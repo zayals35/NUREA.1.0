@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "2b1e00ce-2340-4e4e-91ec-b6d8cdcb5d75",
+  "asset_id": "1106d99b-1560-4341-bae9-506b23c610b1",
   "project_id": "78925c85-564a-4a29-a23c-f07803865c20",
-  "url": "/__l5e/assets-v1/2b1e00ce-2340-4e4e-91ec-b6d8cdcb5d75/hero-water.png",
-  "r2_key": "a/v1/78925c85-564a-4a29-a23c-f07803865c20/2b1e00ce-2340-4e4e-91ec-b6d8cdcb5d75/hero-water.png",
-  "original_filename": "hero-water.png",
-  "size": 3029459,
-  "content_type": "image/png",
-  "created_at": "2026-06-18T21:31:38Z"
+  "url": "/__l5e/assets-v1/1106d99b-1560-4341-bae9-506b23c610b1/hero-water-loop-poster.webp",
+  "r2_key": "a/v1/78925c85-564a-4a29-a23c-f07803865c20/1106d99b-1560-4341-bae9-506b23c610b1/hero-water-loop-poster.webp",
+  "original_filename": "hero-water-loop-poster.webp",
+  "size": 296914,
+  "content_type": "image/webp",
+  "created_at": "2026-06-18T22:05:17Z"
 }
