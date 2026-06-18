@@ -25,9 +25,9 @@ export const SERVICES: Service[] = [
     image: "/nurea-hero/stone-nettsider.png",
     priority: true,
     rotation: -2,
-    // Biggest anchor — center of left stone field
-    desktop: { left: "28vw", top: "58vh", width: "clamp(300px, 23vw, 430px)" },
-    mobile: { left: "50%", top: "48%", width: "58%" },
+    // Circle 5 — bottom center anchor, largest stone
+    desktop: { left: "30vw", top: "72vh", width: "clamp(300px, 22vw, 420px)" },
+    mobile: { left: "50%", top: "62%", width: "58%" },
   },
   {
     id: "innhold",
@@ -37,7 +37,8 @@ export const SERVICES: Service[] = [
     image: "/nurea-hero/stone-innhold.png",
     priority: true,
     rotation: 2,
-    desktop: { left: "38vw", top: "38vh", width: "clamp(240px, 18vw, 350px)" },
+    // Circle 4 — upper right of stone field
+    desktop: { left: "40vw", top: "28vh", width: "clamp(230px, 17vw, 330px)" },
     mobile: { left: "62%", top: "22%", width: "44%" },
   },
   {
@@ -48,7 +49,8 @@ export const SERVICES: Service[] = [
     image: "/nurea-hero/stone-merkevare.png",
     priority: true,
     rotation: -4,
-    desktop: { left: "15vw", top: "82vh", width: "clamp(240px, 18vw, 350px)" },
+    // Circle 2 — upper mid-left
+    desktop: { left: "24vw", top: "19vh", width: "clamp(220px, 16vw, 320px)" },
     mobile: { left: "26%", top: "80%", width: "46%" },
   },
   {
@@ -59,7 +61,8 @@ export const SERVICES: Service[] = [
     image: "/nurea-hero/stone-systemer.png",
     priority: false,
     rotation: -3,
-    desktop: { left: "9vw", top: "30vh", width: "clamp(180px, 14vw, 270px)" },
+    // Circle 3 — middle left
+    desktop: { left: "11vw", top: "48vh", width: "clamp(180px, 14vw, 270px)" },
     mobile: { left: "18%", top: "14%", width: "32%" },
   },
   {
@@ -70,7 +73,8 @@ export const SERVICES: Service[] = [
     image: "/nurea-hero/stone-reklamer.png",
     priority: false,
     rotation: 3,
-    desktop: { left: "36vw", top: "84vh", width: "clamp(190px, 15vw, 290px)" },
+    // Circle 1 — top left
+    desktop: { left: "10vw", top: "15vh", width: "clamp(190px, 14vw, 280px)" },
     mobile: { left: "48%", top: "92%", width: "32%" },
   },
 ];
