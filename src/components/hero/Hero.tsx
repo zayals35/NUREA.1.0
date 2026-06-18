@@ -115,11 +115,11 @@ export const Hero = () => {
       {/* Hero text */}
       <div className="relative z-[50] h-full pointer-events-none">
         <header className="flex items-center justify-between px-6 md:px-12 pt-6 md:pt-8 pointer-events-auto">
-          <div className="font-serif text-xl tracking-[0.25em]" style={{ color: "#17242A" }}>NUREA</div>
-          <nav className="hidden md:flex gap-8 text-sm" style={{ color: "rgba(23,36,42,0.78)" }}>
-            <a href="/tjenester/nettsider" className="hover:opacity-100 opacity-90">Tjenester</a>
-            <a href="#" className="hover:opacity-100 opacity-90">Arbeider</a>
-            <a href="#" className="hover:opacity-100 opacity-90">Kontakt</a>
+          <div className="hero-wordmark">NUREA</div>
+          <nav className="hidden md:flex gap-8 hero-nav">
+            <a href="/tjenester/nettsider" className="hover:opacity-100 opacity-90 transition">Tjenester</a>
+            <a href="#" className="hover:opacity-100 opacity-90 transition">Arbeider</a>
+            <a href="#" className="hover:opacity-100 opacity-90 transition">Kontakt</a>
           </nav>
         </header>
 
@@ -132,33 +132,25 @@ export const Hero = () => {
             textAlign: "left",
           }}
         >
-          <p className="mb-4 text-[11px] uppercase tracking-[0.4em]" style={{ color: "#B99655" }}>
-            Under Overflaten
-          </p>
-          <h1
-            className="font-serif text-3xl md:text-5xl lg:text-6xl leading-[1.08]"
-            style={{ color: "#17242A" }}
-          >
+          <p className="hero-eyebrow mb-5">Under Overflaten</p>
+          <h1 className="hero-headline">
             Digitale uttrykk som gjør solide bedrifter enklere å forstå, stole på og velge.
           </h1>
-          <p
-            className="mt-5 max-w-xl text-base md:text-lg leading-relaxed"
-            style={{ color: "rgba(23,36,42,0.78)" }}
-          >
+          <p className="hero-body mt-6 max-w-xl text-base md:text-[17px]">
             NUREA bygger merkevare, nettsider, innhold og digitale systemer med én tydelig retning.
           </p>
-          <div className="mt-7 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             <a
               href="#kontakt"
-              className="rounded-full bg-[hsl(var(--gold))] px-6 py-3 text-sm font-medium shadow-lg hover:brightness-105 transition"
-              style={{ color: "#17242A" }}
+              className="rounded-full bg-[hsl(var(--gold))] px-6 py-3 text-[13px] font-medium tracking-[-0.01em] shadow-[0_10px_30px_rgba(185,150,85,0.35)] hover:brightness-105 transition"
+              style={{ color: "#17242A", fontFamily: "'Inter', sans-serif" }}
             >
               Start med klarhet
             </a>
             <a
               href="/tjenester/nettsider"
-              className="rounded-full border px-6 py-3 text-sm backdrop-blur-sm transition hover:bg-white/30"
-              style={{ borderColor: "rgba(23,36,42,0.45)", color: "#17242A" }}
+              className="rounded-full border px-6 py-3 text-[13px] backdrop-blur-sm transition hover:bg-white/30"
+              style={{ borderColor: "rgba(23,36,42,0.45)", color: "#17242A", fontFamily: "'Inter', sans-serif" }}
             >
               Utforsk tjenester
             </a>
@@ -166,10 +158,10 @@ export const Hero = () => {
         </div>
 
         <footer className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-6 md:pb-10 flex items-end justify-between pointer-events-auto">
-          <span className="text-[11px] uppercase tracking-[0.35em]" style={{ color: "rgba(23,36,42,0.7)" }}>
+          <span className="text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(23,36,42,0.7)", fontFamily: "'Inter', sans-serif" }}>
             ↓ Utforsk tjenestene under overflaten
           </span>
-          <span className="hidden md:block text-[11px] uppercase tracking-[0.35em]" style={{ color: "rgba(23,36,42,0.55)" }}>
+          <span className="hidden md:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(23,36,42,0.55)", fontFamily: "'Inter', sans-serif" }}>
             Oslo · Norge
           </span>
         </footer>
