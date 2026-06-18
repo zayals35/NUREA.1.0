@@ -40,17 +40,15 @@ export const Hero = () => {
       className="hero-root relative w-screen h-screen overflow-hidden bg-[#0f2a36] text-white"
       aria-label="NUREA – Under Overflaten"
     >
-      {/* Layer 1: water background */}
+      {/* Layer 1: actual water background */}
       <div
-        className="absolute inset-0 z-0 bg-cover bg-center"
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage:
-            "linear-gradient(180deg,#cfe4e8 0%,#7fb0b8 45%,#2f5e6c 100%), url(/nurea-hero/hero-water-clean.webp)",
-          backgroundBlendMode: "overlay",
+          backgroundImage: "url(/nurea-hero/hero-water-clean.webp)",
         }}
       />
       {/* Subtle vignette for depth */}
-      <div className="absolute inset-0 z-[1] pointer-events-none bg-[radial-gradient(ellipse_at_center,_transparent_45%,_rgba(8,28,38,0.55)_100%)]" />
+      <div className="absolute inset-0 z-[1] pointer-events-none bg-[radial-gradient(ellipse_at_center,_transparent_45%,_rgba(8,28,38,0.35)_100%)]" />
 
       {/* Layer 2: gold connection lines (beneath water shimmer) */}
       <svg
@@ -87,8 +85,11 @@ export const Hero = () => {
         />
       ))}
 
-      {/* Layer 3: water shimmer / caustics ABOVE submerged stones */}
-      <div className="caustics absolute inset-0 z-[40] pointer-events-none mix-blend-screen opacity-40" />
+      {/* Layer 3: uploaded water overlay ABOVE submerged stones */}
+      <div
+        className="absolute inset-0 z-[40] pointer-events-none bg-cover bg-center bg-no-repeat mix-blend-screen opacity-30"
+        style={{ backgroundImage: "url(/nurea-hero/water-caustics-overlay.png)" }}
+      />
       <div className="shimmer absolute inset-0 z-[41] pointer-events-none mix-blend-overlay opacity-60" />
 
       {/* Hero text */}
