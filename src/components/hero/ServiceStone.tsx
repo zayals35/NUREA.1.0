@@ -16,19 +16,19 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
     const [imgError, setImgError] = useState(false);
 
     // Default submerged style vs. risen (active) style.
-    // Priority stones (Nettsider, Merkevare, Innhold) are slightly more visible.
     const submergedOpacity = service.priority ? 0.84 : 0.78;
     const rot = service.rotation ?? 0;
     const stoneStyle = active
       ? {
           opacity: 1,
-          filter: "blur(0px) brightness(1.04) contrast(1) saturate(1.04) drop-shadow(0 14px 18px rgba(0,0,0,0.35))",
-          transform: `translateY(-6px) scale(1.03) rotate(${rot}deg)`,
+          filter: "blur(0px) brightness(1.03) contrast(1.05) saturate(1.05)",
+          transform: `translateY(-18px) scale(1.035) rotate(${rot}deg)`,
         }
       : {
           opacity: submergedOpacity,
-          filter: `blur(0.2px) brightness(0.92) contrast(0.94) saturate(0.9)`,
+          filter: "blur(0.15px) brightness(0.9) contrast(0.92) saturate(0.88)",
           transform: `translateY(0) scale(1) rotate(${rot}deg)`,
+          mixBlendMode: "multiply" as const,
         };
 
     return (
@@ -95,7 +95,10 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
 
         {/* Stone image */}
         <div
-          className="relative transition-all duration-700 ease-[cubic-bezier(0.2,0.7,0.2,1)]"
+          className={cn(
+            "stone-img-wrap relative transition-all duration-700 ease-[cubic-bezier(0.2,0.7,0.2,1)]",
+            active && "is-active"
+          )}
           style={stoneStyle}
         >
           <img

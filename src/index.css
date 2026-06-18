@@ -106,6 +106,9 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   :root {
@@ -117,7 +120,57 @@ All colors MUST be HSL.
     font-weight: 500;
     letter-spacing: -0.01em;
   }
+
+  /* Hero typography refinements */
+  .hero-headline {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 0.92;
+    color: #17242A;
+    font-size: clamp(56px, 5vw, 96px);
+  }
+  .hero-body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    color: rgba(23, 36, 42, 0.76);
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+  }
+  .hero-nav {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 13px;
+    letter-spacing: -0.01em;
+    color: rgba(23, 36, 42, 0.76);
+    font-weight: 400;
+  }
+  .hero-eyebrow {
+    font-family: 'Inter', system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    font-size: 11px;
+    color: #B99655;
+    font-weight: 500;
+  }
+  .hero-wordmark {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    font-size: 18px;
+    color: #17242A;
+  }
+
+  /* Submerged stone contact shadow + edge softness */
+  .stone-img-wrap {
+    filter: drop-shadow(0 10px 18px rgba(23, 36, 42, 0.22))
+            drop-shadow(0 2px 4px rgba(23, 36, 42, 0.18));
+  }
+  .stone-img-wrap.is-active {
+    filter: drop-shadow(0 18px 28px rgba(23, 36, 42, 0.32))
+            drop-shadow(0 4px 8px rgba(23, 36, 42, 0.22));
+  }
 }
+
 
 /* ---- NUREA Hero water layers ---- */
 .hero-root .caustics {
