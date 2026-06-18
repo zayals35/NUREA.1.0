@@ -23,9 +23,9 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
           transform: "translateY(-10px) scale(1.04)",
         }
       : {
-          opacity: 0.64,
-          filter: "blur(0.55px) brightness(0.82) contrast(0.86) saturate(0.78)",
-          transform: "translateY(14px) scale(0.94)",
+          opacity: 0.78,
+          filter: "blur(0.35px) brightness(0.91) contrast(0.93) saturate(0.88)",
+          transform: "translateY(10px) scale(0.96)",
         };
 
     return (

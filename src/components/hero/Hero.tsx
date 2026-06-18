@@ -90,16 +90,16 @@ export const Hero = () => {
         className="absolute inset-0 z-[30] pointer-events-none"
         style={{
           background:
-            "linear-gradient(180deg, rgba(12,40,55,0.18) 0%, rgba(18,60,75,0.28) 60%, rgba(12,40,55,0.22) 100%)",
+            "linear-gradient(180deg, rgba(12,40,55,0.08) 0%, rgba(18,60,75,0.14) 60%, rgba(12,40,55,0.10) 100%)",
         }}
       />
 
       {/* Layer 4: uploaded water caustics overlay above stones */}
       <div
-        className="absolute inset-0 z-[40] pointer-events-none bg-cover bg-center bg-no-repeat mix-blend-soft-light opacity-[0.12]"
+        className="absolute inset-0 z-[40] pointer-events-none bg-cover bg-center bg-no-repeat mix-blend-soft-light opacity-[0.08]"
         style={{ backgroundImage: "url(/nurea-hero/water-caustics-overlay.png)" }}
       />
-      <div className="shimmer absolute inset-0 z-[41] pointer-events-none mix-blend-overlay opacity-40" />
+      <div className="shimmer absolute inset-0 z-[41] pointer-events-none mix-blend-overlay opacity-30" />
 
       {/* Hero text */}
       <div className="relative z-[50] flex h-full flex-col justify-between pointer-events-none">
