@@ -1,7 +1,6 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SERVICES, type ServiceId } from "@/data/services";
 import { useIsMobile } from "@/hooks/use-mobile";
-import heroWaterAsset from "@/assets/hero-water.png.asset.json";
 import { ServiceStone } from "./ServiceStone";
 import { MobileServiceSheet } from "./MobileServiceSheet";
 
