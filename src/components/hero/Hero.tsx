@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { SERVICES, type ServiceId } from "@/data/services";
 import { useIsMobile } from "@/hooks/use-mobile";
+import heroWaterAsset from "@/assets/hero-water.png.asset.json";
 import { ServiceStone } from "./ServiceStone";
 import { MobileServiceSheet } from "./MobileServiceSheet";
 
@@ -44,7 +45,7 @@ export const Hero = () => {
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url(/nurea-hero/hero-water-clean.webp)",
+          backgroundImage: `url(${heroWaterAsset.url})`,
         }}
       />
       {/* Subtle vignette for depth */}
