@@ -9,6 +9,7 @@ export const Hero = () => {
   const [activeId, setActiveId] = useState<ServiceId | null>(null);
   const [sheetId, setSheetId] = useState<ServiceId | null>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
 
   useEffect(() => {
     const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
