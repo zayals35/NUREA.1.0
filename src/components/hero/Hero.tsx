@@ -105,10 +105,10 @@ export const Hero = () => {
 
       {/* Subtle readability veil on the right where the hero text lives */}
       <div
-        className="absolute inset-y-0 right-0 w-full md:w-[48%] z-[45] pointer-events-none"
+        className="absolute inset-y-0 right-0 w-full md:w-[55%] z-[45] pointer-events-none"
         style={{
           background:
-            "linear-gradient(270deg, rgba(220,232,232,0.45) 0%, rgba(220,232,232,0.22) 55%, rgba(220,232,232,0.0) 100%)",
+            "radial-gradient(ellipse 80% 70% at 75% 45%, rgba(235,242,240,0.35) 0%, rgba(220,232,232,0.18) 45%, transparent 75%)",
         }}
       />
 
@@ -133,24 +133,46 @@ export const Hero = () => {
           }}
         >
           <p className="hero-eyebrow mb-5">Under Overflaten</p>
-          <h1 className="hero-headline">
+          <h1 className="hero-headline" style={{ maxWidth: 720 }}>
             Digitale uttrykk som gjør solide bedrifter enklere å forstå, stole på og velge.
           </h1>
-          <p className="hero-body mt-6 max-w-xl text-base md:text-[17px]">
+          <p className="hero-body mt-6" style={{ maxWidth: 520 }}>
             NUREA bygger merkevare, nettsider, innhold og digitale systemer med én tydelig retning.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a
               href="#kontakt"
-              className="rounded-full bg-[hsl(var(--gold))] px-6 py-3 text-[13px] font-medium tracking-[-0.01em] shadow-[0_10px_30px_rgba(185,150,85,0.35)] hover:brightness-105 transition"
-              style={{ color: "#17242A", fontFamily: "'Inter', sans-serif" }}
+              className="inline-flex items-center justify-center rounded-full font-semibold shadow-[0_10px_30px_rgba(185,150,85,0.35)] hover:brightness-105 transition"
+              style={{
+                background: "#C99A46",
+                color: "#17242A",
+                height: 46,
+                padding: "0 28px",
+                borderRadius: 999,
+                fontSize: 14,
+                fontFamily: "'Manrope', 'Inter', sans-serif",
+                fontWeight: 600,
+                border: "none",
+              }}
             >
               Start med klarhet
             </a>
             <a
               href="/tjenester/nettsider"
-              className="rounded-full border px-6 py-3 text-[13px] backdrop-blur-sm transition hover:bg-white/30"
-              style={{ borderColor: "rgba(23,36,42,0.45)", color: "#17242A", fontFamily: "'Inter', sans-serif" }}
+              className="inline-flex items-center justify-center rounded-full font-medium transition hover:bg-white/30"
+              style={{
+                background: "rgba(255, 255, 255, 0.18)",
+                color: "#17242A",
+                border: "1px solid rgba(23, 36, 42, 0.42)",
+                height: 46,
+                padding: "0 28px",
+                borderRadius: 999,
+                fontSize: 14,
+                fontFamily: "'Manrope', 'Inter', sans-serif",
+                fontWeight: 500,
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
+              }}
             >
               Utforsk tjenester
             </a>
@@ -158,10 +180,10 @@ export const Hero = () => {
         </div>
 
         <footer className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-6 md:pb-10 flex items-end justify-between pointer-events-auto">
-          <span className="text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(23,36,42,0.7)", fontFamily: "'Inter', sans-serif" }}>
+          <span className="text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(23,36,42,0.7)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>
             ↓ Utforsk tjenestene under overflaten
           </span>
-          <span className="hidden md:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(23,36,42,0.55)", fontFamily: "'Inter', sans-serif" }}>
+          <span className="hidden md:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(23,36,42,0.55)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>
             Oslo · Norge
           </span>
         </footer>
