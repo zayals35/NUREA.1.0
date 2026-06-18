@@ -30,8 +30,8 @@ export const Hero = () => {
       const pos = isMobile ? s.mobile : s.desktop;
       return { id: s.id, x: parseFloat(pos.left), y: parseFloat(pos.top) };
     });
-    // chain through them in a calm order
-    const order: ServiceId[] = ["merkevare", "innhold", "nettsider", "systemer", "reklamer"];
+    // chain through them in a calm top-to-bottom order
+    const order: ServiceId[] = ["reklamer", "merkevare", "innhold", "systemer", "nettsider"];
     const ordered = order.map((id) => pts.find((p) => p.id === id)!).filter(Boolean);
     return ordered;
   }, [isMobile]);
