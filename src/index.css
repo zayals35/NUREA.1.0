@@ -115,49 +115,43 @@ All colors MUST be HSL.
     --gold: 38 55% 62%;
   }
 
-  .font-serif {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-  }
-
   /* Hero typography refinements */
   .hero-headline {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 500;
-    letter-spacing: -0.035em;
-    line-height: 0.92;
+    font-family: 'Manrope', 'Inter', system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.045em;
+    line-height: 0.98;
     color: #17242A;
-    font-size: clamp(56px, 5vw, 96px);
+    font-size: clamp(52px, 4.7vw, 88px);
   }
   .hero-body {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Manrope', 'Inter', system-ui, sans-serif;
     font-weight: 400;
-    color: rgba(23, 36, 42, 0.76);
+    color: rgba(23, 36, 42, 0.82);
     line-height: 1.55;
-    letter-spacing: -0.005em;
+    font-size: clamp(15px, 1vw, 18px);
   }
   .hero-nav {
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 13px;
+    font-family: 'Manrope', 'Inter', system-ui, sans-serif;
+    font-size: 14px;
     letter-spacing: -0.01em;
-    color: rgba(23, 36, 42, 0.76);
-    font-weight: 400;
+    color: rgba(23, 36, 42, 0.86);
+    font-weight: 500;
   }
   .hero-eyebrow {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Manrope', 'Inter', system-ui, sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.28em;
     font-size: 11px;
-    color: #B99655;
-    font-weight: 500;
+    color: #A97F38;
+    font-weight: 600;
   }
   .hero-wordmark {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 500;
-    letter-spacing: 0.32em;
+    font-family: 'Manrope', 'Inter', system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.35em;
     font-size: 18px;
-    color: #17242A;
+    color: rgba(23, 36, 42, 0.9);
   }
 
   /* Submerged stone contact shadow + edge softness */
