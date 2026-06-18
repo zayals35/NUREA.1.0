@@ -6,6 +6,8 @@ export interface Service {
   description: string;
   href: string;
   image: string;
+  /** Priority stones are the three main anchors (Nettsider, Merkevare, Innhold) */
+  priority: boolean;
   /** desktop position as percentages of hero */
   desktop: { left: string; top: string; width: string };
   /** mobile position as percentages of hero */
@@ -19,8 +21,10 @@ export const SERVICES: Service[] = [
     description: "Bygget for klarhet, tillit og riktige henvendelser.",
     href: "/tjenester/nettsider",
     image: "/nurea-hero/stone-nettsider.png",
-    desktop: { left: "66%", top: "60%", width: "20%" },
-    mobile: { left: "72%", top: "58%", width: "42%" },
+    priority: true,
+    // Largest, left-center main anchor
+    desktop: { left: "26%", top: "58%", width: "26%" },
+    mobile: { left: "40%", top: "46%", width: "52%" },
   },
   {
     id: "merkevare",
@@ -28,8 +32,10 @@ export const SERVICES: Service[] = [
     description: "Et tydelig uttrykk før du bygger mer.",
     href: "/tjenester/merkevare",
     image: "/nurea-hero/stone-merkevare.png",
-    desktop: { left: "20%", top: "86%", width: "16%" },
-    mobile: { left: "18%", top: "82%", width: "38%" },
+    priority: true,
+    // Large, lower-left
+    desktop: { left: "12%", top: "82%", width: "20%" },
+    mobile: { left: "22%", top: "78%", width: "44%" },
   },
   {
     id: "innhold",
@@ -37,8 +43,10 @@ export const SERVICES: Service[] = [
     description: "Ord, bilder og struktur som gjør verdien lettere å forstå.",
     href: "/tjenester/innhold",
     image: "/nurea-hero/stone-innhold.png",
-    desktop: { left: "48%", top: "76%", width: "16%" },
-    mobile: { left: "52%", top: "74%", width: "38%" },
+    priority: true,
+    // Large, mid-left / upper-left
+    desktop: { left: "44%", top: "34%", width: "20%" },
+    mobile: { left: "60%", top: "22%", width: "44%" },
   },
   {
     id: "systemer",
@@ -46,8 +54,10 @@ export const SERVICES: Service[] = [
     description: "Digitale flyter som gjør hverdagen enklere og mer ryddig.",
     href: "/tjenester/systemer",
     image: "/nurea-hero/stone-systemer.png",
-    desktop: { left: "80%", top: "30%", width: "16%" },
-    mobile: { left: "78%", top: "32%", width: "38%" },
+    priority: false,
+    // Supporting, upper-left smaller
+    desktop: { left: "10%", top: "26%", width: "12%" },
+    mobile: { left: "16%", top: "14%", width: "28%" },
   },
   {
     id: "reklamer",
@@ -55,7 +65,9 @@ export const SERVICES: Service[] = [
     description: "Strategiske budskap som gjør synligheten tydeligere.",
     href: "/tjenester/reklamer",
     image: "/nurea-hero/stone-reklamer.png",
-    desktop: { left: "82%", top: "82%", width: "16%" },
-    mobile: { left: "82%", top: "84%", width: "36%" },
+    priority: false,
+    // Supporting, lower-middle smaller
+    desktop: { left: "38%", top: "88%", width: "12%" },
+    mobile: { left: "44%", top: "92%", width: "28%" },
   },
 ];
