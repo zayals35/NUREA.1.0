@@ -99,7 +99,63 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html, body, #root {
+    height: 100%;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
   }
+
+  :root {
+    --gold: 38 55% 62%;
+  }
+
+  .font-serif {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* ---- NUREA Hero water layers ---- */
+.hero-root .caustics {
+  background-image:
+    url('/nurea-hero/water-caustics-overlay.png'),
+    radial-gradient(ellipse at 30% 40%, rgba(255,255,255,0.25), transparent 60%),
+    radial-gradient(ellipse at 70% 60%, rgba(255,255,255,0.18), transparent 65%);
+  background-size: 60% auto, 100% 100%, 100% 100%;
+  background-repeat: repeat, no-repeat, no-repeat;
+  animation: causticsDrift 18s ease-in-out infinite alternate;
+}
+
+.hero-root .shimmer {
+  background:
+    repeating-linear-gradient(
+      100deg,
+      rgba(255,255,255,0.05) 0px,
+      rgba(255,255,255,0.12) 2px,
+      rgba(255,255,255,0.02) 6px,
+      transparent 14px
+    );
+  animation: shimmerSlide 12s linear infinite;
+}
+
+@keyframes causticsDrift {
+  0%   { background-position: 0% 0%, 0 0, 0 0; transform: scale(1); }
+  100% { background-position: 8% 5%, 0 0, 0 0; transform: scale(1.04); }
+}
+
+@keyframes shimmerSlide {
+  from { background-position: 0 0; }
+  to   { background-position: 240px 0; }
+}
+
+.stone-btn { cursor: pointer; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-root .caustics,
+  .hero-root .shimmer { animation: none !important; }
+  .stone-btn, .stone-btn * { transition: none !important; }
 }

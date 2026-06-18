@@ -1,0 +1,154 @@
+import { useMemo, useState } from "react";
+import { SERVICES, type ServiceId } from "@/data/services";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { ServiceStone } from "./ServiceStone";
+import { MobileServiceSheet } from "./MobileServiceSheet";
+
+export const Hero = () => {
+  const isMobile = useIsMobile();
+  const [activeId, setActiveId] = useState<ServiceId | null>(null);
+  const [sheetId, setSheetId] = useState<ServiceId | null>(null);
+
+  const activeService = useMemo(
+    () => SERVICES.find((s) => s.id === sheetId) ?? null,
+    [sheetId]
+  );
+
+  const handleActivate = (id: ServiceId) => {
+    setActiveId(id);
+    if (isMobile) setSheetId(id);
+  };
+
+  const handleDeactivate = () => {
+    if (!isMobile) setActiveId(null);
+  };
+
+  // SVG connection lines between stones (use desktop positions as % anchors)
+  const lines = useMemo(() => {
+    const pts = SERVICES.map((s) => {
+      const pos = isMobile ? s.mobile : s.desktop;
+      return { id: s.id, x: parseFloat(pos.left), y: parseFloat(pos.top) };
+    });
+    // chain through them in a calm order
+    const order: ServiceId[] = ["merkevare", "innhold", "nettsider", "systemer", "reklamer"];
+    const ordered = order.map((id) => pts.find((p) => p.id === id)!).filter(Boolean);
+    return ordered;
+  }, [isMobile]);
+
+  return (
+    <section
+      className="hero-root relative w-screen h-screen overflow-hidden bg-[#0f2a36] text-white"
+      aria-label="NUREA – Under Overflaten"
+    >
+      {/* Layer 1: water background */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "linear-gradient(180deg,#cfe4e8 0%,#7fb0b8 45%,#2f5e6c 100%), url(/nurea-hero/hero-water-clean.webp)",
+          backgroundBlendMode: "overlay",
+        }}
+      />
+      {/* Subtle vignette for depth */}
+      <div className="absolute inset-0 z-[1] pointer-events-none bg-[radial-gradient(ellipse_at_center,_transparent_45%,_rgba(8,28,38,0.55)_100%)]" />
+
+      {/* Layer 2: gold connection lines (beneath water shimmer) */}
+      <svg
+        className="absolute inset-0 z-[10] w-full h-full pointer-events-none opacity-50 mix-blend-soft-light"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        aria-hidden
+      >
+        <defs>
+          <linearGradient id="goldLine" x1="0" x2="1">
+            <stop offset="0%" stopColor="hsl(var(--gold))" stopOpacity="0" />
+            <stop offset="50%" stopColor="hsl(var(--gold))" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="hsl(var(--gold))" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <polyline
+          fill="none"
+          stroke="url(#goldLine)"
+          strokeWidth="0.15"
+          strokeLinecap="round"
+          points={lines.map((p) => `${p.x},${p.y}`).join(" ")}
+        />
+      </svg>
+
+      {/* Stones (z controlled per-state inside) */}
+      {SERVICES.map((s) => (
+        <ServiceStone
+          key={s.id}
+          service={s}
+          isMobile={isMobile}
+          active={activeId === s.id}
+          onActivate={() => handleActivate(s.id)}
+          onDeactivate={handleDeactivate}
+        />
+      ))}
+
+      {/* Layer 3: water shimmer / caustics ABOVE submerged stones */}
+      <div className="caustics absolute inset-0 z-[40] pointer-events-none mix-blend-screen opacity-40" />
+      <div className="shimmer absolute inset-0 z-[41] pointer-events-none mix-blend-overlay opacity-60" />
+
+      {/* Hero text */}
+      <div className="relative z-[50] flex h-full flex-col justify-between pointer-events-none">
+        <header className="flex items-center justify-between px-6 md:px-12 pt-6 md:pt-8 pointer-events-auto">
+          <div className="font-serif text-xl tracking-[0.25em] text-white/90">NUREA</div>
+          <nav className="hidden md:flex gap-8 text-sm text-white/80">
+            <a href="/tjenester/nettsider" className="hover:text-white">Tjenester</a>
+            <a href="#" className="hover:text-white">Arbeider</a>
+            <a href="#" className="hover:text-white">Kontakt</a>
+          </nav>
+        </header>
+
+        <div className="px-6 md:px-16 pt-12 md:pt-0 md:max-w-[58%] pointer-events-auto">
+          <p className="mb-4 text-[11px] uppercase tracking-[0.4em] text-[hsl(var(--gold))]">
+            Under Overflaten
+          </p>
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl leading-[1.08] text-white drop-shadow-[0_2px_18px_rgba(0,0,0,0.35)]">
+            Digitale uttrykk som gjør solide bedrifter enklere å forstå, stole på og velge.
+          </h1>
+          <p className="mt-5 max-w-xl text-base md:text-lg text-white/85 leading-relaxed">
+            NUREA bygger merkevare, nettsider, innhold og digitale systemer med én tydelig retning.
+          </p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <a
+              href="#kontakt"
+              className="rounded-full bg-[hsl(var(--gold))] px-6 py-3 text-sm font-medium text-slate-900 shadow-lg hover:brightness-105 transition"
+            >
+              Start med klarhet
+            </a>
+            <a
+              href="/tjenester/nettsider"
+              className="rounded-full border border-white/60 px-6 py-3 text-sm text-white/95 backdrop-blur-sm hover:bg-white/10 transition"
+            >
+              Utforsk tjenester
+            </a>
+          </div>
+        </div>
+
+        <footer className="px-6 md:px-12 pb-6 md:pb-10 flex items-end justify-between pointer-events-auto">
+          <span className="text-[11px] uppercase tracking-[0.35em] text-white/70">
+            ↓ Utforsk tjenestene under overflaten
+          </span>
+          <span className="hidden md:block text-[11px] uppercase tracking-[0.35em] text-white/50">
+            Oslo · Norge
+          </span>
+        </footer>
+      </div>
+
+      {isMobile && (
+        <MobileServiceSheet
+          service={activeService}
+          onClose={() => {
+            setSheetId(null);
+            setActiveId(null);
+          }}
+        />
+      )}
+    </section>
+  );
+};
+
+export default Hero;
