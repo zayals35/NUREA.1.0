@@ -33,7 +33,7 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
         className={cn(
           "stone-btn group absolute -translate-x-1/2 -translate-y-1/2",
           "outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--gold))]",
-          "z-[45]"
+          "z-[20]"
         )}
         style={{ left: pos.left, top: pos.top, width: pos.width }}
       >
@@ -44,14 +44,22 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
           </div>
         )}
 
-        {/* Stone image – debug visibility: fully opaque, no filter */}
-        <img
-          src={service.image}
-          alt={service.title}
-          onError={() => setImgError(true)}
-          className="block w-full h-auto select-none"
-          style={{ opacity: 1, filter: "none" }}
-        />
+        {/* Stone image – underwater default state */}
+        <div
+          className="relative transition-transform duration-700 ease-[cubic-bezier(0.2,0.7,0.2,1)]"
+          style={{
+            opacity: 0.64,
+            filter: "blur(0.55px) brightness(0.82) contrast(0.86) saturate(0.78)",
+            transform: "translateY(14px) scale(0.94)",
+          }}
+        >
+          <img
+            src={service.image}
+            alt={service.title}
+            onError={() => setImgError(true)}
+            className="block w-full h-auto select-none"
+          />
+        </div>
       </button>
     );
   }
