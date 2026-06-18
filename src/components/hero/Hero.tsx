@@ -8,6 +8,15 @@ export const Hero = () => {
   const isMobile = useIsMobile();
   const [activeId, setActiveId] = useState<ServiceId | null>(null);
   const [sheetId, setSheetId] = useState<ServiceId | null>(null);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
 
   const activeService = useMemo(
     () => SERVICES.find((s) => s.id === sheetId) ?? null,
@@ -41,13 +50,25 @@ export const Hero = () => {
       style={{ color: "#17242A" }}
       aria-label="NUREA – Under Overflaten"
     >
-      {/* Layer 1: actual water background */}
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url(${heroWaterAsset.url})`,
-        }}
-      />
+      {/* Layer 1: animated water background */}
+      {reducedMotion ? (
+        <div
+          className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url(/images/hero-water-loop-poster.webp)" }}
+        />
+      ) : (
+        <video
+          className="hero-bg absolute inset-0 z-0 w-full h-full object-cover pointer-events-none"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/images/hero-water-loop-poster.webp"
+        >
+          <source src="/images/hero-water-loop.webm" type="video/webm" />
+          <source src="/images/hero-water-loop.mp4" type="video/mp4" />
+        </video>
+      )}
       {/* Subtle vignette for depth */}
       <div className="absolute inset-0 z-[1] pointer-events-none bg-[radial-gradient(ellipse_at_center,_transparent_45%,_rgba(8,28,38,0.35)_100%)]" />
 
