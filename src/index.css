@@ -159,3 +159,9 @@ All colors MUST be HSL.
   .hero-root .shimmer { animation: none !important; }
   .stone-btn, .stone-btn * { transition: none !important; }
 }
+
+@keyframes stone-ripple {
+  0%   { transform: translate(-50%, -50%) scale(0.55); opacity: 0.9; }
+  60%  { opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(1.9); opacity: 0; }
+}
