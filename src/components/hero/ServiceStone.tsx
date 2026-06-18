@@ -15,7 +15,10 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
     const pos = isMobile ? service.mobile : service.desktop;
     const [imgError, setImgError] = useState(false);
 
-    // Default submerged style vs. risen (active) style
+    // Default submerged style vs. risen (active) style.
+    // Priority stones (Nettsider, Merkevare, Innhold) are slightly more visible.
+    const submergedOpacity = service.priority ? 0.84 : 0.68;
+    const submergedBrightness = service.priority ? 0.95 : 0.88;
     const stoneStyle = active
       ? {
           opacity: 1,
@@ -23,8 +26,8 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
           transform: "translateY(-10px) scale(1.04)",
         }
       : {
-          opacity: 0.78,
-          filter: "blur(0.35px) brightness(0.91) contrast(0.93) saturate(0.88)",
+          opacity: submergedOpacity,
+          filter: `blur(0.35px) brightness(${submergedBrightness}) contrast(0.93) saturate(0.88)`,
           transform: "translateY(10px) scale(0.96)",
         };
 
