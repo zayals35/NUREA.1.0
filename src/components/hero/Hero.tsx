@@ -58,17 +58,28 @@ export const Hero = () => {
           style={{ backgroundImage: "url(/images/hero-water-loop-poster.webp)" }}
         />
       ) : (
-        <video
-          className="hero-bg absolute inset-0 z-0 w-full h-full object-cover pointer-events-none"
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/images/hero-water-loop-poster.webp"
-        >
-          <source src="/images/hero-water-loop.webm" type="video/webm" />
-          <source src="/images/hero-water-loop.mp4" type="video/mp4" />
-        </video>
+        <>
+          {/* Poster image behind video — fades out once video plays */}
+          <div
+            className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-out"
+            style={{
+              backgroundImage: "url(/images/hero-water-loop-poster.webp)",
+              opacity: videoReady ? 0 : 1,
+            }}
+          />
+          <video
+            className="hero-bg absolute inset-0 z-0 w-full h-full object-cover pointer-events-none transition-opacity duration-1000 ease-out"
+            style={{ opacity: videoReady ? 1 : 0 }}
+            autoPlay
+            muted
+            loop
+            playsInline
+            onPlaying={() => setVideoReady(true)}
+          >
+            <source src="/images/hero-water-loop.webm" type="video/webm" />
+            <source src="/images/hero-water-loop.mp4" type="video/mp4" />
+          </video>
+        </>
       )}
       {/* Subtle vignette for depth */}
       <div className="absolute inset-0 z-[1] pointer-events-none bg-[radial-gradient(ellipse_at_center,_transparent_45%,_rgba(8,28,38,0.35)_100%)]" />
