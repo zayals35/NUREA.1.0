@@ -128,12 +128,29 @@ export const Hero = () => {
         }}
       />
 
-      {/* Layer 4: uploaded water caustics overlay above stones */}
-      <div
-        className="absolute inset-0 z-[40] pointer-events-none bg-cover bg-center bg-no-repeat mix-blend-soft-light opacity-[0.08]"
-        style={{ backgroundImage: "url(/nurea-hero/water-caustics-overlay.png)" }}
-      />
-      <div className="shimmer absolute inset-0 z-[41] pointer-events-none mix-blend-overlay opacity-30" />
+      {/* Layer 4: animated water caustics overlay (above default stones, below active stone & text) */}
+      {!reducedMotion && (
+        <video
+          className="hero-caustics absolute inset-0 z-[35] w-full h-full object-cover pointer-events-none"
+          style={{
+            mixBlendMode: "screen",
+            opacity: "var(--caustics-opacity, 0.18)" as unknown as number,
+          }}
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden
+          onError={() => {
+            // eslint-disable-next-line no-console
+            console.warn("[NUREA] water-caustics-loop video could not load");
+          }}
+        >
+          <source src="/images/water-caustics-loop.webm" type="video/webm" />
+          <source src="/images/water-caustics-loop.mp4" type="video/mp4" />
+        </video>
+      )}
+      <div className="shimmer absolute inset-0 z-[36] pointer-events-none mix-blend-overlay opacity-30" />
 
       {/* Subtle readability veil on the right where the hero text lives */}
       <div
