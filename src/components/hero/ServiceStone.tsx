@@ -17,18 +17,18 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
 
     // Default submerged style vs. risen (active) style.
     // Priority stones (Nettsider, Merkevare, Innhold) are slightly more visible.
-    const submergedOpacity = service.priority ? 0.84 : 0.68;
-    const submergedBrightness = service.priority ? 0.95 : 0.88;
+    const submergedOpacity = service.priority ? 0.84 : 0.78;
+    const rot = service.rotation ?? 0;
     const stoneStyle = active
       ? {
           opacity: 1,
-          filter: "blur(0px) brightness(1.05) contrast(1) saturate(1.05) drop-shadow(0 18px 22px rgba(0,0,0,0.45))",
-          transform: "translateY(-10px) scale(1.04)",
+          filter: "blur(0px) brightness(1.04) contrast(1) saturate(1.04) drop-shadow(0 14px 18px rgba(0,0,0,0.35))",
+          transform: `translateY(-6px) scale(1.03) rotate(${rot}deg)`,
         }
       : {
           opacity: submergedOpacity,
-          filter: `blur(0.35px) brightness(${submergedBrightness}) contrast(0.93) saturate(0.88)`,
-          transform: "translateY(10px) scale(0.96)",
+          filter: `blur(0.2px) brightness(0.92) contrast(0.94) saturate(0.9)`,
+          transform: `translateY(0) scale(1) rotate(${rot}deg)`,
         };
 
     return (

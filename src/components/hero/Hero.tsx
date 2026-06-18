@@ -105,15 +105,15 @@ export const Hero = () => {
 
       {/* Subtle readability veil on the right where the hero text lives */}
       <div
-        className="absolute inset-y-0 right-0 w-full md:w-[55%] z-[45] pointer-events-none"
+        className="absolute inset-y-0 right-0 w-full md:w-[48%] z-[45] pointer-events-none"
         style={{
           background:
-            "linear-gradient(270deg, rgba(220,232,232,0.55) 0%, rgba(220,232,232,0.28) 45%, rgba(220,232,232,0.0) 100%)",
+            "linear-gradient(270deg, rgba(220,232,232,0.45) 0%, rgba(220,232,232,0.22) 55%, rgba(220,232,232,0.0) 100%)",
         }}
       />
 
       {/* Hero text */}
-      <div className="relative z-[50] flex h-full flex-col justify-between pointer-events-none">
+      <div className="relative z-[50] h-full pointer-events-none">
         <header className="flex items-center justify-between px-6 md:px-12 pt-6 md:pt-8 pointer-events-auto">
           <div className="font-serif text-xl tracking-[0.25em]" style={{ color: "#17242A" }}>NUREA</div>
           <nav className="hidden md:flex gap-8 text-sm" style={{ color: "rgba(23,36,42,0.78)" }}>
@@ -123,7 +123,15 @@ export const Hero = () => {
           </nav>
         </header>
 
-        <div className="px-6 md:px-16 pt-12 md:pt-0 md:ml-auto md:max-w-[48%] md:text-right pointer-events-auto">
+        <div
+          className="px-6 md:px-0 pt-12 md:pt-0 pointer-events-auto md:absolute"
+          style={{
+            left: "57vw",
+            top: "30vh",
+            width: "min(calc(100vw - 48px), clamp(420px, 36vw, 620px))",
+            textAlign: "left",
+          }}
+        >
           <p className="mb-4 text-[11px] uppercase tracking-[0.4em]" style={{ color: "#B99655" }}>
             Under Overflaten
           </p>
@@ -134,12 +142,12 @@ export const Hero = () => {
             Digitale uttrykk som gjør solide bedrifter enklere å forstå, stole på og velge.
           </h1>
           <p
-            className="mt-5 md:ml-auto max-w-xl text-base md:text-lg leading-relaxed"
+            className="mt-5 max-w-xl text-base md:text-lg leading-relaxed"
             style={{ color: "rgba(23,36,42,0.78)" }}
           >
             NUREA bygger merkevare, nettsider, innhold og digitale systemer med én tydelig retning.
           </p>
-          <div className="mt-7 flex flex-wrap gap-3 md:justify-end">
+          <div className="mt-7 flex flex-wrap gap-3">
             <a
               href="#kontakt"
               className="rounded-full bg-[hsl(var(--gold))] px-6 py-3 text-sm font-medium shadow-lg hover:brightness-105 transition"
@@ -157,7 +165,7 @@ export const Hero = () => {
           </div>
         </div>
 
-        <footer className="px-6 md:px-12 pb-6 md:pb-10 flex items-end justify-between pointer-events-auto">
+        <footer className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-6 md:pb-10 flex items-end justify-between pointer-events-auto">
           <span className="text-[11px] uppercase tracking-[0.35em]" style={{ color: "rgba(23,36,42,0.7)" }}>
             ↓ Utforsk tjenestene under overflaten
           </span>
