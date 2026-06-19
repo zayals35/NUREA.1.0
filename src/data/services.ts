@@ -37,8 +37,8 @@ export const SERVICES: Service[] = [
     image: "/nurea-hero/stone-innhold.png",
     priority: true,
     rotation: 2,
-    // Circle 4 — upper right of stone field
-    desktop: { left: "40vw", top: "28vh", width: "clamp(230px, 17vw, 330px)" },
+    // Circle 4 — center-left, settled into clearer water
+    desktop: { left: "37vw", top: "34vh", width: "clamp(230px, 17vw, 330px)" },
     mobile: { left: "62%", top: "22%", width: "44%" },
   },
   {

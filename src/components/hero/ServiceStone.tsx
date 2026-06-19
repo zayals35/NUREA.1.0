@@ -6,30 +6,42 @@ interface Props {
   service: Service;
   active: boolean;
   isMobile: boolean;
+  reducedMotion: boolean;
   onActivate: () => void;
   onDeactivate: () => void;
 }
 
 export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
-  ({ service, active, isMobile, onActivate, onDeactivate }, ref) => {
+  ({ service, active, isMobile, reducedMotion, onActivate, onDeactivate }, ref) => {
     const pos = isMobile ? service.mobile : service.desktop;
     const [imgError, setImgError] = useState(false);
 
-    // Default submerged style vs. risen (active) style.
-    const submergedOpacity = service.priority ? 0.84 : 0.78;
+    // Default = submerged (blurred, dimmed, desaturated, seen through water).
+    // Active = risen above the surface (sharp, bright, clear).
+    const submergedOpacity = service.priority ? 0.9 : 0.84;
     const rot = service.rotation ?? 0;
     const stoneStyle = active
       ? {
           opacity: 1,
-          filter: "blur(0px) brightness(1.03) contrast(1.05) saturate(1.05)",
-          transform: `translateY(-18px) scale(1.035) rotate(${rot}deg)`,
+          filter:
+            "blur(0px) brightness(1.05) contrast(1.05) saturate(1.06)",
+          transform: `translateY(-52px) scale(1.06) rotate(${rot}deg)`,
         }
       : {
           opacity: submergedOpacity,
-          filter: "blur(0.15px) brightness(0.9) contrast(0.92) saturate(0.88)",
+          filter:
+            "blur(1px) brightness(0.93) contrast(0.95) saturate(0.88)",
           transform: `translateY(0) scale(1) rotate(${rot}deg)`,
-          mixBlendMode: "multiply" as const,
         };
+
+    // Droplet spray that bursts from the water line when the stone surfaces.
+    const droplets = [
+      { dx: "-26px", delay: "40ms", size: 7, left: "32%" },
+      { dx: "-10px", delay: "0ms", size: 9, left: "44%" },
+      { dx: "8px", delay: "70ms", size: 6, left: "54%" },
+      { dx: "22px", delay: "30ms", size: 8, left: "64%" },
+      { dx: "36px", delay: "110ms", size: 5, left: "72%" },
+    ];
 
     return (
       <button
@@ -59,46 +71,79 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
           </div>
         )}
 
-        {/* Ripple rings — appear when active */}
-        {active && (
-          <>
+        {/* Break-the-surface FX — fire at the water line (resting center) when active.
+            Skipped entirely under reduced motion. */}
+        {active && !reducedMotion && (
+          <span
+            aria-hidden
+            className="pointer-events-none absolute left-1/2 -translate-x-1/2"
+            style={{ top: "58%", width: "100%", height: 0 }}
+          >
+            {/* Expanding ripple rings */}
             <span
-              aria-hidden
-              className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+              className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full"
               style={{
-                width: "120%",
+                width: "118%",
                 aspectRatio: "1 / 1",
                 backgroundImage: "url(/nurea-hero/ripple-ring.png)",
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
-                animation: "stone-ripple 1600ms ease-out forwards",
+                animation: "stone-ripple 1500ms ease-out forwards",
                 opacity: 0.85,
               }}
             />
             <span
-              aria-hidden
-              className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+              className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full"
               style={{
-                width: "120%",
+                width: "118%",
                 aspectRatio: "1 / 1",
                 backgroundImage: "url(/nurea-hero/ripple-ring.png)",
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 animation: "stone-ripple 1800ms ease-out 220ms forwards",
-                opacity: 0.55,
+                opacity: 0.5,
               }}
             />
-          </>
+            {/* Bright meniscus arc — the surface tenting and snapping */}
+            <span
+              className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-[50%]"
+              style={{
+                width: "70%",
+                height: "26%",
+                background:
+                  "radial-gradient(ellipse at center, rgba(255,255,255,0.9) 0%, rgba(220,240,245,0.35) 45%, transparent 72%)",
+                animation: "stone-meniscus 700ms ease-out forwards",
+              }}
+            />
+            {/* Droplet spray */}
+            {droplets.map((d, i) => (
+              <span
+                key={i}
+                className="pointer-events-none absolute top-0 rounded-full"
+                style={{
+                  left: d.left,
+                  width: d.size,
+                  height: d.size,
+                  background:
+                    "radial-gradient(circle at 35% 30%, rgba(255,255,255,0.95), rgba(190,220,228,0.7) 60%, rgba(150,190,200,0.4))",
+                  boxShadow: "0 0 4px rgba(255,255,255,0.5)",
+                  ["--dx" as string]: d.dx,
+                  animation: `stone-droplet 900ms cubic-bezier(0.3,0.1,0.4,1) ${d.delay} forwards`,
+                  opacity: 0,
+                }}
+              />
+            ))}
+          </span>
         )}
+
+        {/* Contact shadow on the lakebed beneath the resting stone */}
+        <span aria-hidden className="stone-contact" />
 
         {/* Stone image */}
         <div
-          className={cn(
-            "stone-img-wrap relative transition-all duration-700 ease-[cubic-bezier(0.2,0.7,0.2,1)]",
-            active && "is-active"
-          )}
+          className={cn("stone-img-wrap relative", active && "is-active")}
           style={stoneStyle}
         >
           <img
@@ -108,6 +153,43 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
             className="block w-full h-auto select-none"
             draggable={false}
           />
+          {/* Cyan "through-water" veil — fades out as the stone surfaces */}
+          <span
+            aria-hidden
+            className="stone-tint"
+            style={{
+              WebkitMaskImage: `url(${service.image})`,
+              maskImage: `url(${service.image})`,
+              WebkitMaskSize: "100% 100%",
+              maskSize: "100% 100%",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+            }}
+          />
+          {/* Wet sheen sliding down the freshly-surfaced stone */}
+          {active && !reducedMotion && (
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0 overflow-hidden"
+              style={{
+                WebkitMaskImage: `url(${service.image})`,
+                maskImage: `url(${service.image})`,
+                WebkitMaskSize: "100% 100%",
+                maskSize: "100% 100%",
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+              }}
+            >
+              <span
+                className="absolute inset-x-0 top-0 h-1/2"
+                style={{
+                  background:
+                    "linear-gradient(180deg, rgba(255,255,255,0.55) 0%, transparent 100%)",
+                  animation: "stone-sheen 900ms ease-out 120ms forwards",
+                }}
+              />
+            </span>
+          )}
         </div>
 
         {/* Reveal info card (desktop only — mobile uses bottom sheet) */}

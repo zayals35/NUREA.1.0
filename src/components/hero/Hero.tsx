@@ -33,18 +33,6 @@ export const Hero = () => {
     if (!isMobile) setActiveId(null);
   };
 
-  // SVG connection lines between stones (use desktop positions as % anchors)
-  const lines = useMemo(() => {
-    const pts = SERVICES.map((s) => {
-      const pos = isMobile ? s.mobile : s.desktop;
-      return { id: s.id, x: parseFloat(pos.left), y: parseFloat(pos.top) };
-    });
-    // chain through them in a calm top-to-bottom order
-    const order: ServiceId[] = ["reklamer", "merkevare", "innhold", "systemer", "nettsider"];
-    const ordered = order.map((id) => pts.find((p) => p.id === id)!).filter(Boolean);
-    return ordered;
-  }, [isMobile]);
-
   return (
     <section
       className="hero-root relative w-screen h-screen overflow-hidden bg-[#cfdfe0]"
@@ -55,7 +43,7 @@ export const Hero = () => {
       {reducedMotion ? (
         <div
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url(/images/hero-water-loop-poster.webp)" }}
+          style={{ backgroundImage: "url(/nurea-hero/hero-water-loop-poster.webp)" }}
         />
       ) : (
         <>
@@ -63,7 +51,7 @@ export const Hero = () => {
           <div
             className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-out"
             style={{
-              backgroundImage: "url(/images/hero-water-loop-poster.webp)",
+              backgroundImage: "url(/nurea-hero/hero-water-loop-poster.webp)",
               opacity: videoReady ? 0 : 1,
             }}
           />
@@ -76,81 +64,33 @@ export const Hero = () => {
             playsInline
             onPlaying={() => setVideoReady(true)}
           >
-            <source src="/images/hero-water-loop.webm" type="video/webm" />
-            <source src="/images/hero-water-loop.mp4" type="video/mp4" />
+            <source src="/nurea-hero/hero-water-loop-mobile.webm" type="video/webm" media="(max-width: 768px)" />
+            <source src="/nurea-hero/hero-water-loop-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
+            <source src="/nurea-hero/hero-water-loop.webm" type="video/webm" />
+            <source src="/nurea-hero/hero-water-loop.mp4" type="video/mp4" />
           </video>
         </>
       )}
       {/* Subtle vignette for depth */}
       <div className="absolute inset-0 z-[1] pointer-events-none bg-[radial-gradient(ellipse_at_center,_transparent_45%,_rgba(8,28,38,0.35)_100%)]" />
 
-      {/* Layer 2: gold connection lines (beneath water shimmer) */}
-      <svg
-        className="absolute inset-0 z-[10] w-full h-full pointer-events-none opacity-50 mix-blend-soft-light"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        aria-hidden
-      >
-        <defs>
-          <linearGradient id="goldLine" x1="0" x2="1">
-            <stop offset="0%" stopColor="hsl(var(--gold))" stopOpacity="0" />
-            <stop offset="50%" stopColor="hsl(var(--gold))" stopOpacity="0.9" />
-            <stop offset="100%" stopColor="hsl(var(--gold))" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <polyline
-          fill="none"
-          stroke="url(#goldLine)"
-          strokeWidth="0.15"
-          strokeLinecap="round"
-          points={lines.map((p) => `${p.x},${p.y}`).join(" ")}
-        />
-      </svg>
-
-      {/* Stones (z controlled per-state inside) */}
+      {/* Resting stones (z-20). Active stone lifts itself above the surface layer. */}
       {SERVICES.map((s) => (
         <ServiceStone
           key={s.id}
           service={s}
           isMobile={isMobile}
+          reducedMotion={reducedMotion}
           active={activeId === s.id}
           onActivate={() => handleActivate(s.id)}
           onDeactivate={handleDeactivate}
         />
       ))}
 
-      {/* Layer 3: subtle blue water veil above stones */}
-      <div
-        className="absolute inset-0 z-[30] pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(12,40,55,0.08) 0%, rgba(18,60,75,0.14) 60%, rgba(12,40,55,0.10) 100%)",
-        }}
-      />
-
-      {/* Layer 4: animated water caustics overlay (above default stones, below active stone & text) */}
-      {!reducedMotion && (
-        <video
-          className="hero-caustics absolute inset-0 z-[35] w-full h-full object-cover pointer-events-none"
-          style={{
-            mixBlendMode: "screen",
-            opacity: "var(--caustics-opacity, 0.18)" as unknown as number,
-          }}
-          autoPlay
-          muted
-          loop
-          playsInline
-          aria-hidden
-          onError={() => {
-            // eslint-disable-next-line no-console
-            console.warn("[NUREA] water-caustics-loop video could not load");
-          }}
-        >
-          <source src="/images/water-caustics-loop.webm" type="video/webm" />
-          <source src="/images/water-caustics-loop.mp4" type="video/mp4" />
-        </video>
-      )}
-      <div className="shimmer absolute inset-0 z-[36] pointer-events-none mix-blend-overlay opacity-30" />
+      {/* THE WATER SURFACE (z-30) — caustics + cyan veil that sit ABOVE the resting
+          stones, so they read as submerged. One slow non-directional motion. */}
+      <div className="surface absolute inset-0 z-[30] pointer-events-none" aria-hidden />
+      <div className="shimmer absolute inset-0 z-[31] pointer-events-none mix-blend-overlay opacity-20" />
 
       {/* Subtle readability veil on the right where the hero text lives */}
       <div

@@ -154,61 +154,141 @@ All colors MUST be HSL.
     color: rgba(23, 36, 42, 0.9);
   }
 
-  /* Submerged stone contact shadow + edge softness */
-  .stone-img-wrap {
-    filter: drop-shadow(0 10px 18px rgba(23, 36, 42, 0.22))
-            drop-shadow(0 2px 4px rgba(23, 36, 42, 0.18));
-  }
-  .stone-img-wrap.is-active {
-    filter: drop-shadow(0 18px 28px rgba(23, 36, 42, 0.32))
-            drop-shadow(0 4px 8px rgba(23, 36, 42, 0.22));
-  }
 }
 
 
-/* ---- NUREA Hero water layers ---- */
-.hero-root .caustics {
-  background-image:
-    url('/nurea-hero/water-caustics-overlay.png'),
-    radial-gradient(ellipse at 30% 40%, rgba(255,255,255,0.25), transparent 60%),
-    radial-gradient(ellipse at 70% 60%, rgba(255,255,255,0.18), transparent 65%);
-  background-size: 60% auto, 100% 100%, 100% 100%;
-  background-repeat: repeat, no-repeat, no-repeat;
-  animation: causticsDrift 18s ease-in-out infinite alternate;
+/* ---- NUREA Hero water layers ----
+
+   Layer model (the whole illusion depends on this order):
+     z0   background water video (the lakebed, seen through depth)
+     z20  resting stones  — submerged, blurred + cyan-tinted
+     z30  .surface        — caustics + cyan veil that sits ABOVE resting stones
+     z40  active stone     — risen above the surface, sharp & clear
+     z50  text / nav
+*/
+
+/* The water SURFACE: soft caustic light + faint cyan veil. Because this sits
+   above the resting stones (z30 > z20), the stones read as being *under* it.
+   Pure CSS, one slow non-directional "breathing" motion — never competes with
+   the background video's direction. */
+.hero-root .surface {
+  background:
+    radial-gradient(ellipse 68% 52% at 26% 36%, rgba(255,255,255,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 52% 62% at 72% 62%, rgba(255,255,255,0.12) 0%, transparent 68%),
+    radial-gradient(ellipse 42% 38% at 54% 16%, rgba(255,255,255,0.08) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(120,165,180,0.10) 0%, rgba(90,140,160,0.16) 55%, rgba(120,165,180,0.10) 100%);
+  mix-blend-mode: soft-light;
+  animation: surfaceBreathe 24s ease-in-out infinite alternate;
 }
 
 .hero-root .shimmer {
   background:
     repeating-linear-gradient(
       100deg,
-      rgba(255,255,255,0.05) 0px,
-      rgba(255,255,255,0.12) 2px,
-      rgba(255,255,255,0.02) 6px,
+      rgba(255,255,255,0.03) 0px,
+      rgba(255,255,255,0.07) 2px,
+      rgba(255,255,255,0.01) 6px,
       transparent 14px
     );
-  animation: shimmerSlide 12s linear infinite;
+  animation: shimmerSlide 16s linear infinite;
 }
 
-@keyframes causticsDrift {
-  0%   { background-position: 0% 0%, 0 0, 0 0; transform: scale(1); }
-  100% { background-position: 8% 5%, 0 0, 0 0; transform: scale(1.04); }
+@keyframes surfaceBreathe {
+  0%   { transform: scale(1)    translate(0%,    0%);    opacity: 0.85; }
+  50%  { transform: scale(1.02) translate(0.8%, -0.5%);  opacity: 1;    }
+  100% { transform: scale(1.03) translate(-0.5%, 0.6%);  opacity: 0.9;  }
 }
 
 @keyframes shimmerSlide {
   from { background-position: 0 0; }
-  to   { background-position: 240px 0; }
+  to   { background-position: 200px 0; }
 }
 
 .stone-btn { cursor: pointer; }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero-root .caustics,
-  .hero-root .shimmer { animation: none !important; }
-  .stone-btn, .stone-btn * { transition: none !important; }
+/* ---- Submerged stone treatment ----
+   The wrapper carries the underwater look at rest and clears it when risen. */
+.stone-img-wrap {
+  transition:
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 10px 18px rgba(23, 36, 42, 0.22))
+          drop-shadow(0 2px 4px rgba(23, 36, 42, 0.18));
+}
+.stone-img-wrap.is-active {
+  filter: drop-shadow(0 26px 30px rgba(12, 30, 40, 0.40))
+          drop-shadow(0 6px 10px rgba(12, 30, 40, 0.26));
 }
 
+/* Cyan "seen through water" veil, clipped to the stone shape via the image mask
+   on the ::after of the wrapper. Fades out as the stone surfaces. */
+.stone-tint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(150,200,210,0.55) 0%, rgba(70,120,140,0.55) 100%);
+  mix-blend-mode: multiply;
+  opacity: 0.22;
+  pointer-events: none;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.is-active .stone-tint { opacity: 0; }
+
+/* Contact shadow on the lakebed beneath a resting stone. */
+.stone-contact {
+  position: absolute;
+  left: 50%;
+  bottom: 2%;
+  width: 78%;
+  height: 16%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(10,28,36,0.42) 0%, transparent 70%);
+  filter: blur(6px);
+  pointer-events: none;
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.is-active .stone-contact {
+  opacity: 0.55;
+  transform: translateX(-50%) translateY(16px) scale(1.12);
+}
+
+/* ---- Break-the-surface effects ---- */
+
+/* Expanding ripple ring at the water line where the stone punched through. */
 @keyframes stone-ripple {
-  0%   { transform: translate(-50%, -50%) scale(0.55); opacity: 0.9; }
-  60%  { opacity: 0.5; }
-  100% { transform: translate(-50%, -50%) scale(1.9); opacity: 0; }
+  0%   { transform: translate(-50%, -50%) scale(0.45); opacity: 0.85; }
+  60%  { opacity: 0.4; }
+  100% { transform: translate(-50%, -50%) scale(2.0);  opacity: 0; }
+}
+
+/* A quick bright meniscus arc as the surface tents and snaps. */
+@keyframes stone-meniscus {
+  0%   { transform: translate(-50%, -50%) scaleX(0.5) scaleY(0.2); opacity: 0; }
+  35%  { opacity: 0.7; }
+  100% { transform: translate(-50%, -50%) scaleX(1.25) scaleY(0.55); opacity: 0; }
+}
+
+/* Droplets flung up then pulled back down by gravity, fading out.
+   Per-droplet direction/scale come from inline --dx / --delay vars. */
+@keyframes stone-droplet {
+  0%   { transform: translate(-50%, -50%) translate(0, 0) scale(0.9); opacity: 0; }
+  15%  { opacity: 0.95; }
+  45%  { transform: translate(-50%, -50%) translate(var(--dx, 0px), -42px) scale(1); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) translate(calc(var(--dx, 0px) * 1.4), 26px) scale(0.5); opacity: 0; }
+}
+
+/* Wet sheen sliding down the face of the freshly-surfaced stone. */
+@keyframes stone-sheen {
+  0%   { transform: translateY(-60%); opacity: 0; }
+  25%  { opacity: 0.5; }
+  100% { transform: translateY(60%); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-root .surface,
+  .hero-root .shimmer { animation: none !important; }
+  .stone-img-wrap,
+  .stone-tint,
+  .stone-contact { transition: none !important; }
+  .stone-btn, .stone-btn * { transition: none !important; }
 }
