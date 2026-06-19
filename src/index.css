@@ -117,17 +117,17 @@ All colors MUST be HSL.
 
   /* Hero typography refinements */
   .hero-headline {
-    font-family: 'Manrope', 'Inter', system-ui, sans-serif;
-    font-weight: 600;
-    letter-spacing: -0.045em;
+    font-family: 'Bricolage Grotesque', 'Manrope', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.035em;
     line-height: 0.98;
-    color: #17242A;
-    font-size: clamp(52px, 4.7vw, 88px);
+    color: #15233A;
+    font-size: clamp(44px, 4.6vw, 86px);
   }
   .hero-body {
     font-family: 'Manrope', 'Inter', system-ui, sans-serif;
     font-weight: 400;
-    color: rgba(23, 36, 42, 0.82);
+    color: rgba(21, 35, 58, 0.82);
     line-height: 1.55;
     font-size: clamp(15px, 1vw, 18px);
   }
@@ -135,7 +135,7 @@ All colors MUST be HSL.
     font-family: 'Manrope', 'Inter', system-ui, sans-serif;
     font-size: 14px;
     letter-spacing: -0.01em;
-    color: rgba(23, 36, 42, 0.86);
+    color: rgba(21, 35, 58, 0.86);
     font-weight: 500;
   }
   .hero-eyebrow {
@@ -143,15 +143,26 @@ All colors MUST be HSL.
     text-transform: uppercase;
     letter-spacing: 0.28em;
     font-size: 11px;
-    color: #A97F38;
-    font-weight: 600;
+    color: #1E8A8A;
+    font-weight: 700;
   }
   .hero-wordmark {
-    font-family: 'Manrope', 'Inter', system-ui, sans-serif;
-    font-weight: 600;
-    letter-spacing: 0.35em;
-    font-size: 18px;
-    color: rgba(23, 36, 42, 0.9);
+    font-family: 'Bricolage Grotesque', 'Manrope', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    font-size: 19px;
+    color: rgba(21, 35, 58, 0.92);
+  }
+
+  /* Phone / tablet: stones sit on top, copy at the bottom — keep the headline
+     compact so it fits the bottom band without crowding the stones. */
+  @media (max-width: 1023px) {
+    .hero-headline { font-size: clamp(30px, 5.4vw, 44px); line-height: 1.02; }
+    .hero-body { font-size: 14.5px; }
+  }
+  @media (max-width: 767px) {
+    .hero-headline { font-size: 30px; line-height: 1.03; }
+    .hero-body { font-size: 14px; }
   }
 
 }

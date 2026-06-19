@@ -1,15 +1,21 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { SERVICES, type ServiceId } from "@/data/services";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useBreakpoint } from "@/hooks/use-mobile";
 import { ServiceStone } from "./ServiceStone";
-import { MobileServiceSheet } from "./MobileServiceSheet";
+
+// Static bed image per breakpoint. (Placeholder = the loop poster until the
+// dedicated hero-bg-{breakpoint} art is generated.)
+const BG_BY_BP: Record<string, string> = {
+  desktop: "/nurea-hero/hero-water-loop-poster.webp",
+  tablet: "/nurea-hero/hero-water-loop-poster.webp",
+  phone: "/nurea-hero/hero-water-loop-poster.webp",
+};
 
 export const Hero = () => {
-  const isMobile = useIsMobile();
+  const breakpoint = useBreakpoint();
+  const isTouch = breakpoint !== "desktop";
   const [activeId, setActiveId] = useState<ServiceId | null>(null);
-  const [sheetId, setSheetId] = useState<ServiceId | null>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
 
   useEffect(() => {
     const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -19,67 +25,38 @@ export const Hero = () => {
     return () => mql.removeEventListener("change", handler);
   }, []);
 
-  const activeService = useMemo(
-    () => SERVICES.find((s) => s.id === sheetId) ?? null,
-    [sheetId]
-  );
+  const handleActivate = (id: ServiceId) => setActiveId(id);
+  const handleDeactivate = () => setActiveId(null);
 
-  const handleActivate = (id: ServiceId) => {
-    setActiveId(id);
-    if (isMobile) setSheetId(id);
+  // On touch, tapping empty space closes any open popover.
+  const handleBackdrop = () => {
+    if (isTouch) setActiveId(null);
   };
 
-  const handleDeactivate = () => {
-    if (!isMobile) setActiveId(null);
-  };
+  const bgImage = BG_BY_BP[breakpoint];
 
   return (
     <section
       className="hero-root relative w-screen h-screen overflow-hidden bg-[#cfdfe0]"
-      style={{ color: "#17242A" }}
+      style={{ color: "#15233A" }}
       aria-label="NUREA – Under Overflaten"
+      onClick={handleBackdrop}
     >
-      {/* Layer 1: animated water background */}
-      {reducedMotion ? (
-        <div
-          className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url(/nurea-hero/hero-water-loop-poster.webp)" }}
-        />
-      ) : (
-        <>
-          {/* Poster image behind video — fades out once video plays */}
-          <div
-            className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-out"
-            style={{
-              backgroundImage: "url(/nurea-hero/hero-water-loop-poster.webp)",
-              opacity: videoReady ? 0 : 1,
-            }}
-          />
-          <video
-            className="hero-bg absolute inset-0 z-0 w-full h-full object-cover pointer-events-none transition-opacity duration-1000 ease-out"
-            style={{ opacity: videoReady ? 1 : 0 }}
-            autoPlay
-            muted
-            loop
-            playsInline
-            onPlaying={() => setVideoReady(true)}
-          >
-            <source src="/nurea-hero/hero-water-loop-mobile.webm" type="video/webm" media="(max-width: 768px)" />
-            <source src="/nurea-hero/hero-water-loop-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
-            <source src="/nurea-hero/hero-water-loop.webm" type="video/webm" />
-            <source src="/nurea-hero/hero-water-loop.mp4" type="video/mp4" />
-          </video>
-        </>
-      )}
-      {/* Subtle vignette for depth */}
-      <div className="absolute inset-0 z-[1] pointer-events-none bg-[radial-gradient(ellipse_at_center,_transparent_45%,_rgba(8,28,38,0.35)_100%)]" />
+      {/* Layer 0: STATIC bed image (no video → no jitter, always sharp) */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${bgImage})` }}
+      />
 
-      {/* Resting stones (z-20). Active stone lifts itself above the surface layer. */}
+      {/* Subtle vignette for depth */}
+      <div className="absolute inset-0 z-[1] pointer-events-none bg-[radial-gradient(ellipse_at_center,_transparent_45%,_rgba(8,28,38,0.32)_100%)]" />
+
+      {/* Resting stones (z-20). Active stone lifts itself above the water surface. */}
       {SERVICES.map((s) => (
         <ServiceStone
           key={s.id}
           service={s}
-          isMobile={isMobile}
+          breakpoint={breakpoint}
           reducedMotion={reducedMotion}
           active={activeId === s.id}
           onActivate={() => handleActivate(s.id)}
@@ -87,21 +64,32 @@ export const Hero = () => {
         />
       ))}
 
-      {/* THE WATER SURFACE (z-30) — caustics + cyan veil that sit ABOVE the resting
-          stones, so they read as submerged. One slow non-directional motion. */}
-      <div className="surface absolute inset-0 z-[30] pointer-events-none" aria-hidden />
-      <div className="shimmer absolute inset-0 z-[31] pointer-events-none mix-blend-overlay opacity-20" />
-
-      {/* Subtle readability veil on the right where the hero text lives */}
+      {/* THE WATER SURFACE (z-30): faint static cyan veil + a gentle moving
+          caustics video (light only) layered over the still bed. Sits above the
+          resting stones so they read as submerged; the risen stone (z-45) clears it. */}
       <div
-        className="absolute inset-y-0 right-0 w-full md:w-[55%] z-[45] pointer-events-none"
+        className="absolute inset-0 z-[30] pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 80% 70% at 75% 45%, rgba(235,242,240,0.35) 0%, rgba(220,232,232,0.18) 45%, transparent 75%)",
+            "linear-gradient(180deg, rgba(120,165,180,0.10) 0%, rgba(90,140,160,0.14) 55%, rgba(120,165,180,0.10) 100%)",
         }}
       />
+      {!reducedMotion && (
+        <video
+          className="absolute inset-0 z-[30] w-full h-full object-cover pointer-events-none"
+          style={{ mixBlendMode: "screen", opacity: 0.22 }}
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden
+        >
+          <source src="/nurea-hero/water-caustics-loop.webm" type="video/webm" />
+          <source src="/nurea-hero/water-caustics-loop.mp4" type="video/mp4" />
+        </video>
+      )}
 
-      {/* Hero text */}
+      {/* Hero text + nav */}
       <div className="relative z-[50] h-full pointer-events-none">
         <header className="flex items-center justify-between px-6 md:px-12 pt-6 md:pt-8 pointer-events-auto">
           <div className="hero-wordmark">NUREA</div>
@@ -112,53 +100,66 @@ export const Hero = () => {
           </nav>
         </header>
 
+        {/* Desktop: copy on the RIGHT. Phone/Tablet: copy anchored at the BOTTOM. */}
         <div
-          className="px-6 md:px-0 pt-12 md:pt-0 pointer-events-auto md:absolute"
-          style={{
-            left: "57vw",
-            top: "30vh",
-            width: "min(calc(100vw - 48px), clamp(420px, 36vw, 620px))",
-            textAlign: "left",
-          }}
+          className="pointer-events-auto px-6 md:px-0"
+          style={
+            isTouch
+              ? {
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  bottom: "5vh",
+                  width: "100%",
+                  textAlign: "left",
+                }
+              : {
+                  position: "absolute",
+                  left: "55vw",
+                  top: "26vh",
+                  width: "min(calc(100vw - 48px), clamp(420px, 38vw, 640px))",
+                  textAlign: "left",
+                }
+          }
         >
-          <p className="hero-eyebrow mb-5">Under Overflaten</p>
-          <h1 className="hero-headline" style={{ maxWidth: 720 }}>
-            Digitale uttrykk som gjør solide bedrifter enklere å forstå, stole på og velge.
-          </h1>
-          <p className="hero-body mt-6" style={{ maxWidth: 520 }}>
-            NUREA bygger merkevare, nettsider, innhold og digitale systemer med én tydelig retning.
+          <p className="hero-eyebrow mb-4">Under Overflaten</p>
+          <h1 className="hero-headline">Digitale uttrykk</h1>
+          <p className="hero-body mt-5" style={{ maxWidth: 520 }}>
+            som gjør solide bedrifter enklere å forstå, stole på og velge.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-7 flex flex-wrap gap-3">
             <a
               href="#kontakt"
-              className="inline-flex items-center justify-center rounded-full font-semibold shadow-[0_10px_30px_rgba(185,150,85,0.35)] hover:brightness-105 transition"
+              className="inline-flex items-center justify-center rounded-full transition hover:brightness-110"
               style={{
-                background: "#C99A46",
-                color: "#17242A",
-                height: 46,
-                padding: "0 28px",
+                background: "#1E8A8A",
+                color: "#ffffff",
+                height: 48,
+                padding: "0 30px",
                 borderRadius: 999,
-                fontSize: 14,
+                fontSize: 14.5,
                 fontFamily: "'Manrope', 'Inter', sans-serif",
-                fontWeight: 600,
+                fontWeight: 700,
+                letterSpacing: "0.01em",
                 border: "none",
+                boxShadow: "0 10px 30px rgba(30,138,138,0.38)",
               }}
             >
               Start med klarhet
             </a>
             <a
               href="/tjenester/nettsider"
-              className="inline-flex items-center justify-center rounded-full font-medium transition hover:bg-white/30"
+              className="inline-flex items-center justify-center rounded-full transition hover:bg-[#15233A] hover:text-white"
               style={{
-                background: "rgba(255, 255, 255, 0.18)",
-                color: "#17242A",
-                border: "1px solid rgba(23, 36, 42, 0.42)",
-                height: 46,
-                padding: "0 28px",
+                background: "rgba(255,255,255,0.22)",
+                color: "#15233A",
+                border: "1.5px solid rgba(21,35,58,0.55)",
+                height: 48,
+                padding: "0 30px",
                 borderRadius: 999,
-                fontSize: 14,
+                fontSize: 14.5,
                 fontFamily: "'Manrope', 'Inter', sans-serif",
-                fontWeight: 500,
+                fontWeight: 600,
                 backdropFilter: "blur(8px)",
                 WebkitBackdropFilter: "blur(8px)",
               }}
@@ -168,25 +169,15 @@ export const Hero = () => {
           </div>
         </div>
 
-        <footer className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-6 md:pb-10 flex items-end justify-between pointer-events-auto">
-          <span className="text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(23,36,42,0.7)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>
+        <footer className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-5 md:pb-8 flex items-end justify-between pointer-events-auto">
+          <span className="hidden md:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(21,35,58,0.7)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>
             ↓ Utforsk tjenestene under overflaten
           </span>
-          <span className="hidden md:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(23,36,42,0.55)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>
+          <span className="hidden md:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(21,35,58,0.55)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>
             Oslo · Norge
           </span>
         </footer>
       </div>
-
-      {isMobile && (
-        <MobileServiceSheet
-          service={activeService}
-          onClose={() => {
-            setSheetId(null);
-            setActiveId(null);
-          }}
-        />
-      )}
     </section>
   );
 };
