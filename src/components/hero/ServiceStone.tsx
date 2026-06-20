@@ -15,8 +15,8 @@ interface Props {
 export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
   ({ service, active, breakpoint, reducedMotion, onActivate, onDeactivate }, ref) => {
     const isTouch = breakpoint !== "desktop";
-    const isPhone = breakpoint === "phone";
-    const pos = service[breakpoint];
+    // Tablet reuses the phone (portrait) layout.
+    const pos = breakpoint === "tablet" ? service.phone : service[breakpoint];
     const [imgError, setImgError] = useState(false);
 
     // Flip the info popover above the stone when it sits low in the viewport,
@@ -31,7 +31,7 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
     // Resting look. MOBILE: stones stay SHARP (no blur) — the underwater feel comes
     // from the water veil, not from blurring the stones. DESKTOP/TABLET: keep the
     // original submerged blur treatment untouched.
-    const restingStyle = isPhone
+    const restingStyle = isTouch
       ? {
           opacity: 0.99,
           filter:
@@ -46,7 +46,7 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
         };
     // Active (risen) look. MOBILE: a small, sharp rise that breaks the surface with
     // a stronger natural shadow. DESKTOP/TABLET: the original larger lift.
-    const activeStyle = isPhone
+    const activeStyle = isTouch
       ? {
           opacity: 1,
           filter:
@@ -233,7 +233,7 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
             "absolute left-1/2 -translate-x-1/2 w-[210px] text-center z-[60]",
             "transition-all duration-300 ease-out",
             active
-              ? cn("opacity-100 translate-y-0", isPhone && "pointer-events-auto")
+              ? cn("opacity-100 translate-y-0", isTouch && "pointer-events-auto")
               : cn("opacity-0 pointer-events-none", placeAbove ? "translate-y-1" : "-translate-y-1")
           )}
           style={
@@ -242,7 +242,7 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
               : { top: "calc(100% + 12px)" }
           }
         >
-          {isPhone ? (
+          {isTouch ? (
             <div className="nurea-info-tab">
               <div className="info-title">{service.title}</div>
               <div className="info-desc">{service.description}</div>

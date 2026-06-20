@@ -8,8 +8,8 @@ import { ServiceStone } from "./ServiceStone";
 // on it, so the final bed photo can be swapped in here with no rework.
 const BG_BY_BP: Record<string, string> = {
   desktop: "/nurea-hero/hero-bg-desktop.webp",
-  // Tablet still uses the old poster until a warm tablet bed is generated.
-  tablet: "/nurea-hero/hero-water-loop-poster.webp",
+  // Tablet reuses the phone (portrait) bed and the whole phone layout.
+  tablet: "/nurea-hero/hero-bg-phone.webp",
   phone: "/nurea-hero/hero-bg-phone.webp",
 };
 
@@ -43,10 +43,10 @@ export const Hero = () => {
   const bgImage = BG_BY_BP[breakpoint];
 
   // The artboard aspect ratio matches the bed image for this breakpoint (portrait
-  // 9:16 on phone, landscape 16:9 otherwise). It is sized to COVER the viewport and
-  // centred, so the bed fills the screen while the stones (positioned in % of the
-  // artboard) stay locked to their pockets at any screen size.
-  const artboardAR = breakpoint === "phone" ? 9 / 16 : 16 / 9;
+  // 9:16 on phone & tablet, landscape 16:9 on desktop). It is sized to COVER the
+  // viewport and centred, so the bed fills the screen while the stones (positioned
+  // in % of the artboard) stay locked to their pockets at any screen size.
+  const artboardAR = breakpoint === "desktop" ? 16 / 9 : 9 / 16;
   const artboardStyle: CSSProperties = {
     position: "absolute",
     top: "50%",
@@ -97,23 +97,15 @@ export const Hero = () => {
       {/* Layer 0: STATIC bed image (no video → no jitter, always sharp) */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url(${bgImage})`,
-          // Desktop and phone use their real warm beds (no filter, true tone).
-          // Only the tablet still uses the cool poster, so warm just that one.
-          filter:
-            breakpoint === "tablet"
-              ? "sepia(0.5) saturate(1.2) brightness(1.04) hue-rotate(-12deg)"
-              : "none",
-        }}
+        style={{ backgroundImage: `url(${bgImage})` }}
       />
 
       {/* Subtle vignette for depth */}
       <div className="absolute inset-0 z-[1] pointer-events-none bg-[radial-gradient(ellipse_at_center,_transparent_48%,_rgba(48,30,14,0.30)_100%)]" />
 
-      {/* Mobile only: subtle light-lift over the engraved NUREA mark (baked into
-          the phone bed). Above the bed (z-2), below the stones. */}
-      {breakpoint === "phone" && (
+      {/* Touch (phone + tablet): subtle light-lift over the engraved NUREA mark
+          baked into the portrait bed. Above the bed (z-2), below the stones. */}
+      {isTouch && (
         <div className="nurea-mobile-logo-lift" aria-hidden />
       )}
 
@@ -200,7 +192,7 @@ export const Hero = () => {
             <div className="hero-wordmark">NUREA</div>
             <div className="hero-tagline">Merkevare og digital retning</div>
           </div>
-          <nav className="hidden md:flex gap-8 hero-nav pt-1">
+          <nav className="hidden lg:flex gap-8 hero-nav pt-1">
             <a href="/tjenester/nettsider" className="hover:opacity-100 opacity-90 transition">Tjenester</a>
             <a href="#" className="hover:opacity-100 opacity-90 transition">Arbeider</a>
             <a href="#kontakt" className="hover:opacity-100 opacity-90 transition">Kontakt</a>
@@ -234,10 +226,10 @@ export const Hero = () => {
         )}
 
         <footer className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-5 md:pb-8 flex items-end justify-between pointer-events-auto">
-          <span className="hidden md:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(21,35,58,0.7)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>
+          <span className="hidden lg:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(21,35,58,0.7)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>
             ↓ Utforsk tjenestene under overflaten
           </span>
-          <span className="hidden md:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(21,35,58,0.55)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>
+          <span className="hidden lg:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(21,35,58,0.55)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>
             Oslo · Norge
           </span>
         </footer>
