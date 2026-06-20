@@ -109,6 +109,15 @@ export const Hero = () => {
         <div className="nurea-mobile-logo-lift" aria-hidden />
       )}
 
+      {/* Phone + tablet: gentle moving water caustics over the wet area only. The
+          bed stays static (camera locked); only this light layer drifts (z-3,
+          below the stones). Masked off the dry stone; skipped under reduced motion. */}
+      {isTouch && !reducedMotion && (
+        <div className="water-caustics-mask" aria-hidden>
+          <div className="water-caustics-layer" />
+        </div>
+      )}
+
       {/* LAKEBED FLOOR (z-10): engraved N + electric lines running into it.
           Below the resting stones (z-20) so the stones lie on top of the floor.
           Desktop only for now. */}
