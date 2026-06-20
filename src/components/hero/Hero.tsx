@@ -212,7 +212,7 @@ export const Hero = () => {
           className="pointer-events-none"
           style={
             isTouch
-              ? { position: "absolute", top: "13vh", left: 0, right: 0, display: "flex", justifyContent: "center" }
+              ? { position: "absolute", top: "61vh", left: "6vw" }
               : { position: "absolute", left: "3vw", top: "46vh" }
           }
         >
