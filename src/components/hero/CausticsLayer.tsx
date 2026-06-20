@@ -17,8 +17,11 @@ void main(){
   vec2 p = uv;
   p.x *= u_res.x / u_res.y;     // keep cells round regardless of aspect
   p *= 3.2;                      // caustic frequency
-  p.y += u_time * 0.32;          // gentle downward flow (top -> bottom)
-  float time = u_time * 0.45 + 23.0;
+  // Wrap both time accumulators so they never grow large (avoids float-precision
+  // decay on mobile GPUs). The spatial pattern has period 1, so the downward flow
+  // wraps seamlessly; the shimmer wraps on a 24*TAU phase (also seamless).
+  p.y += mod(u_time * 0.32, 1.0);   // gentle downward flow (top -> bottom)
+  float time = mod(u_time * 0.45, 24.0 * TAU) + 23.0;
   vec2 q = mod(p * TAU, TAU) - 250.0;
   vec2 i = q;
   float c = 1.0;
