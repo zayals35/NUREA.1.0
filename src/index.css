@@ -281,40 +281,21 @@ All colors MUST be HSL.
   padding-bottom: 2px;
 }
 
-/* Phone + tablet water motion. The bed image is 100% static (camera locked); only
-   this light layer drifts, so there is no shake. Masked off the dry bottom-right
-   stone. GPU-friendly: a single soft-light layer animated with transform only. */
-.water-caustics-mask {
+/* Phone + tablet water motion: a real animated WebGL caustics canvas over the wet
+   area. The bed image stays 100% static (camera locked); only the caustic light
+   moves, so there is no shake. Screen-blended onto the bed, masked off the dry
+   bottom-right stone. */
+.water-caustics-canvas {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: 3;
   pointer-events: none;
-  overflow: hidden;
-  /* Blend the masked light with the BED behind it (the inner layer must not carry
-     the blend, or the mask isolates it and nothing shows). */
+  opacity: 0.82;
   mix-blend-mode: screen;
   -webkit-mask-image: radial-gradient(135% 125% at 80% 84%, transparent 0%, transparent 22%, #000 48%);
   mask-image: radial-gradient(135% 125% at 80% 84%, transparent 0%, transparent 22%, #000 48%);
-}
-.water-caustics-layer {
-  position: absolute;
-  inset: -20%;
-  opacity: 0.72;
-  background:
-    radial-gradient(ellipse 26% 18% at 28% 26%, rgba(255, 252, 240, 0.85), transparent 60%),
-    radial-gradient(ellipse 22% 15% at 55% 38%, rgba(255, 252, 240, 0.7), transparent 60%),
-    radial-gradient(ellipse 28% 18% at 40% 58%, rgba(255, 252, 240, 0.62), transparent 62%),
-    radial-gradient(ellipse 20% 14% at 16% 50%, rgba(255, 252, 240, 0.75), transparent 60%),
-    radial-gradient(ellipse 18% 13% at 66% 18%, rgba(255, 252, 240, 0.55), transparent 60%),
-    radial-gradient(ellipse 16% 12% at 22% 74%, rgba(255, 252, 240, 0.6), transparent 60%),
-    repeating-linear-gradient(115deg, rgba(255, 252, 240, 0) 0px, rgba(255, 252, 240, 0.16) 4px, transparent 9px, transparent 24px);
-  animation: waterDrift 13s ease-in-out infinite alternate;
-  will-change: transform;
-}
-@keyframes waterDrift {
-  0%   { transform: translate3d(-3%, -2%, 0) scale(1.02); }
-  50%  { transform: translate3d(2.5%, 3%, 0) scale(1.08); }
-  100% { transform: translate3d(-1%, -3%, 0) scale(1.04); }
 }
 
 /* ---- Submerged stone treatment ----
