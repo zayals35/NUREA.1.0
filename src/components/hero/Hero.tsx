@@ -111,6 +111,12 @@ export const Hero = () => {
       {/* Subtle vignette for depth */}
       <div className="absolute inset-0 z-[1] pointer-events-none bg-[radial-gradient(ellipse_at_center,_transparent_48%,_rgba(48,30,14,0.30)_100%)]" />
 
+      {/* Mobile only: subtle light-lift over the engraved NUREA mark (baked into
+          the phone bed). Above the bed (z-2), below the stones. */}
+      {breakpoint === "phone" && (
+        <div className="nurea-mobile-logo-lift" aria-hidden />
+      )}
+
       {/* LAKEBED FLOOR (z-10): engraved N + electric lines running into it.
           Below the resting stones (z-20) so the stones lie on top of the floor.
           Desktop only for now. */}
@@ -206,13 +212,12 @@ export const Hero = () => {
           className="pointer-events-none"
           style={
             isTouch
-              ? { position: "absolute", top: "6vh", left: 0, right: 0, display: "flex", justifyContent: "center" }
+              ? { position: "absolute", top: "13vh", left: 0, right: 0, display: "flex", justifyContent: "center" }
               : { position: "absolute", left: "3vw", top: "46vh" }
           }
         >
           <span className="hover-hint">
-            <span className="dot" />
-            {isTouch ? "Trykk på en stein" : "Hold over en stein"}
+            {isTouch ? "Trykk på en stein for info" : "Hold over en stein"}
           </span>
         </div>
 

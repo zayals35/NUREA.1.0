@@ -215,7 +215,71 @@ All colors MUST be HSL.
   to   { background-position: 200px 0; }
 }
 
-.stone-btn { cursor: pointer; }
+.stone-btn {
+  cursor: pointer;
+  /* Kill the rectangular tap-highlight box on mobile (keyboard focus still shows
+     a subtle ring via focus-visible). */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Mobile only: a subtle warm light-lift over the engraved NUREA mark that is baked
+   into the phone bed image. Sits above the bed, below the stones. Not a visible
+   glow or circle — just enough to make the carved mark a touch easier to read. */
+.nurea-mobile-logo-lift {
+  position: absolute;
+  left: 50%;
+  top: 31%;
+  width: 22%;
+  aspect-ratio: 1 / 0.55;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.16;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 244, 218, 0.32) 0%,
+    rgba(255, 244, 218, 0.14) 42%,
+    rgba(255, 244, 218, 0) 75%
+  );
+  filter: blur(8px);
+}
+
+/* Mobile tap info tab: a small premium glass/water card. */
+.nurea-info-tab {
+  width: 100%;
+  padding: 12px 15px 13px;
+  border-radius: 16px;
+  background: rgba(58, 44, 28, 0.46);
+  backdrop-filter: blur(12px) saturate(1.15);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  border: 1px solid rgba(255, 244, 218, 0.22);
+  box-shadow: 0 14px 34px rgba(28, 18, 8, 0.4), inset 0 1px 0 rgba(255, 244, 218, 0.18);
+}
+.nurea-info-tab .info-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.12;
+  color: #fdf6e8;
+}
+.nurea-info-tab .info-desc {
+  margin-top: 5px;
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: rgba(253, 246, 232, 0.86);
+}
+.nurea-info-tab .info-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffdf9e;
+  border-bottom: 1px solid rgba(255, 223, 158, 0.5);
+  padding-bottom: 2px;
+}
 
 /* ---- Submerged stone treatment ----
    The wrapper carries the underwater look at rest and clears it when risen. */
@@ -380,30 +444,24 @@ All colors MUST be HSL.
 }
 
 /* "Hold over en stein" affordance cue. */
+/* Hint: a subtle glass pill with light warm-white text. Visible but not
+   disturbing. (No dot — the glowing-dot effect is retired in this project.) */
 .hover-hint {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
   font-family: 'Manrope', 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.06em;
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(46, 33, 22, 0.82);
-  font-weight: 700;
-  text-shadow: 0 1px 10px rgba(247, 242, 232, 0.9);
-}
-.hover-hint .dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #a9743f;
-  box-shadow: 0 0 0 0 rgba(169, 116, 63, 0.5);
-  animation: hintPulse 1.8s ease-out infinite;
-}
-@keyframes hintPulse {
-  0%   { box-shadow: 0 0 0 0 rgba(169, 116, 63, 0.5); }
-  70%  { box-shadow: 0 0 0 10px rgba(169, 116, 63, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(169, 116, 63, 0); }
+  font-weight: 600;
+  color: rgba(253, 246, 232, 0.92);
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: rgba(58, 44, 28, 0.28);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  border: 1px solid rgba(255, 244, 218, 0.18);
+  box-shadow: 0 6px 18px rgba(28, 18, 8, 0.18);
 }
 
 /* One stone gently bobs a few times on load to telegraph interactivity. */
@@ -415,6 +473,5 @@ All colors MUST be HSL.
 
 @media (prefers-reduced-motion: reduce) {
   .electric-pulse,
-  .hover-hint .dot,
   .stone-bob { animation: none !important; }
 }

@@ -15,6 +15,7 @@ interface Props {
 export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
   ({ service, active, breakpoint, reducedMotion, onActivate, onDeactivate }, ref) => {
     const isTouch = breakpoint !== "desktop";
+    const isPhone = breakpoint === "phone";
     const pos = service[breakpoint];
     const [imgError, setImgError] = useState(false);
 
@@ -27,12 +28,15 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
     // Active = risen above the surface (sharp, bright, clear).
     const submergedOpacity = service.priority ? 0.9 : 0.84;
     const rotateCss = pos.rotate ?? `${service.rotation ?? 0}deg`;
-    const stoneStyle = active
+    // Resting look. MOBILE: stones stay SHARP (no blur) — the underwater feel comes
+    // from the water veil, not from blurring the stones. DESKTOP/TABLET: keep the
+    // original submerged blur treatment untouched.
+    const restingStyle = isPhone
       ? {
-          opacity: 1,
+          opacity: 0.99,
           filter:
-            "blur(0px) brightness(1.05) contrast(1.05) saturate(1.06)",
-          transform: `translateY(-52px) scale(1.06) rotate(${rotateCss})`,
+            "saturate(0.96) contrast(1.02) brightness(1) drop-shadow(0 10px 18px rgba(45,35,22,.18))",
+          transform: `translateY(0) scale(1) rotate(${rotateCss})`,
         }
       : {
           opacity: submergedOpacity,
@@ -40,6 +44,22 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
             "blur(1px) brightness(0.93) contrast(0.95) saturate(0.88)",
           transform: `translateY(0) scale(1) rotate(${rotateCss})`,
         };
+    // Active (risen) look. MOBILE: a small, sharp rise that breaks the surface with
+    // a stronger natural shadow. DESKTOP/TABLET: the original larger lift.
+    const activeStyle = isPhone
+      ? {
+          opacity: 1,
+          filter:
+            "saturate(1) contrast(1.04) brightness(1.03) drop-shadow(0 20px 26px rgba(45,35,22,.34))",
+          transform: `translateY(-16px) scale(1.06) rotate(${rotateCss})`,
+        }
+      : {
+          opacity: 1,
+          filter:
+            "blur(0px) brightness(1.05) contrast(1.05) saturate(1.06)",
+          transform: `translateY(-52px) scale(1.06) rotate(${rotateCss})`,
+        };
+    const stoneStyle = active ? activeStyle : restingStyle;
 
     // Droplet spray that bursts from the water line when the stone surfaces.
     const droplets = [
@@ -62,12 +82,15 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
         onBlur={() => !isTouch && onDeactivate()}
         onClick={(e) => {
           e.preventDefault();
+          // Stop the tap from bubbling to the section's backdrop handler, which
+          // would immediately clear the active stone on touch.
+          e.stopPropagation();
           if (active) onDeactivate();
           else onActivate();
         }}
         className={cn(
           "stone-btn group absolute -translate-x-1/2 -translate-y-1/2",
-          "outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--gold))]",
+          "outline-none focus-visible:ring-1 focus-visible:ring-white/40",
           active ? "z-[45]" : "z-[20]"
         )}
         style={{ left: pos.left, top: pos.top, width: pos.width }}
@@ -203,50 +226,66 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
           )}
         </div>
 
-        {/* Service label — free text beside the stone, NO box (organic).
-            A soft light halo keeps it legible over the bed. */}
+        {/* Info tab. MOBILE: a small premium glass/water card (tappable). DESKTOP:
+            free text beside the stone, no box (organic). */}
         <div
           className={cn(
-            "absolute left-1/2 -translate-x-1/2 w-[230px] text-center z-[60] pointer-events-none",
+            "absolute left-1/2 -translate-x-1/2 w-[210px] text-center z-[60]",
             "transition-all duration-300 ease-out",
             active
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 " + (placeAbove ? "translate-y-1" : "-translate-y-1")
+              ? cn("opacity-100 translate-y-0", isPhone && "pointer-events-auto")
+              : cn("opacity-0 pointer-events-none", placeAbove ? "translate-y-1" : "-translate-y-1")
           )}
           style={
             placeAbove
-              ? { bottom: "calc(100% + 10px)" }
-              : { top: "calc(100% + 10px)" }
+              ? { bottom: "calc(100% + 12px)" }
+              : { top: "calc(100% + 12px)" }
           }
         >
-          <div
-            className="text-[18px] leading-tight"
-            style={{
-              fontFamily: "'Bricolage Grotesque', sans-serif",
-              fontWeight: 700,
-              color: "#2a1f16",
-              textShadow: "0 1px 14px rgba(247,242,232,0.9), 0 1px 3px rgba(247,242,232,0.8)",
-            }}
-          >
-            {service.title}
-          </div>
-          <div
-            className="mt-1 text-[12.5px] leading-snug mx-auto"
-            style={{
-              maxWidth: 200,
-              color: "rgba(46,33,22,0.85)",
-              textShadow: "0 1px 12px rgba(247,242,232,0.9)",
-            }}
-          >
-            {service.description}
-          </div>
-          <a
-            href={service.href}
-            className="pointer-events-auto mt-1.5 inline-block text-[11px] uppercase tracking-[0.22em] transition"
-            style={{ color: "#8a5a2f", fontWeight: 700, textShadow: "0 1px 10px rgba(247,242,232,0.9)" }}
-          >
-            Les mer →
-          </a>
+          {isPhone ? (
+            <div className="nurea-info-tab">
+              <div className="info-title">{service.title}</div>
+              <div className="info-desc">{service.description}</div>
+              <a
+                href={service.href}
+                onClick={(e) => e.stopPropagation()}
+                className="info-link"
+              >
+                Utforsk tjeneste →
+              </a>
+            </div>
+          ) : (
+            <>
+              <div
+                className="text-[18px] leading-tight"
+                style={{
+                  fontFamily: "'Bricolage Grotesque', sans-serif",
+                  fontWeight: 700,
+                  color: "#2a1f16",
+                  textShadow: "0 1px 14px rgba(247,242,232,0.9), 0 1px 3px rgba(247,242,232,0.8)",
+                }}
+              >
+                {service.title}
+              </div>
+              <div
+                className="mt-1 text-[12.5px] leading-snug mx-auto"
+                style={{
+                  maxWidth: 200,
+                  color: "rgba(46,33,22,0.85)",
+                  textShadow: "0 1px 12px rgba(247,242,232,0.9)",
+                }}
+              >
+                {service.description}
+              </div>
+              <a
+                href={service.href}
+                className="pointer-events-auto mt-1.5 inline-block text-[11px] uppercase tracking-[0.22em] transition"
+                style={{ color: "#8a5a2f", fontWeight: 700, textShadow: "0 1px 10px rgba(247,242,232,0.9)" }}
+              >
+                Les mer →
+              </a>
+            </>
+          )}
         </div>
       </button>
     );

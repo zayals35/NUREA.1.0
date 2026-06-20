@@ -38,7 +38,7 @@ export const SERVICES: Service[] = [
     // Largest anchor stone. Mid-left per the Figma sketch.
     desktop: { left: "25%", top: "70%", width: "17%" },
     tablet: { left: "50%", top: "40%", width: "32%" },
-    phone: { left: "67%", top: "17.5%", width: "29%", rotate: "3deg" },
+    phone: { left: "66%", top: "18%", width: "25%", rotate: "3deg" },
   },
   {
     id: "innhold",
@@ -50,7 +50,7 @@ export const SERVICES: Service[] = [
     rotation: 2,
     desktop: { left: "24%", top: "34%", width: "14%" },
     tablet: { left: "28%", top: "25%", width: "27%" },
-    phone: { left: "27%", top: "39%", width: "25%", rotate: "7deg" },
+    phone: { left: "33%", top: "39.5%", width: "22%", rotate: "7deg" },
   },
   {
     id: "merkevare",
@@ -62,7 +62,7 @@ export const SERVICES: Service[] = [
     rotation: -4,
     desktop: { left: "49%", top: "75%", width: "15%" },
     tablet: { left: "54%", top: "11%", width: "27%" },
-    phone: { left: "51%", top: "50%", width: "25%", rotate: "5deg" },
+    phone: { left: "51%", top: "50.5%", width: "25%", rotate: "5deg" },
   },
   {
     id: "systemer",
@@ -74,7 +74,7 @@ export const SERVICES: Service[] = [
     rotation: -3,
     desktop: { left: "57%", top: "36%", width: "13%" },
     tablet: { left: "74%", top: "25%", width: "21%" },
-    phone: { left: "31%", top: "15.5%", width: "21%", rotate: "-5deg" },
+    phone: { left: "33%", top: "16%", width: "18.5%", rotate: "-5deg" },
   },
   {
     id: "reklamer",
@@ -86,6 +86,6 @@ export const SERVICES: Service[] = [
     rotation: 3,
     desktop: { left: "46%", top: "24%", width: "13%" },
     tablet: { left: "24%", top: "10%", width: "22%" },
-    phone: { left: "68%", top: "34.5%", width: "21%", rotate: "-3deg" },
+    phone: { left: "68%", top: "35%", width: "18.5%", rotate: "-3deg" },
   },
 ];
