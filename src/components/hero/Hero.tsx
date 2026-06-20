@@ -73,10 +73,10 @@ export const Hero = () => {
           isTouch ? "justify-start" : "justify-end"
         }`}
       >
-        <a href="#metode" className="cta-link cta-link--primary">
+        <a href="/arbeider" className="cta-link cta-link--primary">
           Se hvordan vi jobber<span aria-hidden> →</span>
         </a>
-        <a href="#kontakt" className="cta-link">
+        <a href="/kontakt" className="cta-link">
           Kontakt oss<span aria-hidden> →</span>
         </a>
       </div>
@@ -199,9 +199,10 @@ export const Hero = () => {
             <div className="hero-tagline">Merkevare og digital retning</div>
           </div>
           <nav className="hidden lg:flex gap-8 hero-nav pt-1">
-            <a href="/tjenester/nettsider" className="hover:opacity-100 opacity-90 transition">Tjenester</a>
-            <a href="#" className="hover:opacity-100 opacity-90 transition">Arbeider</a>
-            <a href="#kontakt" className="hover:opacity-100 opacity-90 transition">Kontakt</a>
+            <a href="/tjenester" className="hover:opacity-100 opacity-90 transition">Tjenester</a>
+            <a href="/priser" className="hover:opacity-100 opacity-90 transition">Priser</a>
+            <a href="/arbeider" className="hover:opacity-100 opacity-90 transition">Arbeider</a>
+            <a href="/kontakt" className="hover:opacity-100 opacity-90 transition">Kontakt</a>
           </nav>
         </header>
 
