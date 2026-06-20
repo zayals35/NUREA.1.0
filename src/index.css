@@ -292,7 +292,7 @@ All colors MUST be HSL.
   height: 100%;
   z-index: 3;
   pointer-events: none;
-  opacity: 0.82;
+  opacity: 0.74;
   mix-blend-mode: screen;
   -webkit-mask-image: radial-gradient(135% 125% at 80% 84%, transparent 0%, transparent 22%, #000 48%);
   mask-image: radial-gradient(135% 125% at 80% 84%, transparent 0%, transparent 22%, #000 48%);

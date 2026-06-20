@@ -17,6 +17,7 @@ void main(){
   vec2 p = uv;
   p.x *= u_res.x / u_res.y;     // keep cells round regardless of aspect
   p *= 3.2;                      // caustic frequency
+  p.y += u_time * 0.32;          // gentle downward flow (top -> bottom)
   float time = u_time * 0.45 + 23.0;
   vec2 q = mod(p * TAU, TAU) - 250.0;
   vec2 i = q;
