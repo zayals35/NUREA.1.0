@@ -26,19 +26,19 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
     // Default = submerged (blurred, dimmed, desaturated, seen through water).
     // Active = risen above the surface (sharp, bright, clear).
     const submergedOpacity = service.priority ? 0.9 : 0.84;
-    const rot = service.rotation ?? 0;
+    const rotateCss = pos.rotate ?? `${service.rotation ?? 0}deg`;
     const stoneStyle = active
       ? {
           opacity: 1,
           filter:
             "blur(0px) brightness(1.05) contrast(1.05) saturate(1.06)",
-          transform: `translateY(-52px) scale(1.06) rotate(${rot}deg)`,
+          transform: `translateY(-52px) scale(1.06) rotate(${rotateCss})`,
         }
       : {
           opacity: submergedOpacity,
           filter:
             "blur(1px) brightness(0.93) contrast(0.95) saturate(0.88)",
-          transform: `translateY(0) scale(1) rotate(${rot}deg)`,
+          transform: `translateY(0) scale(1) rotate(${rotateCss})`,
         };
 
     // Droplet spray that bursts from the water line when the stone surfaces.
@@ -157,7 +157,11 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
             src={service.image}
             alt={service.title}
             onError={() => setImgError(true)}
-            className="block w-full h-auto select-none"
+            className={cn(
+              "block w-full h-auto select-none",
+              // One stone bobs a few times on load to hint that stones are interactive.
+              service.id === "nettsider" && !active && !reducedMotion && "stone-bob"
+            )}
             draggable={false}
           />
           {/* Cyan "through-water" veil — fades out as the stone surfaces */}
@@ -199,40 +203,50 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
           )}
         </div>
 
-        {/* Info popover — anchored beside the stone, never dims the page.
-            Flips above the stone when it sits low in the viewport. */}
+        {/* Service label — free text beside the stone, NO box (organic).
+            A soft light halo keeps it legible over the bed. */}
         <div
           className={cn(
-            "absolute left-1/2 -translate-x-1/2 w-[230px] text-center z-[60]",
-            "transition-all duration-400 ease-out",
+            "absolute left-1/2 -translate-x-1/2 w-[230px] text-center z-[60] pointer-events-none",
+            "transition-all duration-300 ease-out",
             active
-              ? "opacity-100 translate-y-0 pointer-events-auto"
-              : "opacity-0 pointer-events-none " +
-                  (placeAbove ? "translate-y-2" : "-translate-y-2")
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 " + (placeAbove ? "translate-y-1" : "-translate-y-1")
           )}
           style={
             placeAbove
-              ? { bottom: "calc(100% + 14px)" }
-              : { top: "calc(100% + 14px)" }
+              ? { bottom: "calc(100% + 10px)" }
+              : { top: "calc(100% + 10px)" }
           }
         >
-          <div className="rounded-2xl bg-[rgba(12,26,34,0.72)] backdrop-blur-md border border-white/15 px-4 py-3 shadow-[0_12px_34px_rgba(0,0,0,0.4)]">
-            <div className="text-[10px] uppercase tracking-[0.32em] text-[#5ec6c6] mb-1">
-              Tjeneste
-            </div>
-            <div className="text-lg text-white leading-tight" style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 600 }}>
-              {service.title}
-            </div>
-            <div className="mt-1 text-[12px] text-white/80 leading-snug">
-              {service.description}
-            </div>
-            <a
-              href={service.href}
-              className="mt-2 inline-block text-[11px] uppercase tracking-[0.28em] text-[#5ec6c6] hover:text-white transition"
-            >
-              Les mer →
-            </a>
+          <div
+            className="text-[18px] leading-tight"
+            style={{
+              fontFamily: "'Bricolage Grotesque', sans-serif",
+              fontWeight: 700,
+              color: "#2a1f16",
+              textShadow: "0 1px 14px rgba(247,242,232,0.9), 0 1px 3px rgba(247,242,232,0.8)",
+            }}
+          >
+            {service.title}
           </div>
+          <div
+            className="mt-1 text-[12.5px] leading-snug mx-auto"
+            style={{
+              maxWidth: 200,
+              color: "rgba(46,33,22,0.85)",
+              textShadow: "0 1px 12px rgba(247,242,232,0.9)",
+            }}
+          >
+            {service.description}
+          </div>
+          <a
+            href={service.href}
+            className="pointer-events-auto mt-1.5 inline-block text-[11px] uppercase tracking-[0.22em] transition"
+            style={{ color: "#8a5a2f", fontWeight: 700, textShadow: "0 1px 10px rgba(247,242,232,0.9)" }}
+          >
+            Les mer →
+          </a>
         </div>
       </button>
     );

@@ -121,13 +121,13 @@ All colors MUST be HSL.
     font-weight: 700;
     letter-spacing: -0.035em;
     line-height: 0.98;
-    color: #15233A;
+    color: #2a1f16;
     font-size: clamp(44px, 4.6vw, 86px);
   }
   .hero-body {
     font-family: 'Manrope', 'Inter', system-ui, sans-serif;
     font-weight: 400;
-    color: rgba(21, 35, 58, 0.82);
+    color: rgba(46, 33, 22, 0.84);
     line-height: 1.55;
     font-size: clamp(15px, 1vw, 18px);
   }
@@ -237,9 +237,9 @@ All colors MUST be HSL.
 .stone-tint {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(150,200,210,0.55) 0%, rgba(70,120,140,0.55) 100%);
+  background: linear-gradient(180deg, rgba(212,188,150,0.55) 0%, rgba(150,118,82,0.55) 100%);
   mix-blend-mode: multiply;
-  opacity: 0.22;
+  opacity: 0.2;
   pointer-events: none;
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -302,4 +302,119 @@ All colors MUST be HSL.
   .stone-tint,
   .stone-contact { transition: none !important; }
   .stone-btn, .stone-btn * { transition: none !important; }
+}
+
+/* ---- v3: engraved N on the lakebed, electric lines, text-stone, hover hint ---- */
+
+/* The NUREA "N" carved into the river floor at the centre. Sits on z-10 (above
+   the bed, below the resting stones) so the stones read as lying on top of it.
+   Placeholder glyph — swap for the real logo SVG when available. */
+.nu-engraved {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: clamp(84px, 9vw, 168px);
+  line-height: 1;
+  color: rgba(44, 30, 18, 0.34);
+  text-shadow:
+    0 2px 1px rgba(255, 248, 235, 0.5),
+    0 -1px 1px rgba(0, 0, 0, 0.2);
+  filter: blur(0.4px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Animated "electric" pulse travelling along each line toward the N. */
+.electric-pulse {
+  filter: drop-shadow(0 0 2px rgba(255, 210, 63, 0.9));
+  animation-name: electricFlow;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes electricFlow {
+  to { stroke-dashoffset: -38; }
+}
+
+/* Hero copy: free-floating editorial text in the calm negative space, NO box.
+   A soft light halo (text-shadow) keeps it legible over the photographic bed. */
+.hero-copy {
+  position: absolute;
+  right: 4vw;
+  bottom: 8vh;
+  width: clamp(330px, 36vw, 520px);
+  text-align: right;
+}
+.hero-copy .hero-headline {
+  font-size: clamp(34px, 3.6vw, 62px);
+  text-shadow: 0 1px 22px rgba(247, 242, 232, 0.7), 0 1px 3px rgba(247, 242, 232, 0.6);
+}
+.hero-copy .hero-body {
+  margin-left: auto;
+  text-shadow: 0 1px 14px rgba(247, 242, 232, 0.85);
+}
+
+/* Organic text-link CTAs (no buttons / boxes). Warm earthy ink. */
+.cta-link {
+  font-family: 'Manrope', 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(46, 33, 22, 0.78);
+  text-decoration: none;
+  padding-bottom: 3px;
+  border-bottom: 1.5px solid rgba(46, 33, 22, 0.26);
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+.cta-link:hover { color: #2a1f16; border-color: #8a5a2f; }
+.cta-link--primary { color: #8a5a2f; border-color: #8a5a2f; font-weight: 700; }
+.cta-link--primary:hover { color: #6f4622; border-color: #6f4622; }
+
+.hero-tagline {
+  font-family: 'Manrope', 'Inter', system-ui, sans-serif;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(21, 35, 58, 0.6);
+  font-weight: 600;
+  margin-top: 3px;
+}
+
+/* "Hold over en stein" affordance cue. */
+.hover-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Manrope', 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(46, 33, 22, 0.82);
+  font-weight: 700;
+  text-shadow: 0 1px 10px rgba(247, 242, 232, 0.9);
+}
+.hover-hint .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #a9743f;
+  box-shadow: 0 0 0 0 rgba(169, 116, 63, 0.5);
+  animation: hintPulse 1.8s ease-out infinite;
+}
+@keyframes hintPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(169, 116, 63, 0.5); }
+  70%  { box-shadow: 0 0 0 10px rgba(169, 116, 63, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(169, 116, 63, 0); }
+}
+
+/* One stone gently bobs a few times on load to telegraph interactivity. */
+@keyframes stoneBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
+}
+.stone-bob { animation: stoneBob 2.4s ease-in-out 3; }
+
+@media (prefers-reduced-motion: reduce) {
+  .electric-pulse,
+  .hover-hint .dot,
+  .stone-bob { animation: none !important; }
 }

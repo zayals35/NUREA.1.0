@@ -1,15 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { SERVICES, type ServiceId } from "@/data/services";
 import { useBreakpoint } from "@/hooks/use-mobile";
 import { ServiceStone } from "./ServiceStone";
 
-// Static bed image per breakpoint. (Placeholder = the loop poster until the
-// dedicated hero-bg-{breakpoint} art is generated.)
+// Static bed image per breakpoint. Currently the approved poster; the code
+// layers below (engraved N, electric lines, pockets, text-stone) do NOT depend
+// on it, so the final bed photo can be swapped in here with no rework.
 const BG_BY_BP: Record<string, string> = {
-  desktop: "/nurea-hero/hero-water-loop-poster.webp",
+  desktop: "/nurea-hero/hero-bg-desktop.webp",
+  // Tablet still uses the old poster until a warm tablet bed is generated.
   tablet: "/nurea-hero/hero-water-loop-poster.webp",
-  phone: "/nurea-hero/hero-water-loop-poster.webp",
+  phone: "/nurea-hero/hero-bg-phone.webp",
 };
+
+// Centre of the NUREA emblem carved into the bed image (vw / vh = SVG units 0..100).
+// The electric lines converge here.
+const N_POS = { x: 40, y: 57 };
+const numOf = (v: string) => parseFloat(v);
 
 export const Hero = () => {
   const breakpoint = useBreakpoint();
@@ -35,21 +42,123 @@ export const Hero = () => {
 
   const bgImage = BG_BY_BP[breakpoint];
 
+  // The artboard aspect ratio matches the bed image for this breakpoint (portrait
+  // 9:16 on phone, landscape 16:9 otherwise). It is sized to COVER the viewport and
+  // centred, so the bed fills the screen while the stones (positioned in % of the
+  // artboard) stay locked to their pockets at any screen size.
+  const artboardAR = breakpoint === "phone" ? 9 / 16 : 16 / 9;
+  const artboardStyle: CSSProperties = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: `max(100vw, calc(100vh * ${artboardAR}))`,
+    height: `max(100vh, calc(100vw / ${artboardAR}))`,
+  };
+
+  // Hero copy + CTAs, reused by the desktop text-stone and the touch block.
+  const heroCopy = (
+    <>
+      <h1 className="hero-headline">
+        Lettere å forstå.
+        <br />
+        Lettere å velge.
+      </h1>
+      <p className="hero-body mt-4" style={{ maxWidth: 460 }}>
+        Merkevare, nettsider, innhold og systemer, samlet i én tydelig retning.
+      </p>
+      <div
+        className={`mt-6 flex flex-wrap items-center gap-x-7 gap-y-3 ${
+          isTouch ? "justify-start" : "justify-end"
+        }`}
+      >
+        <a href="#metode" className="cta-link cta-link--primary">
+          Se hvordan vi jobber<span aria-hidden> →</span>
+        </a>
+        <a href="#kontakt" className="cta-link">
+          Kontakt oss<span aria-hidden> →</span>
+        </a>
+      </div>
+    </>
+  );
+
   return (
     <section
-      className="hero-root relative w-screen h-screen overflow-hidden bg-[#cfdfe0]"
+      className="hero-root relative w-screen h-screen overflow-hidden bg-[#e6ddcf]"
       style={{ color: "#15233A" }}
       aria-label="NUREA – Under Overflaten"
       onClick={handleBackdrop}
     >
+      {/* ARTBOARD: bed + stones + water overlay share one fixed-aspect canvas
+          (9:16 phone / 16:9 desktop), sized to COVER the viewport and centred.
+          Stone left/top/width are percentages of THIS artboard, so each stone
+          stays glued to its pocket on the bed image at any screen size. */}
+      <div style={artboardStyle}>
       {/* Layer 0: STATIC bed image (no video → no jitter, always sharp) */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${bgImage})` }}
+        style={{
+          backgroundImage: `url(${bgImage})`,
+          // Desktop and phone use their real warm beds (no filter, true tone).
+          // Only the tablet still uses the cool poster, so warm just that one.
+          filter:
+            breakpoint === "tablet"
+              ? "sepia(0.5) saturate(1.2) brightness(1.04) hue-rotate(-12deg)"
+              : "none",
+        }}
       />
 
       {/* Subtle vignette for depth */}
-      <div className="absolute inset-0 z-[1] pointer-events-none bg-[radial-gradient(ellipse_at_center,_transparent_45%,_rgba(8,28,38,0.32)_100%)]" />
+      <div className="absolute inset-0 z-[1] pointer-events-none bg-[radial-gradient(ellipse_at_center,_transparent_48%,_rgba(48,30,14,0.30)_100%)]" />
+
+      {/* LAKEBED FLOOR (z-10): engraved N + electric lines running into it.
+          Below the resting stones (z-20) so the stones lie on top of the floor.
+          Desktop only for now. */}
+      {breakpoint === "desktop" && (
+        <div className="absolute inset-0 z-[10] pointer-events-none" aria-hidden>
+          <svg
+            className="absolute inset-0 w-full h-full"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
+            {SERVICES.map((s) => {
+              const x = numOf(s.desktop.left);
+              const y = numOf(s.desktop.top);
+              const on = activeId === s.id;
+              return (
+                <g key={s.id}>
+                  <line
+                    x1={x}
+                    y1={y}
+                    x2={N_POS.x}
+                    y2={N_POS.y}
+                    stroke="#ffd23f"
+                    strokeOpacity={on ? 0.85 : 0.3}
+                    strokeWidth={on ? 2 : 1}
+                    vectorEffect="non-scaling-stroke"
+                  />
+                  {!reducedMotion && (
+                    <line
+                      x1={x}
+                      y1={y}
+                      x2={N_POS.x}
+                      y2={N_POS.y}
+                      className="electric-pulse"
+                      stroke="#fff3c4"
+                      strokeWidth={on ? 2.6 : 1.6}
+                      strokeDasharray="3 16"
+                      vectorEffect="non-scaling-stroke"
+                      style={{ animationDuration: on ? "0.7s" : "1.7s" }}
+                    />
+                  )}
+                </g>
+              );
+            })}
+          </svg>
+          {/* The NUREA emblem is carved into the bed image itself, so no overlay
+              glyph here. The electric lines above converge on its position. */}
+        </div>
+      )}
 
       {/* Resting stones (z-20). Active stone lifts itself above the water surface. */}
       {SERVICES.map((s) => (
@@ -64,110 +173,60 @@ export const Hero = () => {
         />
       ))}
 
-      {/* THE WATER SURFACE (z-30): faint static cyan veil + a gentle moving
-          caustics video (light only) layered over the still bed. Sits above the
-          resting stones so they read as submerged; the risen stone (z-45) clears it. */}
+      {/* Static water-surface veil (z-30): a faint warm tint over the resting
+          stones so they read as submerged. The moving caustics video was removed
+          (it clashed with the bed and lagged on mobile); the bed carries the water
+          itself. The risen stone (z-45) clears this veil. */}
       <div
         className="absolute inset-0 z-[30] pointer-events-none"
         style={{
           background:
-            "linear-gradient(180deg, rgba(120,165,180,0.10) 0%, rgba(90,140,160,0.14) 55%, rgba(120,165,180,0.10) 100%)",
+            "linear-gradient(180deg, rgba(208,182,148,0.10) 0%, rgba(172,142,106,0.14) 55%, rgba(208,182,148,0.10) 100%)",
         }}
       />
-      {!reducedMotion && (
-        <video
-          className="absolute inset-0 z-[30] w-full h-full object-cover pointer-events-none"
-          style={{ mixBlendMode: "screen", opacity: 0.22 }}
-          autoPlay
-          muted
-          loop
-          playsInline
-          aria-hidden
-        >
-          <source src="/nurea-hero/water-caustics-loop.webm" type="video/webm" />
-          <source src="/nurea-hero/water-caustics-loop.mp4" type="video/mp4" />
-        </video>
-      )}
+      </div>
+      {/* /artboard */}
 
       {/* Hero text + nav */}
       <div className="relative z-[50] h-full pointer-events-none">
-        <header className="flex items-center justify-between px-6 md:px-12 pt-6 md:pt-8 pointer-events-auto">
-          <div className="hero-wordmark">NUREA</div>
-          <nav className="hidden md:flex gap-8 hero-nav">
+        <header className="flex items-start justify-between px-6 md:px-12 pt-6 md:pt-8 pointer-events-auto">
+          <div>
+            <div className="hero-wordmark">NUREA</div>
+            <div className="hero-tagline">Merkevare og digital retning</div>
+          </div>
+          <nav className="hidden md:flex gap-8 hero-nav pt-1">
             <a href="/tjenester/nettsider" className="hover:opacity-100 opacity-90 transition">Tjenester</a>
             <a href="#" className="hover:opacity-100 opacity-90 transition">Arbeider</a>
-            <a href="#" className="hover:opacity-100 opacity-90 transition">Kontakt</a>
+            <a href="#kontakt" className="hover:opacity-100 opacity-90 transition">Kontakt</a>
           </nav>
         </header>
 
-        {/* Desktop: copy on the RIGHT. Phone/Tablet: copy anchored at the BOTTOM. */}
+        {/* Affordance cue: tells the user the stones can be touched. */}
         <div
-          className="pointer-events-auto px-6 md:px-0"
+          className="pointer-events-none"
           style={
             isTouch
-              ? {
-                  position: "absolute",
-                  left: 0,
-                  right: 0,
-                  bottom: "5vh",
-                  width: "100%",
-                  textAlign: "left",
-                }
-              : {
-                  position: "absolute",
-                  left: "55vw",
-                  top: "26vh",
-                  width: "min(calc(100vw - 48px), clamp(420px, 38vw, 640px))",
-                  textAlign: "left",
-                }
+              ? { position: "absolute", top: "6vh", left: 0, right: 0, display: "flex", justifyContent: "center" }
+              : { position: "absolute", left: "3vw", top: "46vh" }
           }
         >
-          <p className="hero-eyebrow mb-4">Under Overflaten</p>
-          <h1 className="hero-headline">Digitale uttrykk</h1>
-          <p className="hero-body mt-5" style={{ maxWidth: 520 }}>
-            som gjør solide bedrifter enklere å forstå, stole på og velge.
-          </p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <a
-              href="#kontakt"
-              className="inline-flex items-center justify-center rounded-full transition hover:brightness-110"
-              style={{
-                background: "#1E8A8A",
-                color: "#ffffff",
-                height: 48,
-                padding: "0 30px",
-                borderRadius: 999,
-                fontSize: 14.5,
-                fontFamily: "'Manrope', 'Inter', sans-serif",
-                fontWeight: 700,
-                letterSpacing: "0.01em",
-                border: "none",
-                boxShadow: "0 10px 30px rgba(30,138,138,0.38)",
-              }}
-            >
-              Start med klarhet
-            </a>
-            <a
-              href="/tjenester/nettsider"
-              className="inline-flex items-center justify-center rounded-full transition hover:bg-[#15233A] hover:text-white"
-              style={{
-                background: "rgba(255,255,255,0.22)",
-                color: "#15233A",
-                border: "1.5px solid rgba(21,35,58,0.55)",
-                height: 48,
-                padding: "0 30px",
-                borderRadius: 999,
-                fontSize: 14.5,
-                fontFamily: "'Manrope', 'Inter', sans-serif",
-                fontWeight: 600,
-                backdropFilter: "blur(8px)",
-                WebkitBackdropFilter: "blur(8px)",
-              }}
-            >
-              Utforsk tjenester
-            </a>
-          </div>
+          <span className="hover-hint">
+            <span className="dot" />
+            {isTouch ? "Trykk på en stein" : "Hold over en stein"}
+          </span>
         </div>
+
+        {/* Desktop: copy on a text-stone bottom-right. Touch: copy at the bottom. */}
+        {isTouch ? (
+          <div
+            className="pointer-events-auto px-6"
+            style={{ position: "absolute", left: 0, right: 0, bottom: "5vh", width: "100%", textAlign: "left" }}
+          >
+            {heroCopy}
+          </div>
+        ) : (
+          <div className="hero-copy pointer-events-auto">{heroCopy}</div>
+        )}
 
         <footer className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-5 md:pb-8 flex items-end justify-between pointer-events-auto">
           <span className="hidden md:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(21,35,58,0.7)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>

@@ -4,6 +4,8 @@ export interface StonePos {
   left: string;
   top: string;
   width: string;
+  /** Optional per-breakpoint rotation (e.g. "-5deg"). Falls back to Service.rotation. */
+  rotate?: string;
 }
 
 export interface Service {
@@ -33,10 +35,10 @@ export const SERVICES: Service[] = [
     image: "/nurea-hero/stone-nettsider.png",
     priority: true,
     rotation: -2,
-    // Largest anchor stone.
-    desktop: { left: "20vw", top: "74vh", width: "clamp(220px, 18vw, 340px)" },
+    // Largest anchor stone. Mid-left per the Figma sketch.
+    desktop: { left: "25%", top: "70%", width: "17%" },
     tablet: { left: "50%", top: "40%", width: "32%" },
-    phone: { left: "45%", top: "37%", width: "50%" },
+    phone: { left: "67%", top: "17.5%", width: "29%", rotate: "3deg" },
   },
   {
     id: "innhold",
@@ -46,9 +48,9 @@ export const SERVICES: Service[] = [
     image: "/nurea-hero/stone-innhold.png",
     priority: true,
     rotation: 2,
-    desktop: { left: "14vw", top: "47vh", width: "clamp(180px, 14vw, 270px)" },
+    desktop: { left: "24%", top: "34%", width: "14%" },
     tablet: { left: "28%", top: "25%", width: "27%" },
-    phone: { left: "31%", top: "24%", width: "43%" },
+    phone: { left: "27%", top: "39%", width: "25%", rotate: "7deg" },
   },
   {
     id: "merkevare",
@@ -58,9 +60,9 @@ export const SERVICES: Service[] = [
     image: "/nurea-hero/stone-merkevare.png",
     priority: true,
     rotation: -4,
-    desktop: { left: "27vw", top: "29vh", width: "clamp(190px, 15vw, 290px)" },
+    desktop: { left: "49%", top: "75%", width: "15%" },
     tablet: { left: "54%", top: "11%", width: "27%" },
-    phone: { left: "67%", top: "13%", width: "40%" },
+    phone: { left: "51%", top: "50%", width: "25%", rotate: "5deg" },
   },
   {
     id: "systemer",
@@ -70,9 +72,9 @@ export const SERVICES: Service[] = [
     image: "/nurea-hero/stone-systemer.png",
     priority: false,
     rotation: -3,
-    desktop: { left: "33vw", top: "55vh", width: "clamp(150px, 12vw, 230px)" },
+    desktop: { left: "57%", top: "36%", width: "13%" },
     tablet: { left: "74%", top: "25%", width: "21%" },
-    phone: { left: "74%", top: "27%", width: "33%" },
+    phone: { left: "31%", top: "15.5%", width: "21%", rotate: "-5deg" },
   },
   {
     id: "reklamer",
@@ -82,8 +84,8 @@ export const SERVICES: Service[] = [
     image: "/nurea-hero/stone-reklamer.png",
     priority: false,
     rotation: 3,
-    desktop: { left: "11vw", top: "20vh", width: "clamp(160px, 13vw, 250px)" },
+    desktop: { left: "46%", top: "24%", width: "13%" },
     tablet: { left: "24%", top: "10%", width: "22%" },
-    phone: { left: "24%", top: "11%", width: "35%" },
+    phone: { left: "68%", top: "34.5%", width: "21%", rotate: "-3deg" },
   },
 ];
