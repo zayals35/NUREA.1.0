@@ -3,9 +3,8 @@ import { PageShell } from "@/components/PageShell";
 
 interface Tier {
   name: string;
-  price: string;
-  range?: string;
   tagline?: string;
+  desc: string;
   points: string[];
   featured?: boolean;
 }
@@ -13,8 +12,7 @@ interface Tier {
 const RETAINER: Tier[] = [
   {
     name: "Teknisk trygghet",
-    price: "1 900",
-    range: "1 900–2 500 kr/mnd",
+    desc: "Det laveste nivået. Vi holder det tekniske trygt i bakgrunnen, så du aldri trenger å tenke på at noe krasjer. Hvor stort omfanget er avhenger av hva du allerede har, og prisen settes deretter.",
     points: [
       "Månedlig sjekk av hosting, sky-sikkerhet og API-stabilitet",
       "Du slipper å tenke på at siden krasjer",
@@ -22,19 +20,18 @@ const RETAINER: Tier[] = [
   },
   {
     name: "Digital optimering",
-    price: "4 500",
-    range: "4 500–5 500 kr/mnd",
+    desc: "Et steg opp. Vi følger med på trafikk og konvertering, og forbedrer jevnt, måned for måned. Hvor mye vi optimerer formes etter bedriften din, og prisen følger omfanget.",
     points: [
       "Månedlig 1-sides helserapport med trafikk og konverteringsdata",
+      "Jevn, løpende optimering",
       "Alt fra Teknisk trygghet er inkludert",
     ],
   },
   {
     name: "Strategisk allianse",
-    price: "12 500",
-    range: "12 500–15 000 kr/mnd",
     tagline: "Din outsourcede kreative avdeling, samlet i én partner.",
     featured: true,
+    desc: "Det høyeste nivået. Strategi, innhold og prioritert eksekvering, skreddersydd helt etter ambisjonene og tempoet ditt. To bedrifter på dette nivået ser sjelden helt like ut.",
     points: [
       "Månedlig strategisamtale (30 min)",
       "Prioritert respons og eksekvering innen 24–48 timer",
@@ -44,18 +41,26 @@ const RETAINER: Tier[] = [
 ];
 
 const CONTENT: Tier[] = [
-  { name: "Fast og jevnt", price: "3 500", points: ["8 ferdige visuelle elementer i måneden"] },
-  { name: "Mer bevegelse", price: "7 500", points: ["Mer innhold, med bevegelse og video"] },
+  {
+    name: "Fast og jevnt",
+    desc: "En rolig, forutsigbar grunnmengde innhold hver måned, i din stil. Vi blir enige om mengden som passer deg, og prisen settes etter den.",
+    points: ["Ferdige visuelle elementer hver måned", "I din stil, klart til bruk"],
+  },
+  {
+    name: "Mer bevegelse",
+    desc: "Mer innhold, med bevegelse og video i miksen. Vi setter rytmen sammen med deg, og tilpasser omfang og pris til hvor synlig du vil være.",
+    points: ["Mer innhold, inkludert bevegelse og video", "Jevnt tempo gjennom måneden"],
+  },
   {
     name: "Full produksjon",
-    price: "14 500",
+    desc: "Full produksjon for bedrifter som vil være synlige hele tiden. En jevn strøm av video og nye pakker, dimensjonert, og priset, etter ambisjonene dine.",
     points: ["Jevn strøm av video gjennom måneden", "Nye pakker for hver sesong"],
   },
 ];
 
 const TierCard = ({ t }: { t: Tier }) => (
   <div
-    className="p-7"
+    className="p-7 flex flex-col"
     style={{
       borderRadius: 20,
       background: "rgba(255,255,255,0.42)",
@@ -66,13 +71,7 @@ const TierCard = ({ t }: { t: Tier }) => (
     {t.tagline && (
       <p className="hero-body" style={{ marginTop: 8, fontSize: 13.5, opacity: 0.85 }}>{t.tagline}</p>
     )}
-    <div className="mt-5" style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-      <span className="hero-headline" style={{ fontSize: 34 }}>{t.price}</span>
-      <span className="hero-body" style={{ fontSize: 13, opacity: 0.7 }}>kr/mnd</span>
-    </div>
-    {t.range && (
-      <p className="hero-body" style={{ marginTop: 4, fontSize: 12, opacity: 0.6 }}>Intervall {t.range}</p>
-    )}
+    <p className="hero-body" style={{ marginTop: 14, fontSize: 14.5, lineHeight: 1.6 }}>{t.desc}</p>
     <ul className="mt-5" style={{ listStyle: "none", padding: 0, margin: 0 }}>
       {t.points.map((p) => (
         <li
@@ -84,11 +83,28 @@ const TierCard = ({ t }: { t: Tier }) => (
         </li>
       ))}
     </ul>
-    <div
-      className="mt-6 inline-block"
-      style={{ color: "#8a5a2f", fontWeight: 700, fontSize: 13, letterSpacing: "0.06em" }}
-    >
-      Be om tilbud →
+    <div className="mt-6" style={{ marginTop: "auto", paddingTop: 18 }}>
+      <span
+        style={{
+          display: "inline-block",
+          fontSize: 11,
+          fontWeight: 700,
+          letterSpacing: "0.14em",
+          textTransform: "uppercase",
+          color: "#8a5a2f",
+          background: "rgba(138,90,47,0.1)",
+          padding: "5px 12px",
+          borderRadius: 999,
+        }}
+      >
+        Pris tilpasses deg
+      </span>
+      <div
+        className="mt-4 inline-block"
+        style={{ color: "#8a5a2f", fontWeight: 700, fontSize: 13, letterSpacing: "0.06em" }}
+      >
+        Be om et tilbud →
+      </div>
     </div>
   </div>
 );
@@ -99,8 +115,8 @@ const Group = ({ label, title, intro, children }: { label: string; title: string
       {label}
     </p>
     <h2 className="hero-headline" style={{ fontSize: "clamp(28px, 4vw, 44px)", marginTop: 10 }}>{title}</h2>
-    <p className="hero-body mt-3" style={{ maxWidth: 520 }}>{intro}</p>
-    <div className="mt-8 grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}>
+    <p className="hero-body mt-3" style={{ maxWidth: 540 }}>{intro}</p>
+    <div className="mt-8 grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))" }}>
       {children}
     </div>
   </div>
@@ -109,13 +125,13 @@ const Group = ({ label, title, intro, children }: { label: string; title: string
 const Priser = () => (
   <PageShell
     eyebrow="Priser"
-    title="En grunnmur må følges opp, ikke bare bygges."
-    intro="Månedlig partner, ikke engangsprosjekt. Velg nivået som passer bedriften din."
+    title="Ingen prislister. Bare riktig nivå for deg."
+    intro="Hver bedrift er ulik i størrelse, tempo og behov, så prisen settes alltid individuelt. Velg nivået som ligner mest, så former vi det rundt deg i en klarhetssamtale."
   >
     <Group
       label="01 / Retainer"
       title="Velg ditt nivå."
-      intro="Tre faste pakker for bedrifter vi allerede har satt opp. Passer ingen? Vi lager en skreddersydd fastpris."
+      intro="Tre nivåer for bedrifter vi allerede har satt opp digitalt. Bruk dem som utgangspunkt, vi tilpasser innhold og pris til deg."
     >
       {RETAINER.map((t) => (
         <TierCard key={t.name} t={t} />
@@ -125,17 +141,17 @@ const Priser = () => (
     <Group
       label="02 / Innhold hver måned"
       title="Innhold hver måned."
-      intro="Jevnt med innhold uten at du må tenke på det. Vi lager det i din stil, hver måned. Du velger hvor mye."
+      intro="Jevnt med innhold uten at du må tenke på det. Velg rytmen, så dimensjonerer vi mengden, og prisen, etter deg."
     >
       {CONTENT.map((t) => (
         <TierCard key={t.name} t={t} />
       ))}
     </Group>
 
-    <p className="hero-body" style={{ maxWidth: 620, fontSize: 13.5, opacity: 0.7 }}>
-      Prisene gjelder bedrifter NUREA allerede har satt opp digitalt. Nye kunder starter med
-      et engangsoppsett (fastpris) som avtales i en klarhetssamtale, før den månedlige
-      retaineren begynner.
+    <p className="hero-body" style={{ maxWidth: 640, fontSize: 13.5, opacity: 0.72 }}>
+      Før det månedlige starter, setter vi opp grunnlaget én gang. Omfanget, og prisen,
+      avtales i en klarhetssamtale, så du vet nøyaktig hva du får før vi begynner. Ingen
+      overraskelser, verken i omfang eller pris.
     </p>
   </PageShell>
 );
