@@ -3,6 +3,7 @@ import type { CSSProperties, ReactNode } from "react";
 
 const NAV = [
   { label: "Tjenester", to: "/tjenester" },
+  { label: "Metoden", to: "/metoden" },
   { label: "Priser", to: "/priser" },
   { label: "Arbeider", to: "/arbeider" },
   { label: "Kontakt", to: "/kontakt" },
