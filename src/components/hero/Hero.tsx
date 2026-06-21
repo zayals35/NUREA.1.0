@@ -1,6 +1,6 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { SERVICES, type ServiceId } from "@/data/services";
-import { useBreakpoint } from "@/hooks/use-mobile";
+import { useBreakpoint, type Breakpoint } from "@/hooks/use-mobile";
 import { ServiceStone } from "./ServiceStone";
 import { CausticsLayer } from "./CausticsLayer";
 
@@ -14,9 +14,14 @@ const BG_BY_BP: Record<string, string> = {
   phone: "/nurea-hero/hero-bg-phone.webp",
 };
 
-// Centre of the NUREA emblem carved into the bed image (vw / vh = SVG units 0..100).
-// The electric lines converge here.
-const N_POS = { x: 40, y: 57 };
+// Centre of the engraved NUREA emblem in each bed (SVG units 0..100 of the
+// artboard). The electric lines converge here. The landscape desktop bed carries
+// it lower-centre; the portrait phone/tablet bed carries it upper-centre.
+const N_POS_BY_BP: Record<Breakpoint, { x: number; y: number }> = {
+  desktop: { x: 40, y: 57 },
+  tablet: { x: 47, y: 32 },
+  phone: { x: 47, y: 32 },
+};
 const numOf = (v: string) => parseFloat(v);
 
 export const Hero = () => {
@@ -42,6 +47,10 @@ export const Hero = () => {
   };
 
   const bgImage = BG_BY_BP[breakpoint];
+  const nPos = N_POS_BY_BP[breakpoint];
+  // Tablet reuses the phone (portrait) stone layout.
+  const stonePosOf = (s: (typeof SERVICES)[number]) =>
+    breakpoint === "tablet" ? s.phone : s[breakpoint];
 
   // The artboard aspect ratio matches the bed image for this breakpoint (portrait
   // 9:16 on phone & tablet, landscape 16:9 on desktop). It is sized to COVER the
@@ -115,54 +124,54 @@ export const Hero = () => {
           the stones). Masked off the dry stone; skipped under reduced motion. */}
       {isTouch && !reducedMotion && <CausticsLayer />}
 
-      {/* LAKEBED FLOOR (z-10): engraved N + electric lines running into it.
-          Below the resting stones (z-20) so the stones lie on top of the floor.
-          Desktop only for now. */}
-      {breakpoint === "desktop" && (
-        <div className="absolute inset-0 z-[10] pointer-events-none" aria-hidden>
-          <svg
-            className="absolute inset-0 w-full h-full"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-          >
-            {SERVICES.map((s) => {
-              const x = numOf(s.desktop.left);
-              const y = numOf(s.desktop.top);
-              const on = activeId === s.id;
-              return (
-                <g key={s.id}>
+      {/* LAKEBED FLOOR (z-10): electric lines running from each stone into the
+          engraved N. Below the resting stones (z-20) so the stones lie on top of
+          the floor. Rendered on every breakpoint, using that breakpoint's stone
+          positions and N location. */}
+      <div className="absolute inset-0 z-[10] pointer-events-none" aria-hidden>
+        <svg
+          className="absolute inset-0 w-full h-full"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
+          {SERVICES.map((s) => {
+            const p = stonePosOf(s);
+            const x = numOf(p.left);
+            const y = numOf(p.top);
+            const on = activeId === s.id;
+            return (
+              <g key={s.id}>
+                <line
+                  x1={x}
+                  y1={y}
+                  x2={nPos.x}
+                  y2={nPos.y}
+                  stroke="#ffd23f"
+                  strokeOpacity={on ? 0.85 : 0.3}
+                  strokeWidth={on ? 2 : 1}
+                  vectorEffect="non-scaling-stroke"
+                />
+                {!reducedMotion && (
                   <line
                     x1={x}
                     y1={y}
-                    x2={N_POS.x}
-                    y2={N_POS.y}
-                    stroke="#ffd23f"
-                    strokeOpacity={on ? 0.85 : 0.3}
-                    strokeWidth={on ? 2 : 1}
+                    x2={nPos.x}
+                    y2={nPos.y}
+                    className="electric-pulse"
+                    stroke="#fff3c4"
+                    strokeWidth={on ? 2.6 : 1.6}
+                    strokeDasharray="3 16"
                     vectorEffect="non-scaling-stroke"
+                    style={{ animationDuration: on ? "0.7s" : "1.7s" }}
                   />
-                  {!reducedMotion && (
-                    <line
-                      x1={x}
-                      y1={y}
-                      x2={N_POS.x}
-                      y2={N_POS.y}
-                      className="electric-pulse"
-                      stroke="#fff3c4"
-                      strokeWidth={on ? 2.6 : 1.6}
-                      strokeDasharray="3 16"
-                      vectorEffect="non-scaling-stroke"
-                      style={{ animationDuration: on ? "0.7s" : "1.7s" }}
-                    />
-                  )}
-                </g>
-              );
-            })}
-          </svg>
-          {/* The NUREA emblem is carved into the bed image itself, so no overlay
-              glyph here. The electric lines above converge on its position. */}
-        </div>
-      )}
+                )}
+              </g>
+            );
+          })}
+        </svg>
+        {/* The NUREA emblem is carved into the bed image itself, so no overlay
+            glyph here. The electric lines above converge on its position. */}
+      </div>
 
       {/* Resting stones (z-20). Active stone lifts itself above the water surface. */}
       {SERVICES.map((s) => (
@@ -224,18 +233,11 @@ export const Hero = () => {
               position: "absolute",
               left: 0,
               right: 0,
-              bottom: 0,
-              width: "100%",
+              bottom: "max(4vh, 22px)",
               textAlign: "left",
-              paddingTop: 72,
-              paddingBottom: "max(4vh, 22px)",
-              // Soft warm scrim so the copy stays legible over the bed even when
-              // it grows tall (narrow viewport / 200% zoom) and reaches a stone.
-              background:
-                "linear-gradient(to top, rgba(233,226,214,0.94) 0%, rgba(233,226,214,0.74) 48%, rgba(233,226,214,0) 100%)",
             }}
           >
-            <div style={{ marginBottom: 14 }}>
+            <div style={{ marginBottom: 12 }}>
               <span className="hover-hint">Trykk på en stein for info</span>
             </div>
             {heroCopy}
