@@ -48,6 +48,10 @@ export const Hero = () => {
 
   const bgImage = BG_BY_BP[breakpoint];
   const nPos = N_POS_BY_BP[breakpoint];
+  // Radius of the halo (in % of artboard height) where the electric lines stop,
+  // sized to clear the engraved N glyph so it stays visible. Desktop's emblem is
+  // larger than the portrait bed's.
+  const HALO_R = breakpoint === "desktop" ? 9 : 6;
   // Tablet reuses the phone (portrait) stone layout.
   const stonePosOf = (s: (typeof SERVICES)[number]) =>
     breakpoint === "tablet" ? s.phone : s[breakpoint];
@@ -135,13 +139,23 @@ export const Hero = () => {
             const x = numOf(p.left);
             const y = numOf(p.top);
             const on = activeId === s.id;
+            // Each line stops on a halo around the N rather than at its centre, so
+            // it connects to the glyph from its own side (different angle per stone)
+            // and the N stays clearly visible in the middle. The artboard is
+            // stretched non-uniformly (preserveAspectRatio="none"), so we correct
+            // by AR to keep the halo a visual circle.
+            const dx = x - nPos.x;
+            const dy = y - nPos.y;
+            const len = Math.hypot(dx * artboardAR, dy) || 1;
+            const ex = nPos.x + (HALO_R * dx) / len;
+            const ey = nPos.y + (HALO_R * dy) / len;
             return (
               <g key={s.id}>
                 <line
                   x1={x}
                   y1={y}
-                  x2={nPos.x}
-                  y2={nPos.y}
+                  x2={ex}
+                  y2={ey}
                   stroke="#ffd23f"
                   strokeOpacity={on ? 0.85 : 0.3}
                   strokeWidth={on ? 2 : 1}
@@ -151,8 +165,8 @@ export const Hero = () => {
                   <line
                     x1={x}
                     y1={y}
-                    x2={nPos.x}
-                    y2={nPos.y}
+                    x2={ex}
+                    y2={ey}
                     className="electric-pulse"
                     stroke="#fff3c4"
                     strokeWidth={on ? 2.6 : 1.6}
