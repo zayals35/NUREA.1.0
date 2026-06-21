@@ -207,26 +207,37 @@ export const Hero = () => {
           </nav>
         </header>
 
-        {/* Affordance cue: tells the user the stones can be touched. */}
-        <div
-          className="pointer-events-none"
-          style={
-            isTouch
-              ? { position: "absolute", top: "61vh", left: "6vw" }
-              : { position: "absolute", left: "3vw", top: "46vh" }
-          }
-        >
-          <span className="hover-hint">
-            {isTouch ? "Trykk på en stein for info" : "Hold over en stein"}
-          </span>
-        </div>
+        {/* Desktop affordance cue (hover). On touch the cue lives inside the
+            bottom copy block (below) as an eyebrow, so it can never overlap the
+            headline when the text reflows at narrow widths / high zoom. */}
+        {!isTouch && (
+          <div className="pointer-events-none" style={{ position: "absolute", left: "3vw", top: "46vh" }}>
+            <span className="hover-hint">Hold over en stein</span>
+          </div>
+        )}
 
         {/* Desktop: copy on a text-stone bottom-right. Touch: copy at the bottom. */}
         {isTouch ? (
           <div
             className="pointer-events-auto px-6"
-            style={{ position: "absolute", left: 0, right: 0, bottom: "5vh", width: "100%", textAlign: "left" }}
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              bottom: 0,
+              width: "100%",
+              textAlign: "left",
+              paddingTop: 72,
+              paddingBottom: "max(4vh, 22px)",
+              // Soft warm scrim so the copy stays legible over the bed even when
+              // it grows tall (narrow viewport / 200% zoom) and reaches a stone.
+              background:
+                "linear-gradient(to top, rgba(233,226,214,0.94) 0%, rgba(233,226,214,0.74) 48%, rgba(233,226,214,0) 100%)",
+            }}
           >
+            <div style={{ marginBottom: 14 }}>
+              <span className="hover-hint">Trykk på en stein for info</span>
+            </div>
             {heroCopy}
           </div>
         ) : (
