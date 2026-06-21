@@ -77,11 +77,7 @@ export const Hero = () => {
       <p className="hero-body mt-4" style={{ maxWidth: 460 }}>
         Merkevare, nettsider, innhold og systemer, samlet i én tydelig retning.
       </p>
-      <div
-        className={`mt-6 flex flex-wrap items-center gap-x-7 gap-y-3 ${
-          isTouch ? "justify-start" : "justify-end"
-        }`}
-      >
+      <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3 justify-end">
         <a href="/metoden" className="cta-link cta-link--primary">
           Se hvordan vi jobber<span aria-hidden> →</span>
         </a>
@@ -228,13 +224,13 @@ export const Hero = () => {
         {/* Desktop: copy on a text-stone bottom-right. Touch: copy at the bottom. */}
         {isTouch ? (
           <div
-            className="pointer-events-auto px-6"
+            className="pointer-events-auto"
             style={{
               position: "absolute",
-              left: 0,
-              right: 0,
+              right: "6vw",
               bottom: "max(4vh, 22px)",
-              textAlign: "left",
+              maxWidth: "min(82vw, 360px)",
+              textAlign: "right",
             }}
           >
             <div style={{ marginBottom: 12 }}>
