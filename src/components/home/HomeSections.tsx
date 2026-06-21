@@ -32,7 +32,7 @@ export const ProblemSection = () => (
 
 /* ---------- Arbeider (work showcase) ---------- */
 const WorkSection = () => (
-  <section id="arbeider" className="px-6 md:px-12 py-24 md:py-32" style={{ ...sectionStyle, background: "#e9e2d6" }}>
+  <section id="arbeider" className="px-6 md:px-12 py-24 md:py-32" style={{ ...sectionStyle, background: "#ece5d9" }}>
     <Reveal className="max-w-6xl mx-auto">
       <Eyebrow>Arbeider</Eyebrow>
       <h2 className="hero-headline" style={{ fontSize: "clamp(34px, 5vw, 64px)", marginTop: 12 }}>
@@ -117,7 +117,7 @@ const WorkSection = () => (
 /* ---------- Tjenester (services) ---------- */
 const SERVICE_ORDER = ["merkevare", "nettsider", "innhold", "systemer", "reklamer"];
 const ServicesSection = () => (
-  <section id="tjenester" className="px-6 md:px-12 py-24 md:py-32" style={{ ...sectionStyle, background: "#ece5d9" }}>
+  <section id="tjenester" className="px-6 md:px-12 py-24 md:py-32" style={{ ...sectionStyle, background: "#e9e2d6" }}>
     <Reveal className="max-w-5xl mx-auto">
       <Eyebrow>Tjenester</Eyebrow>
       <h2 className="hero-headline" style={{ fontSize: "clamp(34px, 5vw, 64px)", marginTop: 12 }}>
@@ -279,8 +279,8 @@ const FinalCta = () => (
 
 export const HomeSections = () => (
   <>
-    <WorkSection />
     <ServicesSection />
+    <WorkSection />
     <MethodSection />
     <FaqSection />
     <FinalCta />
