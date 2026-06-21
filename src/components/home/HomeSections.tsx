@@ -12,6 +12,24 @@ const Eyebrow = ({ children }: { children: string }) => (
   </p>
 );
 
+/* ---------- Problem / why NUREA exists (right after the hero) ---------- */
+export const ProblemSection = () => (
+  <section id="hvorfor" className="px-6 md:px-12 py-28 md:py-40" style={{ ...sectionStyle, background: "#e9e2d6" }}>
+    <Reveal className="max-w-4xl mx-auto">
+      <Eyebrow>Hvorfor NUREA finnes</Eyebrow>
+      <h2 className="hero-headline" style={{ fontSize: "clamp(34px, 5.4vw, 72px)", marginTop: 14, maxWidth: 760 }}>
+        De fleste bedrifter er sterkere enn de ser ut til.
+      </h2>
+      <p className="hero-body" style={{ marginTop: 24, maxWidth: 580, fontSize: "clamp(16px, 1.3vw, 20px)", lineHeight: 1.65 }}>
+        Avstanden ligger sjelden i hvor god du faktisk er, men i hvordan det henger
+        sammen. Uten en <span style={{ color: accent, fontWeight: 600 }}>rød tråd</span>{" "}
+        mellom merkevare, innhold, annonser og stemme, drukner det sterke i støy. NUREA
+        finnes for å samle det til ett tydelig uttrykk, så du blir forstått og valgt.
+      </p>
+    </Reveal>
+  </section>
+);
+
 /* ---------- Arbeider (work showcase) ---------- */
 const WorkSection = () => (
   <section id="arbeider" className="px-6 md:px-12 py-24 md:py-32" style={{ ...sectionStyle, background: "#e9e2d6" }}>
