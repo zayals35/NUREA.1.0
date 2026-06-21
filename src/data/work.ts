@@ -2,55 +2,74 @@ export interface WorkItem {
   id: string;
   title: string;
   caption: string;
-  /** Short tag, e.g. the type of work delivered. */
+  /** Honest tag (type of work) or a real result. No invented numbers. */
   metric?: string;
-  image: string;
+  metricLabel?: string;
+  /** Cover/placeholder image. */
+  cover: string;
+  /** The real work (website / logo / identity). Shown on hover (desktop) and
+   *  auto-cycled over a blurred cover (mobile). Drop images in public/work/. */
+  shots: string[];
   href?: string;
 }
 
-// PLACEHOLDER projects. Replace with real work: drop images into public/work/
-// (work-1.webp ... ) and update title/caption/metric. Best first.
+// PLACEHOLDER projects. Replace with real work:
+//  - cover: a hero/placeholder image  -> public/work/work-N.webp
+//  - shots: the actual website/logo screenshots -> public/work/work-N-a.webp, -b ...
+// Update title/caption/metric. Best first.
 export const WORK: WorkItem[] = [
   {
     id: "w1",
     title: "Prosjekt 01",
     caption: "Kort beskrivelse av arbeidet og hva som ble løst.",
     metric: "Merkevare",
-    image: "/work/work-1.webp",
+    metricLabel: "Komplett identitet og profil",
+    cover: "/work/work-1.webp",
+    shots: [],
   },
   {
     id: "w2",
     title: "Prosjekt 02",
     caption: "Kort beskrivelse av arbeidet og hva som ble løst.",
     metric: "Visuell identitet",
-    image: "/work/work-2.webp",
+    metricLabel: "Logo, farger og system",
+    cover: "/work/work-2.webp",
+    shots: [],
   },
   {
     id: "w3",
     title: "Prosjekt 03",
     caption: "Kort beskrivelse av arbeidet og hva som ble løst.",
     metric: "Nettside",
-    image: "/work/work-3.webp",
+    metricLabel: "Struktur fra forståelse til kontakt",
+    cover: "/work/work-3.webp",
+    shots: [],
   },
   {
     id: "w4",
     title: "Prosjekt 04",
     caption: "Kort beskrivelse av arbeidet og hva som ble løst.",
     metric: "Pakkedesign",
-    image: "/work/work-4.webp",
+    metricLabel: "Emballasje og uttrykk",
+    cover: "/work/work-4.webp",
+    shots: [],
   },
   {
     id: "w5",
     title: "Prosjekt 05",
     caption: "Kort beskrivelse av arbeidet og hva som ble løst.",
     metric: "Innhold",
-    image: "/work/work-5.webp",
+    metricLabel: "Tekst, bilde og struktur",
+    cover: "/work/work-5.webp",
+    shots: [],
   },
   {
     id: "w6",
     title: "Prosjekt 06",
     caption: "Kort beskrivelse av arbeidet og hva som ble løst.",
     metric: "Komplett profil",
-    image: "/work/work-6.webp",
+    metricLabel: "Hele uttrykket samlet",
+    cover: "/work/work-6.webp",
+    shots: [],
   },
 ];

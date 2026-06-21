@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SERVICES } from "@/data/services";
 import { WORK } from "@/data/work";
 import { Reveal } from "@/components/Reveal";
+import { WorkCard } from "./WorkCard";
 
 const sectionStyle = { scrollMarginTop: 80 } as const;
 const accent = "#8a5a2f";
@@ -30,85 +31,48 @@ export const ProblemSection = () => (
   </section>
 );
 
-/* ---------- Arbeider (work showcase) ---------- */
+/* ---------- Arbeider (work showcase, Monolog "success stories" layout) ---------- */
 const WorkSection = () => (
   <section id="arbeider" className="px-6 md:px-12 py-24 md:py-32" style={{ ...sectionStyle, background: "#ece5d9" }}>
-    <Reveal className="max-w-6xl mx-auto">
-      <Eyebrow>Arbeider</Eyebrow>
-      <h2 className="hero-headline" style={{ fontSize: "clamp(34px, 5vw, 64px)", marginTop: 12 }}>
-        Utvalgte arbeider.
+    {/* Big heading */}
+    <Reveal>
+      <h2
+        className="hero-headline"
+        style={{ fontSize: "clamp(40px, 8.5vw, 116px)", textTransform: "uppercase", letterSpacing: "-0.02em", lineHeight: 0.95 }}
+      >
+        Utvalgte arbeider
       </h2>
-      <p className="hero-body mt-4" style={{ maxWidth: 520 }}>
-        Et utvalg merkevare- og designarbeid, hele uttrykk som henger sammen.
-      </p>
     </Reveal>
 
-    <div className="max-w-6xl mx-auto mt-12 grid gap-6" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}>
-      {WORK.map((w, i) => (
-        <Reveal key={w.id} delay={(i % 3) * 0.08}>
-          <a href={w.href || "#"} className="group block">
-            <div
-              style={{
-                position: "relative",
-                aspectRatio: "4 / 3",
-                borderRadius: 18,
-                overflow: "hidden",
-                background: "linear-gradient(135deg, rgba(138,90,47,0.18), rgba(42,31,22,0.12))",
-                border: "1px solid rgba(42,31,22,0.1)",
-              }}
-            >
-              <img
-                src={w.image}
-                alt={w.title}
-                loading="lazy"
-                onError={(e) => (e.currentTarget.style.display = "none")}
-                className="block w-full h-full object-cover transition duration-500 group-hover:scale-[1.04]"
-              />
-              <span
-                style={{
-                  position: "absolute",
-                  top: 12,
-                  left: 14,
-                  fontFamily: "'Manrope','Inter',sans-serif",
-                  fontSize: 12,
-                  fontWeight: 700,
-                  letterSpacing: "0.1em",
-                  color: "#f3ecdb",
-                  textShadow: "0 1px 8px rgba(0,0,0,0.5)",
-                }}
-              >
-                {String(i + 1).padStart(2, "0")} / {String(WORK.length).padStart(2, "0")}
-              </span>
-              {w.metric && (
-                <span
-                  style={{
-                    position: "absolute",
-                    bottom: 12,
-                    left: 14,
-                    fontSize: 11,
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "#2a1f16",
-                    background: "rgba(243,236,219,0.9)",
-                    padding: "4px 10px",
-                    borderRadius: 999,
-                  }}
-                >
-                  {w.metric}
-                </span>
-              )}
-            </div>
-            <h3 className="hero-headline" style={{ fontSize: 22, marginTop: 16 }}>{w.title}</h3>
-            <p className="hero-body" style={{ marginTop: 4, fontSize: 14 }}>{w.caption}</p>
-          </a>
-        </Reveal>
-      ))}
+    {/* Body: sticky side label + cards list */}
+    <div className="mt-10 md:mt-16 flex flex-col md:flex-row gap-6 md:gap-12">
+      {/* sticky sidebar label */}
+      <div className="md:w-[16%] shrink-0">
+        <div className="md:sticky md:top-24 flex items-center gap-2" style={{ color: accent }}>
+          <span style={{ width: 8, height: 8, borderRadius: "50%", background: accent }} />
+          <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", fontFamily: "'Manrope','Inter',sans-serif" }}>
+            Arbeider
+          </span>
+        </div>
+      </div>
+
+      {/* list */}
+      <div
+        className="flex-1 min-w-0 flex flex-col gap-8"
+        style={{ borderTop: "1px dotted rgba(42,31,22,0.28)", paddingTop: 32 }}
+      >
+        {WORK.map((w, i) => (
+          <Reveal key={w.id} delay={(i % 2) * 0.05}>
+            <WorkCard item={w} index={i} total={WORK.length} />
+          </Reveal>
+        ))}
+      </div>
     </div>
 
-    <Reveal className="max-w-6xl mx-auto mt-10">
+    {/* bottom CTA */}
+    <Reveal className="mt-12 flex md:justify-end">
       <a href="/arbeider" style={{ color: accent, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em" }}>
-        Se alle arbeider →
+        Se alle arbeider <span style={{ opacity: 0.55 }}>(snart)</span> →
       </a>
     </Reveal>
   </section>
