@@ -2,18 +2,16 @@ import { PageShell } from "@/components/PageShell";
 import { CloseTheGap } from "@/components/CloseTheGap";
 
 const STEPS = [
-  { n: "01", h: "Klarhet", p: "Vi finner hva som må bli tydeligere først." },
-  { n: "02", h: "Tillit", p: "Vi styrker det som gjør bedriften trygg å velge." },
-  { n: "03", h: "Struktur", p: "Vi bygger veien kunden enkelt kan følge." },
-  { n: "04", h: "Uttrykk", p: "Vi former det digitale uttrykket som henger sammen." },
-  { n: "05", h: "Flyt", p: "Vi gjør veien til kontakt enklere, og bygger videre." },
+  { n: "01", h: "Klarhet", p: "Vi finner ut hva som må bli tydeligere: hvem du er for, og hva som skiller deg." },
+  { n: "02", h: "Uttrykk", p: "Vi former merkevaren: identitet, visuelt språk og stemme, satt i ett system som henger sammen overalt." },
+  { n: "03", h: "Flyt", p: "Vi gjør veien til kontakt enklere, og bygger videre over tid." },
 ];
 
 const Metoden = () => (
   <PageShell
     eyebrow="NUREA-metoden"
     title="Slik jobber vi"
-    intro="Fra uklarhet til tydelig digital retning. Fem rolige steg — noen kunder trenger hele reisen, andre starter med én konkret leveranse."
+    intro="Fra uklarhet til tydelig digital retning. Tre rolige steg, fra forståelse til et uttrykk som henger sammen."
   >
     {/* Scroll effect, placed right after the intro */}
     <CloseTheGap />
