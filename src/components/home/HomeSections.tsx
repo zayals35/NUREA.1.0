@@ -240,6 +240,10 @@ const FAQ = [
   { q: "Kan jeg starte med bare én ting?", a: "Ja. Mange starter med én konkret leveranse, en merkevare, en side eller et budskap, og bygger videre derfra." },
   { q: "Hva er NUREA-metoden?", a: "Tre rolige steg: Klarhet, Uttrykk og Flyt. Fra uklarhet til et tydelig digitalt uttrykk som henger sammen." },
   { q: "Jobber dere med små bedrifter?", a: "Ja. NUREA er bygget for å gi solide bedrifter et tydeligere uttrykk, uansett størrelse." },
+  { q: "Hvem jobber faktisk på prosjektet mitt?", a: "Zaynab leder hvert oppdrag, fra strategi og kreativ retning til din primære kontaktperson gjennom hele prosessen. Avhengig av omfang trekker vi inn nøye utvalgte samarbeidspartnere på design og utvikling. Kvaliteten og omsorgen for arbeidet er den samme, uansett prosjektets størrelse." },
+  { q: "Hva trenger dere for å komme i gang?", a: "Vi starter med en klarhetssamtale der vi går gjennom dine konkrete behov. Deretter sender vi et tilpasset tilbud. Alt vi trenger for å starte er en signert avtale og et starthonorar. Så er vi i gang." },
+  { q: "Hva skjer etter at arbeidet er levert?", a: "Arbeidet slutter ikke ved levering. Du får alle filer, dokumentasjon og en blåkopi av det vi har bygget sammen. Du eier det fullt og helt og kan fortsette med oss eller ta det med deg til et annet byrå. Ønsker du løpende støtte, finner vi en modell som passer." },
+  { q: "Kan dere håndtere merkevare, design og utvikling?", a: "Ja. Vi leverer alle tre under ett tak. Narrativ, identitet, visuals og funksjonalitet henger sammen fra dag én, slik at resultatet blir ett sammenhengende uttrykk, ikke løse deler fra ulike leverandører." },
 ];
 const FaqItem = ({ q, a }: { q: string; a: string }) => {
   const [open, setOpen] = useState(false);
