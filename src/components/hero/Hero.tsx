@@ -1,6 +1,6 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { SERVICES, type ServiceId } from "@/data/services";
-import { useBreakpoint, type Breakpoint } from "@/hooks/use-mobile";
+import { useBreakpoint, useCanHover, type Breakpoint } from "@/hooks/use-mobile";
 import { ServiceStone } from "./ServiceStone";
 import { CausticsLayer } from "./CausticsLayer";
 
@@ -27,6 +27,11 @@ const numOf = (v: string) => parseFloat(v);
 export const Hero = () => {
   const breakpoint = useBreakpoint();
   const isTouch = breakpoint !== "desktop";
+  // Interaction mode is decided by pointer capability, NOT viewport size, so a
+  // narrowed desktop window keeps hover working and only real touch devices get
+  // the tap affordance.
+  const canHover = useCanHover();
+  const hintText = canHover ? "Hold over en stein" : "Trykk på en stein for info";
   const [activeId, setActiveId] = useState<ServiceId | null>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
 
@@ -81,7 +86,7 @@ export const Hero = () => {
       <p className="hero-body mt-4">
         Merkevare, nettsider, innhold og systemer, samlet i én tydelig retning.
       </p>
-      <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3 justify-end">
+      <div className="cta-row mt-6 flex flex-wrap items-center gap-x-7 gap-y-3 justify-end">
         <a href="/metoden" className="cta-link cta-link--primary">
           Se hvordan vi jobber<span aria-hidden> →</span>
         </a>
@@ -197,6 +202,7 @@ export const Hero = () => {
           key={s.id}
           service={s}
           breakpoint={breakpoint}
+          canHover={canHover}
           reducedMotion={reducedMotion}
           active={activeId === s.id}
           onActivate={() => handleActivate(s.id)}
@@ -239,7 +245,7 @@ export const Hero = () => {
             headline when the text reflows at narrow widths / high zoom. */}
         {!isTouch && (
           <div className="pointer-events-none" style={{ position: "absolute", left: "3vw", top: "46vh" }}>
-            <span className="hover-hint">Hold over en stein</span>
+            <span className="hover-hint">{hintText}</span>
           </div>
         )}
 
@@ -250,13 +256,13 @@ export const Hero = () => {
             style={{
               position: "absolute",
               right: "6vw",
-              bottom: "max(4vh, 22px)",
-              maxWidth: "min(80vw, 390px)",
+              bottom: "max(3.5vh, 18px)",
+              maxWidth: "min(74vw, 300px)",
               textAlign: "right",
             }}
           >
             <div style={{ marginBottom: 12 }}>
-              <span className="hover-hint">Trykk på en stein for info</span>
+              <span className="hover-hint">{hintText}</span>
             </div>
             {heroCopy}
           </div>

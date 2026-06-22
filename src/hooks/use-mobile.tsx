@@ -51,6 +51,30 @@ export function useBreakpoint(): Breakpoint {
   return bp;
 }
 
+/**
+ * True when the device has a real pointer that can hover (mouse / trackpad).
+ * This is a CAPABILITY check, not a size check: narrowing a desktop window keeps
+ * this true, so hover interactions keep working. Touch devices return false, so
+ * they get tap interactions and the "Trykk" hint instead. Reacts to capability
+ * changes (e.g. plugging in a mouse), but not to resizing, which is correct.
+ */
+export function useCanHover(): boolean {
+  const query = "(hover: hover) and (pointer: fine)";
+  const [can, setCan] = React.useState<boolean>(() =>
+    typeof window === "undefined" ? true : window.matchMedia(query).matches
+  );
+
+  React.useEffect(() => {
+    const mql = window.matchMedia(query);
+    const onChange = () => setCan(mql.matches);
+    mql.addEventListener("change", onChange);
+    onChange();
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
+
+  return can;
+}
+
 export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined);
 

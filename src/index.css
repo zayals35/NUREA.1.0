@@ -318,16 +318,16 @@ All colors MUST be HSL.
   height: 100%;
   z-index: 3;
   pointer-events: none;
-  opacity: 0.74;
+  opacity: 0.64;
   mix-blend-mode: screen;
   -webkit-mask-image: radial-gradient(135% 125% at 80% 84%, transparent 0%, transparent 22%, #000 48%);
   mask-image: radial-gradient(135% 125% at 80% 84%, transparent 0%, transparent 22%, #000 48%);
 }
 /* Desktop landscape bed: the dry stone sits lower-right and is larger. Mask it off
-   there, let the caustics flow over the rest of the wet bed. Slightly softer so the
-   wide canvas stays premium, not busy. */
+   there, let the caustics flow over the rest of the wet bed. Kept subtle so the
+   wide canvas stays calm and premium, not busy. */
 .water-caustics-canvas--desktop {
-  opacity: 0.6;
+  opacity: 0.38;
   -webkit-mask-image: radial-gradient(62% 80% at 84% 80%, transparent 0%, transparent 24%, #000 56%);
   mask-image: radial-gradient(62% 80% at 84% 80%, transparent 0%, transparent 24%, #000 56%);
 }
@@ -623,15 +623,30 @@ All colors MUST be HSL.
   border-bottom-color: rgba(243, 236, 219, 0.85);
 }
 
-/* Mobile touch hero block — all copy in cream, dark shadow for legibility */
+/* Mobile touch hero block — all copy in cream, dark shadow for legibility.
+   Sized small enough to sit on the dry granite (bottom-right) without spilling up
+   onto the service stones. These selectors outrank the bare .hero-headline mobile
+   rules, so they win without touching shared styles. */
 .hero-touch-copy .hero-headline {
+  font-size: clamp(28px, 8.6vw, 40px);
+  line-height: 1.04;
   color: #f3ecdb;
   text-shadow: 0 2px 28px rgba(42, 31, 22, 0.65), 0 1px 8px rgba(42, 31, 22, 0.45);
 }
 .hero-touch-copy .hero-body {
+  font-size: clamp(13px, 3.5vw, 16px);
+  margin-top: 8px;
   color: rgba(243, 236, 219, 0.82);
   font-weight: 500;
   text-shadow: 0 1px 20px rgba(42, 31, 22, 0.8), 0 2px 8px rgba(42, 31, 22, 0.55);
+}
+/* Touch CTAs: smaller than the desktop 20px so the row stays on the granite. */
+.hero-touch-copy .cta-link {
+  font-size: clamp(14px, 4vw, 16px);
+}
+.hero-touch-copy .cta-row {
+  margin-top: 14px;
+  gap: 8px 18px;
 }
 
 /* Organic text-link CTAs (no buttons / boxes). Warm earthy ink. */

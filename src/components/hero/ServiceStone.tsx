@@ -7,13 +7,15 @@ interface Props {
   service: Service;
   active: boolean;
   breakpoint: Breakpoint;
+  /** True when a real hovering pointer (mouse/trackpad) is present. */
+  canHover: boolean;
   reducedMotion: boolean;
   onActivate: () => void;
   onDeactivate: () => void;
 }
 
 export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
-  ({ service, active, breakpoint, reducedMotion, onActivate, onDeactivate }, ref) => {
+  ({ service, active, breakpoint, canHover, reducedMotion, onActivate, onDeactivate }, ref) => {
     const isTouch = breakpoint !== "desktop";
     // Tablet reuses the phone (portrait) layout.
     const pos = breakpoint === "tablet" ? service.phone : service[breakpoint];
@@ -76,15 +78,18 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
         type="button"
         aria-label={`${service.title} – ${service.description}`}
         aria-pressed={active}
-        onMouseEnter={() => !isTouch && onActivate()}
-        onMouseLeave={() => !isTouch && onDeactivate()}
-        onFocus={() => !isTouch && onActivate()}
-        onBlur={() => !isTouch && onDeactivate()}
+        onMouseEnter={() => canHover && onActivate()}
+        onMouseLeave={() => canHover && onDeactivate()}
+        onFocus={() => canHover && onActivate()}
+        onBlur={() => canHover && onDeactivate()}
         onClick={(e) => {
           e.preventDefault();
           // Stop the tap from bubbling to the section's backdrop handler, which
           // would immediately clear the active stone on touch.
           e.stopPropagation();
+          // On hover-capable devices the pointer handlers manage activation, so a
+          // click should not toggle it back off. Tap devices toggle here.
+          if (canHover) return;
           if (active) onDeactivate();
           else onActivate();
         }}
@@ -233,7 +238,7 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
             "absolute left-1/2 -translate-x-1/2 w-[242px] text-center z-[60]",
             "transition-all duration-300 ease-out",
             active
-              ? cn("opacity-100 translate-y-0", isTouch && "pointer-events-auto")
+              ? cn("opacity-100 translate-y-0", !canHover && "pointer-events-auto")
               : cn("opacity-0 pointer-events-none", placeAbove ? "translate-y-1" : "-translate-y-1")
           )}
           style={
@@ -242,7 +247,7 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
               : { top: "calc(100% + 12px)" }
           }
         >
-          {isTouch ? (
+          {!canHover ? (
             <div className="nurea-info-tab">
               <div className="info-title">{service.title}</div>
               <div className="info-desc">{service.description}</div>
@@ -255,14 +260,28 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
               </a>
             </div>
           ) : (
-            <>
+            <div className="relative">
+              {/* Soft cream scrim so the boxless text stays legible over the busy bed. */}
+              <span
+                aria-hidden
+                style={{
+                  position: "absolute",
+                  inset: "-16px -14px",
+                  zIndex: -1,
+                  borderRadius: 22,
+                  background:
+                    "radial-gradient(ellipse at center, rgba(243,236,221,0.94) 0%, rgba(243,236,221,0.7) 46%, rgba(243,236,221,0) 78%)",
+                  filter: "blur(7px)",
+                  pointerEvents: "none",
+                }}
+              />
               <div
                 className="text-[21px] leading-tight"
                 style={{
                   fontFamily: "'Bricolage Grotesque', sans-serif",
                   fontWeight: 700,
-                  color: "#2a1f16",
-                  textShadow: "0 1px 14px rgba(247,242,232,0.9), 0 1px 3px rgba(247,242,232,0.8)",
+                  color: "#23190f",
+                  textShadow: "0 1px 10px rgba(243,236,221,0.98), 0 1px 2px rgba(243,236,221,0.95)",
                 }}
               >
                 {service.title}
@@ -271,8 +290,9 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
                 className="mt-1 text-[14.5px] leading-snug mx-auto"
                 style={{
                   maxWidth: 230,
-                  color: "rgba(46,33,22,0.85)",
-                  textShadow: "0 1px 12px rgba(247,242,232,0.9)",
+                  fontWeight: 500,
+                  color: "rgba(35,25,15,0.95)",
+                  textShadow: "0 1px 8px rgba(243,236,221,0.98)",
                 }}
               >
                 {service.description}
@@ -280,11 +300,11 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
               <a
                 href={service.href}
                 className="pointer-events-auto mt-1.5 inline-block text-[13px] uppercase tracking-[0.22em] transition"
-                style={{ color: "#8a5a2f", fontWeight: 700, textShadow: "0 1px 10px rgba(247,242,232,0.9)" }}
+                style={{ color: "#6f4422", fontWeight: 800, textShadow: "0 1px 8px rgba(243,236,221,0.98)" }}
               >
                 Les mer →
               </a>
-            </>
+            </div>
           )}
         </div>
       </button>
