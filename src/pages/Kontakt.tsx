@@ -378,7 +378,9 @@ const Kontakt = () => {
                   lineHeight: 1.5,
                 }}
               >
-                Uforpliktende samtale. Vi svarer som regel innen én arbeidsdag.
+                Uforpliktende samtale. Vi svarer som regel innen én arbeidsdag. Se hvordan vi
+                behandler opplysningene dine i{" "}
+                <a href="/personvern" style={{ color: accent, fontWeight: 600 }}>personvernerklæringen</a>.
               </p>
             </form>
           )}

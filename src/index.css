@@ -227,22 +227,48 @@ All colors MUST be HSL.
    glow or circle — just enough to make the carved mark a touch easier to read. */
 .nurea-mobile-logo-lift {
   position: absolute;
-  left: 50%;
-  top: 31%;
-  width: 22%;
-  aspect-ratio: 1 / 0.55;
+  left: 47%;
+  top: 32%;
+  width: 30%;
+  aspect-ratio: 1 / 0.7;
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 2;
-  opacity: 0.16;
-  mix-blend-mode: screen;
+  opacity: 0.62;
+  mix-blend-mode: soft-light;
   background: radial-gradient(
     ellipse at center,
-    rgba(255, 244, 218, 0.32) 0%,
-    rgba(255, 244, 218, 0.14) 42%,
-    rgba(255, 244, 218, 0) 75%
+    rgba(255, 250, 232, 0.7) 0%,
+    rgba(255, 249, 230, 0.42) 44%,
+    rgba(255, 249, 230, 0.14) 66%,
+    rgba(255, 249, 230, 0) 82%
   );
-  filter: blur(8px);
+  filter: blur(9px);
+}
+
+/* Desktop: a brighter warm light-lift over the engraved NUREA mark baked into the
+   landscape bed, so the carved emblem reads clearly through the water. Stronger than
+   the mobile lift. Sits above the bed, below the stones. Position tracks the desktop
+   N location (N_POS desktop ~40%/57%). */
+.nurea-desktop-logo-lift {
+  position: absolute;
+  left: 40%;
+  top: 54%;
+  width: 19%;
+  aspect-ratio: 1 / 0.72;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.62;
+  mix-blend-mode: soft-light;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 250, 232, 0.7) 0%,
+    rgba(255, 249, 230, 0.42) 44%,
+    rgba(255, 249, 230, 0.14) 66%,
+    rgba(255, 249, 230, 0) 82%
+  );
+  filter: blur(11px);
 }
 
 /* Mobile tap info tab: a small premium glass/water card. */
@@ -297,6 +323,14 @@ All colors MUST be HSL.
   -webkit-mask-image: radial-gradient(135% 125% at 80% 84%, transparent 0%, transparent 22%, #000 48%);
   mask-image: radial-gradient(135% 125% at 80% 84%, transparent 0%, transparent 22%, #000 48%);
 }
+/* Desktop landscape bed: the dry stone sits lower-right and is larger. Mask it off
+   there, let the caustics flow over the rest of the wet bed. Slightly softer so the
+   wide canvas stays premium, not busy. */
+.water-caustics-canvas--desktop {
+  opacity: 0.6;
+  -webkit-mask-image: radial-gradient(62% 80% at 84% 80%, transparent 0%, transparent 24%, #000 56%);
+  mask-image: radial-gradient(62% 80% at 84% 80%, transparent 0%, transparent 24%, #000 56%);
+}
 
 /* ---- "Close the gap" scroll effect (ported from nurea-static, warm-adapted) ----
    Sticky stage: "VI TETTER" / "GAPET" converge from the sides around a centre
@@ -304,10 +338,13 @@ All colors MUST be HSL.
    not collide with anything. Full-bleed so it ignores page padding. */
 .ctg {
   position: relative;
-  height: 100vh;
+  height: 88vh;
   width: 100vw;
   margin-left: calc(50% - 50vw);
 }
+/* Override the stack min-height so the gap card doesn't force full viewport */
+.stack > .ctg { min-height: 88vh; }
+
 .ctg-sticky {
   position: relative;
   height: 100%;
@@ -317,9 +354,23 @@ All colors MUST be HSL.
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(1rem, 3vh, 1.8rem);
+  gap: clamp(1.4rem, 3vh, 2rem);
   padding: 0 clamp(20px, 6vw, 64px);
   text-align: center;
+}
+/* Background texture: the engraved-stone circuit image, fading in from edges */
+.ctg-sticky::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/work/tetter.gapet.backgroundimage.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.22;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%);
+  z-index: 0;
+  pointer-events: none;
 }
 
 /* ---- Stacking / overlay scroll (homepage top stretch) ----
@@ -342,13 +393,13 @@ All colors MUST be HSL.
   font-family: 'Manrope', 'Inter', system-ui, sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.28em;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
   color: #8a5a2f;
   position: relative;
   z-index: 4;
 }
-.ctg-canvas { position: relative; width: 100%; height: clamp(330px, 64vh, 600px); }
+.ctg-canvas { position: relative; width: 100%; height: clamp(240px, 46vh, 460px); }
 .ctg-stage {
   position: absolute;
   left: 50%;
@@ -402,10 +453,12 @@ All colors MUST be HSL.
   max-width: 48ch;
   margin: 0 auto;
   color: rgba(46, 33, 22, 0.82);
-  font-size: 1.05rem;
+  font-size: 1.42rem;
   line-height: 1.62;
 }
 @media (max-width: 640px) {
+  .ctg { height: 75vh; }
+  .stack > .ctg { min-height: 75vh; }
   .ctg-stage { width: 52vw; }
   .ctg-word { font-size: clamp(2rem, 11vw, 3.6rem); }
 }
@@ -645,7 +698,12 @@ All colors MUST be HSL.
 .t-arrow:hover { opacity: 1; }
 
 /* Work card links — suppress all browser default hover/active/focus color shifts */
-.work-card-link { -webkit-tap-highlight-color: transparent; }
+.work-card-link {
+  -webkit-tap-highlight-color: transparent;
+  background: transparent;
+  text-decoration: none;
+  color: inherit;
+}
 .work-card-link:hover,
 .work-card-link:active,
 .work-card-link:focus,

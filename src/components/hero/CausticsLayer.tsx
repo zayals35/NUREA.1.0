@@ -46,7 +46,7 @@ function compile(gl: WebGLRenderingContext, type: number, src: string) {
   return s;
 }
 
-export const CausticsLayer = () => {
+export const CausticsLayer = ({ className = "" }: { className?: string }) => {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -114,7 +114,7 @@ export const CausticsLayer = () => {
     };
   }, []);
 
-  return <canvas ref={ref} className="water-caustics-canvas" aria-hidden />;
+  return <canvas ref={ref} className={`water-caustics-canvas ${className}`.trim()} aria-hidden />;
 };
 
 export default CausticsLayer;

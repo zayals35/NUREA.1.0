@@ -119,10 +119,18 @@ export const Hero = () => {
         <div className="nurea-mobile-logo-lift" aria-hidden />
       )}
 
-      {/* Phone + tablet: real animated WebGL water caustics over the wet area. The
+      {/* Desktop: brighter light-lift over the carved NUREA emblem so it pops. */}
+      {!isTouch && (
+        <div className="nurea-desktop-logo-lift" aria-hidden />
+      )}
+
+      {/* Animated WebGL water caustics over the wet area, every breakpoint. The
           bed stays static (camera locked); only the caustic light moves (z-3, below
-          the stones). Masked off the dry stone; skipped under reduced motion. */}
-      {isTouch && !reducedMotion && <CausticsLayer />}
+          the stones). Masked off the dry stone (a landscape-tuned mask on desktop,
+          the portrait mask on touch); skipped under reduced motion. */}
+      {!reducedMotion && (
+        <CausticsLayer className={isTouch ? "" : "water-caustics-canvas--desktop"} />
+      )}
 
       {/* LAKEBED FLOOR (z-10): electric lines running from each stone into the
           engraved N. Below the resting stones (z-20) so the stones lie on top of

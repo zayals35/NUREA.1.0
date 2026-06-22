@@ -284,7 +284,8 @@ const Klarhetssjekk = () => {
               </button>
 
               <p style={{ marginTop: 14, fontFamily: "'Manrope','Inter',sans-serif", fontSize: 12, color: "rgba(42,31,22,0.6)", lineHeight: 1.5 }}>
-                Gratis og uforpliktende. Vi bruker e-posten din kun til å sende vurderingen.
+                Gratis og uforpliktende. Vi bruker e-posten din kun til å sende vurderingen. Se{" "}
+                <a href="/personvern" style={{ color: accent, fontWeight: 600 }}>personvernerklæringen</a>.
               </p>
             </form>
           )}

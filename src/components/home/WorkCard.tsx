@@ -17,24 +17,21 @@ export const WorkCard = ({ item, index, total }: { item: WorkItem; index: number
   const hasShots = shots.length > 0;
   const mobile = !canHover;
 
-  // Mobile: auto-cycle the brand shots over the receded artwork.
+  // Mobile: auto-cycle the brand shots over the artwork.
   useEffect(() => {
     if (!mobile || shots.length < 2) return;
     const t = setInterval(() => setShot((s) => (s + 1) % shots.length), 1900);
     return () => clearInterval(t);
   }, [mobile, shots.length]);
 
-  // Desktop: cycle the shots while hovered (if more than one).
+  // Desktop: cycle the shots while hovered.
   useEffect(() => {
     if (mobile || !hovered || shots.length < 2) return;
     const t = setInterval(() => setShot((s) => (s + 1) % shots.length), 1500);
     return () => clearInterval(t);
   }, [mobile, hovered, shots.length]);
 
-  // The brand image reveals on hover (desktop) or always (mobile) — only when
-  // the project actually has shots. Cards without shots just rest as artwork.
   const reveal = hasShots && (mobile ? true : hovered);
-  const activeShot = shots[shot % Math.max(shots.length, 1)];
   const counter = `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
 
   return (
@@ -48,8 +45,8 @@ export const WorkCard = ({ item, index, total }: { item: WorkItem; index: number
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        {/* MEDIA: NUREA artwork at rest. On reveal it greys + recedes and the
-            real brand work appears framed inside it, cycling. */}
+        {/* MEDIA: video art (Metanoia) or static art image at rest.
+            Cycling brand shots appear in an inset frame on hover (desktop) or always (mobile). */}
         <div
           style={{
             position: "relative",
@@ -60,24 +57,29 @@ export const WorkCard = ({ item, index, total }: { item: WorkItem; index: number
             border: "1px solid rgba(42,31,22,0.1)",
           }}
         >
-          {/* Artwork layer (NUREA-made abstract placeholder) */}
-          <img
-            src={item.art}
-            alt={`${item.title} – NUREA`}
-            loading="lazy"
-            onError={hideImg}
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          />
+          {item.video ? (
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+            >
+              <source src={item.video} type="video/mp4" />
+            </video>
+          ) : (
+            <img
+              src={item.art}
+              alt={`${item.title} – NUREA`}
+              loading="lazy"
+              onError={hideImg}
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          )}
           {item.grain && <div className="art-grain-overlay" aria-hidden />}
 
-          {/* Framed brand shot (the real work), inset so the artwork still
-              shows as a mat around it. */}
+          {/* Framed brand shot (the real work), inset so the art shows as a mat around it. */}
           {hasShots && (
             <div
               aria-hidden

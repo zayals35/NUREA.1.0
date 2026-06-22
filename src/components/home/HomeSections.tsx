@@ -3,7 +3,9 @@ import { SERVICES } from "@/data/services";
 import { WORK } from "@/data/work";
 import { Reveal } from "@/components/Reveal";
 import { WorkCard } from "./WorkCard";
-import { TestimonialsSection } from "./Testimonials";
+// Testimonials hidden until real client-approved quotes are ready. Re-add
+// <TestimonialsSection /> below (and this import) once quotes are in Testimonials.tsx.
+// import { TestimonialsSection } from "./Testimonials";
 
 const sectionStyle = { scrollMarginTop: 80 } as const;
 const accent = "#8a5a2f";
@@ -318,7 +320,6 @@ export const HomeSections = () => (
   <>
     <ServicesSection />
     <WorkSection />
-    <TestimonialsSection />
     <MethodSection />
     <KlarhetssjekkTeaser />
     <FaqSection />
@@ -343,6 +344,7 @@ export const SiteFooter = () => (
         <a href="/klarhetssjekk" className="opacity-80 hover:opacity-100 transition">Klarhetssjekk</a>
         <a href="/priser" className="opacity-80 hover:opacity-100 transition">Priser</a>
         <a href="/kontakt" className="opacity-80 hover:opacity-100 transition">Kontakt</a>
+        <a href="/personvern" className="opacity-80 hover:opacity-100 transition">Personvern</a>
       </nav>
     </div>
     <p style={{ marginTop: 28, fontFamily: "'Manrope','Inter',sans-serif", fontSize: 12, opacity: 0.5 }}>

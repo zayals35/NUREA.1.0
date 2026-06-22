@@ -1,25 +1,22 @@
-import { PageShell, Skel } from "@/components/PageShell";
+import { PageShell } from "@/components/PageShell";
+import { Reveal } from "@/components/Reveal";
+import { WorkCard } from "@/components/home/WorkCard";
+import { WORK } from "@/data/work";
 
 const Arbeider = () => (
   <PageShell
     eyebrow="Arbeider"
     title="Utvalgte prosjekter"
-    intro="Et utvalg av arbeidet vårt. (Plassholderside — prosjekter kommer.)"
+    intro="Et utvalg av arbeidet vårt. Merkevare, nettsider, innhold og digitale systemer, samlet i én tydelig retning."
   >
-    <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
-      {Array.from({ length: 6 }).map((_, i) => (
-        <div key={i}>
-          <div
-            style={{
-              aspectRatio: "4 / 3",
-              borderRadius: 18,
-              background: "rgba(42,31,22,0.08)",
-              border: "1px solid rgba(42,31,22,0.08)",
-            }}
-          />
-          <Skel w="60%" h={13} mt={16} />
-          <Skel w="40%" h={10} mt={9} />
-        </div>
+    <div
+      className="flex flex-col gap-8"
+      style={{ borderTop: "1px dotted rgba(42,31,22,0.28)", paddingTop: 32, maxWidth: 1100 }}
+    >
+      {WORK.map((w, i) => (
+        <Reveal key={w.id} delay={(i % 2) * 0.05}>
+          <WorkCard item={w} index={i} total={WORK.length} />
+        </Reveal>
       ))}
     </div>
   </PageShell>
