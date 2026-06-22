@@ -40,12 +40,18 @@ export const WORK: WorkItem[] = [
   },
   {
     id: "moremarin",
-    title: "Møre Marin",
+    title: "Bemanningsbyrå",
     caption: "Logo, nettside, e-postoppsett og CRM-integrasjon samlet i én digital grunnmur for maritim bemanning og rekruttering.",
     tags: ["Merkevare", "Nettside"],
     metricLabel: "Logo · Nettside · E-post · CRM",
     art: "/work/art-moremarin.webp",
-    shots: ["/work/moremarin-cover.webp", "/work/moremarin-logo.webp"],
+    shots: [
+      "/work/moremarin-hero.webp",
+      "/work/moremarin-contact.webp",
+      "/work/moremarin-jobs.webp",
+      "/work/moremarin-farm.webp",
+      "/work/moremarin-crew.webp",
+    ],
     href: "https://www.moremarin.no",
   },
   {
