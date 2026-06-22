@@ -115,7 +115,7 @@ export const Hero = () => {
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url(${bgImage})`,
-          filter: "contrast(1.08) saturate(1.05) brightness(0.96)",
+          filter: "contrast(1.06) saturate(1.05)",
         }}
       />
 
@@ -226,17 +226,6 @@ export const Hero = () => {
         }}
       />
 
-      {/* Clarity overlay (z-31): a gentle darken, a touch stronger toward the
-          bottom, so the bed gains depth and the cream text reads cleanly. Sits
-          above the resting scene but below the risen active stone (z-45) and the
-          text (z-50), which both stay bright and pop. */}
-      <div
-        className="absolute inset-0 z-[31] pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(24,16,8,0.10) 0%, rgba(24,16,8,0.16) 55%, rgba(24,16,8,0.26) 100%)",
-        }}
-      />
       </div>
       {/* /artboard */}
 

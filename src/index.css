@@ -233,8 +233,8 @@ All colors MUST be HSL.
   aspect-ratio: 1 / 0.7;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  z-index: 32;
-  opacity: 0.92;
+  z-index: 2;
+  opacity: 0.8;
   mix-blend-mode: soft-light;
   background: radial-gradient(
     ellipse at center,
@@ -258,8 +258,8 @@ All colors MUST be HSL.
   aspect-ratio: 1 / 0.72;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  z-index: 32;
-  opacity: 0.92;
+  z-index: 2;
+  opacity: 0.8;
   mix-blend-mode: soft-light;
   background: radial-gradient(
     ellipse at center,
