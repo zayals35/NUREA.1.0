@@ -59,17 +59,30 @@ const ServicePage = () => {
             marginTop: 20,
             display: "inline-flex",
             alignItems: "center",
+            gap: 8,
             background: "rgba(138,90,47,0.1)",
             border: "1px solid rgba(138,90,47,0.25)",
             borderRadius: 999,
             padding: "8px 18px",
             fontFamily: "'Manrope','Inter',sans-serif",
-            fontSize: 13,
-            fontWeight: 600,
+            fontSize: 12,
+            fontWeight: 700,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
             color: accent,
           }}
         >
-          Kommer snart — vi tilbyr reklame når resten av grunnmuren er på plass
+          <span
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: accent,
+              display: "inline-block",
+              flexShrink: 0,
+            }}
+          />
+          Kommer snart
         </div>
       )}
 
