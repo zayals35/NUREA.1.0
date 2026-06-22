@@ -5,7 +5,7 @@ import { PageShell } from "@/components/PageShell";
 // ---- FILL THESE IN -------------------------------------------------------
 // Web3Forms access key (free, tied to an inbox at https://web3forms.com).
 // While empty, the form falls back to opening the visitor's own mail app.
-const WEB3FORMS_KEY = "";
+const WEB3FORMS_KEY = "6340fc54-aa73-46d5-ade0-2408f92a8938";
 // Where klarhetssjekk requests should land (used by the mailto fallback).
 const CONTACT_EMAIL = "hei@nurea.no";
 // --------------------------------------------------------------------------

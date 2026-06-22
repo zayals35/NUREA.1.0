@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { PageShell } from "@/components/PageShell";
 import { Reveal } from "@/components/Reveal";
 
-const WEB3FORMS_KEY = "";
+const WEB3FORMS_KEY = "6340fc54-aa73-46d5-ade0-2408f92a8938";
 const CONTACT_EMAIL = "hei@nurea.no";
 
 const accent = "#8a5a2f";

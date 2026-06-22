@@ -221,7 +221,7 @@ export const Hero = () => {
             <a href="/tjenester" className="hover:opacity-100 opacity-90 transition">Tjenester</a>
             <a href="/metoden" className="hover:opacity-100 opacity-90 transition">Metoden</a>
             <a href="/priser" className="hover:opacity-100 opacity-90 transition">Priser</a>
-            <a href="/arbeider" className="hover:opacity-100 opacity-90 transition">Arbeider</a>
+            <a href="/#arbeider" className="hover:opacity-100 opacity-90 transition">Arbeider</a>
             <a href="/kontakt" className="hover:opacity-100 opacity-90 transition">Kontakt</a>
           </nav>
         </header>

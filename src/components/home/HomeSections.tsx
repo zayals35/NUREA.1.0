@@ -106,12 +106,6 @@ const WorkSection = () => (
       </div>
     </div>
 
-    {/* bottom CTA */}
-    <Reveal className="mt-12 flex md:justify-end">
-      <a href="/arbeider" style={{ color: accent, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em" }}>
-        Se alle arbeider <span style={{ opacity: 0.55 }}>(snart)</span> →
-      </a>
-    </Reveal>
   </section>
 );
 
