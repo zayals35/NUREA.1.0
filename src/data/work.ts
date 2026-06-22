@@ -30,6 +30,10 @@ export const WORK: WorkItem[] = [
     shots: [
       "/work/metanoia-cover.webp",
       "/work/metanoia-a.webp",
+      "/work/metanoia/metanoia.package.png",
+      "/work/metanoia/metanoia.package2.png",
+      "/work/metanoia/metanoiapackage.all.png",
+      "/work/metanoia/metanoiapackage3.png",
       "/work/metanoia/cloud-1.jpg",
       "/work/metanoia/cloud-2.jpg",
       "/work/metanoia/cloud-3.jpg",
@@ -41,6 +45,12 @@ export const WORK: WorkItem[] = [
       "/work/metanoia/volds-2.jpg",
       "/work/metanoia/volds-3.jpg",
       "/work/metanoia/other-1.jpg",
+      "/work/metanoia/IMG_0533.JPG",
+      "/work/metanoia/IMG_0764.JPG",
+      "/work/metanoia/IMG_9359.JPG",
+      "/work/metanoia/IMG_1636.JPG",
+      "/work/metanoia/IMG_1853.JPG",
+      "/work/metanoia/IMG_8790.JPEG",
     ],
   },
   {
