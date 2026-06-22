@@ -12,6 +12,7 @@ import Arbeider from "./pages/Arbeider.tsx";
 import Kontakt from "./pages/Kontakt.tsx";
 import OmOss from "./pages/OmOss.tsx";
 import Metoden from "./pages/Metoden.tsx";
+import Klarhetssjekk from "./pages/Klarhetssjekk.tsx";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/kontakt" element={<Kontakt />} />
           <Route path="/om-oss" element={<OmOss />} />
           <Route path="/metoden" element={<Metoden />} />
+          <Route path="/klarhetssjekk" element={<Klarhetssjekk />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

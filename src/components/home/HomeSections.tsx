@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { SERVICES } from "@/data/services";
 import { WORK } from "@/data/work";
+import { WEEK_STEPS } from "@/data/method";
 import { Reveal } from "@/components/Reveal";
 import { WorkCard } from "./WorkCard";
 
@@ -13,21 +14,58 @@ const Eyebrow = ({ children }: { children: string }) => (
   </p>
 );
 
-/* ---------- Problem / why NUREA exists (right after the hero) ---------- */
-export const ProblemSection = () => (
-  <section id="hvorfor" className="px-6 md:px-12 py-28 md:py-40" style={{ ...sectionStyle, background: "#e9e2d6" }}>
-    <Reveal className="max-w-4xl mx-auto">
+/* ---------- Thesis (right after the hero) ----------
+   The single sharpest positioning line, then what NUREA builds. */
+export const EnemySection = () => (
+  <section id="hvorfor" className="px-6 md:px-12 py-24 md:py-36" style={{ ...sectionStyle, background: "#e9e2d6" }}>
+    <Reveal className="max-w-5xl mx-auto">
       <Eyebrow>Hvorfor NUREA finnes</Eyebrow>
-      <h2 className="hero-headline" style={{ fontSize: "clamp(34px, 5.4vw, 72px)", marginTop: 14, maxWidth: 760 }}>
-        De fleste bedrifter er sterkere enn de ser ut til.
+      <h2 className="hero-headline" style={{ fontSize: "clamp(30px, 4.6vw, 62px)", marginTop: 14, maxWidth: 880, lineHeight: 1.05 }}>
+        Solide bedrifter taper ikke kunder fordi de mangler verdi. De taper kunder fordi{" "}
+        <span style={{ color: accent }}>verdien ikke blir forstått raskt nok.</span>
       </h2>
-      <p className="hero-body" style={{ marginTop: 24, maxWidth: 580, fontSize: "clamp(16px, 1.3vw, 20px)", lineHeight: 1.65 }}>
-        Avstanden ligger sjelden i hvor god du faktisk er, men i hvordan det henger
-        sammen. Uten en <span style={{ color: accent, fontWeight: 600 }}>rød tråd</span>{" "}
-        mellom merkevare, innhold, annonser og stemme, drukner det sterke i støy. NUREA
-        finnes for å samle det til ett tydelig uttrykk, så du blir forstått og valgt.
+      <p className="hero-body" style={{ marginTop: 24, maxWidth: 600, fontSize: "clamp(16px, 1.3vw, 20px)", lineHeight: 1.65 }}>
+        NUREA bygger merkevare, nettside, innhold og digitale systemer som gjør bedriften
+        tydeligere, mer troverdig og enklere å velge.
       </p>
     </Reveal>
+  </section>
+);
+
+/* ---------- To vanlige feller (after the scroll moment, before services) ----------
+   The diagnostic beat: the two traps NUREA helps companies out of. */
+const TRAPS = [
+  {
+    t: "Kampanjetenkning",
+    p: "Troen på at vekst bare handler om å kjøre flere annonser. Veksten kommer når du bygger systemet bedriften faktisk drives på, ikke enda en kampanje.",
+  },
+  {
+    t: "Tilfeldig digital tilstedeværelse",
+    p: "Bedriften er solid, men på nett virker den uklar, utdatert eller fragmentert. Veien videre: bygg klarhet først, så tillit, så henvendelser.",
+  },
+];
+export const TrapsSection = () => (
+  <section id="feller" className="px-6 md:px-12 py-24 md:py-36" style={{ ...sectionStyle, background: "#ece5d9" }}>
+    <Reveal className="max-w-5xl mx-auto">
+      <Eyebrow>To vanlige feller</Eyebrow>
+      <h2 className="hero-headline" style={{ fontSize: "clamp(28px, 4vw, 50px)", marginTop: 12, maxWidth: 640 }}>
+        Det vi rydder bort.
+      </h2>
+    </Reveal>
+
+    <div className="max-w-5xl mx-auto mt-12 md:mt-14 grid gap-x-12 gap-y-10" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
+      {TRAPS.map((e, i) => (
+        <Reveal key={e.t} delay={i * 0.08}>
+          <div style={{ borderTop: "1px dotted rgba(42,31,22,0.32)", paddingTop: 20 }}>
+            <span style={{ color: accent, fontWeight: 700, fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", fontFamily: "'Manrope','Inter',sans-serif" }}>
+              Felle 0{i + 1}
+            </span>
+            <div className="hero-headline" style={{ fontSize: "clamp(22px, 2.6vw, 30px)", marginTop: 12 }}>{e.t}</div>
+            <p className="hero-body" style={{ marginTop: 10, fontSize: 15.5, maxWidth: "42ch" }}>{e.p}</p>
+          </div>
+        </Reveal>
+      ))}
+    </div>
   </section>
 );
 
@@ -87,8 +125,9 @@ const ServicesSection = () => (
       <h2 className="hero-headline" style={{ fontSize: "clamp(34px, 5vw, 64px)", marginTop: 12 }}>
         Fem deler, én grunnmur.
       </h2>
-      <p className="hero-body mt-4" style={{ maxWidth: 540 }}>
-        Tjenestene er ikke løse produkter. De er deler av samme digitale grunnlag, med merkevaren som første stein.
+      <p className="hero-body mt-4" style={{ maxWidth: 560 }}>
+        Dette er ikke løse produkter du kjøper. Det er ett system som gjør uklar digital
+        tilstedeværelse om til klarhet, tillit og henvendelser, med merkevaren som første stein.
       </p>
     </Reveal>
 
@@ -153,6 +192,68 @@ const MethodSection = () => (
     </div>
     <Reveal className="max-w-5xl mx-auto mt-10">
       <a href="/metoden" style={{ color: accent, fontWeight: 700, fontSize: 14 }}>Se hele metoden →</a>
+    </Reveal>
+  </section>
+);
+
+/* ---------- De første 30 dagene (trust: what actually happens) ---------- */
+const ThirtyDaysSection = () => (
+  <section id="forlop" className="px-6 md:px-12 py-24 md:py-32" style={{ ...sectionStyle, background: "#ece5d9" }}>
+    <Reveal className="max-w-5xl mx-auto">
+      <Eyebrow>De første 30 dagene</Eyebrow>
+      <h2 className="hero-headline" style={{ fontSize: "clamp(34px, 5vw, 64px)", marginTop: 12 }}>
+        Du skal vite hva du kjøper.
+      </h2>
+      <p className="hero-body mt-4" style={{ maxWidth: 560 }}>
+        Ingen mystikk. Slik ser den første måneden med NUREA ut, steg for steg, fra
+        diagnose til en tydelig grunnmur du kan bygge videre på.
+      </p>
+    </Reveal>
+
+    <div className="max-w-5xl mx-auto mt-12 grid gap-x-10 gap-y-12" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
+      {WEEK_STEPS.map((s, i) => (
+        <Reveal key={s.n} delay={i * 0.07}>
+          <div style={{ borderTop: "2px solid rgba(42,31,22,0.18)", paddingTop: 18 }}>
+            <div style={{ color: accent, fontWeight: 700, fontSize: 13, letterSpacing: "0.1em", textTransform: "uppercase" }}>{s.n}</div>
+            <div className="hero-headline" style={{ fontSize: 26, marginTop: 10 }}>{s.h}</div>
+            <p className="hero-body" style={{ marginTop: 10, fontSize: 15 }}>{s.p}</p>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+);
+
+/* ---------- Gratis klarhetssjekk (lead magnet teaser) ---------- */
+const KlarhetssjekkTeaser = () => (
+  <section id="klarhetssjekk" className="px-6 md:px-12 py-24 md:py-32" style={{ ...sectionStyle, background: "#e9e2d6" }}>
+    <Reveal className="max-w-4xl mx-auto">
+      <Eyebrow>Gratis · uforpliktende</Eyebrow>
+      <h2 className="hero-headline" style={{ fontSize: "clamp(34px, 5.4vw, 70px)", marginTop: 12, maxWidth: 720 }}>
+        Gratis digital klarhetssjekk.
+      </h2>
+      <p className="hero-body mt-5" style={{ maxWidth: 600, fontSize: "clamp(16px, 1.3vw, 19px)", lineHeight: 1.6 }}>
+        Send inn nettsiden din. Du får en kort vurdering med{" "}
+        <span style={{ color: accent, fontWeight: 600 }}>3 ting som fungerer</span>,{" "}
+        <span style={{ color: accent, fontWeight: 600 }}>3 ting som svekker tillit</span>, og{" "}
+        <span style={{ color: accent, fontWeight: 600 }}>1 konkret forbedring</span> du kan gjøre denne uken.
+      </p>
+      <a
+        href="/klarhetssjekk"
+        className="mt-9 inline-flex items-center justify-center transition hover:brightness-105"
+        style={{
+          background: "#2a1f16",
+          color: "#f3ecdb",
+          fontFamily: "'Manrope','Inter',sans-serif",
+          fontSize: 15,
+          fontWeight: 700,
+          height: 52,
+          padding: "0 32px",
+          borderRadius: 999,
+        }}
+      >
+        Få din klarhetssjekk →
+      </a>
     </Reveal>
   </section>
 );
@@ -246,6 +347,8 @@ export const HomeSections = () => (
     <ServicesSection />
     <WorkSection />
     <MethodSection />
+    <ThirtyDaysSection />
+    <KlarhetssjekkTeaser />
     <FaqSection />
     <FinalCta />
   </>
@@ -265,6 +368,7 @@ export const SiteFooter = () => (
         <a href="/#arbeider" className="opacity-80 hover:opacity-100 transition">Arbeider</a>
         <a href="/#tjenester" className="opacity-80 hover:opacity-100 transition">Tjenester</a>
         <a href="/metoden" className="opacity-80 hover:opacity-100 transition">Metoden</a>
+        <a href="/klarhetssjekk" className="opacity-80 hover:opacity-100 transition">Klarhetssjekk</a>
         <a href="/priser" className="opacity-80 hover:opacity-100 transition">Priser</a>
         <a href="/kontakt" className="opacity-80 hover:opacity-100 transition">Kontakt</a>
       </nav>

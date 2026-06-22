@@ -2,74 +2,69 @@ export interface WorkItem {
   id: string;
   title: string;
   caption: string;
-  /** Honest tag (type of work) or a real result. No invented numbers. */
-  metric?: string;
+  /** One or more work-type tags shown as chips on the card. */
+  tags?: string[];
   metricLabel?: string;
-  /** Cover/placeholder image. */
-  cover: string;
-  /** The real work (website / logo / identity). Shown on hover (desktop) and
-   *  auto-cycled over a blurred cover (mobile). Drop images in public/work/. */
+  /** NUREA-made abstract artwork shown at rest (the card "frame"). */
+  art: string;
+  /** Real brand images, framed inside the art on hover and cycled. Drop in
+   *  public/work/. Empty = the card just shows the artwork. */
   shots: string[];
   href?: string;
 }
 
-// PLACEHOLDER projects. Replace with real work:
-//  - cover: a hero/placeholder image  -> public/work/work-N.webp
-//  - shots: the actual website/logo screenshots -> public/work/work-N-a.webp, -b ...
-// Update title/caption/metric. Best first.
 export const WORK: WorkItem[] = [
   {
-    id: "w1",
-    title: "Prosjekt 01",
-    caption: "Kort beskrivelse av arbeidet og hva som ble løst.",
-    metric: "Merkevare",
-    metricLabel: "Komplett identitet og profil",
-    cover: "/work/work-1.webp",
-    shots: [],
+    id: "metanoia",
+    title: "Metanoia",
+    caption: "Fra kleskolleksjon til kulturell bevegelse. Navn, logo, identitet, klærdesign, innhold og kreativ retning bygget fra grunnen av.",
+    tags: ["Merkevare"],
+    metricLabel: "Identitet · Design · Innholdsdireksjon",
+    art: "/work/art-metanoia.webp",
+    shots: [
+      "/work/metanoia-cover.webp",
+      "/work/metanoia-logo.webp",
+      "/work/metanoia-a.webp",
+      "/work/metanoia-b.webp",
+      "/work/metanoia-c.webp",
+    ],
   },
   {
-    id: "w2",
-    title: "Prosjekt 02",
-    caption: "Kort beskrivelse av arbeidet og hva som ble løst.",
-    metric: "Visuell identitet",
-    metricLabel: "Logo, farger og system",
-    cover: "/work/work-2.webp",
-    shots: [],
+    id: "nue-invitations",
+    title: "NUE Invitations",
+    caption: "Et digitalt invitasjonsmerke bygget rundt enso-sirkelen. Tidløs estetikk, moderne funksjonalitet og en klar merkevare som erstatter papir med noe verdt å ta vare på.",
+    tags: ["Merkevare"],
+    metricLabel: "Logo · Identitet · Konsept",
+    art: "/work/art-nue.webp",
+    shots: ["/work/nue-cover.webp", "/work/nue-logo.webp"],
   },
   {
-    id: "w3",
-    title: "Prosjekt 03",
-    caption: "Kort beskrivelse av arbeidet og hva som ble løst.",
-    metric: "Nettside",
-    metricLabel: "Struktur fra forståelse til kontakt",
-    cover: "/work/work-3.webp",
-    shots: [],
+    id: "moremarin",
+    title: "Møre Marin",
+    caption: "Logo, nettside, e-postoppsett og CRM-integrasjon samlet i én digital grunnmur for maritim bemanning og rekruttering.",
+    tags: ["Merkevare", "Nettside"],
+    metricLabel: "Logo · Nettside · E-post · CRM",
+    art: "/work/art-moremarin.webp",
+    shots: ["/work/moremarin-cover.webp", "/work/moremarin-logo.webp"],
+    href: "https://www.moremarin.no",
   },
   {
-    id: "w4",
-    title: "Prosjekt 04",
-    caption: "Kort beskrivelse av arbeidet og hva som ble løst.",
-    metric: "Pakkedesign",
-    metricLabel: "Emballasje og uttrykk",
-    cover: "/work/work-4.webp",
-    shots: [],
+    id: "bilmekka",
+    title: "Bilmekka",
+    caption: "Logo bygget for å bære hele merket: visittkort, uniform, bygningsskilt, annonser og sosiale medier. Supplert med nettside, e-postoppsett og digitale systemer.",
+    tags: ["Merkevare", "Nettside"],
+    metricLabel: "Logo · Nettside · E-post · Systemer",
+    art: "/work/art-bilmekka.webp",
+    shots: ["/work/bilmekka-cover.webp", "/work/bilmekka-a.webp"],
+    href: "https://www.bilmekka.no",
   },
   {
-    id: "w5",
-    title: "Prosjekt 05",
-    caption: "Kort beskrivelse av arbeidet og hva som ble løst.",
-    metric: "Innhold",
-    metricLabel: "Tekst, bilde og struktur",
-    cover: "/work/work-5.webp",
-    shots: [],
-  },
-  {
-    id: "w6",
-    title: "Prosjekt 06",
-    caption: "Kort beskrivelse av arbeidet og hva som ble løst.",
-    metric: "Komplett profil",
-    metricLabel: "Hele uttrykket samlet",
-    cover: "/work/work-6.webp",
+    id: "moustache-city",
+    title: "Moustache City",
+    caption: "Merkevare og visuell retning. Case og bilder legges til snart.",
+    tags: ["Merkevare"],
+    metricLabel: "Identitet · Uttrykk",
+    art: "/work/art-moustach.webp",
     shots: [],
   },
 ];

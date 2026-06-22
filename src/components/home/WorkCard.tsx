@@ -14,9 +14,10 @@ export const WorkCard = ({ item, index, total }: { item: WorkItem; index: number
   const [hovered, setHovered] = useState(false);
   const [shot, setShot] = useState(0);
   const shots = item.shots || [];
+  const hasShots = shots.length > 0;
   const mobile = !canHover;
 
-  // Mobile: auto-cycle the work shots over the blurred cover.
+  // Mobile: auto-cycle the brand shots over the receded artwork.
   useEffect(() => {
     if (!mobile || shots.length < 2) return;
     const t = setInterval(() => setShot((s) => (s + 1) % shots.length), 1900);
@@ -30,9 +31,9 @@ export const WorkCard = ({ item, index, total }: { item: WorkItem; index: number
     return () => clearInterval(t);
   }, [mobile, hovered, shots.length]);
 
-  const hasShots = shots.length > 0;
-  // The "shot" layer is always on for mobile; on desktop only while hovered.
-  const showShot = mobile ? hasShots : hovered;
+  // The brand image reveals on hover (desktop) or always (mobile) — only when
+  // the project actually has shots. Cards without shots just rest as artwork.
+  const reveal = hasShots && (mobile ? true : hovered);
   const activeShot = shots[shot % Math.max(shots.length, 1)];
   const counter = `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
 
@@ -47,7 +48,8 @@ export const WorkCard = ({ item, index, total }: { item: WorkItem; index: number
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        {/* MEDIA */}
+        {/* MEDIA: NUREA artwork at rest. On reveal it greys + recedes and the
+            real brand work appears framed inside it, cycling. */}
         <div
           style={{
             position: "relative",
@@ -58,10 +60,10 @@ export const WorkCard = ({ item, index, total }: { item: WorkItem; index: number
             border: "1px solid rgba(42,31,22,0.1)",
           }}
         >
-          {/* Cover (blurred on mobile so the shots read on top) */}
+          {/* Artwork layer (NUREA-made abstract placeholder) */}
           <img
-            src={item.cover}
-            alt={item.title}
+            src={item.art}
+            alt={`${item.title} – NUREA`}
             loading="lazy"
             onError={hideImg}
             style={{
@@ -70,56 +72,49 @@ export const WorkCard = ({ item, index, total }: { item: WorkItem; index: number
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              transform: "scale(1.08)",
-              filter: mobile && hasShots ? "blur(12px) brightness(0.9)" : "none",
-              transition: "filter 0.4s ease, transform 0.6s ease",
+              transform: reveal ? "scale(1.06)" : "scale(1)",
+              filter: reveal ? "grayscale(0.85) brightness(0.62)" : "none",
+              transition: "filter 0.5s ease, transform 0.6s ease",
             }}
-            className={canHover ? "group-hover:scale-[1.12]" : ""}
+            className={canHover ? "group-hover:scale-[1.06]" : ""}
           />
 
-          {/* Shot layer (the real work) */}
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              inset: 0,
-              opacity: showShot ? 1 : 0,
-              transition: "opacity 0.5s ease",
-            }}
-          >
-            {hasShots ? (
-              <img
-                src={activeShot}
-                alt=""
-                onError={hideImg}
-                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-              />
-            ) : (
-              // No real shots yet: a soft dark scrim + hint (desktop hover only).
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background: "rgba(33,26,18,0.55)",
-                  display: "flex",
-                  alignItems: "flex-end",
-                  padding: 16,
-                }}
-              >
-                <span
+          {/* Framed brand shot (the real work), inset so the artwork still
+              shows as a mat around it. */}
+          {hasShots && (
+            <div
+              aria-hidden
+              style={{
+                position: "absolute",
+                inset: "9%",
+                borderRadius: 8,
+                overflow: "hidden",
+                boxShadow: "0 18px 40px rgba(20,14,8,0.45)",
+                border: "3px solid rgba(247,242,232,0.92)",
+                opacity: reveal ? 1 : 0,
+                transform: reveal ? "scale(1)" : "scale(0.92)",
+                transition: "opacity 0.45s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1)",
+              }}
+            >
+              {shots.map((src, i) => (
+                <img
+                  key={src}
+                  src={src}
+                  alt=""
+                  onError={hideImg}
                   style={{
-                    color: "#f3ecdb",
-                    fontFamily: "'Manrope','Inter',sans-serif",
-                    fontWeight: 700,
-                    fontSize: 13,
-                    letterSpacing: "0.04em",
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    opacity: i === shot % shots.length ? 1 : 0,
+                    transition: "opacity 0.6s ease",
                   }}
-                >
-                  Se prosjektet →
-                </span>
-              </div>
-            )}
-          </div>
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* CONTENT */}
@@ -140,27 +135,50 @@ export const WorkCard = ({ item, index, total }: { item: WorkItem; index: number
             {item.caption}
           </p>
 
-          {item.metric && (
+          {(item.tags?.length || item.metricLabel || item.href) && (
             <div style={{ marginTop: "auto", paddingTop: 22 }}>
-              <span
-                style={{
-                  display: "inline-block",
-                  background: "rgba(138,90,47,0.14)",
-                  color: "#2a1f16",
-                  fontFamily: "'Manrope','Inter',sans-serif",
-                  fontSize: 13,
-                  fontWeight: 700,
-                  letterSpacing: "0.02em",
-                  padding: "6px 12px",
-                  borderRadius: 8,
-                }}
-              >
-                {item.metric}
-              </span>
+              {item.tags && item.tags.length > 0 && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {item.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      style={{
+                        display: "inline-block",
+                        background: "rgba(138,90,47,0.14)",
+                        color: "#2a1f16",
+                        fontFamily: "'Manrope','Inter',sans-serif",
+                        fontSize: 13,
+                        fontWeight: 700,
+                        letterSpacing: "0.02em",
+                        padding: "6px 12px",
+                        borderRadius: 8,
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
               {item.metricLabel && (
                 <p className="hero-body" style={{ marginTop: 8, fontSize: 13, opacity: 0.75, maxWidth: "22ch" }}>
                   {item.metricLabel}
                 </p>
+              )}
+              {item.href && (
+                <span
+                  style={{
+                    display: "inline-block",
+                    marginTop: 10,
+                    fontFamily: "'Manrope','Inter',sans-serif",
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: "#8a5a2f",
+                    letterSpacing: "0.03em",
+                    opacity: 0.8,
+                  }}
+                >
+                  {item.href.replace("https://www.", "").replace("https://", "")} ↗
+                </span>
               )}
             </div>
           )}

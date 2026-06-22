@@ -304,22 +304,39 @@ All colors MUST be HSL.
    not collide with anything. Full-bleed so it ignores page padding. */
 .ctg {
   position: relative;
-  height: 160vh;
+  height: 100vh;
   width: 100vw;
   margin-left: calc(50% - 50vw);
 }
 .ctg-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+  position: relative;
+  height: 100%;
   overflow: hidden;
+  background: #e6ddcf;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(1.4rem, 4vh, 2.4rem);
+  gap: clamp(1rem, 3vh, 1.8rem);
   padding: 0 clamp(20px, 6vw, 64px);
   text-align: center;
+}
+
+/* ---- Stacking / overlay scroll (homepage top stretch) ----
+   Hero, thesis, the gap moment and the traps each pin to the top; the next one
+   slides up and covers the previous, which stays pinned underneath. Scoped to
+   .stack so the shared .ctg keeps its normal behaviour on the Metoden page. */
+.stack { position: relative; z-index: 0; }
+.stack > * { position: sticky; top: 0; }
+/* Only the covering card (the gap) gets full height, a rounded top and a top
+   shadow; the first child (the thesis) stays its natural content height and is
+   the pinned base that the gap slides up to cover. */
+.stack > *:not(:first-child) {
+  min-height: 100vh;
+  overflow: hidden;
+  border-top-left-radius: clamp(18px, 3vw, 40px);
+  border-top-right-radius: clamp(18px, 3vw, 40px);
+  box-shadow: 0 -26px 70px -34px rgba(20, 14, 7, 0.55);
 }
 .ctg-kicker {
   font-family: 'Manrope', 'Inter', system-ui, sans-serif;
@@ -331,7 +348,7 @@ All colors MUST be HSL.
   position: relative;
   z-index: 4;
 }
-.ctg-canvas { position: relative; width: 100%; height: clamp(300px, 56vh, 560px); }
+.ctg-canvas { position: relative; width: 100%; height: clamp(330px, 64vh, 600px); }
 .ctg-stage {
   position: absolute;
   left: 50%;
@@ -353,6 +370,7 @@ All colors MUST be HSL.
 .ctg-slide { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity 0.6s ease; }
 .ctg-slide.is-active { opacity: 1; }
 .ctg-slide img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ctg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .ctg-overlay {
   position: absolute;
   inset: 0;
@@ -377,7 +395,7 @@ All colors MUST be HSL.
   display: inline-flex;
   will-change: transform;
 }
-.ctg-char { display: inline-block; opacity: 0; will-change: transform, opacity; }
+.ctg-char { display: inline-block; opacity: 0; white-space: pre; will-change: transform, opacity; }
 .ctg-sub {
   position: relative;
   z-index: 4;

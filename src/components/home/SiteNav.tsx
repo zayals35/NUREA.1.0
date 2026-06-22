@@ -5,6 +5,7 @@ const LINKS = [
   { label: "Arbeider", href: "/#arbeider" },
   { label: "Tjenester", href: "/#tjenester" },
   { label: "Metoden", href: "/#metoden" },
+  { label: "Klarhetssjekk", href: "/klarhetssjekk" },
   { label: "Kontakt", href: "/#kontakt" },
 ];
 

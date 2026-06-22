@@ -13,6 +13,7 @@ export const CloseTheGap = () => {
   const leftRef = useRef<HTMLSpanElement>(null);
   const rightRef = useRef<HTMLSpanElement>(null);
   const imgboxRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const gap = rootRef.current;
@@ -20,7 +21,6 @@ export const CloseTheGap = () => {
     const gRight = rightRef.current;
     const gImgbox = imgboxRef.current;
     if (!gap || !gLeft || !gRight || !gImgbox) return;
-    const gSlides = Array.from(gap.querySelectorAll<HTMLElement>(".ctg-slide"));
 
     const splitChars = (el: HTMLElement) => {
       const txt = el.textContent || "";
@@ -29,7 +29,7 @@ export const CloseTheGap = () => {
       for (let i = 0; i < txt.length; i++) {
         const s = document.createElement("span");
         s.className = "ctg-char";
-        s.textContent = txt[i] === " " ? " " : txt[i];
+        s.textContent = txt[i] === " " ? " " : txt[i];
         frag.appendChild(s);
         chars.push(s);
       }
@@ -62,27 +62,19 @@ export const CloseTheGap = () => {
       gLeft.style.transform = "translateX(0)";
       gRight.style.transform = "translateX(0)";
       gImgbox.style.transform = "scale(1)";
+      // Motion-sensitive visitors get the still poster, not the looping clip.
+      videoRef.current?.pause();
       return;
-    }
-
-    // auto-cycle the centre image (independent of scroll)
-    let slideTimer = 0;
-    if (gSlides.length > 1) {
-      let cur = 0;
-      slideTimer = window.setInterval(() => {
-        gSlides[cur].classList.remove("is-active");
-        cur = (cur + 1) % gSlides.length;
-        gSlides[cur].classList.add("is-active");
-      }, 1000);
     }
 
     const progress = () => {
       const vh = window.innerHeight;
       const rectTop = gap.getBoundingClientRect().top;
-      const head = vh * 0.9; // start while still entering from below
-      const pinnedRun = gap.offsetHeight - vh; // distance it stays pinned
-      const run = head + pinnedRun * 0.9; // finish near the end of the pin
-      return Math.min(Math.max((head - rectTop) / run, 0), 1);
+      // 0 when the section's top sits ~a viewport below the fold (just entering
+      // / sliding up), 1 when its top reaches the top of the viewport (pinned and
+      // fully covering). Works both as a normal section (Metoden) and as a sticky
+      // stack item (homepage), where the converge plays during the slide-up.
+      return Math.min(Math.max((vh - rectTop) / (vh * 0.92), 0), 1);
     };
 
     let tick = false;
@@ -107,7 +99,6 @@ export const CloseTheGap = () => {
     return () => {
       window.removeEventListener("scroll", onGap);
       window.removeEventListener("resize", onGap);
-      if (slideTimer) clearInterval(slideTimer);
     };
   }, []);
 
@@ -118,12 +109,19 @@ export const CloseTheGap = () => {
         <div className="ctg-canvas">
           <div className="ctg-stage">
             <div className="ctg-imgbox" ref={imgboxRef}>
-              <figure className="ctg-slide is-active">
-                <img src="/nurea-method/gap-1.webp" alt="" />
-              </figure>
-              <figure className="ctg-slide">
-                <img src="/nurea-method/gap-2.webp" alt="" />
-              </figure>
+              <video
+                ref={videoRef}
+                className="ctg-video"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/nurea-method/gap-poster.jpg"
+              >
+                <source src="/nurea-method/gap.webm" type="video/webm" />
+                <source src="/nurea-method/gap.mp4" type="video/mp4" />
+              </video>
             </div>
           </div>
           <div className="ctg-overlay">
