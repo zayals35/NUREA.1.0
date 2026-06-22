@@ -78,7 +78,7 @@ export const Hero = () => {
         <br />
         Lettere å velge.
       </h1>
-      <p className="hero-body mt-4" style={{ maxWidth: 460 }}>
+      <p className="hero-body mt-4">
         Merkevare, nettsider, innhold og systemer, samlet i én tydelig retning.
       </p>
       <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3 justify-end">
@@ -238,12 +238,12 @@ export const Hero = () => {
         {/* Desktop: copy on a text-stone bottom-right. Touch: copy at the bottom. */}
         {isTouch ? (
           <div
-            className="pointer-events-auto"
+            className="pointer-events-auto hero-touch-copy"
             style={{
               position: "absolute",
               right: "6vw",
               bottom: "max(4vh, 22px)",
-              maxWidth: "min(82vw, 360px)",
+              maxWidth: "min(80vw, 340px)",
               textAlign: "right",
             }}
           >
