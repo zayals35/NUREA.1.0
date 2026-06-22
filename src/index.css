@@ -157,12 +157,12 @@ All colors MUST be HSL.
   /* Phone / tablet: stones sit on top, copy at the bottom — keep the headline
      compact so it fits the bottom band without crowding the stones. */
   @media (max-width: 1023px) {
-    .hero-headline { font-size: clamp(32px, 5.8vw, 46px); line-height: 1.02; }
-    .hero-body { font-size: 15.5px; }
+    .hero-headline { font-size: clamp(38px, 7vw, 54px); line-height: 1.02; }
+    .hero-body { font-size: 16px; }
   }
   @media (max-width: 767px) {
-    .hero-headline { font-size: 36px; line-height: 1.02; }
-    .hero-body { font-size: 15.5px; }
+    .hero-headline { font-size: 44px; line-height: 1.02; }
+    .hero-body { font-size: 16px; }
   }
 
 }
@@ -539,27 +539,47 @@ All colors MUST be HSL.
   text-align: right;
 }
 .hero-copy .hero-headline {
-  font-size: clamp(42px, 4.4vw, 72px);
+  font-size: clamp(52px, 5.6vw, 88px);
   color: #f3ecdb;
-  text-shadow: 0 2px 32px rgba(42, 31, 22, 0.55), 0 1px 8px rgba(42, 31, 22, 0.35);
+  text-shadow: 0 2px 32px rgba(42, 31, 22, 0.6), 0 1px 10px rgba(42, 31, 22, 0.4);
 }
 .hero-copy .hero-body {
   margin-left: auto;
-  font-size: clamp(15px, 1.4vw, 17px);
-  color: rgba(42, 31, 22, 0.88);
+  font-size: clamp(16px, 1.6vw, 20px);
+  font-weight: 500;
+  color: rgba(243, 236, 219, 0.85);
   max-width: 30ch;
-  text-shadow: 0 1px 14px rgba(247, 242, 232, 0.9);
+  text-shadow: 0 1px 20px rgba(42, 31, 22, 0.75), 0 2px 8px rgba(42, 31, 22, 0.5);
 }
-/* Hero CTAs: bigger and clearly readable on the stone */
+/* Hero CTAs: cream, bold, clearly legible on stone */
 .hero-copy .cta-link,
-.hero-touch-copy .cta-link { font-size: 16px; }
+.hero-touch-copy .cta-link {
+  font-size: 17px;
+  font-weight: 700;
+  color: rgba(243, 236, 219, 0.75);
+  border-bottom-color: rgba(243, 236, 219, 0.32);
+}
+.hero-copy .cta-link--primary,
+.hero-touch-copy .cta-link--primary {
+  color: #f3ecdb;
+  border-bottom-color: rgba(243, 236, 219, 0.65);
+}
+.hero-copy .cta-link:hover,
+.hero-touch-copy .cta-link:hover {
+  color: #f3ecdb;
+  border-bottom-color: rgba(243, 236, 219, 0.85);
+}
 
-/* Mobile touch hero block — cream headline, dark ink body */
+/* Mobile touch hero block — all copy in cream, dark shadow for legibility */
 .hero-touch-copy .hero-headline {
   color: #f3ecdb;
-  text-shadow: 0 2px 26px rgba(42, 31, 22, 0.6), 0 1px 6px rgba(42, 31, 22, 0.4);
+  text-shadow: 0 2px 28px rgba(42, 31, 22, 0.65), 0 1px 8px rgba(42, 31, 22, 0.45);
 }
-.hero-touch-copy .hero-body { color: rgba(42, 31, 22, 0.88); }
+.hero-touch-copy .hero-body {
+  color: rgba(243, 236, 219, 0.82);
+  font-weight: 500;
+  text-shadow: 0 1px 20px rgba(42, 31, 22, 0.8), 0 2px 8px rgba(42, 31, 22, 0.55);
+}
 
 /* Organic text-link CTAs (no buttons / boxes). Warm earthy ink. */
 .cta-link {
