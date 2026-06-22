@@ -50,6 +50,7 @@ export const WORK: WorkItem[] = [
       "/work/moremarin/moremarin-contact.png",
       "/work/moremarin/moremarin-jobs.webp.png",
       "/work/moremarin/moremarin-crew.webp.png",
+      "/work/moremarin/sjø.png",
     ],
     href: "https://www.moremarin.no",
   },
