@@ -604,3 +604,8 @@ All colors MUST be HSL.
   .electric-pulse,
   .stone-bob { animation: none !important; }
 }
+
+/* Testimonial slider helpers (see components/home/Testimonials.tsx) */
+.t-line { display: block; will-change: transform; }
+.t-arrow { opacity: 0.6; transition: opacity 0.2s ease; }
+.t-arrow:hover { opacity: 1; }

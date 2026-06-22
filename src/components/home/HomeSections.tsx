@@ -3,6 +3,7 @@ import { SERVICES } from "@/data/services";
 import { WORK } from "@/data/work";
 import { Reveal } from "@/components/Reveal";
 import { WorkCard } from "./WorkCard";
+import { TestimonialsSection } from "./Testimonials";
 
 const sectionStyle = { scrollMarginTop: 80 } as const;
 const accent = "#8a5a2f";
@@ -317,6 +318,7 @@ export const HomeSections = () => (
   <>
     <ServicesSection />
     <WorkSection />
+    <TestimonialsSection />
     <MethodSection />
     <KlarhetssjekkTeaser />
     <FaqSection />
