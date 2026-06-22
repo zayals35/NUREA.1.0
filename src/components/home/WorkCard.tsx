@@ -125,8 +125,20 @@ export const WorkCard = ({ item, index, total }: { item: WorkItem; index: number
             </span>
           </div>
 
-          <h3 className="hero-headline" style={{ fontSize: "clamp(20px, 2.4vw, 30px)", marginTop: 14 }}>
+          <p style={{
+            fontFamily: "'Manrope','Inter',sans-serif",
+            fontSize: "clamp(11px, 1vw, 13px)",
+            fontWeight: 600,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: accent,
+            marginTop: 14,
+            opacity: 0.85,
+          }}>
             {item.title}
+          </p>
+          <h3 className="hero-headline" style={{ fontSize: "clamp(24px, 3vw, 38px)", marginTop: 4, lineHeight: 1.05 }}>
+            {item.company}
           </h3>
           <p className="hero-body" style={{ marginTop: 8, fontSize: "clamp(14px, 1.4vw, 17px)", maxWidth: "40ch" }}>
             {item.caption}

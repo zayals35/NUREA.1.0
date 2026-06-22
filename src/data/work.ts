@@ -1,6 +1,9 @@
 export interface WorkItem {
   id: string;
+  /** Small descriptor label above the company name. */
   title: string;
+  /** Primary display name — the client/brand. Rendered large. */
+  company: string;
   caption: string;
   /** One or more work-type tags shown as chips on the card. */
   tags?: string[];
@@ -16,7 +19,8 @@ export interface WorkItem {
 export const WORK: WorkItem[] = [
   {
     id: "metanoia",
-    title: "Metanoia",
+    title: "Merkevare",
+    company: "Metanoia",
     caption: "Fra kleskolleksjon til kulturell bevegelse. Navn, logo, identitet, klærdesign, innhold og kreativ retning bygget fra grunnen av.",
     tags: ["Merkevare"],
     metricLabel: "Identitet · Design · Innholdsdireksjon",
@@ -32,6 +36,7 @@ export const WORK: WorkItem[] = [
   {
     id: "nue-invitations",
     title: "Event planlegging",
+    company: "NUE Invitations",
     caption: "Nettsiden lanseres 29. juli. Caset blir oppdatert etter lansering.",
     tags: ["Merkevare"],
     metricLabel: "Logo · Identitet · Konsept",
@@ -41,6 +46,7 @@ export const WORK: WorkItem[] = [
   {
     id: "moremarin",
     title: "Bemanningsbyrå",
+    company: "Møre Marin",
     caption: "Logo, nettside, e-postoppsett og CRM-integrasjon samlet i én digital grunnmur for maritim bemanning og rekruttering.",
     tags: ["Merkevare", "Nettside"],
     metricLabel: "Logo · Nettside · E-post · CRM",
@@ -56,7 +62,8 @@ export const WORK: WorkItem[] = [
   },
   {
     id: "bilmekka",
-    title: "Bilmekka",
+    title: "Merkevare & Nettside",
+    company: "Bilmekka",
     caption: "Logo bygget for å bære hele merket: visittkort, uniform, bygningsskilt, annonser og sosiale medier. Supplert med nettside, e-postoppsett og digitale systemer.",
     tags: ["Merkevare", "Nettside"],
     metricLabel: "Logo · Nettside · E-post · Systemer",
@@ -66,7 +73,8 @@ export const WORK: WorkItem[] = [
   },
   {
     id: "moustache-city",
-    title: "Moustache City",
+    title: "Merkevare",
+    company: "Moustache City",
     caption: "Merkevare og visuell retning. Case og bilder legges til snart.",
     tags: ["Merkevare"],
     metricLabel: "Identitet · Uttrykk",
