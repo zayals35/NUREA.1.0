@@ -219,7 +219,7 @@ const Kontakt = () => {
                 {CONTACT_EMAIL}
               </a>
               <p className="hero-body mt-1" style={{ fontSize: 13, opacity: 0.55 }}>
-                Oslo · Norge
+                Trondheim · Norge
               </p>
             </div>
           </Reveal>

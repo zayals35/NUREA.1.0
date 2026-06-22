@@ -360,7 +360,7 @@ export const SiteFooter = () => (
       <div>
         <div className="hero-wordmark" style={{ color: "#f3ecdb", fontSize: 20 }}>NUREA</div>
         <p style={{ marginTop: 8, fontFamily: "'Manrope','Inter',sans-serif", fontSize: 13, opacity: 0.7 }}>
-          Merkevare og digital retning. Oslo, Norge.
+          Merkevare og digital retning. Trondheim, Norge.
         </p>
       </div>
       <nav className="flex flex-wrap gap-x-6 gap-y-2" style={{ fontFamily: "'Manrope','Inter',sans-serif", fontSize: 14 }}>

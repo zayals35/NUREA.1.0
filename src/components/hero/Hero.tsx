@@ -261,7 +261,7 @@ export const Hero = () => {
             ↓ Utforsk tjenestene under overflaten
           </span>
           <span className="hidden lg:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(21,35,58,0.55)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>
-            Oslo · Norge
+            Trondheim · Norge
           </span>
         </footer>
       </div>

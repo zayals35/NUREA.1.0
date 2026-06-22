@@ -80,7 +80,7 @@ export const PageShell = ({ eyebrow, title, intro, children }: Props) => (
         className="text-[11px] uppercase tracking-[0.32em]"
         style={{ color: "rgba(42,31,22,0.55)", fontWeight: 500, fontFamily: "'Manrope', 'Inter', sans-serif" }}
       >
-        Oslo · Norge
+        Trondheim · Norge
       </span>
     </footer>
   </main>
