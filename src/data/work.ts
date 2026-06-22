@@ -10,6 +10,8 @@ export interface WorkItem {
   metricLabel?: string;
   /** NUREA-made abstract artwork shown at rest (the card "frame"). */
   art: string;
+  /** Add a film-grain overlay to the art image (for clean digital graphics). */
+  grain?: boolean;
   /** Real brand images, framed inside the art on hover and cycled. Drop in
    *  public/work/. Empty = the card just shows the artwork. */
   shots: string[];
@@ -24,7 +26,7 @@ export const WORK: WorkItem[] = [
     caption: "Fra kleskolleksjon til kulturell bevegelse. Navn, logo, identitet, klærdesign, innhold og kreativ retning bygget fra grunnen av.",
     tags: ["Merkevare"],
     metricLabel: "Identitet · Design · Innholdsdireksjon",
-    art: "/work/art-metanoia.webp",
+    art: "/work/metanoia-logo-real.png",
     shots: [
       "/work/metanoia-cover.webp",
       "/work/metanoia-logo.webp",
@@ -41,6 +43,7 @@ export const WORK: WorkItem[] = [
     tags: ["Merkevare", "Nettside"],
     metricLabel: "Logo · Nettside · E-post · Systemer",
     art: "/work/bilmekka/bm favicon.png",
+    grain: true,
     shots: [
       "/work/bilmekka/phonehero.png",
       "/work/bilmekka/businesscards1.png",

@@ -40,11 +40,11 @@ export const WorkCard = ({ item, index, total }: { item: WorkItem; index: number
   return (
     <div style={{ borderBottom: "1px dotted rgba(42,31,22,0.28)", paddingBottom: 32 }}>
       <a
-        href={item.href || "#"}
+        href={item.href || undefined}
         target={item.href ? "_blank" : undefined}
         rel={item.href ? "noreferrer" : undefined}
-        className="group grid items-start gap-5 md:gap-7"
-        style={{ gridTemplateColumns: "minmax(0,5fr) minmax(0,6fr)" }}
+        className="work-card-link group grid items-start gap-5 md:gap-7"
+        style={{ gridTemplateColumns: "minmax(0,5fr) minmax(0,6fr)", WebkitTapHighlightColor: "transparent" }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
@@ -73,8 +73,8 @@ export const WorkCard = ({ item, index, total }: { item: WorkItem; index: number
               height: "100%",
               objectFit: "cover",
             }}
-            className=""
           />
+          {item.grain && <div className="art-grain-overlay" aria-hidden />}
 
           {/* Framed brand shot (the real work), inset so the artwork still
               shows as a mat around it. */}
