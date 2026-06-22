@@ -40,7 +40,7 @@ export const WORK: WorkItem[] = [
     caption: "Logo bygget for å bære hele merket: visittkort, uniform, bygningsskilt, annonser og sosiale medier. Supplert med nettside, e-postoppsett og digitale systemer.",
     tags: ["Merkevare", "Nettside"],
     metricLabel: "Logo · Nettside · E-post · Systemer",
-    art: "/work/bilmekka/bilmekka-logo.png",
+    art: "/work/bilmekka/bm favicon.png",
     shots: [
       "/work/bilmekka/phonehero.png",
       "/work/bilmekka/businesscards1.png",
