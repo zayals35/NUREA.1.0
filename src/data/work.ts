@@ -31,8 +31,8 @@ export const WORK: WorkItem[] = [
   },
   {
     id: "nue-invitations",
-    title: "NUE Invitations",
-    caption: "Et digitalt invitasjonsmerke bygget rundt enso-sirkelen. Tidløs estetikk, moderne funksjonalitet og en klar merkevare som erstatter papir med noe verdt å ta vare på.",
+    title: "Event planlegging",
+    caption: "Nettsiden lanseres 29. juli. Caset blir oppdatert etter lansering.",
     tags: ["Merkevare"],
     metricLabel: "Logo · Identitet · Konsept",
     art: "/work/art-nue.webp",
