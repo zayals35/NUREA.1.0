@@ -24,10 +24,10 @@ export interface WorkItem {
 export const WORK: WorkItem[] = [
   {
     id: "metanoia",
-    title: "Merkevare",
+    title: "Klesmerke",
     company: "Metanoia",
     caption: "Fra kleskolleksjon til kulturell bevegelse. Navn, logo, identitet, klærdesign, innhold og kreativ retning bygget fra grunnen av.",
-    tags: ["Merkevare"],
+    tags: ["Klesmerke"],
     metricLabel: "Identitet · Design · Innholdsdireksjon",
     art: "/work/metanoia/metanoia-logo.webp",
     video: "/work/metanoia/placeholder.mp4",

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="6" fill="#2a1f16"/>
+  <!-- N lettermark — left bar -->
+  <polygon points="6,6 10,6 10,26 6,26" fill="#e9e2d6"/>
+  <!-- N lettermark — diagonal -->
+  <polygon points="10,6 14,6 24,26 20,26" fill="#e9e2d6"/>
+  <!-- N lettermark — right bar -->
+  <polygon points="22,6 26,6 26,26 22,26" fill="#e9e2d6"/>
+</svg>
