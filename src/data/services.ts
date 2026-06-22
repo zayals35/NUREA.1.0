@@ -40,7 +40,7 @@ export const SERVICES: Service[] = [
     rotation: -2,
     desktop: { left: "25%", top: "70%", width: "17%" },
     tablet: { left: "50%", top: "40%", width: "32%" },
-    phone: { left: "66%", top: "18%", width: "25%", rotate: "3deg" },
+    phone: { left: "66%", top: "18%", width: "26.25%", rotate: "3deg" },
     statement: "Nettsiden er ikke brosjyren. Den er salgsteamet som aldri sover.",
     statementBody:
       "De fleste nettsider forteller om bedriften. En god nettside leder besøkeren fra nysgjerrighet til beslutning, uten at du er til stede. Vi bygger strukturen, innholdet og brukeropplevelsen slik at siden din gjør jobben, dag og natt. Når siden er tydelig, slipper du å forklare det i hvert eneste salgsmøte.",
@@ -65,7 +65,7 @@ export const SERVICES: Service[] = [
     rotation: 2,
     desktop: { left: "24%", top: "34%", width: "14%" },
     tablet: { left: "28%", top: "25%", width: "27%" },
-    phone: { left: "33%", top: "39.5%", width: "22%", rotate: "7deg" },
+    phone: { left: "26%", top: "49.5%", width: "23.1%", rotate: "7deg" },
     statement: "Sosiale medier er gratis annonsering. Du trenger bare å bruke det riktig.",
     statementBody:
       "For mange føles innhold som en plikt, noe man må gjøre uten å vite om det virker. Vi snur på det. Når du forteller tydelig hva du gjør og hvorfor, blir hvert innlegg en liten annonse som ikke koster deg noe. Du når folk som aldri ville funnet deg ellers, og de forstår deg med en gang.",
@@ -90,7 +90,7 @@ export const SERVICES: Service[] = [
     rotation: -4,
     desktop: { left: "49%", top: "75%", width: "15%" },
     tablet: { left: "54%", top: "11%", width: "27%" },
-    phone: { left: "51%", top: "50.5%", width: "25%", rotate: "5deg" },
+    phone: { left: "56%", top: "50.5%", width: "26.25%", rotate: "5deg" },
     statement: "Merkevaren er ikke logoen. Den er gjenkjennelsen.",
     statementBody:
       "En merkevare er summen av det folk føler når de møter bedriften din, før de har lest et eneste ord. Vi former den bevisst: hvem dere er for, tonen dere snakker i, og det visuelle språket som gjør at riktig kunde tenker «dette er for meg». Når merkevaren er tydelig, slipper alt annet å rope for å bli forstått.",
@@ -115,7 +115,7 @@ export const SERVICES: Service[] = [
     rotation: -3,
     desktop: { left: "57%", top: "36%", width: "13%" },
     tablet: { left: "74%", top: "25%", width: "21%" },
-    phone: { left: "33%", top: "16%", width: "18.5%", rotate: "-5deg" },
+    phone: { left: "33%", top: "16%", width: "19.4%", rotate: "-5deg" },
     statement: "Et system er ikke et verktøy. Det er flyten som gjør at du slipper å tenke.",
     statementBody:
       "Mange bedrifter bruker ti verktøy der to ville holdt. Vi starter med å forstå hvorfor noe gjør vondt, og finner den enkle løsningen som tar bort friksjon. Kanskje det er en integrasjon mellom skjema og CRM. Kanskje det er en automatisering som sender riktig e-post til riktig tid. Målet er alltid det samme: at du kan bruke energien din på kundene, ikke på systemene.",
@@ -140,7 +140,7 @@ export const SERVICES: Service[] = [
     rotation: 3,
     desktop: { left: "46%", top: "24%", width: "13%" },
     tablet: { left: "24%", top: "10%", width: "22%" },
-    phone: { left: "68%", top: "35%", width: "18.5%", rotate: "-3deg" },
+    phone: { left: "68%", top: "35%", width: "19.4%", rotate: "-3deg" },
     statement: "Reklame uten grunnmur er støy. Med grunnmur er det forsterkning.",
     statementBody:
       "De fleste bedrifter starter med reklame før de er klare for det. Resultatet er dyrt og skuffende. Vi tilbyr reklame som det siste steget i grunnmuren, når merkevaren, nettsiden og innholdet allerede gjør jobben. Da er hver krone du bruker på synlighet en krone som faktisk lønner seg.",

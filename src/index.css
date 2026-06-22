@@ -233,15 +233,15 @@ All colors MUST be HSL.
   aspect-ratio: 1 / 0.7;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  z-index: 2;
-  opacity: 0.62;
+  z-index: 32;
+  opacity: 0.92;
   mix-blend-mode: soft-light;
   background: radial-gradient(
     ellipse at center,
-    rgba(255, 250, 232, 0.7) 0%,
-    rgba(255, 249, 230, 0.42) 44%,
-    rgba(255, 249, 230, 0.14) 66%,
-    rgba(255, 249, 230, 0) 82%
+    rgba(255, 251, 235, 0.82) 0%,
+    rgba(255, 250, 232, 0.5) 44%,
+    rgba(255, 250, 232, 0.16) 66%,
+    rgba(255, 250, 232, 0) 82%
   );
   filter: blur(9px);
 }
@@ -258,15 +258,15 @@ All colors MUST be HSL.
   aspect-ratio: 1 / 0.72;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  z-index: 2;
-  opacity: 0.62;
+  z-index: 32;
+  opacity: 0.92;
   mix-blend-mode: soft-light;
   background: radial-gradient(
     ellipse at center,
-    rgba(255, 250, 232, 0.7) 0%,
-    rgba(255, 249, 230, 0.42) 44%,
-    rgba(255, 249, 230, 0.14) 66%,
-    rgba(255, 249, 230, 0) 82%
+    rgba(255, 251, 235, 0.82) 0%,
+    rgba(255, 250, 232, 0.5) 44%,
+    rgba(255, 250, 232, 0.16) 66%,
+    rgba(255, 250, 232, 0) 82%
   );
   filter: blur(11px);
 }
@@ -366,7 +366,9 @@ All colors MUST be HSL.
   background-image: url('/work/tetter.gapet.backgroundimage.png');
   background-size: cover;
   background-position: center;
-  opacity: 0.22;
+  opacity: 0.45;
+  filter: contrast(1.12) saturate(1.05);
+  mix-blend-mode: multiply;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%);
   z-index: 0;
@@ -640,13 +642,16 @@ All colors MUST be HSL.
   font-weight: 500;
   text-shadow: 0 1px 20px rgba(42, 31, 22, 0.8), 0 2px 8px rgba(42, 31, 22, 0.55);
 }
-/* Touch CTAs: smaller than the desktop 20px so the row stays on the granite. */
+/* Touch CTAs: smaller than the desktop 20px and on ONE row (no wrap) so both
+   links sit side-by-side within the granite zone. */
 .hero-touch-copy .cta-link {
-  font-size: clamp(14px, 4vw, 16px);
+  font-size: clamp(12px, 3.4vw, 14px);
+  white-space: nowrap;
 }
 .hero-touch-copy .cta-row {
+  flex-wrap: nowrap;
   margin-top: 14px;
-  gap: 8px 18px;
+  gap: 0 12px;
 }
 
 /* Organic text-link CTAs (no buttons / boxes). Warm earthy ink. */

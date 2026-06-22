@@ -109,10 +109,14 @@ export const Hero = () => {
           Stone left/top/width are percentages of THIS artboard, so each stone
           stays glued to its pocket on the bed image at any screen size. */}
       <div style={artboardStyle}>
-      {/* Layer 0: STATIC bed image (no video → no jitter, always sharp) */}
+      {/* Layer 0: STATIC bed image (no video → no jitter, always sharp). A light
+          contrast/saturation lift makes the bed read crisper. */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${bgImage})` }}
+        style={{
+          backgroundImage: `url(${bgImage})`,
+          filter: "contrast(1.08) saturate(1.05) brightness(0.96)",
+        }}
       />
 
       {/* Subtle vignette for depth */}
@@ -221,6 +225,18 @@ export const Hero = () => {
             "linear-gradient(180deg, rgba(208,182,148,0.10) 0%, rgba(172,142,106,0.14) 55%, rgba(208,182,148,0.10) 100%)",
         }}
       />
+
+      {/* Clarity overlay (z-31): a gentle darken, a touch stronger toward the
+          bottom, so the bed gains depth and the cream text reads cleanly. Sits
+          above the resting scene but below the risen active stone (z-45) and the
+          text (z-50), which both stay bright and pop. */}
+      <div
+        className="absolute inset-0 z-[31] pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(24,16,8,0.10) 0%, rgba(24,16,8,0.16) 55%, rgba(24,16,8,0.26) 100%)",
+        }}
+      />
       </div>
       {/* /artboard */}
 
@@ -229,7 +245,6 @@ export const Hero = () => {
         <header className="flex items-start justify-between px-6 md:px-12 pt-6 md:pt-8 pointer-events-auto">
           <div>
             <div className="hero-wordmark">NUREA</div>
-            <div className="hero-tagline">Merkevare og digital retning</div>
           </div>
           <nav className="hidden lg:flex gap-8 hero-nav pt-1">
             <a href="/tjenester" className="hover:opacity-100 opacity-90 transition">Tjenester</a>
@@ -256,7 +271,7 @@ export const Hero = () => {
             style={{
               position: "absolute",
               right: "6vw",
-              bottom: "max(3.5vh, 18px)",
+              bottom: "max(2vh, 12px)",
               maxWidth: "min(74vw, 300px)",
               textAlign: "right",
             }}
