@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { SERVICES } from "@/data/services";
 import { WORK } from "@/data/work";
-import { WEEK_STEPS } from "@/data/method";
 import { Reveal } from "@/components/Reveal";
 import { WorkCard } from "./WorkCard";
 
@@ -161,66 +160,42 @@ const ServicesSection = () => (
   </section>
 );
 
-/* ---------- Metoden (3-step process) ---------- */
-const STEPS = [
-  { n: "01", h: "Klarhet", p: "Vi finner ut hva som må bli tydeligere: hvem du er for, og hva som skiller deg." },
-  { n: "02", h: "Uttrykk", p: "Vi former merkevaren: identitet, visuelt språk og stemme, satt i ett system som henger sammen overalt." },
-  { n: "03", h: "Flyt", p: "Vi gjør veien til kontakt enklere, og bygger videre over tid." },
-];
+/* ---------- Metoden teaser (slim link to /metoden) ---------- */
 const MethodSection = () => (
-  <section id="metoden" className="px-6 md:px-12 py-24 md:py-32" style={{ ...sectionStyle, background: "#e9e2d6" }}>
-    <Reveal className="max-w-5xl mx-auto">
-      <Eyebrow>NUREA-metoden</Eyebrow>
-      <h2 className="hero-headline" style={{ fontSize: "clamp(34px, 5vw, 64px)", marginTop: 12 }}>
-        Slik jobber vi.
-      </h2>
-      <p className="hero-body mt-4" style={{ maxWidth: 540 }}>
-        Tre rolige steg. Fra uklarhet til et tydelig digitalt uttrykk som henger sammen.
-      </p>
+  <section id="metoden" className="px-6 md:px-12 py-16 md:py-20" style={{ ...sectionStyle, background: "#e9e2d6" }}>
+    <Reveal className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div>
+        <Eyebrow>NUREA-metoden</Eyebrow>
+        <h2 className="hero-headline" style={{ fontSize: "clamp(24px, 3.2vw, 42px)", marginTop: 10 }}>
+          Utforsk hvordan vi jobber.
+        </h2>
+        <p className="hero-body mt-3" style={{ maxWidth: 460, fontSize: 15.5 }}>
+          Kontrollert fra start til slutt. Revisjonen kommer først, du godkjenner underveis,
+          og alt du trenger for å gå videre er ditt når vi er ferdige.
+        </p>
+      </div>
+      <a
+        href="/metoden"
+        className="self-start md:self-auto"
+        style={{
+          flexShrink: 0,
+          display: "inline-flex",
+          alignItems: "center",
+          height: 50,
+          padding: "0 28px",
+          borderRadius: 999,
+          border: `1.5px solid rgba(42,31,22,0.3)`,
+          color: "#2a1f16",
+          fontFamily: "'Manrope','Inter',sans-serif",
+          fontSize: 14,
+          fontWeight: 700,
+          textDecoration: "none",
+          whiteSpace: "nowrap",
+        }}
+      >
+        Se metoden →
+      </a>
     </Reveal>
-
-    <div className="max-w-5xl mx-auto mt-12 grid gap-x-10 gap-y-12" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
-      {STEPS.map((s, i) => (
-        <Reveal key={s.n} delay={i * 0.08}>
-          <div style={{ borderTop: "2px solid rgba(42,31,22,0.18)", paddingTop: 18 }}>
-            <div style={{ color: accent, fontWeight: 700, fontSize: 13, letterSpacing: "0.1em" }}>STEG {s.n}</div>
-            <div className="hero-headline" style={{ fontSize: 28, marginTop: 10 }}>{s.h}</div>
-            <p className="hero-body" style={{ marginTop: 10, fontSize: 15 }}>{s.p}</p>
-          </div>
-        </Reveal>
-      ))}
-    </div>
-    <Reveal className="max-w-5xl mx-auto mt-10">
-      <a href="/metoden" style={{ color: accent, fontWeight: 700, fontSize: 14 }}>Se hele metoden →</a>
-    </Reveal>
-  </section>
-);
-
-/* ---------- De første 30 dagene (trust: what actually happens) ---------- */
-const ThirtyDaysSection = () => (
-  <section id="forlop" className="px-6 md:px-12 py-24 md:py-32" style={{ ...sectionStyle, background: "#ece5d9" }}>
-    <Reveal className="max-w-5xl mx-auto">
-      <Eyebrow>De første 30 dagene</Eyebrow>
-      <h2 className="hero-headline" style={{ fontSize: "clamp(34px, 5vw, 64px)", marginTop: 12 }}>
-        Du skal vite hva du kjøper.
-      </h2>
-      <p className="hero-body mt-4" style={{ maxWidth: 560 }}>
-        Ingen mystikk. Slik ser den første måneden med NUREA ut, steg for steg, fra
-        diagnose til en tydelig grunnmur du kan bygge videre på.
-      </p>
-    </Reveal>
-
-    <div className="max-w-5xl mx-auto mt-12 grid gap-x-10 gap-y-12" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
-      {WEEK_STEPS.map((s, i) => (
-        <Reveal key={s.n} delay={i * 0.07}>
-          <div style={{ borderTop: "2px solid rgba(42,31,22,0.18)", paddingTop: 18 }}>
-            <div style={{ color: accent, fontWeight: 700, fontSize: 13, letterSpacing: "0.1em", textTransform: "uppercase" }}>{s.n}</div>
-            <div className="hero-headline" style={{ fontSize: 26, marginTop: 10 }}>{s.h}</div>
-            <p className="hero-body" style={{ marginTop: 10, fontSize: 15 }}>{s.p}</p>
-          </div>
-        </Reveal>
-      ))}
-    </div>
   </section>
 );
 
@@ -347,7 +322,6 @@ export const HomeSections = () => (
     <ServicesSection />
     <WorkSection />
     <MethodSection />
-    <ThirtyDaysSection />
     <KlarhetssjekkTeaser />
     <FaqSection />
     <FinalCta />
