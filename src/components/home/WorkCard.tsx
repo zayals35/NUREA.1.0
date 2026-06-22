@@ -72,11 +72,8 @@ export const WorkCard = ({ item, index, total }: { item: WorkItem; index: number
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              transform: reveal ? "scale(1.06)" : "scale(1)",
-              filter: reveal ? "grayscale(0.85) brightness(0.62)" : "none",
-              transition: "filter 0.5s ease, transform 0.6s ease",
             }}
-            className={canHover ? "group-hover:scale-[1.06]" : ""}
+            className=""
           />
 
           {/* Framed brand shot (the real work), inset so the artwork still
