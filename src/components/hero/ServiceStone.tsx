@@ -21,10 +21,11 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
     const pos = breakpoint === "tablet" ? service.phone : service[breakpoint];
     const [imgError, setImgError] = useState(false);
 
-    // Flip the info popover above the stone when it sits low in the viewport,
-    // so it never runs off the bottom edge.
+    // Flip the info popover above the stone when it sits in the lower half, so it
+    // never runs off the bottom edge or collides with the hero copy below. Lowered
+    // to catch the mid-bed phone stones (innhold ~49.5%, merkevare ~50.5%).
     const topNum = parseFloat(pos.top);
-    const placeAbove = topNum > 55;
+    const placeAbove = topNum > 45;
 
     // Default = submerged (blurred, dimmed, desaturated, seen through water).
     // Active = risen above the surface (sharp, bright, clear).
