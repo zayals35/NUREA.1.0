@@ -95,7 +95,7 @@ export const Hero = () => {
   return (
     <section
       className="hero-root relative w-screen h-screen overflow-hidden bg-[#e6ddcf]"
-      style={{ color: "#15233A" }}
+      style={{ color: "#2a1f16" }}
       aria-label="NUREA – Under Overflaten"
       onClick={handleBackdrop}
     >
@@ -257,10 +257,10 @@ export const Hero = () => {
         )}
 
         <footer className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-5 md:pb-8 flex items-end justify-between pointer-events-auto">
-          <span className="hidden lg:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(21,35,58,0.7)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>
+          <span className="hidden lg:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(42,31,22,0.7)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>
             ↓ Utforsk tjenestene under overflaten
           </span>
-          <span className="hidden lg:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(21,35,58,0.55)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>
+          <span className="hidden lg:block text-[11px] uppercase tracking-[0.32em]" style={{ color: "rgba(42,31,22,0.55)", fontFamily: "'Manrope', 'Inter', sans-serif", fontWeight: 500 }}>
             Trondheim · Norge
           </span>
         </footer>

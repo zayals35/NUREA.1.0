@@ -16,6 +16,7 @@ export interface WorkItem {
    *  public/work/. Empty = the card just shows the artwork. */
   shots: string[];
   href?: string;
+  instagram?: string;
 }
 
 export const WORK: WorkItem[] = [
@@ -51,7 +52,27 @@ export const WORK: WorkItem[] = [
       "/work/metanoia/IMG_1636.JPG",
       "/work/metanoia/IMG_1853.JPG",
       "/work/metanoia/IMG_8790.JPEG",
+      "/work/metanoia/IMG_0578.JPG",
+      "/work/metanoia/IMG_0582.JPG",
+      "/work/metanoia/IMG_0589.JPG",
+      "/work/metanoia/IMG_0590.JPG",
+      "/work/metanoia/IMG_0596.JPEG",
+      "/work/metanoia/IMG_0602.JPG",
+      "/work/metanoia/IMG_0607.JPG",
+      "/work/metanoia/IMG_0700.JPG",
+      "/work/metanoia/IMG_0731.JPG",
+      "/work/metanoia/IMG_0738.JPG",
+      "/work/metanoia/IMG_2742.JPEG",
+      "/work/metanoia/IMG_2753.JPEG",
+      "/work/metanoia/IMG_2822.JPEG",
+      "/work/metanoia/IMG_2828.JPEG",
+      "/work/metanoia/IMG_4625.JPG",
+      "/work/metanoia/IMG_4627.JPG",
+      "/work/metanoia/IMG_2158.JPG",
+      "/work/metanoia/IMG_2172.JPG",
+      "/work/metanoia/IMG_2190.JPG",
     ],
+    instagram: "@metanoia.ftp",
   },
   {
     id: "bilmekka",

@@ -189,6 +189,22 @@ export const WorkCard = ({ item, index, total }: { item: WorkItem; index: number
                   {item.href.replace("https://www.", "").replace("https://", "")} ↗
                 </span>
               )}
+              {item.instagram && (
+                <span
+                  style={{
+                    display: "block",
+                    marginTop: 6,
+                    fontFamily: "'Manrope','Inter',sans-serif",
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: "#8a5a2f",
+                    letterSpacing: "0.03em",
+                    opacity: 0.8,
+                  }}
+                >
+                  {item.instagram}
+                </span>
+              )}
             </div>
           )}
         </div>

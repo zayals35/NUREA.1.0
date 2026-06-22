@@ -135,7 +135,7 @@ All colors MUST be HSL.
     font-family: 'Manrope', 'Inter', system-ui, sans-serif;
     font-size: 14px;
     letter-spacing: -0.01em;
-    color: rgba(21, 35, 58, 0.86);
+    color: rgba(42, 31, 22, 0.86);
     font-weight: 500;
   }
   .hero-eyebrow {
@@ -151,7 +151,7 @@ All colors MUST be HSL.
     font-weight: 700;
     letter-spacing: 0.3em;
     font-size: 19px;
-    color: rgba(21, 35, 58, 0.92);
+    color: #2a1f16;
   }
 
   /* Phone / tablet: stones sit on top, copy at the bottom — keep the headline
@@ -601,7 +601,7 @@ All colors MUST be HSL.
   font-size: 10.5px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(21, 35, 58, 0.6);
+  color: rgba(42, 31, 22, 0.6);
   font-weight: 600;
   margin-top: 3px;
 }
