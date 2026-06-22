@@ -22,14 +22,12 @@ const TESTIMONIALS = [
   {
     quote:
       "Før følte det digitale tilfeldig ut. Nå ser vi like seriøse ut som vi faktisk er, og kundene finner fram til oss uten å lure.",
-    name: "Bjørn",
     company: "Bilmekka",
     initial: "B",
   },
   {
     quote:
       "NUREA ryddet opp i hele uttrykket vårt. Alt henger sammen nå, fra første inntrykk til henvendelsen lander der den skal.",
-    name: "Marius",
     company: "Møre Marin",
     initial: "M",
   },
@@ -118,14 +116,6 @@ const avatarStyle: CSSProperties = {
   fontFamily: "'Manrope','Inter',sans-serif",
   fontWeight: 700,
   fontSize: 16,
-};
-const nameStyle: CSSProperties = {
-  fontFamily: "'Manrope','Inter',sans-serif",
-  fontWeight: 600,
-  fontSize: 14,
-  color: cream,
-  margin: 0,
-  lineHeight: 1.3,
 };
 const companyStyle: CSSProperties = {
   fontFamily: "'Manrope','Inter',sans-serif",
@@ -321,9 +311,6 @@ const TestimonialCard = () => {
                 {t.initial}
               </div>
               <div>
-                <p data-detail style={nameStyle}>
-                  {t.name}
-                </p>
                 <p data-detail style={companyStyle}>
                   {t.company}
                 </p>
