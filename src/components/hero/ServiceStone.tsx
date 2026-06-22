@@ -230,7 +230,7 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
             free text beside the stone, no box (organic). */}
         <div
           className={cn(
-            "absolute left-1/2 -translate-x-1/2 w-[210px] text-center z-[60]",
+            "absolute left-1/2 -translate-x-1/2 w-[242px] text-center z-[60]",
             "transition-all duration-300 ease-out",
             active
               ? cn("opacity-100 translate-y-0", isTouch && "pointer-events-auto")
@@ -257,7 +257,7 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
           ) : (
             <>
               <div
-                className="text-[18px] leading-tight"
+                className="text-[21px] leading-tight"
                 style={{
                   fontFamily: "'Bricolage Grotesque', sans-serif",
                   fontWeight: 700,
@@ -268,9 +268,9 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
                 {service.title}
               </div>
               <div
-                className="mt-1 text-[12.5px] leading-snug mx-auto"
+                className="mt-1 text-[14.5px] leading-snug mx-auto"
                 style={{
-                  maxWidth: 200,
+                  maxWidth: 230,
                   color: "rgba(46,33,22,0.85)",
                   textShadow: "0 1px 12px rgba(247,242,232,0.9)",
                 }}
@@ -279,7 +279,7 @@ export const ServiceStone = forwardRef<HTMLButtonElement, Props>(
               </div>
               <a
                 href={service.href}
-                className="pointer-events-auto mt-1.5 inline-block text-[11px] uppercase tracking-[0.22em] transition"
+                className="pointer-events-auto mt-1.5 inline-block text-[13px] uppercase tracking-[0.22em] transition"
                 style={{ color: "#8a5a2f", fontWeight: 700, textShadow: "0 1px 10px rgba(247,242,232,0.9)" }}
               >
                 Les mer →

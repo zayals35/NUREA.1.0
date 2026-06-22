@@ -243,7 +243,7 @@ export const Hero = () => {
               position: "absolute",
               right: "6vw",
               bottom: "max(4vh, 22px)",
-              maxWidth: "min(80vw, 340px)",
+              maxWidth: "min(80vw, 390px)",
               textAlign: "right",
             }}
           >

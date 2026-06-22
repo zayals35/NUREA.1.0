@@ -157,12 +157,12 @@ All colors MUST be HSL.
   /* Phone / tablet: stones sit on top, copy at the bottom — keep the headline
      compact so it fits the bottom band without crowding the stones. */
   @media (max-width: 1023px) {
-    .hero-headline { font-size: clamp(38px, 7vw, 54px); line-height: 1.02; }
-    .hero-body { font-size: 16px; }
+    .hero-headline { font-size: clamp(44px, 8vw, 62px); line-height: 1.02; }
+    .hero-body { font-size: 18px; }
   }
   @media (max-width: 767px) {
-    .hero-headline { font-size: 44px; line-height: 1.02; }
-    .hero-body { font-size: 16px; }
+    .hero-headline { font-size: 50px; line-height: 1.02; }
+    .hero-body { font-size: 18px; }
   }
 
 }
@@ -259,20 +259,20 @@ All colors MUST be HSL.
 .nurea-info-tab .info-title {
   font-family: 'Bricolage Grotesque', sans-serif;
   font-weight: 700;
-  font-size: 17px;
+  font-size: 20px;
   line-height: 1.12;
   color: #fdf6e8;
 }
 .nurea-info-tab .info-desc {
   margin-top: 5px;
-  font-size: 12.5px;
+  font-size: 14.5px;
   line-height: 1.35;
   color: rgba(253, 246, 232, 0.86);
 }
 .nurea-info-tab .info-link {
   display: inline-block;
   margin-top: 10px;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -535,17 +535,17 @@ All colors MUST be HSL.
   position: absolute;
   right: 4vw;
   bottom: 8vh;
-  width: clamp(300px, 34vw, 460px);
+  width: clamp(345px, 39vw, 530px);
   text-align: right;
 }
 .hero-copy .hero-headline {
-  font-size: clamp(52px, 5.6vw, 88px);
+  font-size: clamp(60px, 6.4vw, 101px);
   color: #f3ecdb;
   text-shadow: 0 2px 32px rgba(42, 31, 22, 0.6), 0 1px 10px rgba(42, 31, 22, 0.4);
 }
 .hero-copy .hero-body {
   margin-left: auto;
-  font-size: clamp(16px, 1.6vw, 20px);
+  font-size: clamp(18px, 1.85vw, 23px);
   font-weight: 500;
   color: rgba(243, 236, 219, 0.85);
   max-width: 30ch;
@@ -554,7 +554,7 @@ All colors MUST be HSL.
 /* Hero CTAs: cream, bold, clearly legible on stone */
 .hero-copy .cta-link,
 .hero-touch-copy .cta-link {
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 700;
   color: rgba(243, 236, 219, 0.75);
   border-bottom-color: rgba(243, 236, 219, 0.32);
