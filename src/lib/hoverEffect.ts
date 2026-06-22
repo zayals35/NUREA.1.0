@@ -18,8 +18,8 @@ const DUR_OUT = 0.65;
 // Adaptive tint: dark elements (over the water hero) get a light highlight,
 // light elements (content sections) get a warm dark tint. Keeps the effect
 // visible on every background.
-const TINT_ON_LIGHT = "rgba(26, 23, 19, 0.10)";
-const TINT_ON_DARK = "rgba(250, 250, 249, 0.12)";
+const TINT_ON_LIGHT = "rgba(26, 23, 19, 0.16)";
+const TINT_ON_DARK = "rgba(250, 250, 249, 0.18)";
 
 const SELECTOR = 'a, button, [role="button"]';
 
@@ -48,8 +48,17 @@ function backgroundIsDark(el: Element): boolean {
   return false; // default: assume light background
 }
 
+function hasSolidBackground(bgStr: string): boolean {
+  const m = bgStr.match(/rgba?\(([^)]+)\)/);
+  if (!m) return false;
+  const parts = m[1].split(",").map((p) => parseFloat(p.trim()));
+  const a = parts[3] ?? 1;
+  return a > 0.1;
+}
+
 interface HoverEl extends HTMLElement {
   _restBg?: string;
+  _hasSolidBg?: boolean;
 }
 
 export function attachHoverEffect(selector = SELECTOR) {
@@ -60,26 +69,38 @@ export function attachHoverEffect(selector = SELECTOR) {
     const stone = el.matches(".stone-btn");
 
     if (!stone) {
-      el._restBg = getComputedStyle(el).backgroundColor;
+      const cs = getComputedStyle(el);
+      el._restBg = cs.backgroundColor;
+      // Elements with their own solid background (pill buttons) get lift only —
+      // overlaying a tint would erase their color and make text unreadable.
+      el._hasSolidBg = hasSolidBackground(cs.backgroundColor);
+      if (cs.borderTopLeftRadius === "0px") {
+        el.style.borderRadius = "8px";
+      }
     }
 
     el.addEventListener(
       "mouseenter",
       () => {
-        // Sound always fires — this is what makes the stones audible too.
         // TODO: stones should later use a dedicated stone-movement sound.
         playHover();
 
         if (stone) return; // sound only, no visual
 
-        const tint = backgroundIsDark(el) ? TINT_ON_DARK : TINT_ON_LIGHT;
-        gsap.to(el, {
-          backgroundColor: tint,
+        const tweenVars: gsap.TweenVars = {
           y: prefersReduced ? 0 : -2,
           duration: prefersReduced ? 0 : DUR_IN,
           ease: EASE,
           overwrite: "auto",
-        });
+        };
+        // Only tint transparent-background elements (nav links, FAQ rows).
+        // Solid-background buttons get lift only to avoid washing out their color.
+        if (!el._hasSolidBg) {
+          tweenVars.backgroundColor = backgroundIsDark(el)
+            ? TINT_ON_DARK
+            : TINT_ON_LIGHT;
+        }
+        gsap.to(el, tweenVars);
       },
       { passive: true }
     );
@@ -89,13 +110,16 @@ export function attachHoverEffect(selector = SELECTOR) {
     el.addEventListener(
       "mouseleave",
       () => {
-        gsap.to(el, {
-          backgroundColor: el._restBg ?? "rgba(0,0,0,0)",
+        const tweenVars: gsap.TweenVars = {
           y: 0,
           duration: prefersReduced ? 0 : DUR_OUT,
           ease: EASE,
           overwrite: "auto",
-        });
+        };
+        if (!el._hasSolidBg) {
+          tweenVars.backgroundColor = el._restBg ?? "rgba(0,0,0,0)";
+        }
+        gsap.to(el, tweenVars);
       },
       { passive: true }
     );
