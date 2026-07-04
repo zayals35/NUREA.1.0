@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Hero from "../components/home/Hero";
+import ProblemSection from "../components/home/ProblemSection";
 import GapSection from "../components/home/GapSection";
 import WorkSection from "../components/home/WorkSection";
 import ServicesSection from "../components/home/ServicesSection";
@@ -15,10 +16,11 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <GapSection />
+      <ProblemSection />
       <WorkSection />
       <ServicesSection />
       <MethodSection />
+      <GapSection />
       <OfferSection />
       <FaqSection />
     </main>

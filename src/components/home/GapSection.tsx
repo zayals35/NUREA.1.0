@@ -1,10 +1,9 @@
 import Reveal from "../Reveal";
 import CharReveal from "../CharReveal";
-import { sound } from "../../lib/sound";
 
-const STATEMENT = `Solide bedrifter taper ikke kunder fordi de mangler verdi. De taper kunder fordi verdien ikke blir forstått raskt nok.
+const STATEMENT = `Vi tetter gapet. Mellom det kunden forstår og det bedriften faktisk er. Klarhet og tillit lukker avstanden, steg for steg.
 
-Vi tetter gapet. Mellom det kunden forstår og det bedriften faktisk er. Klarhet og tillit lukker avstanden, steg for steg.`;
+De fleste byråer selger tjenester. Vi selger klarhet. Resultatet er ikke en leveranse du legger i en skuff, men et digitalt uttrykk som henger sammen og gjør jobben for bedriften din.`;
 
 const STATS = [
   { n: "5+", label: "merker bygget fra grunnen, fra identitet til nettside" },
@@ -12,12 +11,9 @@ const STATS = [
   { n: "1", label: "kontaktperson gjennom hele prosessen" },
 ];
 
-const CLIENTS = ["Metanoia", "Bilmekka", "Møre Marin", "Moustache City", "NUE"];
-
 /**
- * The "Vi tetter gapet" moment, in Monolog's problems-section layout: left
- * stats rail, right scroll-revealed statement + signature, brands divider
- * inside the same section.
+ * The "Vi tetter gapet" moment, Monolog problems-section layout: left stats
+ * rail, right char-by-char scroll-revealed statement + founder signature.
  */
 export default function GapSection() {
   return (
@@ -26,7 +22,7 @@ export default function GapSection() {
         <div className="grid gap-14 md:grid-cols-[minmax(220px,1fr)_2.3fr] md:gap-20">
           {/* Left rail */}
           <Reveal className="flex flex-row flex-wrap gap-10 md:flex-col md:gap-14" stagger={0.1}>
-            <p className="eyebrow w-full text-gold md:w-auto">01 · Hvorfor NUREA</p>
+            <p className="eyebrow w-full text-gold md:w-auto">02 · Vi tetter gapet</p>
             {STATS.map((s) => (
               <div key={s.label}>
                 <span className="mono block text-3xl text-cream md:text-4xl">{s.n}</span>
@@ -56,27 +52,6 @@ export default function GapSection() {
               </span>
             </Reveal>
           </div>
-        </div>
-
-        {/* Brands divider, inside the same section like the reference */}
-        <div className="mt-20 grid gap-8 border-t border-cream/10 pt-10 md:mt-28 md:grid-cols-[minmax(220px,1fr)_2.3fr] md:gap-20 md:pt-12">
-          <Reveal>
-            <p className="eyebrow text-cream/50">Merker vi har jobbet med</p>
-          </Reveal>
-          <Reveal
-            className="flex flex-wrap items-baseline gap-x-10 gap-y-5 md:gap-x-14"
-            stagger={0.07}
-          >
-            {CLIENTS.map((name) => (
-              <span
-                key={name}
-                onMouseEnter={() => sound.play("hover")}
-                className="display cursor-default text-xl text-cream/40 transition-[color,transform] duration-300 hover:-translate-y-1 hover:text-cream md:text-3xl"
-              >
-                {name}
-              </span>
-            ))}
-          </Reveal>
         </div>
       </div>
     </section>
