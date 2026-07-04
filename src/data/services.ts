@@ -4,7 +4,8 @@ export interface Service {
   id: ServiceId;
   index: string;
   title: string;
-  stone: string;
+  /** Short plain-language role tag (replaces the retired stone metaphor). */
+  role: string;
   description: string;
   statement: string;
   statementBody: string;
@@ -19,7 +20,7 @@ export const SERVICES: Service[] = [
     id: "merkevare",
     index: "01",
     title: "Merkevare",
-    stone: "Første stein",
+    role: "Der alt begynner",
     description: "Et tydelig uttrykk før du bygger mer.",
     statement: "Merkevaren er ikke logoen. Den er gjenkjennelsen.",
     statementBody:
@@ -30,7 +31,7 @@ export const SERVICES: Service[] = [
       { title: "Stemme og budskap", body: "Måten dere snakker på, så tonen er den samme uansett hvor kunden møter dere." },
       { title: "Merkevarehåndbok", body: "Et enkelt dokument, så identiteten holder seg konsekvent over tid." },
     ],
-    position: "Første stein i grunnmuren",
+    position: "Der alt begynner",
     positionBody: "Merkevaren gir nettsider, innhold og systemer en felles retning å hvile på.",
     ctaHeading: "Klar til å gjøre merkevaren tydelig?",
   },
@@ -38,7 +39,7 @@ export const SERVICES: Service[] = [
     id: "nettsider",
     index: "02",
     title: "Nettsider",
-    stone: "Andre stein",
+    role: "Bygget på merkevaren",
     description: "Bygget for klarhet, tillit og riktige henvendelser.",
     statement: "Nettsiden er ikke brosjyren. Den er salgsteamet som aldri sover.",
     statementBody:
@@ -49,7 +50,7 @@ export const SERVICES: Service[] = [
       { title: "Utvikling", body: "Rask, tilgjengelig og stabil kode. Ingen unødvendige systemer, bare det som trengs." },
       { title: "Lansering og opplæring", body: "Vi setter opp alt og lærer deg å eie siden din, uten avhengighet til oss." },
     ],
-    position: "Andre stein i grunnmuren",
+    position: "Etter merkevaren",
     positionBody: "Nettsiden virker bare når merkevaren bak den er tydelig nok til å bære vekten.",
     ctaHeading: "Klar til å få en nettside som faktisk selger?",
   },
@@ -57,7 +58,7 @@ export const SERVICES: Service[] = [
     id: "innhold",
     index: "03",
     title: "Innhold",
-    stone: "Tredje stein",
+    role: "Fyller siden med mening",
     description: "Ord, bilder og struktur som gjør verdien lettere å forstå.",
     statement: "Sosiale medier er gratis annonsering. Du trenger bare å bruke det riktig.",
     statementBody:
@@ -68,7 +69,7 @@ export const SERVICES: Service[] = [
       { title: "Bilde og visuelt", body: "Foto, illustrasjon og grafikk som forsterker det skrevne og gjør innholdet lettere å ta inn." },
       { title: "Publiseringsplan", body: "Når, hvor og hvor ofte. En ryddig plan som er enkel å følge over tid." },
     ],
-    position: "Tredje stein i grunnmuren",
+    position: "Sammen med nettsiden",
     positionBody: "Innholdet forsterker merkevaren og fyller nettsiden med mening som faktisk holder.",
     ctaHeading: "Klar til å lage innhold som faktisk bygger tillit?",
   },
@@ -76,7 +77,7 @@ export const SERVICES: Service[] = [
     id: "systemer",
     index: "04",
     title: "Systemer",
-    stone: "Fjerde stein",
+    role: "Fjerner friksjon",
     description: "Digitale flyter som gjør hverdagen enklere og mer ryddig.",
     statement: "Et system er ikke et verktøy. Det er flyten som gjør at du slipper å tenke.",
     statementBody:
@@ -87,7 +88,7 @@ export const SERVICES: Service[] = [
       { title: "Automatisering", body: "Gjentakende oppgaver blir håndtert automatisk, slik at ingenting faller mellom stolene." },
       { title: "Opplæring og dokumentasjon", body: "Du og teamet ditt forstår og eier systemene. Ingen svart boks, ingen avhengighet." },
     ],
-    position: "Fjerde stein i grunnmuren",
+    position: "Under alt det andre",
     positionBody: "Systemene bak siden gjør at merkevare, nettsider og innhold lever av seg selv.",
     ctaHeading: "Klar til å kutte friksjon og la systemene jobbe for deg?",
   },
@@ -95,19 +96,19 @@ export const SERVICES: Service[] = [
     id: "reklamer",
     index: "05",
     title: "Reklamer",
-    stone: "Femte stein",
+    role: "Det siste steget",
     description: "Strategiske budskap som gjør synligheten tydeligere.",
-    statement: "Reklame uten grunnmur er støy. Med grunnmur er det forsterkning.",
+    statement: "Reklame uten en tydelig merkevare er støy. Med den er det forsterkning.",
     statementBody:
-      "De fleste bedrifter starter med reklame før de er klare for det. Resultatet er dyrt og skuffende. Vi tilbyr reklame som det siste steget i grunnmuren, når merkevaren, nettsiden og innholdet allerede gjør jobben. Da er hver krone du bruker på synlighet en krone som faktisk lønner seg.",
+      "De fleste bedrifter starter med reklame før de er klare for det. Resultatet er dyrt og skuffende. Vi tilbyr reklame som det siste steget, når merkevaren, nettsiden og innholdet allerede gjør jobben. Da er hver krone du bruker på synlighet en krone som faktisk lønner seg.",
     deliverables: [
       { title: "Kampanjestrategi", body: "Hva vi skal si, til hvem, og hvor. Strategien som gjør at pengene går til rett sted." },
       { title: "Annonsekopi og kreativt", body: "Tekst og visuals forankret i merkevaren. Ikke generisk, men gjenkjennelig." },
       { title: "Kanalvalg og kjøp", body: "Vi velger kanalene der riktig kunde faktisk er, og setter opp kampanjen uten bortkastet budsjett." },
       { title: "Måling og optimering", body: "Vi følger opp, justerer og rapporterer, slik at hver kampanje er bedre enn den forrige." },
     ],
-    position: "Femte stein i grunnmuren",
-    positionBody: "Reklamen er det siste steget. Den virker bare når resten av grunnmuren er klar til å ta imot.",
-    ctaHeading: "Vil du vite om grunnmuren din er klar for reklame?",
+    position: "Det siste steget",
+    positionBody: "Reklamen er det siste steget. Den virker bare når resten allerede gjør jobben.",
+    ctaHeading: "Vil du vite om du er klar for reklame?",
   },
 ];

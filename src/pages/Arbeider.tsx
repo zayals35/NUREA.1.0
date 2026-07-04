@@ -12,7 +12,7 @@ export default function Arbeider() {
         docTitle="Arbeider"
         eyebrow="Arbeider"
         title="Arbeid som gjør bedrifter tydeligere."
-        intro="Et utvalg av merker vi har bygget grunnmur for: identitet, nettsider, innhold og systemer som henger sammen."
+        intro="Et utvalg av merker vi har bygget en tydelig digital retning for: identitet, nettsider, innhold og systemer som henger sammen."
       />
 
       <section className="bg-parchment text-ink">

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import Hero from "../components/home/Hero";
 import ProblemSection from "../components/home/ProblemSection";
 import CloseTheGap from "../components/home/CloseTheGap";
-import GapSection from "../components/home/GapSection";
 import ServicesSection from "../components/home/ServicesSection";
 import MethodSection from "../components/home/MethodSection";
 import OfferSection from "../components/home/OfferSection";
@@ -17,10 +16,9 @@ export default function Home() {
     <main>
       <Hero />
       <ProblemSection />
-      <CloseTheGap />
       <ServicesSection />
+      <CloseTheGap />
       <MethodSection />
-      <GapSection />
       <OfferSection />
       <FaqSection />
     </main>

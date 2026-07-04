@@ -44,7 +44,7 @@ export const WORK: WorkItem[] = [
     title: "Bemanningsbyrå",
     company: "Møre Marin",
     caption:
-      "Logo, nettside, e-postoppsett og CRM-integrasjon samlet i én digital grunnmur for maritim bemanning og rekruttering.",
+      "Logo, nettside, e-postoppsett og CRM-integrasjon samlet i én tydelig digital retning for maritim bemanning og rekruttering.",
     tags: ["Merkevare", "Nettside"],
     metricLabel: "Logo · Nettside · E-post · CRM",
     art: "/work/art-moremarin.webp",

@@ -60,12 +60,12 @@ export default function MethodSection() {
   );
 
   return (
-    <section className="grain relative overflow-hidden bg-parchment text-ink">
+    <section className="grain relative overflow-hidden bg-espresso text-cream">
       <div className="relative z-[2] mx-auto max-w-[1440px] px-6 py-24 md:px-10 md:py-40">
         <Reveal className="max-w-2xl" sfx>
-          <p className="eyebrow text-accent">Metoden</p>
+          <p className="eyebrow text-gold">Metoden</p>
           <h2 className="display-sans mt-6 text-4xl md:text-6xl">Tre rolige steg.</h2>
-          <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-ink/75 md:text-lg">
+          <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-cream/75 md:text-lg">
             Fra uklarhet til et tydelig digitalt uttrykk som henger sammen.
           </p>
         </Reveal>
@@ -74,9 +74,9 @@ export default function MethodSection() {
         <div className="mt-16 grid gap-12 md:mt-24 md:grid-cols-3 md:gap-8">
           {METHOD_STEPS.map((s, i) => (
             <Reveal key={s.h} delay={i * 0.1}>
-              <span className="mono text-sm text-accent">{s.n}</span>
+              <span className="mono text-sm text-gold">{s.n}</span>
               <h3 className="display-sans mt-4 text-3xl md:text-4xl">{s.h}</h3>
-              <p className="mt-4 max-w-[38ch] text-sm leading-relaxed text-ink/70 md:text-base">
+              <p className="mt-4 max-w-[38ch] text-sm leading-relaxed text-cream/70 md:text-base">
                 {s.p}
               </p>
             </Reveal>
@@ -85,16 +85,16 @@ export default function MethodSection() {
 
         {/* Slik starter vi: pinned sequence on desktop */}
         <div ref={weeksRef} className="mt-24 md:mt-36">
-          <h3 className="display-sans text-2xl text-ink md:text-3xl">Slik starter vi</h3>
+          <h3 className="display-sans text-2xl text-cream md:text-3xl">Slik starter vi</h3>
           <div className="relative mt-10">
-            <div className="absolute left-0 top-0 h-px w-full bg-ink/10" />
-            <div className="method-line absolute left-0 top-0 h-px w-full bg-accent" style={{ transform: "scaleX(0)" }} />
+            <div className="absolute left-0 top-0 h-px w-full bg-cream/12" />
+            <div className="method-line absolute left-0 top-0 h-px w-full bg-gold" style={{ transform: "scaleX(0)" }} />
             <div className="grid gap-10 pt-10 md:grid-cols-4 md:gap-8">
               {WEEK_STEPS.map((w) => (
                 <div key={w.n} className="week-step">
-                  <span className="eyebrow text-ink/50">{w.n}</span>
-                  <h4 className="display-sans mt-3 text-xl text-ink md:text-2xl">{w.h}</h4>
-                  <p className="mt-3 max-w-[34ch] text-sm leading-relaxed text-ink/70">{w.p}</p>
+                  <span className="eyebrow text-cream/50">{w.n}</span>
+                  <h4 className="display-sans mt-3 text-xl text-cream md:text-2xl">{w.h}</h4>
+                  <p className="mt-3 max-w-[34ch] text-sm leading-relaxed text-cream/70">{w.p}</p>
                 </div>
               ))}
             </div>
@@ -103,7 +103,7 @@ export default function MethodSection() {
             <Link
               to="/metoden"
               onClick={() => sound.play("click")}
-              className="link-line text-sm font-semibold text-ink/70 hover:text-ink"
+              className="link-line text-sm font-semibold text-cream/70 hover:text-cream"
             >
               Se hele metoden
             </Link>

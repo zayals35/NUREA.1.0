@@ -111,7 +111,7 @@ export default function CloseTheGap() {
       aria-label="Vi tetter gapet"
       className="grain relative flex h-[75vh] w-full flex-col items-center justify-center gap-6 overflow-hidden bg-parchment-alt px-5 text-ink md:h-[88vh] md:gap-8"
     >
-      {/* Textured stage: stone-dot fog on paper */}
+      {/* Textured stage: warm fog on paper */}
       <HalftoneFog amp={0.35} color="#8a8170" color2="#6b6357" />
 
       <div className="relative h-[clamp(240px,46vh,460px)] w-full">

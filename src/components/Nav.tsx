@@ -54,10 +54,10 @@ export default function Nav() {
           >
             <span
               aria-hidden="true"
-              className="block h-8 w-8 bg-cream"
+              className="block h-7 w-7 bg-cream"
               style={{
-                maskImage: "url(/nurea-symbol.webp)",
-                WebkitMaskImage: "url(/nurea-symbol.webp)",
+                maskImage: "url(/nurea-n-mark.webp)",
+                WebkitMaskImage: "url(/nurea-n-mark.webp)",
                 maskSize: "contain",
                 WebkitMaskSize: "contain",
                 maskRepeat: "no-repeat",
@@ -66,6 +66,7 @@ export default function Nav() {
                 WebkitMaskPosition: "center",
               }}
             />
+            <span className="display text-2xl leading-none">Nurea</span>
           </Link>
 
           <div className="hidden items-center gap-8 lg:flex">

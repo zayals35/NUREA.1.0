@@ -11,8 +11,8 @@ export default function Tjenester() {
       <PageHeader
         docTitle="Tjenester"
         eyebrow="Tjenester"
-        title="Fem deler, én grunnmur."
-        intro="Dette er ikke løse produkter du kjøper. Det er ett system som gjør uklar digital tilstedeværelse om til klarhet, tillit og henvendelser, med merkevaren som første stein."
+        title="Fem deler, én retning."
+        intro="Ikke løse produkter du kjøper, men ett system som gjør uklar digital tilstedeværelse om til klarhet, tillit og henvendelser."
       />
 
       <section className="bg-parchment text-ink">
@@ -32,7 +32,7 @@ export default function Tjenester() {
                         {s.title}
                       </h2>
                     </div>
-                    <span className="eyebrow text-ink/40">{s.stone}</span>
+                    <span className="eyebrow text-ink/40">{s.role}</span>
                   </div>
                   <div className="mt-6 grid gap-6 md:grid-cols-2 md:gap-16 md:pl-[calc(1.5rem+24px)]">
                     <p className="display-sans text-xl leading-snug text-ink/80 md:text-2xl">

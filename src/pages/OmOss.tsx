@@ -24,7 +24,7 @@ export default function OmOss() {
       <PageHeader
         docTitle="Om oss"
         eyebrow="Om oss"
-        title="Under overflaten."
+        title="Bak Nurea."
         intro="Et lite studio med én tydelig retning: gjøre solide bedrifter lettere å forstå og lettere å velge."
       />
 

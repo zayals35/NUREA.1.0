@@ -22,7 +22,7 @@ export const WEEK_STEPS: WeekStep[] = [
   },
   {
     n: "Steg 04",
-    h: "Grunnmur",
+    h: "Videre",
     p: "Vi definerer neste steg: nettside, brand, systemer, innhold eller markedsføring.",
   },
 ];

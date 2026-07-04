@@ -18,7 +18,7 @@ export default function TjenesteDetalj() {
     <main>
       <PageHeader
         docTitle={service.title}
-        eyebrow={`${service.index} · ${service.stone} i grunnmuren`}
+        eyebrow={`${service.index} · ${service.role}`}
         title={service.statement}
         intro={service.description}
       />

@@ -19,9 +19,9 @@
   --color-gold: #e8671c;
   --color-gold-soft: #f3d9c5;
 
-  --font-display: "quiche-display", Georgia, serif;
+  --font-display: "Fraunces Variable", "Fraunces", Georgia, serif;
   --font-body: "forma-djr-text", "Inter", system-ui, sans-serif;
-  --font-display-sans: "forma-djr-display", system-ui, sans-serif;
+  --font-display-sans: "Fraunces Variable", "Fraunces", Georgia, serif;
   --font-mono: "mono45-headline", "Courier New", monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -51,21 +51,23 @@ body {
 
 /* ---------- typography roles ---------- */
 
-/* Signature: Quiche Display Bold Italic */
+/* Headline voice: Fraunces, warm optical display cut. Expressive weight/opsz. */
 .display {
   font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.04;
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
+  font-variation-settings: "opsz" 144, "SOFT" 40, "WONK" 1;
 }
 
-/* Workhorse subheads: Forma DJR Display Medium */
+/* Section subheads: same Fraunces face, slightly lighter and smaller optical. */
 .display-sans {
   font-family: var(--font-display-sans);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
+  font-weight: 560;
+  letter-spacing: -0.012em;
+  line-height: 1.08;
+  font-variation-settings: "opsz" 96, "SOFT" 30, "WONK" 0;
 }
 
 /* Labels: Mono45 Headline */

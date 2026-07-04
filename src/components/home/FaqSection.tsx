@@ -53,17 +53,17 @@ export function FaqList({ items, dark = false }: { items: FaqItem[]; dark?: bool
 
 export default function FaqSection() {
   return (
-    <section className="bg-parchment text-ink">
-      <div className="mx-auto max-w-[1440px] px-6 py-24 md:px-10 md:py-40">
+    <section className="grain relative overflow-hidden bg-espresso text-cream">
+      <div className="relative z-[2] mx-auto max-w-[1440px] px-6 py-24 md:px-10 md:py-40">
         <div className="grid gap-12 md:grid-cols-[1fr_2fr] md:gap-20">
           <Reveal>
-            <p className="eyebrow text-accent">FAQ</p>
+            <p className="eyebrow text-gold">FAQ</p>
             <h2 className="display-sans mt-6 text-4xl md:text-5xl">
               Spørsmål vi ofte får.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <FaqList items={FAQ.filter((f) => f.home)} />
+            <FaqList items={FAQ.filter((f) => f.home).slice(0, 4)} dark />
           </Reveal>
         </div>
       </div>

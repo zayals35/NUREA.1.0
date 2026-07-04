@@ -5,36 +5,40 @@ import { sound } from "../../lib/sound";
 
 export default function ServicesSection() {
   return (
-    <section className="bg-parchment-alt text-ink">
-      <div className="mx-auto max-w-[1440px] px-6 py-24 md:px-10 md:py-40">
-        <Reveal className="max-w-2xl">
-          <p className="eyebrow text-accent">Tjenester</p>
-          <h2 className="display-sans mt-6 text-4xl md:text-6xl">Fem deler, én grunnmur.</h2>
-          <p className="mt-6 max-w-[56ch] text-base leading-relaxed text-ink/70 md:text-lg">
-            Dette er ikke løse produkter du kjøper. Det er ett system som gjør
-            uklar digital tilstedeværelse om til klarhet, tillit og
-            henvendelser, med merkevaren som første stein.
-          </p>
+    <section className="grain relative overflow-hidden bg-espresso text-cream">
+      <div className="relative z-[2] mx-auto max-w-[1440px] px-6 py-24 md:px-10 md:py-36">
+        <Reveal className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p className="eyebrow text-gold">Dette gjør vi</p>
+            <h2 className="display-sans mt-6 text-4xl md:text-6xl">Fem deler, én retning.</h2>
+          </div>
+          <Link
+            to="/tjenester"
+            onClick={() => sound.play("click")}
+            className="link-line pb-2 text-sm font-semibold text-cream/70 hover:text-cream"
+          >
+            Se alle tjenester
+          </Link>
         </Reveal>
 
-        <div className="mt-16 border-t border-ink/10 md:mt-24">
+        <div className="mt-14 border-t border-cream/12 md:mt-20">
           {SERVICES.map((s, i) => (
             <Reveal key={s.id} variant="fade-up" delay={i * 0.03}>
               <Link
                 to={`/tjenester/${s.id}`}
                 onClick={() => sound.play("click")}
-                className="group grid grid-cols-[auto_1fr_auto] items-baseline gap-4 border-b border-ink/10 py-8 transition-colors duration-300 hover:bg-ink/[0.03] md:grid-cols-[80px_1fr_1fr_auto] md:gap-8 md:py-10"
+                className="group grid grid-cols-[auto_1fr_auto] items-baseline gap-4 border-b border-cream/12 py-8 transition-colors duration-300 hover:bg-cream/[0.04] md:grid-cols-[80px_1fr_1fr_auto] md:gap-8 md:py-10"
               >
-                <span className="mono text-sm text-accent">{s.index}</span>
+                <span className="mono text-sm text-gold">{s.index}</span>
                 <h3 className="display-sans text-3xl transition-transform duration-400 ease-out group-hover:translate-x-2 md:text-5xl">
                   {s.title}
                 </h3>
-                <p className="col-span-3 max-w-[46ch] text-sm leading-relaxed text-ink/70 md:col-span-1 md:text-base">
+                <p className="col-span-3 max-w-[46ch] text-sm leading-relaxed text-cream/70 md:col-span-1 md:text-base">
                   {s.description}
                 </p>
                 <span
                   aria-hidden="true"
-                  className="hidden text-2xl text-ink/30 transition-[transform,color] duration-300 group-hover:translate-x-1 group-hover:text-accent md:block"
+                  className="hidden text-2xl text-cream/30 transition-[transform,color] duration-300 group-hover:translate-x-1 group-hover:text-gold md:block"
                 >
                   →
                 </span>
