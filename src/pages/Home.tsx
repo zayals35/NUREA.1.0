@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import Hero from "../components/home/Hero";
-import Positioning from "../components/home/Positioning";
-import TrustRow from "../components/home/TrustRow";
-import KineticRibbon from "../components/home/KineticRibbon";
+import GapSection from "../components/home/GapSection";
 import WorkSection from "../components/home/WorkSection";
 import ServicesSection from "../components/home/ServicesSection";
 import MethodSection from "../components/home/MethodSection";
@@ -17,9 +15,7 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <Positioning />
-      <TrustRow />
-      <KineticRibbon />
+      <GapSection />
       <WorkSection />
       <ServicesSection />
       <MethodSection />

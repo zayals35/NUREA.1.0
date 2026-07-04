@@ -5,6 +5,7 @@ import { gsap, prefersReducedMotion } from "../lib/motion";
 import { sound } from "../lib/sound";
 import Button from "./Button";
 import Reveal from "./Reveal";
+import HalftoneFog from "./HalftoneFog";
 
 const LINKS = [
   { to: "/om-oss", label: "Om" },
@@ -53,6 +54,7 @@ export default function Footer() {
 
   return (
     <footer className="grain relative overflow-hidden bg-espresso-deep text-cream">
+      <HalftoneFog amp={0.45} />
       <div className="relative z-[2] mx-auto max-w-[1440px] px-6 pt-24 md:px-10 md:pt-32">
         {/* CTA moment */}
         <Reveal className="max-w-2xl">

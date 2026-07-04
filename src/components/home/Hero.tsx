@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, prefersReducedMotion } from "../../lib/motion";
 import Button from "../Button";
+import HalftoneFog from "../HalftoneFog";
 
 /**
  * Text-first cinematic hero: ambient CSS gradient + warm grain, mission line
@@ -34,11 +35,11 @@ export default function Hero() {
       ref={root}
       className="grain relative flex min-h-svh flex-col overflow-hidden bg-espresso text-cream"
     >
-      <div className="ambient" aria-hidden="true">
-        <span />
-        <span />
-        <span />
-      </div>
+      <HalftoneFog amp={0.68} />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(33,26,18,0.55)_100%)]"
+      />
 
       {/* Mission line */}
       <div className="relative z-[2] flex flex-1 flex-col items-center justify-center px-6 pt-24 text-center">
