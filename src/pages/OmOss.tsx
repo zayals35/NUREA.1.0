@@ -31,7 +31,7 @@ export default function OmOss() {
       <section className="grain relative overflow-hidden bg-espresso text-cream">
         <div className="relative z-[2] mx-auto max-w-[1440px] px-6 pb-24 md:px-10 md:pb-36">
           <WordReveal
-            className="display max-w-4xl text-2xl leading-[1.2] sm:text-3xl md:text-5xl"
+            className="display-sans max-w-4xl text-2xl leading-[1.2] sm:text-3xl md:text-5xl"
             text="Vi bygger merkevare, nettside, innhold og systemer som *ett* *system.* Ikke løse produkter."
           />
           <Reveal className="mt-12 flex items-center gap-4" delay={0.1}>
@@ -59,7 +59,7 @@ export default function OmOss() {
           <div className="mt-12 grid gap-12 md:grid-cols-3 md:gap-10">
             {TRAITS.map((t, i) => (
               <Reveal key={t.h} delay={i * 0.1} className="border-t-2 border-accent/30 pt-6">
-                <h2 className="display text-3xl md:text-4xl">{t.h}</h2>
+                <h2 className="display-sans text-3xl md:text-4xl">{t.h}</h2>
                 <p className="mt-4 max-w-[38ch] text-sm leading-relaxed text-ink/60 md:text-base">
                   {t.p}
                 </p>

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger, prefersReducedMotion } from "../../lib/motion";
+import HalftoneFog from "../HalftoneFog";
 
 /**
  * The "vi tetter gapet" converge animation, ported from the live nurea.no
@@ -110,7 +111,8 @@ export default function CloseTheGap() {
       aria-label="Vi tetter gapet"
       className="grain relative flex h-[75vh] w-full flex-col items-center justify-center gap-6 overflow-hidden bg-parchment-alt px-5 text-ink md:h-[88vh] md:gap-8"
     >
-      <span className="eyebrow relative z-[4] text-accent">Mellom kunde og bedrift</span>
+      {/* Textured stage: stone-dot fog on paper */}
+      <HalftoneFog amp={0.35} color="#8a8170" color2="#6b6357" />
 
       <div className="relative h-[clamp(240px,46vh,460px)] w-full">
         {/* Centre media, scales up as the words converge */}
@@ -138,19 +140,20 @@ export default function CloseTheGap() {
         </div>
 
         {/* The converging words */}
+        {/* Font size lives on the container so the em gap scales with the words. */}
         <div
-          className="pointer-events-none absolute inset-0 z-[3] flex items-center justify-center gap-[0.28em]"
+          className="pointer-events-none absolute inset-0 z-[3] flex items-center justify-center gap-[0.28em] text-[clamp(2rem,11vw,3.6rem)] md:text-[clamp(2.8rem,8.5vw,7.5rem)]"
           aria-hidden="true"
         >
           <span
             ref={leftRef}
-            className="ctg-word display whitespace-nowrap text-[clamp(2rem,11vw,3.6rem)] uppercase leading-[0.94] text-[#e7e1d5] md:text-[clamp(2.8rem,8.5vw,7.5rem)]"
+            className="ctg-word display-sans whitespace-nowrap font-bold uppercase leading-[0.94] text-[#e7e1d5]"
           >
             VI TETTER
           </span>
           <span
             ref={rightRef}
-            className="ctg-word display whitespace-nowrap text-[clamp(2rem,11vw,3.6rem)] uppercase leading-[0.94] text-[#e7e1d5] md:text-[clamp(2.8rem,8.5vw,7.5rem)]"
+            className="ctg-word display-sans whitespace-nowrap font-bold uppercase leading-[0.94] text-[#e7e1d5]"
           >
             GAPET
           </span>

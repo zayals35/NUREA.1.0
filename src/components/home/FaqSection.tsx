@@ -23,7 +23,7 @@ export function FaqList({ items, dark = false }: { items: FaqItem[]; dark?: bool
               aria-expanded={isOpen}
               className="flex w-full items-center justify-between gap-6 py-6 text-left md:py-8"
             >
-              <span className="display text-lg md:text-2xl">{f.q}</span>
+              <span className="display-sans text-lg md:text-2xl">{f.q}</span>
               <span
                 aria-hidden="true"
                 className={`relative h-5 w-5 shrink-0 transition-transform duration-300 ${
@@ -58,7 +58,7 @@ export default function FaqSection() {
         <div className="grid gap-12 md:grid-cols-[1fr_2fr] md:gap-20">
           <Reveal>
             <p className="eyebrow text-accent">FAQ</p>
-            <h2 className="display mt-6 text-4xl md:text-5xl">
+            <h2 className="display-sans mt-6 text-4xl md:text-5xl">
               Spørsmål vi ofte får.
             </h2>
           </Reveal>

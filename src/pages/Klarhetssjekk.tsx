@@ -16,7 +16,7 @@ const REVIEWS = [
 ];
 
 const FIELD =
-  "w-full rounded-xl border border-ink/15 bg-white/50 px-5 py-4 text-base text-ink placeholder:text-ink/35 outline-none transition-[border-color,box-shadow] focus:border-accent focus:shadow-[0_0_0_3px_rgba(138,90,47,0.15)]";
+  "w-full rounded-none border border-ink/15 bg-white/50 px-5 py-4 text-base text-ink placeholder:text-ink/35 outline-none transition-[border-color,box-shadow] focus:border-accent focus:shadow-[0_0_0_3px_rgba(194,81,31,0.15)]";
 
 export default function Klarhetssjekk() {
   const { status, submit } = useWebForm("Klarhetssjekk, ny forespørsel");
@@ -57,7 +57,7 @@ export default function Klarhetssjekk() {
                   <span className="text-xs font-semibold text-accent">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="display text-xl md:text-2xl">{r}</span>
+                  <span className="display-sans text-xl md:text-2xl">{r}</span>
                 </li>
               ))}
             </ul>
@@ -70,7 +70,7 @@ export default function Klarhetssjekk() {
           <Reveal delay={0.1}>
             {status === "ok" ? (
               <div className="rounded-2xl border border-accent/25 bg-white/40 p-10 text-center md:p-16">
-                <p className="display text-5xl md:text-6xl">Takk.</p>
+                <p className="display-sans text-5xl md:text-6xl">Takk.</p>
                 <p className="mx-auto mt-6 max-w-[40ch] text-base leading-relaxed text-ink/65">
                   Vi har mottatt forespørselen din. Du hører fra oss så snart
                   klarhetssjekken er klar.
@@ -102,9 +102,9 @@ export default function Klarhetssjekk() {
                         type="button"
                         onClick={() => toggleFocus(f)}
                         aria-pressed={focus.includes(f)}
-                        className={`rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors ${
+                        className={`mono rounded-none border px-5 py-2.5 text-xs tracking-[0.1em] transition-colors ${
                           focus.includes(f)
-                            ? "border-accent bg-accent text-cream"
+                            ? "border-accent bg-accent text-[#f6efe2]"
                             : "border-ink/20 text-ink/70 hover:border-ink/50"
                         }`}
                       >

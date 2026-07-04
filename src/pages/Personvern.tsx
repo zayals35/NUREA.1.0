@@ -44,14 +44,14 @@ export default function Personvern() {
           <div className="max-w-3xl">
             {SECTIONS.map((s, i) => (
               <Reveal key={s.h} delay={Math.min(i * 0.04, 0.15)} className="border-t border-ink/10 py-10">
-                <h2 className="display text-2xl md:text-3xl">{s.h}</h2>
+                <h2 className="display-sans text-2xl md:text-3xl">{s.h}</h2>
                 <p className="mt-4 max-w-[68ch] text-sm leading-relaxed text-ink/65 md:text-base">
                   {s.p}
                 </p>
               </Reveal>
             ))}
             <Reveal className="border-t border-ink/10 py-10">
-              <h2 className="display text-2xl md:text-3xl">Behandlingsansvarlig</h2>
+              <h2 className="display-sans text-2xl md:text-3xl">Behandlingsansvarlig</h2>
               <p className="mt-4 text-sm leading-relaxed text-ink/65 md:text-base">
                 NUREA, Trondheim, Norge.{" "}
                 <a href={`mailto:${LEAD_EMAIL}`} className="link-line font-semibold text-accent">

@@ -17,7 +17,7 @@ function TierList({ tiers }: { tiers: PriceTier[] }) {
           }`}
         >
           {t.featured && <p className="eyebrow mb-4 text-gold-soft/90">Mest valgt</p>}
-          <h3 className="display text-2xl md:text-3xl">{t.name}</h3>
+          <h3 className="display-sans text-2xl md:text-3xl">{t.name}</h3>
           <p className={`mt-4 text-sm leading-relaxed md:text-base ${t.featured ? "text-cream/70" : "text-ink/60"}`}>
             {t.tagline}
           </p>
@@ -59,13 +59,13 @@ export default function Priser() {
         <div className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-32">
           <Reveal>
             <p className="eyebrow text-accent">Retainer</p>
-            <h2 className="display mt-6 text-3xl md:text-5xl">Velg ditt nivå.</h2>
+            <h2 className="display-sans mt-6 text-3xl md:text-5xl">Velg ditt nivå.</h2>
           </Reveal>
           <TierList tiers={RETAINERS} />
 
           <Reveal className="mt-24 md:mt-32">
             <p className="eyebrow text-accent">Innhold hver måned</p>
-            <h2 className="display mt-6 text-3xl md:text-5xl">Jevnt innhold, i din stil.</h2>
+            <h2 className="display-sans mt-6 text-3xl md:text-5xl">Jevnt innhold, i din stil.</h2>
           </Reveal>
           <TierList tiers={CONTENT_TIERS} />
 

@@ -14,7 +14,7 @@ interface Props {
 }
 
 const BASE =
-  "inline-flex items-center justify-center gap-3 rounded-full px-7 py-4 text-sm font-semibold tracking-wide transition-[transform,box-shadow,background-color,color] duration-200 will-change-transform";
+  "mono inline-flex items-center justify-center gap-3 px-7 py-4 text-xs tracking-[0.14em] transition-[transform,box-shadow,background-color,color] duration-200 will-change-transform";
 
 const VARIANTS = {
   primary:

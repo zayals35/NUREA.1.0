@@ -12,7 +12,7 @@ export default function SoundToggle() {
       onClick={() => sound.toggle()}
       aria-pressed={on}
       aria-label={on ? "Skru av lyd" : "Skru på lyd"}
-      className="group flex h-10 items-center gap-2 rounded-full border border-current/20 px-4 text-[11px] font-semibold tracking-[0.18em] uppercase opacity-80 transition-opacity hover:opacity-100"
+      className="mono group flex h-10 items-center gap-2 border border-current/25 px-4 text-[11px] tracking-[0.18em] opacity-80 transition-opacity hover:opacity-100"
     >
       <span className="flex h-3 items-end gap-[2px]" aria-hidden="true">
         {[0.5, 1, 0.7].map((h, i) => (

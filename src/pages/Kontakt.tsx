@@ -5,7 +5,7 @@ import Button from "../components/Button";
 import { useWebForm, mailtoFallback, LEAD_EMAIL } from "../lib/useWebForm";
 
 const FIELD =
-  "w-full rounded-xl border border-ink/15 bg-white/50 px-5 py-4 text-base text-ink placeholder:text-ink/35 outline-none transition-[border-color,box-shadow] focus:border-accent focus:shadow-[0_0_0_3px_rgba(138,90,47,0.15)]";
+  "w-full rounded-none border border-ink/15 bg-white/50 px-5 py-4 text-base text-ink placeholder:text-ink/35 outline-none transition-[border-color,box-shadow] focus:border-accent focus:shadow-[0_0_0_3px_rgba(194,81,31,0.15)]";
 
 export default function Kontakt() {
   const { status, submit } = useWebForm("Kontaktskjema, ny melding");
@@ -33,7 +33,7 @@ export default function Kontakt() {
         <div className="mx-auto grid max-w-[1440px] gap-16 px-6 py-20 md:grid-cols-[1fr_1.2fr] md:gap-24 md:px-10 md:py-32">
           <Reveal>
             <p className="eyebrow text-accent">Direkte</p>
-            <a href={`mailto:${LEAD_EMAIL}`} className="link-line display mt-6 inline-block text-3xl md:text-4xl">
+            <a href={`mailto:${LEAD_EMAIL}`} className="link-line display-sans mt-6 inline-block text-3xl md:text-4xl">
               {LEAD_EMAIL}
             </a>
             <p className="mt-8 max-w-[44ch] text-sm leading-relaxed text-ink/55 md:text-base">
@@ -55,7 +55,7 @@ export default function Kontakt() {
           <Reveal delay={0.1}>
             {status === "ok" ? (
               <div className="rounded-2xl border border-accent/25 bg-white/40 p-10 text-center md:p-16">
-                <p className="display text-5xl md:text-6xl">Takk.</p>
+                <p className="display-sans text-5xl md:text-6xl">Takk.</p>
                 <p className="mx-auto mt-6 max-w-[40ch] text-base leading-relaxed text-ink/65">
                   Meldingen er sendt. Du hører fra oss snart.
                 </p>

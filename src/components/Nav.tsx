@@ -54,10 +54,10 @@ export default function Nav() {
           >
             <span
               aria-hidden="true"
-              className="block h-7 w-7 bg-cream"
+              className="block h-8 w-8 bg-cream"
               style={{
-                maskImage: "url(/nurea-mark.webp)",
-                WebkitMaskImage: "url(/nurea-mark.webp)",
+                maskImage: "url(/nurea-symbol.webp)",
+                WebkitMaskImage: "url(/nurea-symbol.webp)",
                 maskSize: "contain",
                 WebkitMaskSize: "contain",
                 maskRepeat: "no-repeat",
@@ -66,7 +66,6 @@ export default function Nav() {
                 WebkitMaskPosition: "center",
               }}
             />
-            <span className="display text-xl">Nurea</span>
           </Link>
 
           <div className="hidden items-center gap-8 lg:flex">
@@ -93,7 +92,7 @@ export default function Nav() {
               <Link
                 to="/klarhetssjekk"
                 onClick={() => sound.play("click")}
-                className="inline-flex items-center rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-cream transition-colors hover:bg-[#9c6836]"
+                className="mono inline-flex items-center bg-accent px-5 py-3 text-xs tracking-[0.14em] text-[#f6efe2] transition-colors hover:bg-gold"
               >
                 Få din klarhetssjekk
               </Link>
@@ -161,7 +160,7 @@ export default function Nav() {
           <Link
             to="/klarhetssjekk"
             onClick={() => sound.play("click")}
-            className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-4 text-base font-semibold text-cream"
+            className="mono inline-flex items-center justify-center bg-accent px-6 py-4 text-sm tracking-[0.14em] text-[#f6efe2]"
           >
             Få din klarhetssjekk
           </Link>

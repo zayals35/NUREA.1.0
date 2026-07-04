@@ -26,7 +26,7 @@ export default function TjenesteDetalj() {
       <section className="grain relative overflow-hidden bg-espresso text-cream">
         <div className="relative z-[2] mx-auto max-w-[1440px] px-6 pb-24 md:px-10 md:pb-36">
           <WordReveal
-            className="display max-w-4xl text-2xl leading-[1.2] sm:text-3xl md:text-4xl"
+            className="display-sans max-w-4xl text-2xl leading-[1.2] sm:text-3xl md:text-4xl"
             text={service.statementBody}
           />
         </div>
@@ -43,7 +43,7 @@ export default function TjenesteDetalj() {
                 <span className="text-sm font-semibold text-accent">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h2 className="display mt-3 text-2xl md:text-3xl">{d.title}</h2>
+                <h2 className="display-sans mt-3 text-2xl md:text-3xl">{d.title}</h2>
                 <p className="mt-3 max-w-[52ch] text-sm leading-relaxed text-ink/60 md:text-base">
                   {d.body}
                 </p>
@@ -53,7 +53,7 @@ export default function TjenesteDetalj() {
 
           <Reveal className="mt-24 max-w-2xl">
             <p className="eyebrow text-ink/40">{service.position}</p>
-            <p className="display mt-6 text-2xl leading-snug text-ink/80 md:text-3xl">
+            <p className="display-sans mt-6 text-2xl leading-snug text-ink/80 md:text-3xl">
               {service.positionBody}
             </p>
           </Reveal>
@@ -63,7 +63,7 @@ export default function TjenesteDetalj() {
       <section className="grain relative overflow-hidden bg-espresso-deep text-cream">
         <div className="relative z-[2] mx-auto max-w-[1440px] px-6 py-24 text-center md:px-10 md:py-36">
           <Reveal sfx>
-            <h2 className="display mx-auto max-w-3xl text-3xl sm:text-4xl md:text-6xl">
+            <h2 className="display-sans mx-auto max-w-3xl text-3xl sm:text-4xl md:text-6xl">
               {service.ctaHeading}
             </h2>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">

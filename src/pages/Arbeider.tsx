@@ -52,7 +52,7 @@ export default function Arbeider() {
 
                 <Reveal className="md:sticky md:top-32" delay={0.1}>
                   <p className="eyebrow text-accent">{w.title}</p>
-                  <h2 className="display mt-4 text-4xl md:text-6xl">{w.company}</h2>
+                  <h2 className="display-sans mt-4 text-4xl md:text-6xl">{w.company}</h2>
                   <p className="mono mt-3 text-xs text-ink/45">{w.metricLabel}</p>
                   <p className="mt-6 max-w-[54ch] text-base leading-relaxed text-ink/65 md:text-lg">
                     {w.caption}
@@ -61,7 +61,7 @@ export default function Arbeider() {
                     {w.tags.map((t) => (
                       <span
                         key={t}
-                        className="rounded-full border border-ink/15 px-3 py-1 text-xs font-semibold text-ink/60"
+                        className="mono rounded-none border border-ink/15 px-3 py-1 text-[11px] tracking-[0.1em] text-ink/60"
                       >
                         {t}
                       </span>
@@ -84,7 +84,7 @@ export default function Arbeider() {
           </div>
 
           <Reveal className="mt-28 text-center md:mt-40">
-            <p className="display mx-auto max-w-2xl text-2xl text-ink/70 md:text-3xl">
+            <p className="display-sans mx-auto max-w-2xl text-2xl text-ink/70 md:text-3xl">
               Vil du se hva som er mulig for din bedrift?
             </p>
             <div className="mt-8">

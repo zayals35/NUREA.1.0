@@ -23,20 +23,19 @@ export default function Tjenester() {
                 <Link
                   to={`/tjenester/${s.id}`}
                   onClick={() => sound.play("click")}
-                  onMouseEnter={() => sound.play("hover")}
                   className="group block border-b border-ink/10 py-10 md:py-14"
                 >
                   <div className="flex flex-wrap items-baseline justify-between gap-4">
                     <div className="flex items-baseline gap-6">
                       <span className="text-sm font-semibold text-accent">{s.index}</span>
-                      <h2 className="display text-4xl transition-transform duration-400 ease-out group-hover:translate-x-2 md:text-6xl">
+                      <h2 className="display-sans text-4xl transition-transform duration-400 ease-out group-hover:translate-x-2 md:text-6xl">
                         {s.title}
                       </h2>
                     </div>
                     <span className="eyebrow text-ink/40">{s.stone}</span>
                   </div>
                   <div className="mt-6 grid gap-6 md:grid-cols-2 md:gap-16 md:pl-[calc(1.5rem+24px)]">
-                    <p className="display text-xl leading-snug text-ink/80 md:text-2xl">
+                    <p className="display-sans text-xl leading-snug text-ink/80 md:text-2xl">
                       {s.statement}
                     </p>
                     <div>
@@ -54,7 +53,7 @@ export default function Tjenester() {
           </div>
 
           <Reveal className="mt-20 text-center">
-            <p className="display mx-auto max-w-2xl text-2xl text-ink/70 md:text-3xl">
+            <p className="display-sans mx-auto max-w-2xl text-2xl text-ink/70 md:text-3xl">
               Usikker på hvor du bør starte? Start med klarhet.
             </p>
             <div className="mt-8">

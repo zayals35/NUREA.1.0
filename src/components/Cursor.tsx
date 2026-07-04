@@ -31,13 +31,19 @@ export default function Cursor() {
       ringY(e.clientY);
     };
 
+    // One hover cue per interactive element: only play when entering a NEW one.
+    let lastTarget: Element | null = null;
     const onOver = (e: MouseEvent) => {
       const target = (e.target as HTMLElement).closest(INTERACTIVE);
       if (target) {
         document.body.classList.add("cursor-hover");
-        sound.play("hover");
+        if (target !== lastTarget) {
+          lastTarget = target;
+          sound.play("hover");
+        }
       } else {
         document.body.classList.remove("cursor-hover");
+        lastTarget = null;
       }
     };
 

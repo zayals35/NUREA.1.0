@@ -63,8 +63,8 @@ export default function Hero() {
           Lettere å velge.
         </h1>
         <p
-          className="hero-seq mx-auto mt-8 max-w-[46ch] text-base leading-relaxed text-cream/70 md:text-lg"
-          style={{ animationDelay: "1.3s" }}
+          className="hero-seq mx-auto mt-8 max-w-[46ch] text-base leading-relaxed text-cream/95 md:text-lg"
+          style={{ animationDelay: "1.3s", textShadow: "0 1px 18px rgba(16,14,11,0.8)" }}
         >
           Merkevare, nettsider, innhold og systemer, samlet i én tydelig retning.
         </p>

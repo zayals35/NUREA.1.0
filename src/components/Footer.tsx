@@ -47,7 +47,6 @@ export default function Footer() {
 
   const hoverLetter = (e: React.MouseEvent<HTMLSpanElement>) => {
     if (prefersReducedMotion()) return;
-    sound.play("hover");
     gsap.fromTo(
       e.currentTarget,
       { yPercent: 0 },
@@ -62,8 +61,8 @@ export default function Footer() {
         {/* CTA moment */}
         <Reveal className="max-w-2xl">
           <p className="eyebrow text-gold">Neste steg</p>
-          <h2 className="display mt-6 text-5xl md:text-7xl">La oss snakke.</h2>
-          <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-cream/70 md:text-lg">
+          <h2 className="display-sans mt-6 text-5xl md:text-7xl">La oss snakke.</h2>
+          <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-cream/80 md:text-lg">
             En rolig, uforpliktende samtale om hvor du står, og hva som bør bli
             klarere først.
           </p>
@@ -98,7 +97,7 @@ export default function Footer() {
           <div className="md:text-right">
             <a
               href="mailto:hei@nurea.no"
-              className="link-line display text-2xl text-cream"
+              className="link-line display-sans text-2xl text-cream"
               onClick={() => sound.play("click")}
             >
               hei@nurea.no
