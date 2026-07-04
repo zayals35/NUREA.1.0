@@ -26,7 +26,7 @@ export default function ServicesSection() {
                 onMouseEnter={() => sound.play("hover")}
                 className="group grid grid-cols-[auto_1fr_auto] items-baseline gap-4 border-b border-ink/10 py-8 transition-colors duration-300 hover:bg-ink/[0.03] md:grid-cols-[80px_1fr_1fr_auto] md:gap-8 md:py-10"
               >
-                <span className="text-sm font-semibold text-accent">{s.index}</span>
+                <span className="mono text-sm text-accent">{s.index}</span>
                 <h3 className="display text-3xl transition-transform duration-400 ease-out group-hover:translate-x-2 md:text-5xl">
                   {s.title}
                 </h3>

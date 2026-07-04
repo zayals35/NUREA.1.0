@@ -66,8 +66,8 @@ interface Props {
 export default function HalftoneFog({
   className = "",
   amp = 0.85,
-  color = "#7a4e28",
-  color2 = "#d9b98a",
+  color = "#5d5240",
+  color2 = "#cfc4ac",
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 

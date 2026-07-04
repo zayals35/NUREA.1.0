@@ -1,30 +1,38 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, prefersReducedMotion } from "../../lib/motion";
+import { useVelocitySkew } from "../../lib/useVelocitySkew";
 import Button from "../Button";
 import HalftoneFog from "../HalftoneFog";
 
 /**
- * Text-first cinematic hero: ambient CSS gradient + warm grain, mission line
- * centered, giant wordmark anchored at the bottom. No images block paint.
+ * Text-first cinematic hero: halftone fog + warm grain, mission line
+ * centered, giant signature wordmark anchored at the bottom. On scroll the
+ * mission drifts up while the wordmark sinks under the next section.
  */
 export default function Hero() {
   const root = useRef<HTMLElement>(null);
+  const markRef = useRef<HTMLDivElement>(null);
+
+  useVelocitySkew(markRef, 5);
 
   useGSAP(
     () => {
       if (prefersReducedMotion()) return;
-      // Wordmark drifts down and softens as you scroll past the hero.
-      gsap.to(".hero-mark", {
-        yPercent: 24,
-        opacity: 0.35,
+      // Exit choreography, scrubbed: content lifts and fades, wordmark sinks.
+      gsap.to(".hero-content", {
+        yPercent: -14,
+        autoAlpha: 0,
         ease: "none",
-        scrollTrigger: {
-          trigger: root.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.5,
-        },
+        scrollTrigger: { trigger: root.current, start: "top top", end: "72% top", scrub: 0.4 },
+      });
+      gsap.to(".hero-mark", {
+        yPercent: 30,
+        scale: 1.04,
+        opacity: 0.3,
+        ease: "none",
+        transformOrigin: "center bottom",
+        scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: 0.5 },
       });
     },
     { scope: root }
@@ -38,16 +46,16 @@ export default function Hero() {
       <HalftoneFog amp={0.68} />
       <div
         aria-hidden="true"
-        className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(33,26,18,0.55)_100%)]"
+        className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(16,14,11,0.6)_100%)]"
       />
 
       {/* Mission line */}
-      <div className="relative z-[2] flex flex-1 flex-col items-center justify-center px-6 pt-24 text-center">
+      <div className="hero-content relative z-[2] flex flex-1 flex-col items-center justify-center px-6 pt-24 text-center">
         <p className="hero-seq eyebrow text-cream/60" style={{ animationDelay: "1.0s" }}>
           Merkevare og digital retning · Trondheim
         </p>
         <h1
-          className="hero-seq display mt-8 text-[9.6vw] leading-[1.05] sm:text-6xl md:text-7xl lg:text-8xl"
+          className="hero-seq display mt-8 text-[10vw] leading-[1.08] sm:text-6xl md:text-7xl lg:text-8xl"
           style={{ animationDelay: "1.15s" }}
         >
           Lettere å forstå.
@@ -71,16 +79,17 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Giant wordmark anchored at the bottom */}
+      {/* Giant signature wordmark anchored at the bottom */}
       <div
-        className="hero-mark relative z-[1] flex select-none justify-center overflow-hidden"
+        ref={markRef}
+        className="hero-mark relative z-[1] flex select-none justify-center overflow-hidden will-change-transform"
         aria-hidden="true"
       >
         <span
-          className="hero-seq display block whitespace-nowrap text-[26vw] leading-[0.78] tracking-[-0.04em] text-cream/[0.96] md:text-[23.5vw]"
+          className="hero-seq display block whitespace-nowrap pr-[0.06em] text-[27vw] leading-[1.02] text-cream/[0.96] md:text-[24vw]"
           style={{ animationDelay: "1.55s", animationDuration: "1.1s" }}
         >
-          NUREA
+          Nurea
         </span>
       </div>
 

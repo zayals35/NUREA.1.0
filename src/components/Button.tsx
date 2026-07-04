@@ -18,7 +18,7 @@ const BASE =
 
 const VARIANTS = {
   primary:
-    "bg-accent text-cream hover:bg-[#9c6836] shadow-[0_1px_0_rgba(255,255,255,0.12)_inset] hover:shadow-[0_10px_36px_rgba(138,90,47,0.35)]",
+    "bg-accent text-[#f6efe2] hover:bg-gold shadow-[0_1px_0_rgba(255,255,255,0.12)_inset] hover:shadow-[0_10px_36px_rgba(194,81,31,0.35)]",
   ghost:
     "border border-cream/25 text-cream hover:border-cream/60 hover:bg-cream/5",
   "ghost-dark":

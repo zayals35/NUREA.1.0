@@ -1,6 +1,7 @@
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import Button from "../components/Button";
+import MediaReveal from "../components/MediaReveal";
 import { WORK } from "../data/work";
 import { sound } from "../lib/sound";
 
@@ -25,16 +26,12 @@ export default function Arbeider() {
                 }`}
               >
                 <Reveal variant={i % 2 === 1 ? "slide-left" : "slide-right"}>
-                  <div className="overflow-hidden rounded-2xl">
-                    <img
-                      src={w.art}
-                      alt={`${w.company}, ${w.title}`}
-                      loading={i === 0 ? "eager" : "lazy"}
-                      width={1200}
-                      height={900}
-                      className="aspect-[4/3] w-full object-cover transition-transform duration-[600ms] ease-out hover:scale-[1.045]"
-                    />
-                  </div>
+                  <MediaReveal
+                    src={w.art}
+                    alt={`${w.company}, ${w.title}`}
+                    className="rounded-2xl"
+                    eager={i === 0}
+                  />
                   {w.shots.length > 0 && (
                     <div className="mt-4 grid grid-cols-3 gap-4">
                       {w.shots.map((s) => (
@@ -56,7 +53,7 @@ export default function Arbeider() {
                 <Reveal className="md:sticky md:top-32" delay={0.1}>
                   <p className="eyebrow text-accent">{w.title}</p>
                   <h2 className="display mt-4 text-4xl md:text-6xl">{w.company}</h2>
-                  <p className="mt-3 text-sm text-ink/45">{w.metricLabel}</p>
+                  <p className="mono mt-3 text-xs text-ink/45">{w.metricLabel}</p>
                   <p className="mt-6 max-w-[54ch] text-base leading-relaxed text-ink/65 md:text-lg">
                     {w.caption}
                   </p>

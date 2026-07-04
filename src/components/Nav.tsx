@@ -66,7 +66,7 @@ export default function Nav() {
                 WebkitMaskPosition: "center",
               }}
             />
-            <span className="display text-lg tracking-tight">NUREA</span>
+            <span className="display text-xl">Nurea</span>
           </Link>
 
           <div className="hidden items-center gap-8 lg:flex">

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Reveal from "../Reveal";
+import MediaReveal from "../MediaReveal";
 import { WORK } from "../../data/work";
 import { sound } from "../../lib/sound";
 
@@ -35,24 +36,17 @@ export default function WorkSection() {
                 className="group block"
                 onMouseEnter={() => sound.play("hover")}
               >
-                <div className="overflow-hidden rounded-2xl">
-                  <img
-                    src={w.art}
-                    alt={`${w.company}, ${w.title}`}
-                    loading="lazy"
-                    width={1200}
-                    height={900}
-                    className="aspect-[4/3] w-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.045]"
-                  />
-                </div>
+                <MediaReveal
+                  src={w.art}
+                  alt={`${w.company}, ${w.title}`}
+                  className="rounded-2xl"
+                />
                 <div className="mt-6 flex items-baseline justify-between gap-4">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink/50">
-                      {w.title}
-                    </p>
+                    <p className="eyebrow text-ink/50">{w.title}</p>
                     <h3 className="display mt-2 text-3xl md:text-4xl">{w.company}</h3>
                   </div>
-                  <span className="hidden text-sm text-ink/40 md:block">{w.metricLabel}</span>
+                  <span className="mono hidden text-xs text-ink/40 md:block">{w.metricLabel}</span>
                 </div>
                 <p className="mt-3 max-w-[58ch] text-sm leading-relaxed text-ink/60 md:text-base">
                   {w.caption}

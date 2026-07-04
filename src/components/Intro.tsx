@@ -41,10 +41,10 @@ export default function Intro() {
       }}
     >
       <span
-        className="display text-2xl tracking-tight text-cream/90"
+        className="display text-3xl text-cream/90"
         style={{ animation: "fade-up-in 0.7s cubic-bezier(0.16,1,0.3,1) 0.1s both" }}
       >
-        NUREA
+        Nurea
       </span>
       <style>{`@keyframes fade-up-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }`}</style>
     </div>

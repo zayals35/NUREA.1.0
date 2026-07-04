@@ -26,10 +26,10 @@ export default function GapSection() {
         <div className="grid gap-14 md:grid-cols-[minmax(220px,1fr)_2.3fr] md:gap-20">
           {/* Left rail */}
           <Reveal className="flex flex-row flex-wrap gap-10 md:flex-col md:gap-14" stagger={0.1}>
-            <p className="eyebrow w-full text-accent md:w-auto">01 · Hvorfor NUREA</p>
+            <p className="eyebrow w-full text-gold md:w-auto">01 · Hvorfor NUREA</p>
             {STATS.map((s) => (
               <div key={s.label}>
-                <span className="display block text-4xl text-cream md:text-5xl">{s.n}</span>
+                <span className="mono block text-3xl text-cream md:text-4xl">{s.n}</span>
                 <span className="mt-2 block max-w-[22ch] text-xs leading-snug text-cream/50 md:text-sm">
                   {s.label}
                 </span>
@@ -61,7 +61,7 @@ export default function GapSection() {
         {/* Brands divider, inside the same section like the reference */}
         <div className="mt-20 grid gap-8 border-t border-cream/10 pt-10 md:mt-28 md:grid-cols-[minmax(220px,1fr)_2.3fr] md:gap-20 md:pt-12">
           <Reveal>
-            <p className="text-sm font-semibold text-cream/60">Merker vi har jobbet med</p>
+            <p className="eyebrow text-cream/50">Merker vi har jobbet med</p>
           </Reveal>
           <Reveal
             className="flex flex-wrap items-baseline gap-x-10 gap-y-5 md:gap-x-14"

@@ -18,7 +18,7 @@ export default function PageHeader({ eyebrow, title, intro, docTitle, children }
   return (
     <header className="grain relative overflow-hidden bg-espresso text-cream">
       <div className="relative z-[2] mx-auto max-w-[1440px] px-6 pb-20 pt-36 md:px-10 md:pb-28 md:pt-48">
-        <p className="page-seq eyebrow text-accent" style={{ animationDelay: "0.05s" }}>
+        <p className="page-seq eyebrow text-gold" style={{ animationDelay: "0.05s" }}>
           {eyebrow}
         </p>
         <h1

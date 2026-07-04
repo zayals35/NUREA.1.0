@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import { gsap, prefersReducedMotion } from "../lib/motion";
+import { useVelocitySkew } from "../lib/useVelocitySkew";
 import { sound } from "../lib/sound";
 import Button from "./Button";
 import Reveal from "./Reveal";
@@ -20,6 +21,8 @@ const LINKS = [
 
 export default function Footer() {
   const markRef = useRef<HTMLDivElement>(null);
+
+  useVelocitySkew(markRef, 5);
 
   useGSAP(
     () => {
@@ -58,7 +61,7 @@ export default function Footer() {
       <div className="relative z-[2] mx-auto max-w-[1440px] px-6 pt-24 md:px-10 md:pt-32">
         {/* CTA moment */}
         <Reveal className="max-w-2xl">
-          <p className="eyebrow text-accent">Neste steg</p>
+          <p className="eyebrow text-gold">Neste steg</p>
           <h2 className="display mt-6 text-5xl md:text-7xl">La oss snakke.</h2>
           <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-cream/70 md:text-lg">
             En rolig, uforpliktende samtale om hvor du står, og hva som bør bli
@@ -119,8 +122,8 @@ export default function Footer() {
           className="mt-20 flex select-none justify-center overflow-hidden md:mt-24"
           aria-hidden="true"
         >
-          <div className="display flex whitespace-nowrap text-[27vw] leading-[0.8] text-cream/[0.92] md:text-[24vw]">
-            {"NUREA".split("").map((c, i) => (
+          <div className="display flex whitespace-nowrap pr-[0.06em] text-[27vw] leading-[1.02] text-cream/[0.92] md:text-[24vw]">
+            {"Nurea".split("").map((c, i) => (
               <span
                 key={i}
                 className="ltr inline-block cursor-default will-change-transform"

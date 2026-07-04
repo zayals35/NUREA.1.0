@@ -50,8 +50,8 @@ export default function Metoden() {
 
           <div className="mt-24 max-w-3xl md:mt-32">
             <WordReveal
-              brightColor="#2a1f16"
-              dimColor="rgba(42, 31, 22, 0.22)"
+              brightColor="#1a1714"
+              dimColor="rgba(26, 23, 20, 0.22)"
               className="display text-2xl leading-[1.2] text-ink sm:text-3xl md:text-4xl"
               text="Vi bygger merkevare, nettside, innhold og systemer som *ett* *system.* Ikke løse produkter."
             />
