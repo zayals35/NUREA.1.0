@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Hero from "../components/home/Hero";
+import TrustBelt from "../components/home/TrustBelt";
 import ProblemSection from "../components/home/ProblemSection";
 import CloseTheGap from "../components/home/CloseTheGap";
 import ServicesSection from "../components/home/ServicesSection";
@@ -15,6 +16,7 @@ export default function Home() {
   return (
     <main>
       <Hero />
+      <TrustBelt />
       <ProblemSection />
       <ServicesSection />
       <CloseTheGap />

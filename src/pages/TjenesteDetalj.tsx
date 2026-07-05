@@ -75,7 +75,7 @@ export default function TjenesteDetalj() {
             <Link
               to={`/tjenester/${next.id}`}
               onClick={() => sound.play("click")}
-              className="link-line mt-12 inline-block text-sm text-cream/60 hover:text-cream"
+              className="link-line mt-12 inline-block text-sm text-cream/70 hover:text-cream"
             >
               Neste: {next.index} {next.title}
             </Link>

@@ -43,7 +43,7 @@ export default function OmOss() {
             </span>
             <span>
               <span className="block font-semibold text-cream">Zaynab</span>
-              <span className="block text-sm text-cream/50">
+              <span className="block text-sm text-cream/65">
                 Grunnlegger og din kontaktperson i hvert prosjekt
               </span>
             </span>

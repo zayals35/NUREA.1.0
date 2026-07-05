@@ -77,8 +77,8 @@ export default function Footer() {
         {/* Links + contact */}
         <div className="mt-24 grid gap-12 border-t border-cream/10 pt-12 md:grid-cols-3 md:gap-8">
           <div>
-            <p className="eyebrow text-cream/40">NUREA</p>
-            <p className="mt-4 max-w-[36ch] text-sm leading-relaxed text-cream/60">
+            <p className="eyebrow text-cream/55">NUREA</p>
+            <p className="mt-4 max-w-[36ch] text-sm leading-relaxed text-cream/70">
               Merkevare og digital retning. Trondheim, Norge.
             </p>
           </div>
@@ -102,7 +102,7 @@ export default function Footer() {
             >
               hei@nurea.no
             </a>
-            <p className="mt-4 text-sm text-cream/50">
+            <p className="mt-4 text-sm text-cream/65">
               <a
                 href="https://www.instagram.com/nurea.no"
                 target="_blank"
@@ -134,7 +134,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between border-t border-cream/10 py-6 text-xs text-cream/40">
+        <div className="flex items-center justify-between border-t border-cream/10 py-6 text-xs text-cream/55">
           <span>© {new Date().getFullYear()} NUREA</span>
           <span>Lettere å forstå. Lettere å velge.</span>
         </div>

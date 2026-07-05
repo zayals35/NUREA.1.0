@@ -6,7 +6,7 @@ import { sound } from "../../lib/sound";
 export function FaqList({ items, dark = false }: { items: FaqItem[]; dark?: boolean }) {
   const [open, setOpen] = useState<number | null>(null);
   const border = dark ? "border-cream/12" : "border-ink/10";
-  const muted = dark ? "text-cream/60" : "text-ink/60";
+  const muted = dark ? "text-cream/75" : "text-ink/70";
 
   return (
     <div className={`border-t ${border}`}>

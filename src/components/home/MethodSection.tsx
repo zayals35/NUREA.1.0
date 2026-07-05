@@ -92,7 +92,7 @@ export default function MethodSection() {
             <div className="grid gap-10 pt-10 md:grid-cols-4 md:gap-8">
               {WEEK_STEPS.map((w) => (
                 <div key={w.n} className="week-step">
-                  <span className="eyebrow text-cream/50">{w.n}</span>
+                  <span className="eyebrow text-cream/60">{w.n}</span>
                   <h4 className="display-sans mt-3 text-xl text-cream md:text-2xl">{w.h}</h4>
                   <p className="mt-3 max-w-[34ch] text-sm leading-relaxed text-cream/70">{w.p}</p>
                 </div>

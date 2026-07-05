@@ -138,7 +138,7 @@ export default function Nav() {
             <NavLink
               key={l.to}
               to={l.to}
-              className="display py-2 text-4xl text-cream transition-[opacity,transform] duration-500"
+              className="display-sans py-2 text-4xl text-cream transition-[opacity,transform] duration-500"
               style={{
                 transitionDelay: open ? `${i * 60 + 100}ms` : "0ms",
                 opacity: open ? 1 : 0,

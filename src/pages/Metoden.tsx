@@ -21,7 +21,7 @@ export default function Metoden() {
               <Reveal key={s.h} delay={i * 0.12}>
                 <span className="display-sans text-6xl text-accent/60 md:text-7xl">{s.n}</span>
                 <h2 className="display-sans mt-6 text-3xl md:text-4xl">{s.h}</h2>
-                <p className="mt-4 max-w-[38ch] text-sm leading-relaxed text-cream/60 md:text-base">
+                <p className="mt-4 max-w-[38ch] text-sm leading-relaxed text-cream/75 md:text-base">
                   {s.p}
                 </p>
               </Reveal>

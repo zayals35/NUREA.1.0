@@ -43,7 +43,7 @@ export default function OfferSection() {
           <Button to="/klarhetssjekk" className="px-10 py-5 text-base">
             Få din klarhetssjekk
           </Button>
-          <p className="mt-6 text-xs text-cream/60">
+          <p className="mt-6 text-xs text-cream/70">
             Vi ser på førsteinntrykk, tydelighet, tillit, mobilopplevelse, CTA
             og kontaktflyt.
           </p>
