@@ -85,10 +85,8 @@ export default function Nav() {
             ))}
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="hidden md:block">
-              <SoundToggle />
-            </div>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <SoundToggle />
             <Magnetic className="hidden sm:block">
               <Link
                 to="/klarhetssjekk"
@@ -157,7 +155,6 @@ export default function Nav() {
             transform: open ? "none" : "translateY(24px)",
           }}
         >
-          <SoundToggle />
           <Link
             to="/klarhetssjekk"
             onClick={() => sound.play("click")}
