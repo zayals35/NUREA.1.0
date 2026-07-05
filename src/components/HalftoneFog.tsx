@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { prefersReducedMotion } from "../lib/motion";
 
 /**
@@ -70,6 +70,9 @@ export default function HalftoneFog({
   color2 = "#cfc4ac",
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // No WebGL (hardware acceleration off, blocklisted GPU, context lost):
+  // swap to an animated CSS gradient in the same tones instead of going flat.
+  const [fallback, setFallback] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -80,7 +83,10 @@ export default function HalftoneFog({
       antialias: false,
       powerPreference: "low-power",
     });
-    if (!gl) return; // no WebGL: section bg + grain still stand on their own
+    if (!gl) {
+      setFallback(true);
+      return;
+    }
 
     const compile = (type: number, src: string) => {
       const sh = gl.createShader(type)!;
@@ -92,8 +98,17 @@ export default function HalftoneFog({
     gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT));
     gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
     gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      setFallback(true);
+      return;
+    }
     gl.useProgram(prog);
+
+    const onContextLost = (e: Event) => {
+      e.preventDefault();
+      setFallback(true);
+    };
+    canvas.addEventListener("webglcontextlost", onContextLost);
 
     const buf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
@@ -141,7 +156,10 @@ export default function HalftoneFog({
 
     if (prefersReducedMotion()) {
       draw(20); // one calm static frame
-      return () => ro.disconnect();
+      return () => {
+        canvas.removeEventListener("webglcontextlost", onContextLost);
+        ro.disconnect();
+      };
     }
 
     let raf = 0;
@@ -163,11 +181,26 @@ export default function HalftoneFog({
     io.observe(canvas);
 
     return () => {
+      canvas.removeEventListener("webglcontextlost", onContextLost);
       io.disconnect();
       ro.disconnect();
       cancelAnimationFrame(raf);
     };
-  }, [amp, color, color2]);
+  }, [amp, color, color2, fallback]);
+
+  if (fallback) {
+    return (
+      <div
+        aria-hidden="true"
+        className={`ambient ${className}`}
+        style={{ opacity: Math.min(1, amp * 0.9 + 0.1) }}
+      >
+        <span style={{ background: `radial-gradient(circle, ${color}66, transparent 65%)` }} />
+        <span style={{ background: `radial-gradient(circle, ${color2}2b, transparent 65%)` }} />
+        <span style={{ background: `radial-gradient(circle, ${color}59, transparent 68%)` }} />
+      </div>
+    );
+  }
 
   return (
     <canvas
