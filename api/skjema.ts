@@ -25,6 +25,8 @@ interface Section {
 }
 interface Submission {
   contact: { bedrift: string; navn: string; epost: string };
+  /** Service titles the client picked in the form's first step. */
+  services?: string[];
   sections: Section[];
 }
 
@@ -36,6 +38,10 @@ function isValid(body: unknown): body is Submission {
     b.contact.bedrift.trim().length > 0 &&
     typeof b.contact?.epost === "string" &&
     b.contact.epost.includes("@") &&
+    (b.services === undefined ||
+      (Array.isArray(b.services) &&
+        b.services.length <= 10 &&
+        b.services.every((s) => typeof s === "string"))) &&
     Array.isArray(b.sections) &&
     b.sections.length > 0 &&
     b.sections.length <= 20 &&
@@ -86,6 +92,7 @@ async function sendEmail(sub: Submission, filedNote: string): Promise<boolean> {
       Bedrift: sub.contact.bedrift,
       Navn: sub.contact.navn,
       "E-post": sub.contact.epost,
+      Tjenester: sub.services?.length ? sub.services.join(", ") : "(ikke valgt)",
       Besvart: `${answered} spørsmål`,
       Arkivering: filedNote,
       Svar: asText(sub),
@@ -111,6 +118,7 @@ async function fileInVault(sub: Submission): Promise<string> {
     `bedrift: "${sub.contact.bedrift.replace(/"/g, "'")}"`,
     `kontakt: "${sub.contact.navn.replace(/"/g, "'")}"`,
     `epost: "${sub.contact.epost.replace(/"/g, "'")}"`,
+    `tjenester: "${(sub.services ?? []).join(", ").replace(/"/g, "'")}"`,
     `mottatt: ${now.toISOString()}`,
     "kilde: nurea.no/skjema",
     "status: ny",

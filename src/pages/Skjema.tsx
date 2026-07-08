@@ -4,7 +4,8 @@ import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import Button from "../components/Button";
 import { mailtoFallback, type FormStatus } from "../lib/useWebForm";
-import { SKJEMA, TOTAL_QUESTIONS, type SkjemaSection } from "../data/skjema";
+import { SKJEMA, REQUIRED_IDS, type SkjemaSection } from "../data/skjema";
+import { SERVICES, type ServiceId } from "../data/services";
 import { sound } from "../lib/sound";
 
 const STORAGE_KEY = "nurea-skjema-v1";
@@ -21,16 +22,26 @@ interface Contact {
 interface Saved {
   contact: Contact;
   answers: Record<string, string>;
+  services: ServiceId[];
 }
 
 function loadSaved(): Saved {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as Saved;
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<Saved>;
+      return {
+        contact: { bedrift: "", navn: "", epost: "", ...parsed.contact },
+        answers: parsed.answers ?? {},
+        services: (parsed.services ?? []).filter((id) =>
+          SERVICES.some((s) => s.id === id)
+        ),
+      };
+    }
   } catch {
     /* corrupt or unavailable storage; start clean */
   }
-  return { contact: { bedrift: "", navn: "", epost: "" }, answers: {} };
+  return { contact: { bedrift: "", navn: "", epost: "" }, answers: {}, services: [] };
 }
 
 /** One collapsible questionnaire section, styled as a site list row. */
@@ -41,6 +52,7 @@ function AccordionSection({
   onToggle,
   answers,
   setAnswer,
+  missing,
 }: {
   section: SkjemaSection;
   index: number;
@@ -48,6 +60,7 @@ function AccordionSection({
   onToggle: () => void;
   answers: Record<string, string>;
   setAnswer: (id: string, value: string) => void;
+  missing: string[];
 }) {
   const done = section.questions.filter((q) => answers[q.id]?.trim()).length;
   const total = section.questions.length;
@@ -100,13 +113,23 @@ function AccordionSection({
                   className="mb-2 block text-sm font-semibold leading-relaxed"
                 >
                   {q.text}
+                  {q.required && (
+                    <span className="text-accent" aria-hidden="true">
+                      {" "}
+                      *
+                    </span>
+                  )}
                 </label>
                 <textarea
                   id={q.id}
                   rows={q.tall ? 4 : 2}
                   value={answers[q.id] ?? ""}
                   onChange={(e) => setAnswer(q.id, e.target.value)}
-                  className={`${FIELD} resize-y`}
+                  aria-required={q.required || undefined}
+                  aria-invalid={missing.includes(q.id) || undefined}
+                  className={`${FIELD} resize-y ${
+                    missing.includes(q.id) ? "border-accent" : ""
+                  }`}
                 />
               </div>
             ))}
@@ -118,9 +141,10 @@ function AccordionSection({
 }
 
 export default function Skjema() {
-  const [{ contact, answers }, setSaved] = useState<Saved>(loadSaved);
+  const [{ contact, answers, services }, setSaved] = useState<Saved>(loadSaved);
   const [status, setStatus] = useState<FormStatus>("idle");
   const [open, setOpen] = useState<Record<string, boolean>>({ [SKJEMA[0].id]: true });
+  const [missing, setMissing] = useState<string[]>([]);
   const saveTimer = useRef<number>(undefined);
 
   // Autosave: everything typed lands in localStorage, debounced.
@@ -128,28 +152,66 @@ export default function Skjema() {
     window.clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ contact, answers }));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ contact, answers, services }));
       } catch {
         /* storage full or blocked; the form still works */
       }
     }, 400);
     return () => window.clearTimeout(saveTimer.current);
-  }, [contact, answers]);
+  }, [contact, answers, services]);
 
   const setContact = (field: keyof Contact, value: string) =>
     setSaved((s) => ({ ...s, contact: { ...s.contact, [field]: value } }));
-  const setAnswer = (id: string, value: string) =>
+  const setAnswer = (id: string, value: string) => {
     setSaved((s) => ({ ...s, answers: { ...s.answers, [id]: value } }));
+    if (value.trim()) setMissing((m) => m.filter((x) => x !== id));
+  };
 
   const toggle = (id: string) => {
     sound.play("click");
     setOpen((o) => ({ ...o, [id]: !o[id] }));
   };
 
-  const answered = Object.values(answers).filter((v) => v.trim()).length;
+  const toggleService = (id: ServiceId) => {
+    sound.play("click");
+    setSaved((s) => ({
+      ...s,
+      services: s.services.includes(id)
+        ? s.services.filter((x) => x !== id)
+        : [...s.services, id],
+    }));
+  };
+
+  // Core sections always show; service sections only when a matching service is picked.
+  const visible = SKJEMA.filter(
+    (s) => !s.services || s.services.some((id) => services.includes(id))
+  );
+  const visibleQuestions = visible.flatMap((s) => s.questions);
+  const answered = visibleQuestions.filter((q) => answers[q.id]?.trim()).length;
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // The starred questions are the only ones that block submission.
+    const missingIds = REQUIRED_IDS.filter((id) => !answers[id]?.trim());
+    if (missingIds.length > 0) {
+      setMissing(missingIds);
+      setOpen((o) => {
+        const next = { ...o };
+        for (const s of SKJEMA) {
+          if (s.questions.some((q) => missingIds.includes(q.id))) next[s.id] = true;
+        }
+        return next;
+      });
+      window.setTimeout(() => {
+        const el = document.getElementById(missingIds[0]);
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        el?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+        el?.focus({ preventScroll: true });
+      }, 120);
+      return;
+    }
+
     setStatus("sending");
     try {
       const res = await fetch("/api/skjema", {
@@ -157,7 +219,10 @@ export default function Skjema() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contact,
-          sections: SKJEMA.map((s) => ({
+          services: services.map(
+            (id) => SERVICES.find((s) => s.id === id)?.title ?? id
+          ),
+          sections: visible.map((s) => ({
             title: s.title,
             questions: s.questions.map((q) => ({
               text: q.text,
@@ -183,7 +248,7 @@ export default function Skjema() {
     <main>
       <PageHeader
         docTitle="Spørreskjema"
-        eyebrow="Oppstart · 20 til 30 minutter"
+        eyebrow="Oppstart · 15 til 25 minutter"
         title="Før vi bygger noe, vil vi forstå dere ordentlig."
         intro="Svar kort og ærlig, gjerne i stikkord. Det finnes ingen feil svar. Det du skriver her blir fundamentet for alt vi lager."
       />
@@ -205,14 +270,57 @@ export default function Skjema() {
               <Reveal>
                 <p className="max-w-[52ch] text-sm leading-relaxed text-ink/55">
                   Ta det i ditt eget tempo. Svarene lagres automatisk i nettleseren
-                  din, så du kan lukke siden og komme tilbake senere. Hopp gjerne
-                  over det som ikke passer.
+                  din, så du kan lukke siden og komme tilbake senere. Bare feltene
+                  merket med <span className="font-semibold text-accent">*</span> må
+                  fylles ut; hopp gjerne over resten der det ikke passer.
                 </p>
 
-                <div className="mt-10 grid gap-6 md:grid-cols-3">
+                <div className="mt-12">
+                  <p className="text-sm font-semibold">
+                    Hva gjelder det?{" "}
+                    <span className="font-normal text-ink/45">
+                      Velg gjerne flere. Skjemaet viser bare det som er relevant.
+                    </span>
+                  </p>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+                    {SERVICES.map((s) => {
+                      const on = services.includes(s.id);
+                      return (
+                        <button
+                          key={s.id}
+                          type="button"
+                          aria-pressed={on}
+                          onClick={() => toggleService(s.id)}
+                          className={`rounded-none border px-5 py-4 text-left transition-colors ${
+                            on
+                              ? "border-accent bg-white/50"
+                              : "border-ink/15 bg-white/20 hover:border-ink/40"
+                          }`}
+                        >
+                          <span
+                            className={`text-xs font-semibold ${
+                              on ? "text-accent" : "text-ink/40"
+                            }`}
+                          >
+                            {s.index}
+                          </span>
+                          <span className="display-sans mt-1 block text-lg">{s.title}</span>
+                          <span className="mt-1 block text-xs leading-relaxed text-ink/50">
+                            {s.description}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="mt-12 grid gap-6 md:grid-cols-3">
                   <div>
                     <label htmlFor="bedrift" className="mb-2 block text-sm font-semibold">
-                      Bedrift *
+                      Bedrift{" "}
+                      <span className="text-accent" aria-hidden="true">
+                        *
+                      </span>
                     </label>
                     <input
                       id="bedrift"
@@ -225,7 +333,10 @@ export default function Skjema() {
                   </div>
                   <div>
                     <label htmlFor="navn" className="mb-2 block text-sm font-semibold">
-                      Navn *
+                      Navn{" "}
+                      <span className="text-accent" aria-hidden="true">
+                        *
+                      </span>
                     </label>
                     <input
                       id="navn"
@@ -238,7 +349,10 @@ export default function Skjema() {
                   </div>
                   <div>
                     <label htmlFor="epost" className="mb-2 block text-sm font-semibold">
-                      E-post *
+                      E-post{" "}
+                      <span className="text-accent" aria-hidden="true">
+                        *
+                      </span>
                     </label>
                     <input
                       id="epost"
@@ -255,7 +369,7 @@ export default function Skjema() {
 
               <Reveal>
                 <div className="mt-16 border-t border-ink/10">
-                  {SKJEMA.map((section, i) => (
+                  {visible.map((section, i) => (
                     <AccordionSection
                       key={section.id}
                       section={section}
@@ -264,6 +378,7 @@ export default function Skjema() {
                       onToggle={() => toggle(section.id)}
                       answers={answers}
                       setAnswer={setAnswer}
+                      missing={missing}
                     />
                   ))}
                 </div>
@@ -271,13 +386,18 @@ export default function Skjema() {
 
               <div className="mt-14">
                 <p className="mono text-xs tracking-[0.14em] text-ink/45">
-                  {answered} av {TOTAL_QUESTIONS} besvart
+                  {answered} av {visibleQuestions.length} besvart
                 </p>
                 <div className="mt-6">
                   <Button type="submit" className="w-full py-5 text-base sm:w-auto sm:px-12">
                     {status === "sending" ? "Sender…" : "Send inn svarene"}
                   </Button>
                 </div>
+                {missing.length > 0 && (
+                  <p className="mt-4 text-sm text-accent" role="alert">
+                    Noen av feltene merket med * mangler svar. Vi har åpnet dem for deg.
+                  </p>
+                )}
                 <p className="mt-6 max-w-[52ch] text-sm leading-relaxed text-ink/55">
                   Svarene behandles konfidensielt og brukes bare i prosjektet vårt
                   sammen. Les mer i{" "}
