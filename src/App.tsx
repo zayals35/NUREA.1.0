@@ -16,6 +16,7 @@ const Klarhetssjekk = lazy(() => import("./pages/Klarhetssjekk"));
 const Priser = lazy(() => import("./pages/Priser"));
 const OmOss = lazy(() => import("./pages/OmOss"));
 const Kontakt = lazy(() => import("./pages/Kontakt"));
+const Skjema = lazy(() => import("./pages/Skjema"));
 const Personvern = lazy(() => import("./pages/Personvern"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -117,6 +118,7 @@ export default function App() {
           <Route path="/priser" element={<Priser />} />
           <Route path="/om-oss" element={<OmOss />} />
           <Route path="/kontakt" element={<Kontakt />} />
+          <Route path="/skjema" element={<Skjema />} />
           <Route path="/personvern" element={<Personvern />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
