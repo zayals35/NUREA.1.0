@@ -191,6 +191,8 @@ export default function Skjema() {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // Honeypot: humans never see the field; bots that fill it get dropped server-side.
+    const honeypot = String(new FormData(e.currentTarget).get("website") ?? "");
 
     // The starred questions are the only ones that block submission.
     const missingIds = REQUIRED_IDS.filter((id) => !answers[id]?.trim());
@@ -218,6 +220,7 @@ export default function Skjema() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          website: honeypot,
           contact,
           services: services.map(
             (id) => SERVICES.find((s) => s.id === id)?.title ?? id
@@ -267,6 +270,14 @@ export default function Skjema() {
             </Reveal>
           ) : (
             <form onSubmit={onSubmit}>
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute -left-[9999px] h-0 w-0 opacity-0"
+              />
               <Reveal>
                 <p className="max-w-[52ch] text-sm leading-relaxed text-ink/55">
                   Ta det i ditt eget tempo. Svarene lagres automatisk i nettleseren

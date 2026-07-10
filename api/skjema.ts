@@ -28,7 +28,16 @@ interface Submission {
   /** Service titles the client picked in the form's first step. */
   services?: string[];
   sections: Section[];
+  /** Honeypot: hidden field humans never see. Any value = bot. */
+  website?: string;
 }
+
+// Caps: generous for a real client, tight enough that a bot can't pump
+// megabytes into the vault or the inbox email.
+const MAX_ANSWER = 5_000;
+const MAX_QUESTION = 500;
+const MAX_TITLE = 200;
+const MAX_QUESTIONS_PER_SECTION = 30;
 
 function isValid(body: unknown): body is Submission {
   const b = body as Submission;
@@ -36,22 +45,39 @@ function isValid(body: unknown): body is Submission {
     !!b &&
     typeof b.contact?.bedrift === "string" &&
     b.contact.bedrift.trim().length > 0 &&
+    b.contact.bedrift.length <= MAX_TITLE &&
+    typeof b.contact?.navn === "string" &&
+    b.contact.navn.length <= MAX_TITLE &&
     typeof b.contact?.epost === "string" &&
     b.contact.epost.includes("@") &&
+    b.contact.epost.length <= MAX_TITLE &&
     (b.services === undefined ||
       (Array.isArray(b.services) &&
         b.services.length <= 10 &&
-        b.services.every((s) => typeof s === "string"))) &&
+        b.services.every((s) => typeof s === "string" && s.length <= MAX_TITLE))) &&
     Array.isArray(b.sections) &&
     b.sections.length > 0 &&
     b.sections.length <= 20 &&
     b.sections.every(
       (s) =>
         typeof s?.title === "string" &&
+        s.title.length <= MAX_TITLE &&
         Array.isArray(s.questions) &&
-        s.questions.every((q) => typeof q?.text === "string" && typeof q?.answer === "string")
+        s.questions.length <= MAX_QUESTIONS_PER_SECTION &&
+        s.questions.every(
+          (q) =>
+            typeof q?.text === "string" &&
+            q.text.length <= MAX_QUESTION &&
+            typeof q?.answer === "string" &&
+            q.answer.length <= MAX_ANSWER
+        )
     )
   );
+}
+
+/** Single-line, frontmatter-safe value: no quotes, no newlines, no `---`. */
+function fmSafe(value: string): string {
+  return value.replace(/["\r\n]/g, "'").replace(/-{3,}/g, "--").slice(0, MAX_TITLE);
 }
 
 function asText(sub: Submission): string {
@@ -115,16 +141,16 @@ async function fileInVault(sub: Submission): Promise<string> {
 
   const md = [
     "---",
-    `bedrift: "${sub.contact.bedrift.replace(/"/g, "'")}"`,
-    `kontakt: "${sub.contact.navn.replace(/"/g, "'")}"`,
-    `epost: "${sub.contact.epost.replace(/"/g, "'")}"`,
-    `tjenester: "${(sub.services ?? []).join(", ").replace(/"/g, "'")}"`,
+    `bedrift: "${fmSafe(sub.contact.bedrift)}"`,
+    `kontakt: "${fmSafe(sub.contact.navn)}"`,
+    `epost: "${fmSafe(sub.contact.epost)}"`,
+    `tjenester: "${fmSafe((sub.services ?? []).join(", "))}"`,
     `mottatt: ${now.toISOString()}`,
     "kilde: nurea.no/skjema",
     "status: ny",
     "---",
     "",
-    `# Spørreskjema — ${sub.contact.bedrift}`,
+    `# Spørreskjema: ${fmSafe(sub.contact.bedrift)}`,
     "",
     asText(sub),
   ].join("\n");
@@ -146,8 +172,25 @@ async function fileInVault(sub: Submission): Promise<string> {
   return path;
 }
 
+/**
+ * Per-IP throttle. In-memory, so it only holds per warm serverless instance,
+ * but that is exactly where a burst lands. Real clients submit once.
+ */
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const RATE_MAX = 3;
+const hits = new Map<string, number[]>();
+
+function throttled(ip: string): boolean {
+  const now = Date.now();
+  const recent = (hits.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
+  recent.push(now);
+  hits.set(ip, recent);
+  if (hits.size > 1000) hits.clear();
+  return recent.length > RATE_MAX;
+}
+
 export default async function handler(
-  req: { method?: string; body?: unknown },
+  req: { method?: string; body?: unknown; headers?: Record<string, string | string[] | undefined> },
   res: {
     status: (code: number) => { json: (body: unknown) => void };
     setHeader: (key: string, value: string) => void;
@@ -156,6 +199,16 @@ export default async function handler(
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ ok: false, error: "Method not allowed" });
+  }
+  const forwarded = req.headers?.["x-forwarded-for"];
+  const ip = (Array.isArray(forwarded) ? forwarded[0] : forwarded)?.split(",")[0]?.trim() ?? "unknown";
+  if (throttled(ip)) {
+    return res.status(429).json({ ok: false, error: "Too many requests" });
+  }
+  // Honeypot filled = bot. Report success so it moves on; deliver nothing.
+  const hp = (req.body as { website?: unknown } | null)?.website;
+  if (typeof hp === "string" && hp.trim().length > 0) {
+    return res.status(200).json({ ok: true, emailed: true, filed: true });
   }
   if (!isValid(req.body)) {
     return res.status(400).json({ ok: false, error: "Invalid submission" });
