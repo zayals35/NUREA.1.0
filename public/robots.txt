@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /skjema
+
+Sitemap: https://www.nurea.no/sitemap.xml
