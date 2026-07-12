@@ -11,6 +11,7 @@ import HalftoneFog from "./HalftoneFog";
 const LINKS = [
   { to: "/om-oss", label: "Om" },
   { to: "/arbeider", label: "Arbeider" },
+  { to: "/demoer", label: "Demoer" },
   { to: "/tjenester", label: "Tjenester" },
   { to: "/metoden", label: "Metoden" },
   { to: "/klarhetssjekk", label: "Klarhetssjekk" },

@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 const Tjenester = lazy(() => import("./pages/Tjenester"));
 const TjenesteDetalj = lazy(() => import("./pages/TjenesteDetalj"));
 const Arbeider = lazy(() => import("./pages/Arbeider"));
+const Demoer = lazy(() => import("./pages/Demoer"));
 const Metoden = lazy(() => import("./pages/Metoden"));
 const Klarhetssjekk = lazy(() => import("./pages/Klarhetssjekk"));
 const Priser = lazy(() => import("./pages/Priser"));
@@ -112,6 +113,7 @@ export default function App() {
           <Route path="/tjenester" element={<Tjenester />} />
           <Route path="/tjenester/:slug" element={<TjenesteDetalj />} />
           <Route path="/arbeider" element={<Arbeider />} />
+          <Route path="/demoer" element={<Demoer />} />
           <Route path="/metoden" element={<Metoden />} />
           <Route path="/klarhetssjekk" element={<Klarhetssjekk />} />
           <Route path="/priser" element={<Priser />} />

@@ -6,6 +6,7 @@ import { sound } from "../lib/sound";
 
 const LINKS = [
   { to: "/arbeider", label: "Arbeider" },
+  { to: "/demoer", label: "Demoer" },
   { to: "/tjenester", label: "Tjenester" },
   { to: "/metoden", label: "Metoden" },
   { to: "/priser", label: "Priser" },

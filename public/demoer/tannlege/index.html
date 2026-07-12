@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Elva Tannklinikk · Tannlege på Bakklandet, Trondheim</title>
+<meta name="description" content="En liten tannklinikk ved Nidelva. Ærlige priser, rolige rom og null pekefinger. Bestill time på nett, eller kom innom for en prat først.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html">Elva Tannklinikk <em>eksempel</em></a>
+    <nav class="site-nav" aria-label="Hovedmeny">
+      <a href="priser.html">Priser</a>
+      <a href="trygg.html">Trygg hos oss</a>
+      <a href="#menneskene">Menneskene</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <span class="open-status" data-open-status aria-live="polite"></span>
+    <a class="header-phone" href="tel:+4773520000">73 52 00 00</a>
+    <button class="btn btn-primary" data-wizard>Bestill time</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- 1. Hero -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Velkommen tilbake.<br><span class="soft">Uansett hvor lenge det er siden.</span></h1>
+        <p class="lede">Elva er en liten tannklinikk ved Nidelva. Vi møter deg med ro, ærlige priser og null pekefinger, enten det er seks måneder eller seks år siden sist du satt i stolen.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-primary" data-wizard>Bestill time</button>
+          <a class="hero-phone" href="tel:+4773520000"><span>eller ring</span> 73 52 00 00</a>
+        </div>
+        <div class="hero-proof">
+          <span><strong>4,9 av 5</strong> på Google</span>
+          <span><strong>Akuttime</strong> samme dag</span>
+          <span><strong>Direkte oppgjør</strong> med Helfo</span>
+        </div>
+      </div>
+      <figure class="hero-photo reveal">
+        <img src="assets/resepsjon.webp" alt="Resepsjonen hos Elva Tannklinikk, med trebenk, planter og dagslys" width="1600" height="900">
+        <figcaption>Nedre Bakklandet 21</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 2. Acute lane -->
+  <div class="acute">
+    <div class="wrap">
+      <div class="acute-card reveal">
+        <span class="pulse" aria-hidden="true"></span>
+        <div>
+          <h3>Vondt i dag?</h3>
+          <p>Ring oss før kl. 11, så ser vi på deg samme dag. Akutt undersøkelse koster 1 250,- og du vet alltid prisen før vi begynner.</p>
+        </div>
+        <button class="btn btn-ghost" data-wizard data-intent="akutt">Bestill akuttime</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Intent chooser -->
+  <section id="behandlinger">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Hva trenger du?</p>
+        <h2>Start der du er. Vi tar det derfra.</h2>
+      </div>
+      <div class="intent-grid">
+        <button class="intent-card reveal" data-wizard data-intent="akutt">
+          <span class="mark">01</span>
+          <h3>Det gjør vondt</h3>
+          <p>Tannverk, brukket tann eller noe som ikke kan vente. Vi holder av akuttider hver dag.</p>
+          <span class="go">Bestill akuttime</span>
+        </button>
+        <button class="intent-card reveal" data-wizard data-intent="undersokelse">
+          <span class="mark">02</span>
+          <h3>Sjekk og rens</h3>
+          <p>Undersøkelse, to røntgenbilder og enkel rens. Fast pris, ferdig på en time.</p>
+          <span class="go">Bestill undersøkelse</span>
+        </button>
+        <button class="intent-card reveal" data-wizard data-intent="erstatte">
+          <span class="mark">03</span>
+          <h3>Erstatte en tann</h3>
+          <p>Implantat, krone eller bro. Du får alltid et skriftlig prisoverslag før vi gjør noe.</p>
+          <span class="go">Bestill konsultasjon</span>
+        </button>
+        <a class="intent-card reveal" href="trygg.html">
+          <span class="mark">04</span>
+          <h3>Komme i gang igjen</h3>
+          <p>Har du utsatt det lenge, er du i godt selskap. Les hvordan første besøk foregår, helt uten pekefinger.</p>
+          <span class="go">Se hvordan det foregår</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Prices: the receipt -->
+  <section class="prices" id="priser">
+    <div class="wrap prices-grid">
+      <div class="prices-intro reveal">
+        <p class="eyebrow">Priser 2026</p>
+        <h2>Du skal aldri lure på hva det koster.</h2>
+        <p class="lede">Hele prislisten ligger her på siden, datert og komplett. Faste priser der det er mulig, ærlige fra-og-til-priser der det kommer an på tannen.</p>
+        <div class="law-note">
+          <strong>Vårt løfte, og loven:</strong> koster behandlingen mer enn 5 000 kroner, får du alltid et skriftlig prisoverslag før vi begynner. Eventuell støtte fra Helfo er trukket fra i overslaget.
+        </div>
+        <a class="btn btn-ghost" href="priser.html">Se hele prislisten</a>
+      </div>
+      <div class="receipt reveal" aria-label="Utdrag fra prislisten">
+        <div class="receipt-stamp">
+          <span><strong>Elva Tannklinikk</strong></span>
+          <span>Oppdatert 10.07.2026</span>
+        </div>
+        <div class="receipt-group">
+          <h3>Undersøkelse</h3>
+          <div class="price-row highlight">
+            <span class="item"><strong>Ny hos oss?</strong> Undersøkelse, to røntgenbilder og enkel rens</span>
+            <span class="leader" aria-hidden="true"></span>
+            <span class="tag fast">fast pris</span>
+            <span class="amount">890,-</span>
+          </div>
+          <div class="price-row">
+            <span class="item">Undersøkelse med to røntgenbilder</span>
+            <span class="leader" aria-hidden="true"></span>
+            <span class="tag fast">fast pris</span>
+            <span class="amount">1 190,-</span>
+          </div>
+          <div class="price-row">
+            <span class="item">Akutt undersøkelse, samme dag</span>
+            <span class="leader" aria-hidden="true"></span>
+            <span class="tag fast">fast pris</span>
+            <span class="amount">1 250,-</span>
+          </div>
+        </div>
+        <div class="receipt-group">
+          <h3>Vanlige behandlinger</h3>
+          <div class="price-row">
+            <span class="item">Tannfarget fylling</span>
+            <span class="leader" aria-hidden="true"></span>
+            <span class="tag">fra til</span>
+            <span class="amount">1 250 til 2 590,-</span>
+          </div>
+          <div class="price-row">
+            <span class="item">Rens hos tannpleier</span>
+            <span class="leader" aria-hidden="true"></span>
+            <span class="tag fast">fast pris</span>
+            <span class="amount">1 090,-</span>
+          </div>
+          <div class="price-row">
+            <span class="item">Rotfylling</span>
+            <span class="leader" aria-hidden="true"></span>
+            <span class="tag">fra til</span>
+            <span class="amount">4 900 til 7 900,-</span>
+          </div>
+          <div class="price-row">
+            <span class="item">Krone i keram</span>
+            <span class="leader" aria-hidden="true"></span>
+            <span class="tag">fra til</span>
+            <span class="amount">6 950 til 9 450,-</span>
+          </div>
+        </div>
+        <div class="receipt-foot">
+          <span>Trenger du å dele opp? Vi tilbyr delbetaling over inntil 12 måneder, rentefritt. Spør oss, det tar to minutter.</span>
+          <span class="mono">Komplett prisliste: elvatannklinikk.no/priser</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Helfo -->
+  <section id="helfo">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Helfo i klartekst</p>
+        <h2>Noen ganger betaler staten en del. Vi sier ifra når det gjelder deg.</h2>
+        <p class="lede">Voksne betaler som regel tannlegen selv, men 15 tilstander gir rett til støtte fra folketrygden. Det er tannlegen som vurderer det, og hos oss skjer det automatisk.</p>
+      </div>
+      <div class="helfo-grid">
+        <div class="helfo-card reveal">
+          <h3>Tannkjøttsykdom</h3>
+          <p>Behandling av periodontitt gir rett til støtte. Det samme gjør etterarbeidet når tenner må erstattes.</p>
+        </div>
+        <div class="helfo-card reveal">
+          <h3>Skader og ulykker</h3>
+          <p>Har du skadet tennene i en ulykke, dekker folketrygden deler av behandlingen.</p>
+        </div>
+        <div class="helfo-card reveal">
+          <h3>Sterk tannlegeskrekk</h3>
+          <p>Dokumentert sterk angst for tannbehandling kan gi rett til støtte. Vi hjelper deg med vurderingen.</p>
+        </div>
+      </div>
+      <p class="helfo-note reveal"><strong>Vi har direkte oppgjør med Helfo.</strong> Har du rett til støtte, trekkes den fra regningen din før du betaler. Du trenger ikke søke om noe selv. Og er du under 19, er tannhelsetjenesten gratis for deg hos det offentlige. Da sier vi det, i stedet for å sende deg en regning.</p>
+    </div>
+  </section>
+
+  <!-- 6. Team -->
+  <section class="team" id="menneskene">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Menneskene</p>
+        <h2>Fire mennesker. Ingen ukjente ansikter.</h2>
+        <p class="lede">Hos oss vet du hvem du møter før du kommer. Samme tannlege hver gang, med mindre du vil bytte.</p>
+      </div>
+      <div class="team-grid">
+        <div class="person reveal">
+          <figure><img src="assets/ingrid.webp" alt="Portrett av tannlege Ingrid Solheim" width="900" height="1200" loading="lazy"></figure>
+          <h3>Ingrid Solheim</h3>
+          <p class="role">Tannlege og eier</p>
+          <p class="cred">Universitetet i Oslo, 2004. Videreutdanning i behandling av tannbehandlingsangst.</p>
+        </div>
+        <div class="person reveal">
+          <figure><img src="assets/jonas.webp" alt="Portrett av tannlege Jonas Vik" width="900" height="1200" loading="lazy"></figure>
+          <h3>Jonas Vik</h3>
+          <p class="role">Tannlege</p>
+          <p class="cred">Universitetet i Bergen, 2016. Sertifisert for implantatprotetikk.</p>
+        </div>
+        <div class="person reveal">
+          <figure><img src="assets/amalie.webp" alt="Portrett av tannpleier Amalie Berg" width="900" height="1200" loading="lazy"></figure>
+          <h3>Amalie Berg</h3>
+          <p class="role">Tannpleier</p>
+          <p class="cred">OsloMet, 2021. Ansvarlig for rens, forebygging og oppfølging.</p>
+        </div>
+        <div class="person reveal">
+          <figure><img src="assets/kari.webp" alt="Portrett av klinikkoordinator Kari Moen" width="900" height="1200" loading="lazy"></figure>
+          <h3>Kari Moen</h3>
+          <p class="role">Klinikkoordinator</p>
+          <p class="cred">Har jobbet i tannhelse siden 1998. Stemmen du møter på telefonen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Trygg -->
+  <section class="trygg" id="trygg">
+    <div class="wrap trygg-grid">
+      <div class="reveal">
+        <p class="eyebrow">Trygg hos oss</p>
+        <h2>Det er lov å grue seg.</h2>
+        <p class="lede">Mange tusen nordmenn utsetter tannlegen på grunn av angst. Vi er ikke overrasket, vi er forberedt. Slik foregår første besøk:</p>
+        <ol class="trygg-steps">
+          <li>
+            <span class="n">01</span>
+            <div>
+              <h3>Du kan komme innom bare for å prate</h3>
+              <p>En kaffe i resepsjonen, ingen stol, ingen instrumenter. Du ser rommene og møter oss først.</p>
+            </div>
+          </li>
+          <li>
+            <span class="n">02</span>
+            <div>
+              <h3>Vi begynner aldri uten at du vet hva som skjer</h3>
+              <p>Alt forklares før vi gjør det. Du bestemmer tempoet, og vi stopper når du løfter hånden.</p>
+            </div>
+          </li>
+          <li>
+            <span class="n">03</span>
+            <div>
+              <h3>Bedøvelse som faktisk virker</h3>
+              <p>Overflatebedøvelse før stikket, og lystgass eller beroligende når du trenger det.</p>
+            </div>
+          </li>
+          <li>
+            <span class="n">04</span>
+            <div>
+              <h3>Har du sterk angst, finnes det et offentlig tilbud</h3>
+              <p>TOO-tilbudet gir gratis behandling for deg med sterk tannlegeskrekk. Vi hjelper deg å finne veien dit hvis det er riktig for deg.</p>
+            </div>
+          </li>
+        </ol>
+        <div class="trygg-ctas">
+          <a class="btn btn-light" href="trygg.html">Les mer om trygghet</a>
+          <button class="btn btn-ghost" data-wizard data-intent="prat">Kom innom for en prat</button>
+        </div>
+      </div>
+      <figure class="trygg-photo reveal">
+        <img src="assets/behandlingsrom.webp" alt="Behandlingsrom med dagslys og utsikt til grønne trær" width="1500" height="1000" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- 8. Reviews -->
+  <section class="reviews">
+    <div class="wrap">
+      <div class="reviews-head reveal">
+        <span class="reviews-score">4,9 <span class="of">av 5</span></span>
+        <span class="reviews-src">127 vurderinger på Google</span>
+      </div>
+      <div class="review-grid">
+        <div class="review reveal">
+          <span class="stars" aria-label="5 av 5 stjerner">★★★★★</span>
+          <blockquote>Jeg hadde ikke vært hos tannlege på åtte år og grudde meg i ukevis. Ingrid tok det helt med ro, forklarte alt, og regningen var akkurat det de sa på forhånd.</blockquote>
+          <cite><strong>Marte</strong>, Bakklandet</cite>
+        </div>
+        <div class="review reveal">
+          <span class="stars" aria-label="5 av 5 stjerner">★★★★★</span>
+          <blockquote>Brakk en jeksel på hytta søndag kveld, bestilte akuttime på mobilen samme kveld og satt i stolen mandag morgen. Det er sånn det skal være.</blockquote>
+          <cite><strong>Espen</strong>, Møllenberg</cite>
+        </div>
+        <div class="review reveal">
+          <span class="stars" aria-label="5 av 5 stjerner">★★★★★</span>
+          <blockquote>Endelig en tannlege som viser prisene før du kommer. Fikk skriftlig overslag på kronen, og Helfo-støtten var allerede trukket fra.</blockquote>
+          <cite><strong>Randi</strong>, Byåsen</cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. CTA band -->
+  <section class="cta-band" id="kontakt">
+    <div class="wrap reveal">
+      <p class="eyebrow" style="justify-content: center;">Neste steg</p>
+      <h2>Tre minutter nå, så er det gjort.</h2>
+      <p class="lede">Velg det som gjelder deg, finn en tid som passer, ferdig. Du kan også bare ringe oss.</p>
+      <div class="hero-ctas">
+        <button class="btn btn-primary" data-wizard>Bestill time</button>
+        <a class="hero-phone" href="tel:+4773520000"><span>eller ring</span> 73 52 00 00</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="index.html">Elva Tannklinikk <em>eksempel</em></a>
+        <p>Nedre Bakklandet 21<br>7014 Trondheim</p>
+        <p class="footer-recall">Vi kaller deg inn når det er tid for neste kontroll. Du trenger ikke huske det selv.</p>
+      </div>
+      <div>
+        <h3>Åpningstider</h3>
+        <div class="footer-hours">
+          <span>Man til tors&nbsp;&nbsp;08.00 til 16.00</span>
+          <span>Fredag&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;08.00 til 14.00</span>
+          <span>Akutt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ring før 11</span>
+        </div>
+      </div>
+      <div>
+        <h3>Sider</h3>
+        <ul>
+          <li><a href="priser.html">Priser 2026</a></li>
+          <li><a href="trygg.html">Trygg hos oss</a></li>
+          <li><a href="#menneskene">Menneskene</a></li>
+          <li><a href="priser.html#helseskjema">Helseskjema</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Kontakt</h3>
+        <ul>
+          <li><a href="tel:+4773520000">73 52 00 00</a></li>
+          <li><a href="mailto:hei@elvatannklinikk.no">hei@elvatannklinikk.no</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-demo">
+      <strong>Dette er et eksempel.</strong> Elva Tannklinikk er en fiktiv klinikk, bygget av Nurea som referanse for hvordan en tannklinikks nettside bør være. Menneskene og vurderingene er ikke ekte.
+    </div>
+    <div class="footer-meta">
+      <span>© 2026 Elva Tannklinikk · Org.nr 999 888 777 (eksempel)</span>
+      <span>Prisliste oppdatert 10.07.2026</span>
+      <span>Laget av <a href="https://nurea.no">Nurea</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-book">
+  <a class="btn btn-ghost" href="tel:+4773520000">Ring oss</a>
+  <button class="btn btn-primary" data-wizard>Bestill time</button>
+</div>
+
+<!-- Booking wizard -->
+<div class="wizard-overlay" id="wizard" role="dialog" aria-modal="true" aria-labelledby="wizard-title" hidden>
+  <div class="wizard">
+    <div class="wizard-top">
+      <span class="wizard-progress" id="wizard-progress">Steg 1 av 3</span>
+      <button class="wizard-close" aria-label="Lukk">✕</button>
+    </div>
+    <div class="wizard-bar" aria-hidden="true"><span id="wizard-bar-fill"></span></div>
+
+    <div class="wizard-step active" data-step="1">
+      <h3 id="wizard-title">Hva gjelder det?</h3>
+      <div class="choice-grid" data-field="intent">
+        <button class="choice" data-value="akutt">Det gjør vondt <small>Akuttime, som regel samme dag</small></button>
+        <button class="choice" data-value="undersokelse">Sjekk og rens <small>Undersøkelse, røntgen og enkel rens</small></button>
+        <button class="choice" data-value="erstatte">Erstatte en tann <small>Konsultasjon med skriftlig prisoverslag</small></button>
+        <button class="choice" data-value="prat">Bare en prat først <small>Kaffe og omvisning, ingen behandling</small></button>
+      </div>
+    </div>
+
+    <div class="wizard-step" data-step="2">
+      <h3>Har du vært hos oss før?</h3>
+      <div class="choice-grid" data-field="patient">
+        <button class="choice" data-value="ny">Nei, jeg er ny <small>Da får du ny-pasient-prisen på 890,- for undersøkelse</small></button>
+        <button class="choice" data-value="eksisterende">Ja, jeg har vært her før <small>Velkommen tilbake</small></button>
+      </div>
+    </div>
+
+    <div class="wizard-step" data-step="3">
+      <h3>Når passer det?</h3>
+      <div class="slot-day">
+        <h4>Mandag 13. juli</h4>
+        <div class="slot-row" data-field="slot">
+          <button class="slot" data-value="Mandag 13. juli kl. 08.30">08.30</button>
+          <button class="slot" data-value="Mandag 13. juli kl. 11.00">11.00</button>
+          <button class="slot" data-value="Mandag 13. juli kl. 14.30">14.30</button>
+        </div>
+      </div>
+      <div class="slot-day">
+        <h4>Tirsdag 14. juli</h4>
+        <div class="slot-row" data-field="slot">
+          <button class="slot" data-value="Tirsdag 14. juli kl. 09.30">09.30</button>
+          <button class="slot" data-value="Tirsdag 14. juli kl. 12.00">12.00</button>
+          <button class="slot" data-value="Tirsdag 14. juli kl. 15.00">15.00</button>
+        </div>
+      </div>
+      <div class="slot-day">
+        <h4>Onsdag 15. juli</h4>
+        <div class="slot-row" data-field="slot">
+          <button class="slot" data-value="Onsdag 15. juli kl. 08.00">08.00</button>
+          <button class="slot" data-value="Onsdag 15. juli kl. 10.30">10.30</button>
+          <button class="slot" data-value="Onsdag 15. juli kl. 13.30">13.30</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wizard-step" data-step="4">
+      <div class="wizard-confirm">
+        <div class="check" aria-hidden="true">✓</div>
+        <h3>Da er tiden holdt av til deg.</h3>
+        <div class="summary" id="wizard-summary"></div>
+        <p>Du får en bekreftelse på SMS med en gang, og en påminnelse dagen før. Må du endre? Svar på meldingen, så ordner vi det.</p>
+        <p class="wizard-demo-note">Dette er en demonstrasjon laget av Nurea. Ingen time er bestilt.</p>
+      </div>
+    </div>
+
+    <div class="wizard-nav">
+      <button class="btn btn-ghost" id="wizard-back">Tilbake</button>
+      <button class="btn btn-primary" id="wizard-next" disabled>Neste</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
