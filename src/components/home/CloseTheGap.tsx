@@ -74,6 +74,10 @@ export default function CloseTheGap() {
         const e = smooth(p);
         gLeft.style.transform = `translateX(${(-SPREAD * (1 - e)).toFixed(2)}vw)`;
         gRight.style.transform = `translateX(${(SPREAD * (1 - e)).toFixed(2)}vw)`;
+        // The words themselves resolve from fog to glass as the gap closes.
+        const blur = (10 * (1 - e)).toFixed(2);
+        gLeft.style.filter = `blur(${blur}px)`;
+        gRight.style.filter = `blur(${blur}px)`;
         applyWord(leftChars, p, false);
         applyWord(rightChars, p, true);
         // Closing the gap clears the fog.
@@ -119,13 +123,13 @@ export default function CloseTheGap() {
         >
           <span
             ref={leftRef}
-            className="ctg-word display-sans whitespace-nowrap font-bold uppercase leading-[0.94] text-[#e7e1d5]"
+            className="ctg-word display-sans whitespace-nowrap font-bold uppercase leading-[0.94] text-ink"
           >
             VI TETTER
           </span>
           <span
             ref={rightRef}
-            className="ctg-word display-sans whitespace-nowrap font-bold uppercase leading-[0.94] text-[#e7e1d5]"
+            className="ctg-word display-sans whitespace-nowrap font-bold uppercase leading-[0.94] text-ink"
           >
             GAPET
           </span>
@@ -148,8 +152,7 @@ export default function CloseTheGap() {
       <style>{`
         .ctg-word {
           display: inline-flex;
-          text-shadow: 0 2px 32px rgba(16, 14, 11, 0.95), 0 1px 8px rgba(16, 14, 11, 0.82);
-          will-change: transform;
+          will-change: transform, filter;
         }
         .ctg-char {
           display: inline-block;
