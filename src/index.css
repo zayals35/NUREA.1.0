@@ -151,6 +151,19 @@ body {
   animation: drift-c 38s ease-in-out infinite alternate;
 }
 
+/* Light variant: soft warm glows tuned for the greige ground. */
+.ambient-light span:nth-child(1) {
+  background: radial-gradient(circle, rgba(231, 225, 213, 0.9), transparent 65%);
+}
+
+.ambient-light span:nth-child(2) {
+  background: radial-gradient(circle, rgba(194, 81, 31, 0.09), transparent 65%);
+}
+
+.ambient-light span:nth-child(3) {
+  background: radial-gradient(circle, rgba(138, 129, 112, 0.28), transparent 68%);
+}
+
 @keyframes drift-a {
   from { transform: translate(0, 0) scale(1); }
   to { transform: translate(9vw, 7vh) scale(1.15); }

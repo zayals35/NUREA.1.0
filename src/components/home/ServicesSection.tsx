@@ -10,7 +10,7 @@ export default function ServicesSection() {
         <Reveal className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="eyebrow text-gold">Dette gjør vi</p>
-            <h2 className="display-sans mt-6 text-4xl md:text-6xl">Fem deler, én retning.</h2>
+            <h2 className="display mt-6 text-4xl md:text-6xl">Fem deler, én retning.</h2>
           </div>
           <Link
             to="/tjenester"

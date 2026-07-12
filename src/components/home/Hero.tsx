@@ -39,13 +39,13 @@ export default function Hero() {
         <p className="hero-seq eyebrow text-gold" style={{ animationDelay: "0.9s" }}>
           Merkevare og digital retning · Trondheim
         </p>
-        <h1
-          className="hero-seq display mt-8 text-[12vw] leading-[1.02] sm:text-6xl md:text-7xl lg:text-8xl"
-          style={{ animationDelay: "1.05s" }}
-        >
-          Lettere å forstå.
-          <br />
-          Lettere å velge.
+        <h1 className="display mt-8 text-[12vw] leading-[1.02] sm:text-6xl md:text-7xl lg:text-8xl">
+          <span className="hero-resolve block" style={{ animationDelay: "0.95s" }}>
+            Lettere å forstå.
+          </span>
+          <span className="hero-resolve block" style={{ animationDelay: "1.35s" }}>
+            Lettere å velge.
+          </span>
         </h1>
         <p
           className="hero-seq mx-auto mt-8 max-w-[42ch] text-base leading-relaxed text-cream/90 md:text-lg"
@@ -68,12 +68,22 @@ export default function Hero() {
         .hero-seq {
           animation: hero-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
+        /* The thesis, performed: each line condenses out of fog into sharp ink. */
+        .hero-resolve {
+          animation: hero-clear 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+          will-change: filter, opacity, transform;
+        }
         @keyframes hero-rise {
           from { opacity: 0; transform: translateY(34px); }
           to { opacity: 1; transform: none; }
         }
+        @keyframes hero-clear {
+          0% { opacity: 0; filter: blur(22px); transform: translateY(10px) scale(1.03); }
+          45% { opacity: 1; }
+          100% { opacity: 1; filter: blur(0); transform: none; }
+        }
         @media (prefers-reduced-motion: reduce) {
-          .hero-seq { animation: none; }
+          .hero-seq, .hero-resolve { animation: none; }
         }
       `}</style>
     </section>

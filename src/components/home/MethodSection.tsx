@@ -64,7 +64,7 @@ export default function MethodSection() {
       <div className="relative z-[2] mx-auto max-w-[1440px] px-6 py-24 md:px-10 md:py-40">
         <Reveal className="max-w-2xl" sfx>
           <p className="eyebrow text-gold">Metoden</p>
-          <h2 className="display-sans mt-6 text-4xl md:text-6xl">Tre rolige steg.</h2>
+          <h2 className="display mt-6 text-4xl md:text-6xl">Tre rolige steg.</h2>
           <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-cream/75 md:text-lg">
             Fra uklarhet til et tydelig digitalt uttrykk som henger sammen.
           </p>
@@ -74,8 +74,8 @@ export default function MethodSection() {
         <div className="mt-16 grid gap-12 md:mt-24 md:grid-cols-3 md:gap-8">
           {METHOD_STEPS.map((s, i) => (
             <Reveal key={s.h} delay={i * 0.1}>
-              <span className="mono text-sm text-gold">{s.n}</span>
-              <h3 className="display-sans mt-4 text-3xl md:text-4xl">{s.h}</h3>
+              <div className="h-px w-10 bg-gold" aria-hidden="true" />
+              <h3 className="display-sans mt-6 text-3xl md:text-4xl">{s.h}</h3>
               <p className="mt-4 max-w-[38ch] text-sm leading-relaxed text-cream/70 md:text-base">
                 {s.p}
               </p>
