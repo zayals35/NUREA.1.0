@@ -52,20 +52,18 @@ export default function Nav() {
             aria-label="NUREA, til forsiden"
             onClick={() => sound.play("click")}
           >
-            <span
+            {/* Canonical NUREA mark (NUREA-mark-clean-master). currentColor follows the nav's text color. */}
+            <svg
               aria-hidden="true"
-              className="block h-7 w-7 bg-cream"
-              style={{
-                maskImage: "url(/nurea-n-mark.webp)",
-                WebkitMaskImage: "url(/nurea-n-mark.webp)",
-                maskSize: "contain",
-                WebkitMaskSize: "contain",
-                maskRepeat: "no-repeat",
-                WebkitMaskRepeat: "no-repeat",
-                maskPosition: "center",
-                WebkitMaskPosition: "center",
-              }}
-            />
+              className="block h-7 w-auto"
+              viewBox="17 18 118 142"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill="currentColor"
+                d="M 17 18 L 39 18 C 59 18, 84 37, 87 67 L 87 104 C 89 122, 102 135, 113 138 L 113 70 C 113 61, 120 54, 129 54 L 135 54 L 135 160 C 94 160, 66.5 138, 65 104 L 65 70 C 65 53, 53 42, 39 39 L 39 109 C 39 116, 31 122, 22 122 L 17 122 Z"
+              />
+            </svg>
             <span className="display text-2xl leading-none">Nurea</span>
           </Link>
 

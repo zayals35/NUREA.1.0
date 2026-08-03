@@ -251,6 +251,7 @@ export default function Skjema() {
     <main>
       <PageHeader
         docTitle="Spørreskjema"
+        titleClassName="display-sans"
         eyebrow="Oppstart · 15 til 25 minutter"
         title="Før vi bygger noe, vil vi forstå dere ordentlig."
         intro="Svar kort og ærlig, gjerne i stikkord. Det finnes ingen feil svar. Det du skriver her blir fundamentet for alt vi lager."
