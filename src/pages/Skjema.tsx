@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import Button from "../components/Button";
-import { mailtoFallback, type FormStatus } from "../lib/useWebForm";
+import { mailtoFallback, WEB3FORMS_KEY, type FormStatus } from "../lib/useWebForm";
 import { SKJEMA, REQUIRED_IDS, type SkjemaSection } from "../data/skjema";
 import { SERVICES, type ServiceId } from "../data/services";
 import { sound } from "../lib/sound";
@@ -215,34 +215,75 @@ export default function Skjema() {
     }
 
     setStatus("sending");
+
+    const serviceTitles = services.map(
+      (id) => SERVICES.find((s) => s.id === id)?.title ?? id
+    );
+    const sections = visible.map((s) => ({
+      title: s.title,
+      questions: s.questions.map((q) => ({
+        text: q.text,
+        answer: answers[q.id]?.trim() ?? "",
+      })),
+    }));
+
+    // Channel 1: file the submission in the vault via our API.
+    let filed = false;
+    let filedPath: string | null = null;
     try {
       const res = await fetch("/api/skjema", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ website: honeypot, contact, services: serviceTitles, sections }),
+      });
+      const data = await res.json();
+      filed = !!data.ok;
+      filedPath = typeof data.path === "string" ? data.path : null;
+    } catch {
+      /* vault channel down; email below still carries the answers */
+    }
+
+    // Channel 2: email via Web3Forms, which only accepts client-side calls.
+    const answered = sections.flatMap((s) => s.questions).filter((q) => q.answer).length;
+    const svar = sections
+      .flatMap((s) => [
+        `## ${s.title}`,
+        "",
+        ...s.questions.flatMap((q) => [`**${q.text}**`, q.answer || "(ikke besvart)", ""]),
+      ])
+      .join("\n");
+    let emailed = false;
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          website: honeypot,
-          contact,
-          services: services.map(
-            (id) => SERVICES.find((s) => s.id === id)?.title ?? id
-          ),
-          sections: visible.map((s) => ({
-            title: s.title,
-            questions: s.questions.map((q) => ({
-              text: q.text,
-              answer: answers[q.id]?.trim() ?? "",
-            })),
-          })),
+          access_key: WEB3FORMS_KEY,
+          subject: `Spørreskjema: ${contact.bedrift}`,
+          from_name: "nurea.no/skjema",
+          botcheck: honeypot,
+          Bedrift: contact.bedrift,
+          Navn: contact.navn,
+          "E-post": contact.epost,
+          Tjenester: serviceTitles.length ? serviceTitles.join(", ") : "(ikke valgt)",
+          Besvart: `${answered} spørsmål`,
+          Arkivering: filedPath
+            ? `Arkivert i vault: ${filedPath}`
+            : "ARKIVERING FEILET; svarene finnes bare i denne e-posten",
+          Svar: svar,
         }),
       });
       const data = await res.json();
-      if (data.ok) {
-        localStorage.removeItem(STORAGE_KEY);
-        setStatus("ok");
-        window.scrollTo(0, 0);
-      } else {
-        setStatus("error");
-      }
+      emailed = !!data.success;
     } catch {
+      /* email channel down; vault filing above may still have succeeded */
+    }
+
+    if (emailed || filed) {
+      localStorage.removeItem(STORAGE_KEY);
+      setStatus("ok");
+      window.scrollTo(0, 0);
+    } else {
       setStatus("error");
     }
   };
