@@ -6,11 +6,20 @@ interface Props {
   intro?: string;
   /** Browser tab title. */
   docTitle: string;
+  /** Typography role for the h1. Defaults to the serif signature. */
+  titleClassName?: string;
   children?: ReactNode;
 }
 
 /** Shared dark page opener with the hero entrance choreography. */
-export default function PageHeader({ eyebrow, title, intro, docTitle, children }: Props) {
+export default function PageHeader({
+  eyebrow,
+  title,
+  intro,
+  docTitle,
+  titleClassName = "display",
+  children,
+}: Props) {
   useEffect(() => {
     document.title = `${docTitle} · NUREA`;
   }, [docTitle]);
@@ -22,7 +31,7 @@ export default function PageHeader({ eyebrow, title, intro, docTitle, children }
           {eyebrow}
         </p>
         <h1
-          className="page-seq display mt-6 max-w-5xl text-4xl sm:text-5xl md:text-7xl"
+          className={`page-seq ${titleClassName} mt-6 max-w-5xl text-4xl sm:text-5xl md:text-7xl`}
           style={{ animationDelay: "0.15s" }}
         >
           {title}
