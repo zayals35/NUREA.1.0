@@ -1,17 +1,15 @@
 /**
- * Receives a questionnaire submission from /skjema and does two things:
- *   1. Emails the answers to hei@nurea.no via Web3Forms (same pipeline as the
- *      site's other forms).
- *   2. Files the submission as markdown in the CLAUDE.OS vault repo
- *      (NUREA.HQ/Clients/_inbox/) via the GitHub API, so the onboarding
- *      machine picks it up. Needs the VAULT_GITHUB_TOKEN env var in Vercel:
- *      a fine-grained PAT for zayals35/claude-os with Contents read/write.
+ * Receives a questionnaire submission from /skjema and files it as markdown
+ * in the CLAUDE.OS vault repo (NUREA.HQ/Clients/_inbox/) via the GitHub API,
+ * so the onboarding machine picks it up. Needs the VAULT_GITHUB_TOKEN env var
+ * in Vercel: a fine-grained PAT for zayals35/claude-os with Contents read/write.
  *
- * Email is the primary channel: if filing to GitHub fails the submission
- * still succeeds, and the email gets a warning line so nothing is lost.
+ * The email channel lives client-side in Skjema.tsx: Web3Forms' free plan
+ * rejects server-side calls (confirmed 2026-08-04), so the browser sends the
+ * email directly and this endpoint only handles the vault. The client treats
+ * the submission as delivered if either channel succeeds.
  */
 
-const WEB3FORMS_KEY = "6340fc54-aa73-46d5-ade0-2408f92a8938";
 const VAULT_REPO = "zayals35/claude-os";
 const INBOX_DIR = "NUREA.HQ/Clients/_inbox";
 
@@ -104,30 +102,6 @@ function slugify(name: string): string {
   );
 }
 
-async function sendEmail(sub: Submission, filedNote: string): Promise<boolean> {
-  const answered = sub.sections
-    .flatMap((s) => s.questions)
-    .filter((q) => q.answer.trim()).length;
-  const res = await fetch("https://api.web3forms.com/submit", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({
-      access_key: WEB3FORMS_KEY,
-      subject: `Spørreskjema: ${sub.contact.bedrift}`,
-      from_name: "nurea.no/skjema",
-      Bedrift: sub.contact.bedrift,
-      Navn: sub.contact.navn,
-      "E-post": sub.contact.epost,
-      Tjenester: sub.services?.length ? sub.services.join(", ") : "(ikke valgt)",
-      Besvart: `${answered} spørsmål`,
-      Arkivering: filedNote,
-      Svar: asText(sub),
-    }),
-  });
-  const data = (await res.json()) as { success?: boolean };
-  return !!data.success;
-}
-
 /** Commits the submission into the vault's intake inbox. Returns the file path. */
 async function fileInVault(sub: Submission): Promise<string> {
   const token = process.env.VAULT_GITHUB_TOKEN;
@@ -208,35 +182,19 @@ export default async function handler(
   // Honeypot filled = bot. Report success so it moves on; deliver nothing.
   const hp = (req.body as { website?: unknown } | null)?.website;
   if (typeof hp === "string" && hp.trim().length > 0) {
-    return res.status(200).json({ ok: true, emailed: true, filed: true });
+    return res.status(200).json({ ok: true, filed: true });
   }
   if (!isValid(req.body)) {
     return res.status(400).json({ ok: false, error: "Invalid submission" });
   }
   const sub = req.body;
 
-  let filedPath: string | null = null;
-  let fileError: string | null = null;
   try {
-    filedPath = await fileInVault(sub);
+    const path = await fileInVault(sub);
+    return res.status(200).json({ ok: true, filed: true, path });
   } catch (err) {
-    fileError = err instanceof Error ? err.message : String(err);
-    console.error("Vault filing failed:", fileError);
+    const message = (err instanceof Error ? err.message : String(err)).slice(0, 300);
+    console.error("Vault filing failed:", message);
+    return res.status(502).json({ ok: false, filed: false, error: message });
   }
-
-  let emailed = false;
-  try {
-    emailed = await sendEmail(
-      sub,
-      filedPath ? `Arkivert i vault: ${filedPath}` : `ARKIVERING FEILET (${fileError}); svarene finnes bare i denne e-posten`
-    );
-  } catch (err) {
-    console.error("Email failed:", err);
-  }
-
-  // Success if at least one channel got the answers through.
-  if (emailed || filedPath) {
-    return res.status(200).json({ ok: true, emailed, filed: !!filedPath });
-  }
-  return res.status(502).json({ ok: false, error: "Delivery failed" });
 }
