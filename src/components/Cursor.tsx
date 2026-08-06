@@ -31,15 +31,25 @@ export default function Cursor() {
       ringY(e.clientY);
     };
 
-    // One hover cue per interactive element: only play when entering a NEW one.
+    // One hover cue per interactive element. Re-entering the SAME element
+    // within the cooldown stays silent: animated children (sliding titles,
+    // fading descriptions) refire mouseover and grazing a border resets the
+    // target, which made single hovers tick twice (her report 2026-08-06).
     let lastTarget: Element | null = null;
+    let lastPlayedTarget: Element | null = null;
+    let lastPlayedAt = 0;
     const onOver = (e: MouseEvent) => {
       const target = (e.target as HTMLElement).closest(INTERACTIVE);
       if (target) {
         document.body.classList.add("cursor-hover");
         if (target !== lastTarget) {
           lastTarget = target;
-          sound.play("hover");
+          const now = performance.now();
+          if (target !== lastPlayedTarget || now - lastPlayedAt > 700) {
+            lastPlayedTarget = target;
+            lastPlayedAt = now;
+            sound.play("hover");
+          }
         }
       } else {
         document.body.classList.remove("cursor-hover");

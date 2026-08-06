@@ -2,6 +2,12 @@ import { useState } from "react";
 import Reveal from "../Reveal";
 import { FAQ, type FaqItem } from "../../data/faq";
 import { sound } from "../../lib/sound";
+import { useLang, type Lang } from "../../i18n";
+
+const T: Record<Lang, { heading: string }> = {
+  no: { heading: "Spørsmål vi ofte får." },
+  en: { heading: "Questions we often get." },
+};
 
 export function FaqList({ items, dark = false }: { items: FaqItem[]; dark?: boolean }) {
   const [open, setOpen] = useState<number | null>(null);
@@ -52,18 +58,19 @@ export function FaqList({ items, dark = false }: { items: FaqItem[]; dark?: bool
 }
 
 export default function FaqSection() {
+  const { lang } = useLang();
   return (
-    <section className="grain relative overflow-hidden bg-espresso text-cream">
+    <section className="grain relative overflow-hidden bg-parchment-alt text-ink">
       <div className="relative z-[2] mx-auto max-w-[1440px] px-6 py-24 md:px-10 md:py-40">
         <div className="grid gap-12 md:grid-cols-[1fr_2fr] md:gap-20">
           <Reveal>
-            <p className="eyebrow text-gold">FAQ</p>
-            <h2 className="display-sans mt-6 text-4xl md:text-5xl">
-              Spørsmål vi ofte får.
+            <p className="eyebrow text-ink/70">FAQ</p>
+            <h2 className="display mt-6 text-4xl md:text-5xl">
+              {T[lang].heading}
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <FaqList items={FAQ.filter((f) => f.home).slice(0, 4)} dark />
+            <FaqList items={FAQ[lang].filter((f) => f.home).slice(0, 4)} />
           </Reveal>
         </div>
       </div>

@@ -1,3 +1,5 @@
+import type { Lang } from "../i18n";
+
 export interface WorkItem {
   id: string;
   /** Small descriptor label above the company name. */
@@ -12,9 +14,11 @@ export interface WorkItem {
   shots: string[];
   href?: string;
   instagram?: string;
+  /** Locked until the delivered work is actually live; hidden everywhere. */
+  hidden?: boolean;
 }
 
-export const WORK: WorkItem[] = [
+const WORK_NO: WorkItem[] = [
   {
     id: "metanoia",
     title: "Klesmerke",
@@ -55,11 +59,12 @@ export const WORK: WorkItem[] = [
     id: "nue-invitations",
     title: "Event planlegging",
     company: "NUE Invitations",
-    caption: "Nettsiden lanseres 29. juli. Caset blir oppdatert etter lansering.",
+    caption: "Nettsiden er under arbeid. Caset publiseres når den er lansert.",
     tags: ["Merkevare"],
     metricLabel: "Logo · Identitet · Konsept",
     art: "/work/art-nue.webp",
     shots: ["/work/nue/shot-1.webp"],
+    hidden: true,
   },
   {
     id: "moustache-city",
@@ -73,3 +78,66 @@ export const WORK: WorkItem[] = [
     shots: [],
   },
 ];
+
+const WORK_EN: WorkItem[] = [
+  {
+    id: "metanoia",
+    title: "Clothing brand",
+    company: "Metanoia",
+    caption:
+      "From clothing collection to cultural movement. Name, logo, identity, garment design, content and creative direction built from the ground up.",
+    tags: ["Clothing brand"],
+    metricLabel: "Identity · Design · Content direction",
+    art: "/work/art-metanoia.webp",
+    shots: ["/work/metanoia/shot-1.webp", "/work/metanoia/shot-2.webp", "/work/metanoia/shot-3.webp"],
+    instagram: "@metanoia.ftp",
+  },
+  {
+    id: "bilmekka",
+    title: "Car dealership",
+    company: "Bilmekka",
+    caption:
+      "Bilmekka needed a digital expression that felt as tidy and trustworthy as a good car dealership should be. NUREA developed the logo, website, email structure and systems that give the business a more professional and unified presence.",
+    tags: ["Brand", "Website"],
+    metricLabel: "Logo · Website · Email · Systems",
+    art: "/work/art-bilmekka.webp",
+    shots: ["/work/bilmekka/shot-1.webp", "/work/bilmekka/shot-2.webp", "/work/bilmekka/shot-3.webp"],
+    href: "https://www.bilmekka.no",
+  },
+  {
+    id: "moremarin",
+    title: "Staffing agency",
+    company: "Møre Marin",
+    caption:
+      "Logo, website, email setup and CRM integration gathered in one clear digital direction for maritime staffing and recruitment.",
+    tags: ["Brand", "Website"],
+    metricLabel: "Logo · Website · Email · CRM",
+    art: "/work/art-moremarin.webp",
+    shots: ["/work/moremarin/shot-1.webp", "/work/moremarin/shot-2.webp", "/work/moremarin/shot-3.webp"],
+    href: "https://www.moremarin.no",
+  },
+  {
+    id: "nue-invitations",
+    title: "Event planning",
+    company: "NUE Invitations",
+    caption: "The website is in progress. The case will be published once it launches.",
+    tags: ["Brand"],
+    metricLabel: "Logo · Identity · Concept",
+    art: "/work/art-nue.webp",
+    shots: ["/work/nue/shot-1.webp"],
+    hidden: true,
+  },
+  {
+    id: "moustache-city",
+    title: "Photographer",
+    company: "Moustache City",
+    caption:
+      "Logo and website for a photographer in Trondheim, Norway. Visual identity and a site built to let the photos speak.",
+    tags: ["Brand", "Website"],
+    metricLabel: "Logo · Website · Identity",
+    art: "/work/art-moustach.webp",
+    shots: [],
+  },
+];
+
+export const WORK: Record<Lang, WorkItem[]> = { no: WORK_NO, en: WORK_EN };

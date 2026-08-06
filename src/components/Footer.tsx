@@ -7,21 +7,59 @@ import { sound } from "../lib/sound";
 import Button from "./Button";
 import Reveal from "./Reveal";
 import HalftoneFog from "./HalftoneFog";
+import { useLang, type Lang } from "../i18n";
 
-const LINKS = [
-  { to: "/om-oss", label: "Om" },
-  { to: "/arbeider", label: "Arbeider" },
-  { to: "/demoer", label: "Demoer" },
-  { to: "/tjenester", label: "Tjenester" },
-  { to: "/metoden", label: "Metoden" },
-  { to: "/klarhetssjekk", label: "Klarhetssjekk" },
-  { to: "/priser", label: "Priser" },
-  { to: "/kontakt", label: "Kontakt" },
-  { to: "/personvern", label: "Personvern" },
+const LINKS: { to: string; label: Record<Lang, string> }[] = [
+  { to: "/om-oss", label: { no: "Om", en: "About" } },
+  { to: "/arbeider", label: { no: "Arbeider", en: "Work" } },
+  { to: "/demoer", label: { no: "Demoer", en: "Demos" } },
+  { to: "/tjenester", label: { no: "Tjenester", en: "Services" } },
+  { to: "/metoden", label: { no: "Metoden", en: "Method" } },
+  { to: "/klarhetssjekk", label: { no: "Klarhetssjekk", en: "Clarity check" } },
+  { to: "/priser", label: { no: "Priser", en: "Pricing" } },
+  { to: "/kontakt", label: { no: "Kontakt", en: "Contact" } },
+  { to: "/personvern", label: { no: "Personvern", en: "Privacy" } },
 ];
+
+const T: Record<Lang, {
+  eyebrow: string;
+  heading: string;
+  sub: string;
+  cta: string;
+  start: string;
+  about: string;
+  orgnr: string;
+  navLabel: string;
+  promise: string;
+}> = {
+  no: {
+    eyebrow: "Neste steg",
+    heading: "La oss snakke.",
+    sub: "En rolig, uforpliktende samtale om hvor du står, og hva som bør bli klarere først.",
+    cta: "Få din klarhetssjekk",
+    start: "Start et prosjekt",
+    about: "Merkevare og digital retning. Trondheim, Norge.",
+    orgnr: "Org.nr 937 929 145",
+    navLabel: "Bunnmeny",
+    promise: "Lettere å forstå. Lettere å velge.",
+  },
+  en: {
+    eyebrow: "Next step",
+    heading: "Let's talk.",
+    sub: "A calm, no-obligation conversation about where you stand, and what should become clearer first.",
+    cta: "Get your clarity check",
+    start: "Start a project",
+    about: "Brand and digital direction. Trondheim, Norway.",
+    orgnr: "Org. no. 937 929 145",
+    navLabel: "Footer menu",
+    promise: "Easier to understand. Easier to choose.",
+  },
+};
 
 export default function Footer() {
   const markRef = useRef<HTMLDivElement>(null);
+  const { lang, p } = useLang();
+  const t = T[lang];
 
   useVelocitySkew(markRef, 5);
 
@@ -61,16 +99,15 @@ export default function Footer() {
       <div className="relative z-[2] mx-auto max-w-[1440px] px-6 pt-24 md:px-10 md:pt-32">
         {/* CTA moment */}
         <Reveal className="max-w-2xl">
-          <p className="eyebrow text-gold">Neste steg</p>
-          <h2 className="display-sans mt-6 text-5xl md:text-7xl">La oss snakke.</h2>
+          <p className="eyebrow text-gold">{t.eyebrow}</p>
+          <h2 className="display mt-6 text-5xl md:text-7xl">{t.heading}</h2>
           <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-cream/80 md:text-lg">
-            En rolig, uforpliktende samtale om hvor du står, og hva som bør bli
-            klarere først.
+            {t.sub}
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <Button to="/klarhetssjekk">Få din klarhetssjekk</Button>
-            <Button to="/kontakt" variant="ghost">
-              Start et prosjekt
+            <Button to={p("/klarhetssjekk")}>{t.cta}</Button>
+            <Button to={p("/kontakt")} variant="ghost">
+              {t.start}
             </Button>
           </div>
         </Reveal>
@@ -80,18 +117,18 @@ export default function Footer() {
           <div>
             <p className="eyebrow text-cream/55">NUREA</p>
             <p className="mt-4 max-w-[36ch] text-sm leading-relaxed text-cream/70">
-              Merkevare og digital retning. Trondheim, Norge.
+              {t.about}
             </p>
           </div>
-          <nav className="grid grid-cols-2 gap-x-8 gap-y-3" aria-label="Bunnmeny">
+          <nav className="grid grid-cols-2 gap-x-8 gap-y-3" aria-label={t.navLabel}>
             {LINKS.map((l) => (
               <Link
                 key={l.to}
-                to={l.to}
+                to={p(l.to)}
                 onClick={() => sound.play("click")}
                 className="link-line w-fit text-sm text-cream/70 transition-colors hover:text-cream"
               >
-                {l.label}
+                {l.label[lang]}
               </Link>
             ))}
           </nav>
@@ -136,8 +173,8 @@ export default function Footer() {
         </div>
 
         <div className="flex items-center justify-between border-t border-cream/10 py-6 text-xs text-cream/55">
-          <span>© {new Date().getFullYear()} NUREA</span>
-          <span>Lettere å forstå. Lettere å velge.</span>
+          <span>© {new Date().getFullYear()} NUREA · {t.orgnr}</span>
+          <span>{t.promise}</span>
         </div>
       </div>
     </footer>

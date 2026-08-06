@@ -3,11 +3,81 @@ import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import Button from "../components/Button";
 import { useWebForm, mailtoFallback, LEAD_EMAIL } from "../lib/useWebForm";
+import { useLang, type Lang } from "../i18n";
+
+const T: Record<Lang, {
+  docTitle: string;
+  eyebrow: string;
+  title: string;
+  intro: string;
+  direct: string;
+  about: string;
+  thanks: string;
+  thanksBody: string;
+  nameLabel: string;
+  namePlaceholder: string;
+  emailLabel: string;
+  emailPlaceholder: string;
+  messageLabel: string;
+  messagePlaceholder: string;
+  sending: string;
+  send: string;
+  errorPre: string;
+  errorLink: string;
+  mailtoSubject: string;
+}> = {
+  no: {
+    docTitle: "Kontakt",
+    eyebrow: "Kontakt",
+    title: "La oss snakke.",
+    intro: "En rolig, uforpliktende samtale om hvor du står, og hva som bør bli klarere først.",
+    direct: "Direkte",
+    about:
+      "NUREA holder til i Trondheim og jobber med bedrifter i hele Norge. Zaynab er din kontaktperson fra første melding.",
+    thanks: "Takk.",
+    thanksBody: "Meldingen er sendt. Du hører fra oss snart.",
+    nameLabel: "Navn *",
+    namePlaceholder: "Fornavn Etternavn",
+    emailLabel: "E-post *",
+    emailPlaceholder: "deg@bedriften.no",
+    messageLabel: "Melding *",
+    messagePlaceholder: "Fortell kort om bedriften din og hva du ønsker å få til.",
+    sending: "Sender…",
+    send: "Send melding",
+    errorPre: "Noe gikk galt med innsendingen. Du kan i stedet",
+    errorLink: "sende oss en e-post direkte",
+    mailtoSubject: "Henvendelse fra nettsiden",
+  },
+  en: {
+    docTitle: "Contact",
+    eyebrow: "Contact",
+    title: "Let's talk.",
+    intro: "A calm, no-obligation conversation about where you stand, and what should become clearer first.",
+    direct: "Direct",
+    about:
+      "NUREA is based in Trondheim and works with businesses across Norway and beyond. Zaynab is your contact from the first message.",
+    thanks: "Thank you.",
+    thanksBody: "Your message has been sent. You will hear from us soon.",
+    nameLabel: "Name *",
+    namePlaceholder: "First and last name",
+    emailLabel: "Email *",
+    emailPlaceholder: "you@yourbusiness.com",
+    messageLabel: "Message *",
+    messagePlaceholder: "Tell us briefly about your business and what you want to achieve.",
+    sending: "Sending…",
+    send: "Send message",
+    errorPre: "Something went wrong with the submission. You can instead",
+    errorLink: "send us an email directly",
+    mailtoSubject: "Inquiry from the website",
+  },
+};
 
 const FIELD =
   "w-full rounded-none border border-ink/15 bg-white/50 px-5 py-4 text-base text-ink placeholder:text-ink/35 outline-none transition-[border-color,box-shadow] focus:border-accent focus:shadow-[0_0_0_3px_rgba(194,81,31,0.15)]";
 
 export default function Kontakt() {
+  const { lang } = useLang();
+  const t = T[lang];
   const { status, submit } = useWebForm("Kontaktskjema, ny melding");
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -17,28 +87,28 @@ export default function Kontakt() {
       Navn: String(data.get("name") ?? ""),
       "E-post": String(data.get("email") ?? ""),
       Melding: String(data.get("message") ?? ""),
+      Språk: lang === "no" ? "Norsk" : "Engelsk",
     });
   };
 
   return (
     <main>
       <PageHeader
-        docTitle="Kontakt"
-        eyebrow="Kontakt"
-        title="La oss snakke."
-        intro="En rolig, uforpliktende samtale om hvor du står, og hva som bør bli klarere først."
+        docTitle={t.docTitle}
+        eyebrow={t.eyebrow}
+        title={t.title}
+        intro={t.intro}
       />
 
       <section className="bg-parchment text-ink">
         <div className="mx-auto grid max-w-[1440px] gap-16 px-6 py-20 md:grid-cols-[1fr_1.2fr] md:gap-24 md:px-10 md:py-32">
           <Reveal>
-            <p className="eyebrow text-accent">Direkte</p>
+            <p className="eyebrow text-accent">{t.direct}</p>
             <a href={`mailto:${LEAD_EMAIL}`} className="link-line display-sans mt-6 inline-block text-3xl md:text-4xl">
               {LEAD_EMAIL}
             </a>
             <p className="mt-8 max-w-[44ch] text-sm leading-relaxed text-ink/55 md:text-base">
-              NUREA holder til i Trondheim og jobber med bedrifter i hele
-              Norge. Zaynab er din kontaktperson fra første melding.
+              {t.about}
             </p>
             <p className="mt-6 text-sm text-ink/55">
               <a
@@ -55,58 +125,58 @@ export default function Kontakt() {
           <Reveal delay={0.1}>
             {status === "ok" ? (
               <div className="rounded-2xl border border-accent/25 bg-white/40 p-10 text-center md:p-16">
-                <p className="display-sans text-5xl md:text-6xl">Takk.</p>
+                <p className="display-sans text-5xl md:text-6xl">{t.thanks}</p>
                 <p className="mx-auto mt-6 max-w-[40ch] text-base leading-relaxed text-ink/65">
-                  Meldingen er sendt. Du hører fra oss snart.
+                  {t.thanksBody}
                 </p>
               </div>
             ) : (
               <form onSubmit={onSubmit} className="flex flex-col gap-6">
                 <div>
                   <label htmlFor="name" className="mb-2 block text-sm font-semibold">
-                    Navn *
+                    {t.nameLabel}
                   </label>
-                  <input id="name" name="name" required placeholder="Fornavn Etternavn" className={FIELD} />
+                  <input id="name" name="name" required placeholder={t.namePlaceholder} className={FIELD} />
                 </div>
                 <div>
                   <label htmlFor="email" className="mb-2 block text-sm font-semibold">
-                    E-post *
+                    {t.emailLabel}
                   </label>
                   <input
                     id="email"
                     name="email"
                     type="email"
                     required
-                    placeholder="deg@bedriften.no"
+                    placeholder={t.emailPlaceholder}
                     className={FIELD}
                   />
                 </div>
                 <div>
                   <label htmlFor="message" className="mb-2 block text-sm font-semibold">
-                    Melding *
+                    {t.messageLabel}
                   </label>
                   <textarea
                     id="message"
                     name="message"
                     required
                     rows={6}
-                    placeholder="Fortell kort om bedriften din og hva du ønsker å få til."
+                    placeholder={t.messagePlaceholder}
                     className={`${FIELD} resize-y`}
                   />
                 </div>
                 <div className="mt-2">
                   <Button type="submit" className="w-full py-5 text-base sm:w-auto sm:px-12">
-                    {status === "sending" ? "Sender…" : "Send melding"}
+                    {status === "sending" ? t.sending : t.send}
                   </Button>
                 </div>
                 {status === "error" && (
                   <p className="text-sm text-accent">
-                    Noe gikk galt med innsendingen. Du kan i stedet{" "}
+                    {t.errorPre}{" "}
                     <a
                       className="link-line font-semibold"
-                      href={mailtoFallback("Henvendelse fra nettsiden", "Hei!\n\n")}
+                      href={mailtoFallback(t.mailtoSubject, "Hei!\n\n")}
                     >
-                      sende oss en e-post direkte
+                      {t.errorLink}
                     </a>
                     .
                   </p>

@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect, useLayoutEffect, useRef, useState } from "re
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger, prefersReducedMotion } from "./lib/motion";
+import { LangProvider } from "./i18n";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import Cursor from "./components/Cursor";
@@ -17,6 +18,7 @@ const Klarhetssjekk = lazy(() => import("./pages/Klarhetssjekk"));
 const Priser = lazy(() => import("./pages/Priser"));
 const OmOss = lazy(() => import("./pages/OmOss"));
 const Kontakt = lazy(() => import("./pages/Kontakt"));
+const Skjema = lazy(() => import("./pages/Skjema"));
 const Personvern = lazy(() => import("./pages/Personvern"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -100,30 +102,43 @@ function RouteCurtain() {
 export default function App() {
   return (
     <BrowserRouter>
-      <SmoothScroll />
-      <RouteReset />
-      <FontRefresh />
-      <RouteCurtain />
-      <Intro />
-      <Cursor />
-      <Nav />
-      <Suspense fallback={<div className="min-h-screen bg-espresso" />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/tjenester" element={<Tjenester />} />
-          <Route path="/tjenester/:slug" element={<TjenesteDetalj />} />
-          <Route path="/arbeider" element={<Arbeider />} />
-          <Route path="/demoer" element={<Demoer />} />
-          <Route path="/metoden" element={<Metoden />} />
-          <Route path="/klarhetssjekk" element={<Klarhetssjekk />} />
-          <Route path="/priser" element={<Priser />} />
-          <Route path="/om-oss" element={<OmOss />} />
-          <Route path="/kontakt" element={<Kontakt />} />
-          <Route path="/personvern" element={<Personvern />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-      <Footer />
+      <LangProvider>
+        <SmoothScroll />
+        <RouteReset />
+        <FontRefresh />
+        <RouteCurtain />
+        <Intro />
+        <Cursor />
+        <Nav />
+        <Suspense fallback={<div className="min-h-screen bg-espresso" />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/tjenester" element={<Tjenester />} />
+            <Route path="/tjenester/:slug" element={<TjenesteDetalj />} />
+            <Route path="/arbeider" element={<Arbeider />} />
+            <Route path="/demoer" element={<Demoer />} />
+            <Route path="/metoden" element={<Metoden />} />
+            <Route path="/klarhetssjekk" element={<Klarhetssjekk />} />
+            <Route path="/priser" element={<Priser />} />
+            <Route path="/om-oss" element={<OmOss />} />
+            <Route path="/kontakt" element={<Kontakt />} />
+            <Route path="/skjema" element={<Skjema />} />
+            <Route path="/personvern" element={<Personvern />} />
+            {/* English twins. /skjema and /personvern stay Norwegian on purpose. */}
+            <Route path="/en" element={<Home />} />
+            <Route path="/en/services" element={<Tjenester />} />
+            <Route path="/en/services/:slug" element={<TjenesteDetalj />} />
+            <Route path="/en/work" element={<Arbeider />} />
+            <Route path="/en/method" element={<Metoden />} />
+            <Route path="/en/clarity-check" element={<Klarhetssjekk />} />
+            <Route path="/en/pricing" element={<Priser />} />
+            <Route path="/en/about" element={<OmOss />} />
+            <Route path="/en/contact" element={<Kontakt />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+        <Footer />
+      </LangProvider>
     </BrowserRouter>
   );
 }

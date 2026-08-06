@@ -41,8 +41,13 @@ export interface UpcomingDemo {
 
 export const UPCOMING: UpcomingDemo[] = [
   {
-    niche: "Bruktbilforhandler",
+    niche: "Regnskapsbyrå",
     status: "Bygges nå",
+    line: "Fastpris i klartekst og regnskapet ført som en åpen bok. Tillit bygget på tall som stemmer, ikke ord.",
+  },
+  {
+    niche: "Bruktbilforhandler",
+    status: "I kø",
     line: "Trygghet ved bruktbilkjøp: menneskene bak plassen, rettighetene dine, og bilene på ett sted i stedet for en lenke til Finn.",
   },
   {

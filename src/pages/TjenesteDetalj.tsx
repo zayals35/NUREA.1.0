@@ -5,14 +5,25 @@ import Button from "../components/Button";
 import WordReveal from "../components/WordReveal";
 import { SERVICES } from "../data/services";
 import { sound } from "../lib/sound";
+import { useLang, SERVICE_ID_FROM_EN_SLUG, type Lang } from "../i18n";
+
+const T: Record<Lang, { get: string; cta: string; contact: string; next: string }> = {
+  no: { get: "Hva du får", cta: "Få din klarhetssjekk", contact: "Kontakt oss", next: "Neste" },
+  en: { get: "What you get", cta: "Get your clarity check", contact: "Contact us", next: "Next" },
+};
 
 export default function TjenesteDetalj() {
   const { slug } = useParams();
-  const service = SERVICES.find((s) => s.id === slug);
-  if (!service) return <Navigate to="/tjenester" replace />;
+  const { lang, p } = useLang();
+  const t = T[lang];
 
-  const idx = SERVICES.indexOf(service);
-  const next = SERVICES[(idx + 1) % SERVICES.length];
+  // EN routes use English slugs; resolve back to the canonical service id.
+  const id = lang === "en" ? SERVICE_ID_FROM_EN_SLUG[slug ?? ""] : slug;
+  const service = SERVICES[lang].find((s) => s.id === id);
+  if (!service) return <Navigate to={p("/tjenester")} replace />;
+
+  const idx = SERVICES[lang].indexOf(service);
+  const next = SERVICES[lang][(idx + 1) % SERVICES[lang].length];
 
   return (
     <main>
@@ -26,6 +37,7 @@ export default function TjenesteDetalj() {
       <section className="grain relative overflow-hidden bg-espresso text-cream">
         <div className="relative z-[2] mx-auto max-w-[1440px] px-6 pb-24 md:px-10 md:pb-36">
           <WordReveal
+            key={`${lang}-${service.id}`}
             className="display-sans max-w-4xl text-2xl leading-[1.2] sm:text-3xl md:text-4xl"
             text={service.statementBody}
           />
@@ -35,7 +47,7 @@ export default function TjenesteDetalj() {
       <section className="bg-parchment text-ink">
         <div className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-32">
           <Reveal>
-            <p className="eyebrow text-accent">Hva du får</p>
+            <p className="eyebrow text-accent">{t.get}</p>
           </Reveal>
           <div className="mt-12 grid gap-x-16 gap-y-12 md:grid-cols-2">
             {service.deliverables.map((d, i) => (
@@ -67,17 +79,17 @@ export default function TjenesteDetalj() {
               {service.ctaHeading}
             </h2>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-              <Button to="/klarhetssjekk">Få din klarhetssjekk</Button>
-              <Button to="/kontakt" variant="ghost">
-                Kontakt oss
+              <Button to={p("/klarhetssjekk")}>{t.cta}</Button>
+              <Button to={p("/kontakt")} variant="ghost">
+                {t.contact}
               </Button>
             </div>
             <Link
-              to={`/tjenester/${next.id}`}
+              to={p(`/tjenester/${next.id}`)}
               onClick={() => sound.play("click")}
               className="link-line mt-12 inline-block text-sm text-cream/70 hover:text-cream"
             >
-              Neste: {next.index} {next.title}
+              {t.next}: {next.index} {next.title}
             </Link>
           </Reveal>
         </div>

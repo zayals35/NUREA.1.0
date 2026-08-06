@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
 import { sound } from "../lib/sound";
+import { useLang } from "../i18n";
 
 export default function SoundToggle() {
   const [on, setOn] = useState(sound.enabled);
+  const { lang } = useLang();
 
   useEffect(() => sound.subscribe(setOn), []);
+
+  const label =
+    lang === "no" ? (on ? "Skru av lyd" : "Skru på lyd") : on ? "Turn sound off" : "Turn sound on";
 
   return (
     <button
       type="button"
       onClick={() => sound.toggle()}
       aria-pressed={on}
-      aria-label={on ? "Skru av lyd" : "Skru på lyd"}
+      aria-label={label}
       className="mono group flex h-10 items-center gap-2 border border-current/25 px-4 text-[11px] tracking-[0.18em] opacity-80 transition-opacity hover:opacity-100"
     >
       <span className="flex h-3 items-end gap-[2px]" aria-hidden="true">
@@ -25,7 +30,7 @@ export default function SoundToggle() {
           />
         ))}
       </span>
-      Lyd {on ? "på" : "av"}
+      {lang === "no" ? `Lyd ${on ? "på" : "av"}` : `Sound ${on ? "on" : "off"}`}
     </button>
   );
 }
