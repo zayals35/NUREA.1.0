@@ -27,6 +27,7 @@ const T: Record<Lang, {
   cta: string;
   start: string;
   about: string;
+  orgnr: string;
   navLabel: string;
   promise: string;
 }> = {
@@ -37,6 +38,7 @@ const T: Record<Lang, {
     cta: "Få din klarhetssjekk",
     start: "Start et prosjekt",
     about: "Merkevare og digital retning. Trondheim, Norge.",
+    orgnr: "Org.nr 937 929 145",
     navLabel: "Bunnmeny",
     promise: "Lettere å forstå. Lettere å velge.",
   },
@@ -47,6 +49,7 @@ const T: Record<Lang, {
     cta: "Get your clarity check",
     start: "Start a project",
     about: "Brand and digital direction. Trondheim, Norway.",
+    orgnr: "Org. no. 937 929 145",
     navLabel: "Footer menu",
     promise: "Easier to understand. Easier to choose.",
   },
@@ -169,7 +172,7 @@ export default function Footer() {
         </div>
 
         <div className="flex items-center justify-between border-t border-cream/10 py-6 text-xs text-cream/55">
-          <span>© {new Date().getFullYear()} NUREA</span>
+          <span>© {new Date().getFullYear()} NUREA · {t.orgnr}</span>
           <span>{t.promise}</span>
         </div>
       </div>
