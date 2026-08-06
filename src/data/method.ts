@@ -8,22 +8,22 @@ export const WEEK_STEPS: WeekStep[] = [
   {
     n: "Steg 01",
     h: "Diagnose",
-    p: "Vi går gjennom nettside, merkevare, budskap, kundereise og digitale flaskehalser.",
+    p: "Vi går gjennom nettside, merkevare, budskap og kundereise.",
   },
   {
     n: "Steg 02",
     h: "Retning",
-    p: "Du får en konkret plan: hva som bør bygges, hvorfor, og i hvilken rekkefølge.",
+    p: "En konkret plan: hva som bygges, hvorfor, i hvilken rekkefølge.",
   },
   {
     n: "Steg 03",
     h: "Første løft",
-    p: "Vi forbedrer det som raskest kan øke tillit: struktur, tekst, CTA, visuell retning eller kontaktflyt.",
+    p: "Det som raskest øker tillit: struktur, tekst, CTA, kontaktflyt.",
   },
   {
     n: "Steg 04",
     h: "Videre",
-    p: "Vi definerer neste steg: nettside, brand, systemer, innhold eller markedsføring.",
+    p: "Neste steg defineres: nettside, brand, innhold eller systemer.",
   },
 ];
 
@@ -31,16 +31,16 @@ export const METHOD_STEPS = [
   {
     n: "01",
     h: "Klarhet",
-    p: "Vi finner ut hva som faktisk skal sies, til hvem, og hvorfor det betyr noe. Uten klarhet blir alt annet gjetning.",
+    p: "Hva som skal sies, til hvem, og hvorfor. Uten klarhet er alt annet gjetning.",
   },
   {
     n: "02",
     h: "Uttrykk",
-    p: "Klarheten får en form: identitet, språk og design som gjør at riktig kunde kjenner seg igjen med en gang.",
+    p: "Klarheten får form: identitet, språk og design riktig kunde kjenner igjen.",
   },
   {
     n: "03",
     h: "Flyt",
-    p: "Uttrykket settes i system: nettside, innhold og digitale flyter som jobber sammen, dag og natt.",
+    p: "Uttrykket settes i system: nettside, innhold og flyter som jobber sammen.",
   },
 ];

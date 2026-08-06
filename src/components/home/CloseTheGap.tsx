@@ -89,12 +89,12 @@ export default function CloseTheGap() {
         gSeam.style.transform = `translate(-50%, -50%) scaleY(${se.toFixed(3)})`;
       };
 
-      // Same window as before: converge plays while the section's top
-      // travels from the fold to (almost) the top of the viewport.
+      // Shortened window (her Gate B 2026-08-06): the payoff lands while the
+      // section is still arriving, no long dwell before the seam seals.
       ScrollTrigger.create({
         trigger: rootRef.current,
         start: "top bottom",
-        end: "top 8%",
+        end: "top 32%",
         scrub: true,
         onUpdate: (self) => render(self.progress),
       });
@@ -107,7 +107,7 @@ export default function CloseTheGap() {
     <section
       ref={rootRef}
       aria-label="Vi tetter gapet"
-      className="grain relative flex h-[70vh] w-full flex-col items-center justify-center gap-8 overflow-hidden bg-parchment-alt px-5 text-ink md:h-[85vh] md:gap-10"
+      className="grain relative flex h-[58vh] w-full flex-col items-center justify-center gap-8 overflow-hidden bg-parchment-alt px-5 text-ink md:h-[68vh] md:gap-10"
     >
       {/* Textured stage: warm fog on paper, thinning as the gap closes */}
       <div ref={fogRef} className="absolute inset-0 will-change-[opacity]">
@@ -145,8 +145,7 @@ export default function CloseTheGap() {
       </div>
 
       <p className="relative z-[4] mx-auto max-w-[48ch] text-center text-base leading-relaxed text-ink/80 md:text-xl">
-        Mellom det kunden forstår og det bedriften faktisk er. Klarhet og
-        tillit lukker avstanden, steg for steg.
+        Mellom det kunden forstår og det bedriften faktisk er.
       </p>
 
       <style>{`
