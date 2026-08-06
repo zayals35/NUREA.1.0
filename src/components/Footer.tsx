@@ -61,7 +61,7 @@ export default function Footer() {
         {/* CTA moment */}
         <Reveal className="max-w-2xl">
           <p className="eyebrow text-gold">Neste steg</p>
-          <h2 className="display-sans mt-6 text-5xl md:text-7xl">La oss snakke.</h2>
+          <h2 className="display mt-6 text-5xl md:text-7xl">La oss snakke.</h2>
           <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-cream/80 md:text-lg">
             En rolig, uforpliktende samtale om hvor du står, og hva som bør bli
             klarere først.

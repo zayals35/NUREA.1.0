@@ -5,7 +5,7 @@ const KEY = "nurea-sound";
 type SfxName = "hover" | "click" | "enter";
 
 const DEFS: Record<SfxName, { src: string; volume: number; minGapMs: number }> = {
-  hover: { src: "/sound/tap-hover.mp3", volume: 0.14, minGapMs: 90 },
+  hover: { src: "/sound/tap-hover.mp3", volume: 0.14, minGapMs: 300 },
   click: { src: "/sound/tap-click.mp3", volume: 0.3, minGapMs: 120 },
   enter: { src: "/sound/tap-enter.mp3", volume: 0.2, minGapMs: 900 },
 };

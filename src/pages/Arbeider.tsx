@@ -18,7 +18,7 @@ export default function Arbeider() {
       <section className="bg-parchment text-ink">
         <div className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-32">
           <div className="flex flex-col gap-28 md:gap-40">
-            {WORK.map((w, i) => (
+            {WORK.filter((w) => !w.hidden).map((w, i) => (
               <article
                 key={w.id}
                 className={`grid items-start gap-8 md:grid-cols-2 md:gap-16 ${

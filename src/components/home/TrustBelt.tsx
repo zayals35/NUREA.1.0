@@ -1,5 +1,5 @@
 /** Placeholder names until client logo files exist; swap spans for imgs later. */
-const CLIENTS = ["Metanoia", "Bilmekka", "Møre Marin", "Moustache City", "NUE"];
+const CLIENTS = ["Metanoia", "Bilmekka", "Møre Marin", "Moustache City"];
 
 /** Rolling client belt straight beneath the hero. */
 export default function TrustBelt() {

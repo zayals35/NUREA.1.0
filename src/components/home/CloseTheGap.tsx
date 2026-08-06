@@ -1,13 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger, prefersReducedMotion } from "../../lib/motion";
 import HalftoneFog from "../HalftoneFog";
 
 /**
- * The "vi tetter gapet" converge animation, ported from the live nurea.no
- * CloseTheGap component: VI TETTER and GAPET start pushed to opposite sides
- * with letters spread apart, and close the gap around a centre video that
- * scales up while the section scrolls in. Restyled to the locked brand.
+ * The "vi tetter gapet" converge moment, pure typography: VI TETTER and
+ * GAPET start pushed to opposite sides with letters spread apart and close
+ * the gap while the section scrolls in. As the gap closes, the fog itself
+ * thins out, and a single burnt-orange seam seals the meeting point.
+ * The section performs the sentence; nothing borrowed, nothing stock.
  */
 
 const SPREAD = 40; // vw each word starts off to its side
@@ -49,36 +50,23 @@ export default function CloseTheGap() {
   const rootRef = useRef<HTMLElement>(null);
   const leftRef = useRef<HTMLSpanElement>(null);
   const rightRef = useRef<HTMLSpanElement>(null);
-  const imgboxRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  // Pause the loop when the section is offscreen; never play under reduced motion.
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (prefersReducedMotion()) {
-      video.pause();
-      return;
-    }
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) video.play().catch(() => undefined);
-      else video.pause();
-    });
-    io.observe(video);
-    return () => io.disconnect();
-  }, []);
+  const fogRef = useRef<HTMLDivElement>(null);
+  const seamRef = useRef<HTMLSpanElement>(null);
 
   useGSAP(
     () => {
       const gLeft = leftRef.current!;
       const gRight = rightRef.current!;
-      const gImgbox = imgboxRef.current!;
+      const gFog = fogRef.current!;
+      const gSeam = seamRef.current!;
       const leftChars = splitChars(gLeft);
       const rightChars = splitChars(gRight);
 
       if (prefersReducedMotion()) {
         leftChars.concat(rightChars).forEach((c) => (c.style.opacity = "1"));
-        gImgbox.style.transform = "scale(1)";
+        gFog.style.opacity = "0.3";
+        gSeam.style.opacity = "1";
+        gSeam.style.transform = "translate(-50%, -50%) scaleY(1)";
         return;
       }
 
@@ -86,17 +74,27 @@ export default function CloseTheGap() {
         const e = smooth(p);
         gLeft.style.transform = `translateX(${(-SPREAD * (1 - e)).toFixed(2)}vw)`;
         gRight.style.transform = `translateX(${(SPREAD * (1 - e)).toFixed(2)}vw)`;
-        gImgbox.style.transform = `scale(${(0.4 + 0.6 * e).toFixed(3)})`;
+        // The words themselves resolve from fog to glass as the gap closes.
+        const blur = (10 * (1 - e)).toFixed(2);
+        gLeft.style.filter = `blur(${blur}px)`;
+        gRight.style.filter = `blur(${blur}px)`;
         applyWord(leftChars, p, false);
         applyWord(rightChars, p, true);
+        // Closing the gap clears the fog.
+        gFog.style.opacity = (1 - 0.7 * e).toFixed(3);
+        // The seam seals only at the very end, one quiet spark.
+        const sp = Math.min(Math.max((p - 0.86) / 0.14, 0), 1);
+        const se = smooth(sp);
+        gSeam.style.opacity = se.toFixed(3);
+        gSeam.style.transform = `translate(-50%, -50%) scaleY(${se.toFixed(3)})`;
       };
 
-      // Same window as the live site: converge plays while the section's top
-      // travels from the fold to (almost) the top of the viewport.
+      // Shortened window (her Gate B 2026-08-06): the payoff lands while the
+      // section is still arriving, no long dwell before the seam seals.
       ScrollTrigger.create({
         trigger: rootRef.current,
         start: "top bottom",
-        end: "top 8%",
+        end: "top 32%",
         scrub: true,
         onUpdate: (self) => render(self.progress),
       });
@@ -109,36 +107,14 @@ export default function CloseTheGap() {
     <section
       ref={rootRef}
       aria-label="Vi tetter gapet"
-      className="grain relative flex h-[75vh] w-full flex-col items-center justify-center gap-6 overflow-hidden bg-parchment-alt px-5 text-ink md:h-[88vh] md:gap-8"
+      className="grain relative flex h-[58vh] w-full flex-col items-center justify-center gap-8 overflow-hidden bg-parchment-alt px-5 text-ink md:h-[68vh] md:gap-10"
     >
-      {/* Textured stage: warm fog on paper */}
-      <HalftoneFog amp={0.35} color="#8a8170" color2="#6b6357" />
+      {/* Textured stage: warm fog on paper, thinning as the gap closes */}
+      <div ref={fogRef} className="absolute inset-0 will-change-[opacity]">
+        <HalftoneFog amp={0.35} color="#8a8170" color2="#6b6357" />
+      </div>
 
-      <div className="relative h-[clamp(240px,46vh,460px)] w-full">
-        {/* Centre media, scales up as the words converge */}
-        <div
-          className="absolute left-1/2 top-1/2 z-[1] aspect-[3/4] w-[52vw] -translate-x-1/2 -translate-y-1/2 md:w-[clamp(150px,24vw,340px)]"
-        >
-          <div
-            ref={imgboxRef}
-            className="absolute inset-0 origin-center overflow-hidden rounded-2xl shadow-[0_40px_90px_-34px_rgba(16,14,11,0.62)] will-change-transform"
-          >
-            <video
-              ref={videoRef}
-              className="absolute inset-0 h-full w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster="/nurea-method/gap-poster.webp"
-            >
-              <source src="/nurea-method/gap.webm" type="video/webm" />
-              <source src="/nurea-method/gap.mp4" type="video/mp4" />
-            </video>
-          </div>
-        </div>
-
+      <div className="relative flex h-[clamp(180px,32vh,340px)] w-full items-center justify-center">
         {/* The converging words */}
         {/* Font size lives on the container so the em gap scales with the words. */}
         <div
@@ -147,29 +123,35 @@ export default function CloseTheGap() {
         >
           <span
             ref={leftRef}
-            className="ctg-word display-sans whitespace-nowrap font-bold uppercase leading-[0.94] text-[#e7e1d5]"
+            className="ctg-word display-sans whitespace-nowrap font-bold uppercase leading-[0.94] text-ink"
           >
             VI TETTER
           </span>
           <span
             ref={rightRef}
-            className="ctg-word display-sans whitespace-nowrap font-bold uppercase leading-[0.94] text-[#e7e1d5]"
+            className="ctg-word display-sans whitespace-nowrap font-bold uppercase leading-[0.94] text-ink"
           >
             GAPET
           </span>
         </div>
+
+        {/* The seam: one burnt-orange hairline where the gap used to be */}
+        <span
+          ref={seamRef}
+          aria-hidden="true"
+          className="absolute left-1/2 top-1/2 z-[4] h-[clamp(2.4rem,12vh,7rem)] w-[2px] bg-accent opacity-0 shadow-[0_0_24px_rgba(194,81,31,0.55)] will-change-[transform,opacity]"
+          style={{ transform: "translate(-50%, -50%) scaleY(0)" }}
+        />
       </div>
 
       <p className="relative z-[4] mx-auto max-w-[48ch] text-center text-base leading-relaxed text-ink/80 md:text-xl">
-        Mellom det kunden forstår og det bedriften faktisk er. Klarhet og
-        tillit lukker avstanden, steg for steg.
+        Mellom det kunden forstår og det bedriften faktisk er.
       </p>
 
       <style>{`
         .ctg-word {
           display: inline-flex;
-          text-shadow: 0 2px 32px rgba(16, 14, 11, 0.95), 0 1px 8px rgba(16, 14, 11, 0.82);
-          will-change: transform;
+          will-change: transform, filter;
         }
         .ctg-char {
           display: inline-block;

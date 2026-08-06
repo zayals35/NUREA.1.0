@@ -12,6 +12,8 @@ export interface WorkItem {
   shots: string[];
   href?: string;
   instagram?: string;
+  /** Locked until the delivered work is actually live; hidden everywhere. */
+  hidden?: boolean;
 }
 
 export const WORK: WorkItem[] = [
@@ -55,11 +57,12 @@ export const WORK: WorkItem[] = [
     id: "nue-invitations",
     title: "Event planlegging",
     company: "NUE Invitations",
-    caption: "Nettsiden lanseres 29. juli. Caset blir oppdatert etter lansering.",
+    caption: "Nettsiden er under arbeid. Caset publiseres når den er lansert.",
     tags: ["Merkevare"],
     metricLabel: "Logo · Identitet · Konsept",
     art: "/work/art-nue.webp",
     shots: ["/work/nue/shot-1.webp"],
+    hidden: true,
   },
   {
     id: "moustache-city",
