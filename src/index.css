@@ -19,7 +19,7 @@
   --color-gold: #e8671c;
   --color-gold-soft: #f3d9c5;
 
-  --font-display: "Newsreader Variable", "Newsreader", Georgia, serif;
+  --font-display: "Syne Variable", "Syne", system-ui, sans-serif;
   --font-body: "forma-djr-text", "Inter", system-ui, sans-serif;
   --font-display-sans: "forma-djr-display", "forma-djr-text", "Inter", system-ui, sans-serif;
   --font-mono: "mono45-headline", "Courier New", monospace;
@@ -51,15 +51,14 @@ body {
 
 /* ---------- typography roles ---------- */
 
-/* Headline voice: Newsreader, interim signature (her ruling 2026-08-06);
-   weight 500 against the "thin" read, display optical cut pinned. */
+/* Headline voice: Syne, the signature by her round-2 vote (2026-08-06).
+   Weight 600 for presence; the wordmark rides the same class. */
 .display {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 600;
   font-style: normal;
   letter-spacing: -0.015em;
-  line-height: 1.04;
-  font-variation-settings: "opsz" 72;
+  line-height: 1.06;
 }
 
 /* Section subheads: Forma DJR Display. The working headings; the serif stays a signature. */
