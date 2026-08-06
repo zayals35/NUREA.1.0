@@ -19,7 +19,7 @@
   --color-gold: #e8671c;
   --color-gold-soft: #f3d9c5;
 
-  --font-display: "Fraunces Variable", "Fraunces", Georgia, serif;
+  --font-display: "Newsreader Variable", "Newsreader", Georgia, serif;
   --font-body: "forma-djr-text", "Inter", system-ui, sans-serif;
   --font-display-sans: "forma-djr-display", "forma-djr-text", "Inter", system-ui, sans-serif;
   --font-mono: "mono45-headline", "Courier New", monospace;
@@ -51,14 +51,15 @@ body {
 
 /* ---------- typography roles ---------- */
 
-/* Headline voice: Fraunces, warm optical display cut. Expressive weight/opsz. */
+/* Headline voice: Newsreader, interim signature (her ruling 2026-08-06);
+   weight 500 against the "thin" read, display optical cut pinned. */
 .display {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 500;
   font-style: normal;
   letter-spacing: -0.015em;
-  line-height: 1.02;
-  font-variation-settings: "opsz" 144, "SOFT" 40, "WONK" 1;
+  line-height: 1.04;
+  font-variation-settings: "opsz" 72;
 }
 
 /* Section subheads: Forma DJR Display. The working headings; the serif stays a signature. */
