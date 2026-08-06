@@ -135,7 +135,7 @@ export default function Demoer() {
             </p>
           </Reveal>
           <Reveal className="mt-12 border-t border-cream/10" stagger={0.06}>
-            {WORK.map((w) => (
+            {WORK.no.filter((w) => !w.hidden).map((w) => (
               <div
                 key={w.id}
                 className="grid gap-1 border-b border-cream/10 py-5 md:grid-cols-[16rem_1fr_10rem] md:items-baseline md:gap-8"
@@ -156,7 +156,7 @@ export default function Demoer() {
                   </a>
                 ) : (
                   <span className="mono text-[11px] tracking-[0.1em] text-cream/40 md:justify-self-end md:text-right">
-                    {w.id === "nue-invitations" ? "Lanseres 29. juli" : "Publisert arbeid"}
+                    Publisert arbeid
                   </span>
                 )}
               </div>
