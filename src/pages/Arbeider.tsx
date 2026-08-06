@@ -4,21 +4,55 @@ import Button from "../components/Button";
 import MediaReveal from "../components/MediaReveal";
 import { WORK } from "../data/work";
 import { sound } from "../lib/sound";
+import { useLang, type Lang } from "../i18n";
+
+const T: Record<Lang, {
+  docTitle: string;
+  eyebrow: string;
+  title: string;
+  intro: string;
+  live: string;
+  possible: string;
+  cta: string;
+}> = {
+  no: {
+    docTitle: "Arbeider",
+    eyebrow: "Arbeider",
+    title: "Arbeid som gjør bedrifter tydeligere.",
+    intro:
+      "Et utvalg av merker vi har bygget en tydelig digital retning for: identitet, nettsider, innhold og systemer som henger sammen.",
+    live: "Se siden live",
+    possible: "Vil du se hva som er mulig for din bedrift?",
+    cta: "Få din klarhetssjekk",
+  },
+  en: {
+    docTitle: "Work",
+    eyebrow: "Work",
+    title: "Work that makes businesses clearer.",
+    intro:
+      "A selection of brands we have built a clear digital direction for: identity, websites, content and systems that hold together.",
+    live: "See it live",
+    possible: "Want to see what is possible for your business?",
+    cta: "Get your clarity check",
+  },
+};
 
 export default function Arbeider() {
+  const { lang, p } = useLang();
+  const t = T[lang];
   return (
     <main>
       <PageHeader
-        docTitle="Arbeider"
-        eyebrow="Arbeider"
-        title="Arbeid som gjør bedrifter tydeligere."
-        intro="Et utvalg av merker vi har bygget en tydelig digital retning for: identitet, nettsider, innhold og systemer som henger sammen."
+        docTitle={t.docTitle}
+        eyebrow={t.eyebrow}
+        title={t.title}
+        intro={t.intro}
       />
 
       <section className="bg-parchment text-ink">
         <div className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-32">
           <div className="flex flex-col gap-28 md:gap-40">
-            {WORK.filter((w) => !w.hidden).map((w, i) => (
+            {WORK[lang].filter((w) => !w.hidden).map((w, i) => (
               <article
                 key={w.id}
                 className={`grid items-start gap-8 md:grid-cols-2 md:gap-16 ${
@@ -75,7 +109,7 @@ export default function Arbeider() {
                       onClick={() => sound.play("click")}
                       className="link-line mt-8 inline-block text-sm font-semibold text-accent"
                     >
-                      {w.href ? "Se siden live" : `Instagram ${w.instagram}`}
+                      {w.href ? t.live : `Instagram ${w.instagram}`}
                     </a>
                   )}
                 </Reveal>
@@ -85,10 +119,10 @@ export default function Arbeider() {
 
           <Reveal className="mt-28 text-center md:mt-40">
             <p className="display-sans mx-auto max-w-2xl text-2xl text-ink/70 md:text-3xl">
-              Vil du se hva som er mulig for din bedrift?
+              {t.possible}
             </p>
             <div className="mt-8">
-              <Button to="/klarhetssjekk">Få din klarhetssjekk</Button>
+              <Button to={p("/klarhetssjekk")}>{t.cta}</Button>
             </div>
           </Reveal>
         </div>

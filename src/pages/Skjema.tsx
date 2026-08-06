@@ -34,7 +34,7 @@ function loadSaved(): Saved {
         contact: { bedrift: "", navn: "", epost: "", ...parsed.contact },
         answers: parsed.answers ?? {},
         services: (parsed.services ?? []).filter((id) =>
-          SERVICES.some((s) => s.id === id)
+          SERVICES.no.some((s) => s.id === id)
         ),
       };
     }
@@ -217,7 +217,7 @@ export default function Skjema() {
     setStatus("sending");
 
     const serviceTitles = services.map(
-      (id) => SERVICES.find((s) => s.id === id)?.title ?? id
+      (id) => SERVICES.no.find((s) => s.id === id)?.title ?? id
     );
     const sections = visible.map((s) => ({
       title: s.title,
@@ -336,7 +336,7 @@ export default function Skjema() {
                     </span>
                   </p>
                   <div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
-                    {SERVICES.map((s) => {
+                    {SERVICES.no.map((s) => {
                       const on = services.includes(s.id);
                       return (
                         <button

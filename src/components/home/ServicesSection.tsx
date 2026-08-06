@@ -2,30 +2,38 @@ import { Link } from "react-router-dom";
 import Reveal from "../Reveal";
 import { SERVICES } from "../../data/services";
 import { sound } from "../../lib/sound";
+import { useLang, type Lang } from "../../i18n";
+
+const T: Record<Lang, { eyebrow: string; heading: string; all: string }> = {
+  no: { eyebrow: "Dette gjør vi", heading: "Fem deler, én retning.", all: "Se alle tjenester" },
+  en: { eyebrow: "What we do", heading: "Five parts, one direction.", all: "See all services" },
+};
 
 export default function ServicesSection() {
+  const { lang, p } = useLang();
+  const t = T[lang];
   return (
     <section className="grain relative overflow-hidden bg-espresso text-cream">
       <div className="relative z-[2] mx-auto max-w-[1440px] px-6 py-24 md:px-10 md:py-36">
         <Reveal className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <p className="eyebrow text-gold">Dette gjør vi</p>
-            <h2 className="display mt-6 text-4xl md:text-6xl">Fem deler, én retning.</h2>
+            <p className="eyebrow text-gold">{t.eyebrow}</p>
+            <h2 className="display mt-6 text-4xl md:text-6xl">{t.heading}</h2>
           </div>
           <Link
-            to="/tjenester"
+            to={p("/tjenester")}
             onClick={() => sound.play("click")}
             className="link-line pb-2 text-sm font-semibold text-cream/70 hover:text-cream"
           >
-            Se alle tjenester
+            {t.all}
           </Link>
         </Reveal>
 
         <div className="mt-14 border-t border-cream/12 md:mt-20">
-          {SERVICES.map((s, i) => (
+          {SERVICES[lang].map((s, i) => (
             <Reveal key={s.id} variant="fade-up" delay={i * 0.03}>
               <Link
-                to={`/tjenester/${s.id}`}
+                to={p(`/tjenester/${s.id}`)}
                 onClick={() => sound.play("click")}
                 className="group grid grid-cols-[auto_1fr_auto] items-baseline gap-4 border-b border-cream/12 py-8 transition-colors duration-300 hover:bg-cream/[0.04] focus-visible:bg-cream/[0.04] md:grid-cols-[80px_1fr_1fr_auto] md:gap-8 md:py-10"
               >

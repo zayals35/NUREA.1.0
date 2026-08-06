@@ -2,6 +2,22 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger, prefersReducedMotion } from "../../lib/motion";
 import HalftoneFog from "../HalftoneFog";
+import { useLang, type Lang } from "../../i18n";
+
+const T: Record<Lang, { left: string; right: string; aria: string; caption: string }> = {
+  no: {
+    left: "VI TETTER",
+    right: "GAPET",
+    aria: "Vi tetter gapet",
+    caption: "Mellom det kunden forstår og det bedriften faktisk er.",
+  },
+  en: {
+    left: "WE CLOSE",
+    right: "THE GAP",
+    aria: "We close the gap",
+    caption: "Between what the customer understands and what the business actually is.",
+  },
+};
 
 /**
  * The "vi tetter gapet" converge moment, pure typography: VI TETTER and
@@ -47,6 +63,12 @@ function applyWord(chars: HTMLSpanElement[], p: number, fromRight: boolean) {
 }
 
 export default function CloseTheGap() {
+  // Remount on language change so the split characters are rebuilt.
+  const { lang } = useLang();
+  return <CloseTheGapInner key={lang} t={T[lang]} />;
+}
+
+function CloseTheGapInner({ t }: { t: (typeof T)["no"] }) {
   const rootRef = useRef<HTMLElement>(null);
   const leftRef = useRef<HTMLSpanElement>(null);
   const rightRef = useRef<HTMLSpanElement>(null);
@@ -106,7 +128,7 @@ export default function CloseTheGap() {
   return (
     <section
       ref={rootRef}
-      aria-label="Vi tetter gapet"
+      aria-label={t.aria}
       className="grain relative flex h-[58vh] w-full flex-col items-center justify-center gap-8 overflow-hidden bg-parchment-alt px-5 text-ink md:h-[68vh] md:gap-10"
     >
       {/* Textured stage: warm fog on paper, thinning as the gap closes */}
@@ -125,13 +147,13 @@ export default function CloseTheGap() {
             ref={leftRef}
             className="ctg-word display-sans whitespace-nowrap font-bold uppercase leading-[0.94] text-ink"
           >
-            VI TETTER
+            {t.left}
           </span>
           <span
             ref={rightRef}
             className="ctg-word display-sans whitespace-nowrap font-bold uppercase leading-[0.94] text-ink"
           >
-            GAPET
+            {t.right}
           </span>
         </div>
 
@@ -145,7 +167,7 @@ export default function CloseTheGap() {
       </div>
 
       <p className="relative z-[4] mx-auto max-w-[48ch] text-center text-base leading-relaxed text-ink/80 md:text-xl">
-        Mellom det kunden forstår og det bedriften faktisk er.
+        {t.caption}
       </p>
 
       <style>{`

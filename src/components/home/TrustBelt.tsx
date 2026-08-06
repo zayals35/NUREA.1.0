@@ -1,11 +1,14 @@
+import { useLang } from "../../i18n";
+
 /** Placeholder names until client logo files exist; swap spans for imgs later. */
 const CLIENTS = ["Metanoia", "Bilmekka", "Møre Marin", "Moustache City"];
 
 /** Rolling client belt straight beneath the hero. */
 export default function TrustBelt() {
+  const { lang } = useLang();
   return (
     <section
-      aria-label="Merker vi har jobbet med"
+      aria-label={lang === "no" ? "Merker vi har jobbet med" : "Brands we have worked with"}
       className="relative overflow-hidden border-y border-cream/10 bg-espresso py-6 md:py-8"
     >
       <div className="belt-mask">

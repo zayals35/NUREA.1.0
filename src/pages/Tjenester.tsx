@@ -4,24 +4,59 @@ import Reveal from "../components/Reveal";
 import Button from "../components/Button";
 import { SERVICES } from "../data/services";
 import { sound } from "../lib/sound";
+import { useLang, type Lang } from "../i18n";
+
+const T: Record<Lang, {
+  docTitle: string;
+  eyebrow: string;
+  title: string;
+  intro: string;
+  readMore: (title: string) => string;
+  unsure: string;
+  cta: string;
+}> = {
+  no: {
+    docTitle: "Tjenester",
+    eyebrow: "Tjenester",
+    title: "Fem deler, én retning.",
+    intro:
+      "Ikke løse produkter du kjøper, men ett system som gjør uklar digital tilstedeværelse om til klarhet, tillit og henvendelser.",
+    readMore: (title) => `Les mer om ${title.toLowerCase()}`,
+    unsure: "Usikker på hvor du bør starte? Start med klarhet.",
+    cta: "Få din klarhetssjekk",
+  },
+  en: {
+    docTitle: "Services",
+    eyebrow: "Services",
+    title: "Five parts, one direction.",
+    intro:
+      "Not loose products you buy, but one system that turns an unclear digital presence into clarity, trust and inquiries.",
+    readMore: (title) => `Read more about ${title.toLowerCase()}`,
+    unsure: "Not sure where to start? Start with clarity.",
+    cta: "Get your clarity check",
+  },
+};
 
 export default function Tjenester() {
+  const { lang, p } = useLang();
+  const t = T[lang];
+
   return (
     <main>
       <PageHeader
-        docTitle="Tjenester"
-        eyebrow="Tjenester"
-        title="Fem deler, én retning."
-        intro="Ikke løse produkter du kjøper, men ett system som gjør uklar digital tilstedeværelse om til klarhet, tillit og henvendelser."
+        docTitle={t.docTitle}
+        eyebrow={t.eyebrow}
+        title={t.title}
+        intro={t.intro}
       />
 
       <section className="bg-parchment text-ink">
         <div className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-32">
           <div className="grid gap-y-4">
-            {SERVICES.map((s, i) => (
+            {SERVICES[lang].map((s, i) => (
               <Reveal key={s.id} delay={i * 0.04}>
                 <Link
-                  to={`/tjenester/${s.id}`}
+                  to={p(`/tjenester/${s.id}`)}
                   onClick={() => sound.play("click")}
                   className="group block border-b border-ink/10 py-10 md:py-14"
                 >
@@ -43,7 +78,7 @@ export default function Tjenester() {
                         {s.description} {s.positionBody}
                       </p>
                       <span className="link-line mt-4 inline-block text-sm font-semibold text-accent">
-                        Les mer om {s.title.toLowerCase()}
+                        {t.readMore(s.title)}
                       </span>
                     </div>
                   </div>
@@ -54,10 +89,10 @@ export default function Tjenester() {
 
           <Reveal className="mt-20 text-center">
             <p className="display-sans mx-auto max-w-2xl text-2xl text-ink/70 md:text-3xl">
-              Usikker på hvor du bør starte? Start med klarhet.
+              {t.unsure}
             </p>
             <div className="mt-8">
-              <Button to="/klarhetssjekk">Få din klarhetssjekk</Button>
+              <Button to={p("/klarhetssjekk")}>{t.cta}</Button>
             </div>
           </Reveal>
         </div>
