@@ -1,3 +1,5 @@
+import { randomBytes } from "node:crypto";
+
 /**
  * Receives a questionnaire submission from /skjema and files it as markdown
  * in the CLAUDE.OS vault repo (NUREA.HQ/Clients/_inbox/) via the GitHub API,
@@ -26,6 +28,7 @@ interface Submission {
   /** Service titles the client picked in the form's first step. */
   services?: string[];
   sections: Section[];
+  submissionId?: unknown;
   /** Honeypot: hidden field humans never see. Any value = bot. */
   website?: string;
 }
@@ -36,6 +39,30 @@ const MAX_ANSWER = 5_000;
 const MAX_QUESTION = 500;
 const MAX_TITLE = 200;
 const MAX_QUESTIONS_PER_SECTION = 30;
+const SUBMISSION_ID_RE = /^[a-z0-9]{8,40}$/;
+const SUBMISSION_ID_ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789";
+const DEFAULT_UPSTREAM_TIMEOUT_MS = 8000;
+
+class VaultTimeoutError extends Error {
+  constructor() {
+    super("Vault timeout");
+    this.name = "VaultTimeoutError";
+  }
+}
+
+function newSubmissionId(): string {
+  const bytes = randomBytes(12);
+  return Array.from(bytes, (byte) => SUBMISSION_ID_ALPHABET[byte % SUBMISSION_ID_ALPHABET.length]).join("");
+}
+
+function getSubmissionId(value: unknown): string {
+  return typeof value === "string" && SUBMISSION_ID_RE.test(value) ? value : newSubmissionId();
+}
+
+function getUpstreamTimeoutMs(): number {
+  const configured = Number(process.env.SKJEMA_UPSTREAM_TIMEOUT_MS);
+  return Number.isFinite(configured) && configured > 0 ? configured : DEFAULT_UPSTREAM_TIMEOUT_MS;
+}
 
 function isValid(body: unknown): body is Submission {
   const b = body as Submission;
@@ -44,10 +71,13 @@ function isValid(body: unknown): body is Submission {
     typeof b.contact?.bedrift === "string" &&
     b.contact.bedrift.trim().length > 0 &&
     b.contact.bedrift.length <= MAX_TITLE &&
+    // The browser marks all three contact fields required; the server must agree,
+    // or a bypassed form files a submission nobody can answer.
     typeof b.contact?.navn === "string" &&
+    b.contact.navn.trim().length > 0 &&
     b.contact.navn.length <= MAX_TITLE &&
     typeof b.contact?.epost === "string" &&
-    b.contact.epost.includes("@") &&
+    b.contact.epost.trim().includes("@") &&
     b.contact.epost.length <= MAX_TITLE &&
     (b.services === undefined ||
       (Array.isArray(b.services) &&
@@ -103,15 +133,18 @@ function slugify(name: string): string {
 }
 
 /** Commits the submission into the vault's intake inbox. Returns the file path. */
-async function fileInVault(sub: Submission): Promise<string> {
+async function fileInVault(sub: Submission): Promise<{ path: string; retried: boolean }> {
   const token = process.env.VAULT_GITHUB_TOKEN;
   if (!token) throw new Error("VAULT_GITHUB_TOKEN not configured");
 
   const now = new Date();
   const date = now.toISOString().slice(0, 10);
-  const time = now.toISOString().slice(11, 16).replace(":", "");
   const slug = slugify(sub.contact.bedrift);
-  const path = `${INBOX_DIR}/${date}-${time}-${slug}.md`;
+  const submissionId = getSubmissionId(sub.submissionId);
+  // Date + slug + id, no clock time: a retry of the same submission lands on the
+  // same path, so GitHub's 422 "sha" answer means "already filed" and the client
+  // gets ok instead of a duplicate. Exact receipt time lives in `mottatt` below.
+  const path = `${INBOX_DIR}/${date}-${slug}-${submissionId}.md`;
 
   const md = [
     "---",
@@ -119,6 +152,7 @@ async function fileInVault(sub: Submission): Promise<string> {
     `kontakt: "${fmSafe(sub.contact.navn)}"`,
     `epost: "${fmSafe(sub.contact.epost)}"`,
     `tjenester: "${fmSafe((sub.services ?? []).join(", "))}"`,
+    `id: ${submissionId}`,
     `mottatt: ${now.toISOString()}`,
     "kilde: nurea.no/skjema",
     "status: ny",
@@ -129,21 +163,37 @@ async function fileInVault(sub: Submission): Promise<string> {
     asText(sub),
   ].join("\n");
 
-  const res = await fetch(`https://api.github.com/repos/${VAULT_REPO}/contents/${path}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/vnd.github+json",
-      "Content-Type": "application/json",
-      "User-Agent": "nurea-skjema",
-    },
-    body: JSON.stringify({
-      message: `Onboarding inbox: spørreskjema fra ${sub.contact.bedrift}`,
-      content: Buffer.from(md, "utf8").toString("base64"),
-    }),
-  });
-  if (!res.ok) throw new Error(`GitHub ${res.status}: ${await res.text()}`);
-  return path;
+  const signal = AbortSignal.timeout(getUpstreamTimeoutMs());
+  let res: Response;
+  let body = "";
+  try {
+    res = await fetch(`https://api.github.com/repos/${VAULT_REPO}/contents/${path}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github+json",
+        "Content-Type": "application/json",
+        "User-Agent": "nurea-skjema",
+      },
+      body: JSON.stringify({
+        message: `Onboarding inbox: spørreskjema fra ${sub.contact.bedrift}`,
+        content: Buffer.from(md, "utf8").toString("base64"),
+      }),
+      signal,
+    });
+    // The body read shares the timeout: a stalled error body must not hang the function.
+    if (!res.ok) body = await res.text();
+  } catch (err) {
+    if (signal.aborted) throw new VaultTimeoutError();
+    throw err;
+  }
+  if (!res.ok) {
+    if (res.status === 422 && body.toLowerCase().includes("sha")) {
+      return { path, retried: true };
+    }
+    throw new Error(`GitHub ${res.status}: ${body}`);
+  }
+  return { path, retried: false };
 }
 
 /**
@@ -190,9 +240,18 @@ export default async function handler(
   const sub = req.body;
 
   try {
-    const path = await fileInVault(sub);
-    return res.status(200).json({ ok: true, filed: true, path });
+    const result = await fileInVault(sub);
+    return res.status(200).json({
+      ok: true,
+      filed: true,
+      path: result.path,
+      ...(result.retried ? { retried: true } : {}),
+    });
   } catch (err) {
+    if (err instanceof VaultTimeoutError) {
+      console.error("Vault filing timed out");
+      return res.status(504).json({ ok: false, filed: false, error: "Vault timeout" });
+    }
     const message = (err instanceof Error ? err.message : String(err)).slice(0, 300);
     console.error("Vault filing failed:", message);
     return res.status(502).json({ ok: false, filed: false, error: message });

@@ -19,6 +19,7 @@ export function useWebForm(subject: string) {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject, ...fields }),
+        signal: AbortSignal.timeout(10000),
       });
       const data = await res.json();
       setStatus(data.success ? "ok" : "error");

@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import Button from "../components/Button";
-import { mailtoFallback, WEB3FORMS_KEY, type FormStatus } from "../lib/useWebForm";
+import { mailtoFallback, type FormStatus } from "../lib/useWebForm";
+import { deliverSubmission, newSubmissionId } from "../lib/submitSkjema";
 import { SKJEMA, REQUIRED_IDS, type SkjemaSection } from "../data/skjema";
 import { SERVICES, type ServiceId } from "../data/services";
 import { sound } from "../lib/sound";
@@ -23,6 +24,7 @@ interface Saved {
   contact: Contact;
   answers: Record<string, string>;
   services: ServiceId[];
+  submissionId: string;
 }
 
 function loadSaved(): Saved {
@@ -30,18 +32,28 @@ function loadSaved(): Saved {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as Partial<Saved>;
+      const savedSubmissionId =
+        typeof parsed.submissionId === "string" && /^[a-z0-9]{12}$/.test(parsed.submissionId)
+          ? parsed.submissionId
+          : newSubmissionId();
       return {
         contact: { bedrift: "", navn: "", epost: "", ...parsed.contact },
         answers: parsed.answers ?? {},
         services: (parsed.services ?? []).filter((id) =>
           SERVICES.no.some((s) => s.id === id)
         ),
+        submissionId: savedSubmissionId,
       };
     }
   } catch {
     /* corrupt or unavailable storage; start clean */
   }
-  return { contact: { bedrift: "", navn: "", epost: "" }, answers: {}, services: [] };
+  return {
+    contact: { bedrift: "", navn: "", epost: "" },
+    answers: {},
+    services: [],
+    submissionId: newSubmissionId(),
+  };
 }
 
 /** One collapsible questionnaire section, styled as a site list row. */
@@ -141,24 +153,25 @@ function AccordionSection({
 }
 
 export default function Skjema() {
-  const [{ contact, answers, services }, setSaved] = useState<Saved>(loadSaved);
+  const [{ contact, answers, services, submissionId }, setSaved] = useState<Saved>(loadSaved);
   const [status, setStatus] = useState<FormStatus>("idle");
   const [open, setOpen] = useState<Record<string, boolean>>({ [SKJEMA[0].id]: true });
   const [missing, setMissing] = useState<string[]>([]);
   const saveTimer = useRef<number>(undefined);
+  const inFlight = useRef(false);
 
   // Autosave: everything typed lands in localStorage, debounced.
   useEffect(() => {
     window.clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ contact, answers, services }));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ contact, answers, services, submissionId }));
       } catch {
         /* storage full or blocked; the form still works */
       }
     }, 400);
     return () => window.clearTimeout(saveTimer.current);
-  }, [contact, answers, services]);
+  }, [contact, answers, services, submissionId]);
 
   const setContact = (field: keyof Contact, value: string) =>
     setSaved((s) => ({ ...s, contact: { ...s.contact, [field]: value } }));
@@ -189,10 +202,13 @@ export default function Skjema() {
   const visibleQuestions = visible.flatMap((s) => s.questions);
   const answered = visibleQuestions.filter((q) => answers[q.id]?.trim()).length;
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
+    // One delivery at a time. A ref, not state: two clicks in the same tick both see
+    // the old state, and the disabled fieldset only lands after the next render.
+    if (inFlight.current) return;
     // Honeypot: humans never see the field; bots that fill it get dropped server-side.
-    const honeypot = String(new FormData(e.currentTarget).get("website") ?? "");
+    const honeypot = e ? String(new FormData(e.currentTarget).get("website") ?? "") : "";
 
     // The starred questions are the only ones that block submission.
     const missingIds = REQUIRED_IDS.filter((id) => !answers[id]?.trim());
@@ -214,6 +230,7 @@ export default function Skjema() {
       return;
     }
 
+    inFlight.current = true;
     setStatus("sending");
 
     const serviceTitles = services.map(
@@ -227,64 +244,28 @@ export default function Skjema() {
       })),
     }));
 
-    // Channel 1: file the submission in the vault via our API.
-    let filed = false;
-    let filedPath: string | null = null;
     try {
-      const res = await fetch("/api/skjema", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ website: honeypot, contact, services: serviceTitles, sections }),
+      const result = await deliverSubmission({
+        website: honeypot,
+        contact,
+        services: serviceTitles,
+        sections,
+        submissionId,
       });
-      const data = await res.json();
-      filed = !!data.ok;
-      filedPath = typeof data.path === "string" ? data.path : null;
-    } catch {
-      /* vault channel down; email below still carries the answers */
-    }
 
-    // Channel 2: email via Web3Forms, which only accepts client-side calls.
-    const answered = sections.flatMap((s) => s.questions).filter((q) => q.answer).length;
-    const svar = sections
-      .flatMap((s) => [
-        `## ${s.title}`,
-        "",
-        ...s.questions.flatMap((q) => [`**${q.text}**`, q.answer || "(ikke besvart)", ""]),
-      ])
-      .join("\n");
-    let emailed = false;
-    try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject: `Spørreskjema: ${contact.bedrift}`,
-          from_name: "nurea.no/skjema",
-          botcheck: honeypot,
-          Bedrift: contact.bedrift,
-          Navn: contact.navn,
-          "E-post": contact.epost,
-          Tjenester: serviceTitles.length ? serviceTitles.join(", ") : "(ikke valgt)",
-          Besvart: `${answered} spørsmål`,
-          Arkivering: filedPath
-            ? `Arkivert i vault: ${filedPath}`
-            : "ARKIVERING FEILET; svarene finnes bare i denne e-posten",
-          Svar: svar,
-        }),
-      });
-      const data = await res.json();
-      emailed = !!data.success;
-    } catch {
-      /* email channel down; vault filing above may still have succeeded */
-    }
-
-    if (emailed || filed) {
-      localStorage.removeItem(STORAGE_KEY);
-      setStatus("ok");
-      window.scrollTo(0, 0);
-    } else {
-      setStatus("error");
+      if (result.outcome !== "failed") {
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+        } catch {
+          /* storage blocked; the answers are delivered, the stale draft is harmless */
+        }
+        setStatus("ok");
+        window.scrollTo(0, 0);
+      } else {
+        setStatus("error");
+      }
+    } finally {
+      inFlight.current = false;
     }
   };
 
@@ -311,7 +292,10 @@ export default function Skjema() {
               </div>
             </Reveal>
           ) : (
-            <form onSubmit={onSubmit}>
+            <form onSubmit={handleSubmit}>
+              {/* Locks every field and button while a delivery is in flight, so what was
+                  sent is exactly what is on screen and a double click cannot double send. */}
+              <fieldset disabled={status === "sending"} className="contents min-w-0 border-0 p-0 m-0">
               <input
                 type="text"
                 name="website"
@@ -463,6 +447,14 @@ export default function Skjema() {
                   <p className="mt-4 text-sm text-accent">
                     Noe gikk galt med innsendingen. Svarene dine er fortsatt lagret
                     her i nettleseren, så du kan prøve igjen om litt. Du kan også{" "}
+                    <button
+                      type="button"
+                      className="link-line font-semibold"
+                      onClick={() => void handleSubmit()}
+                    >
+                      Prøv igjen
+                    </button>{" "}
+                    eller{" "}
                     <a
                       className="link-line font-semibold"
                       href={mailtoFallback(
@@ -476,6 +468,7 @@ export default function Skjema() {
                   </p>
                 )}
               </div>
+              </fieldset>
             </form>
           )}
         </div>
