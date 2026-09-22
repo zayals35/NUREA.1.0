@@ -18,7 +18,7 @@ interface Props {
 export default function WordReveal({
   text,
   className,
-  brightColor = "#d9d1c2",
+  brightColor = "#F5F4F0",
   dimColor = "rgba(217, 209, 194, 0.22)",
 }: Props) {
   const ref = useRef<HTMLParagraphElement>(null);
@@ -39,7 +39,7 @@ export default function WordReveal({
       const spans = ref.current!.querySelectorAll<HTMLElement>(".w");
       gsap.to(spans, {
         color: (i: number) =>
-          spans[i].dataset.accent === "true" ? "#e8671c" : brightColor,
+          spans[i].dataset.accent === "true" ? "#D8CF55" : brightColor,
         ease: "none",
         stagger: 0.06,
         scrollTrigger: {
@@ -57,7 +57,7 @@ export default function WordReveal({
     return (
       <p ref={ref} className={className}>
         {words.map((w, i) => (
-          <span key={i} style={w.accent ? { color: "#e8671c" } : undefined}>
+          <span key={i} style={w.accent ? { color: "#D8CF55" } : undefined}>
             {w.word}{" "}
           </span>
         ))}

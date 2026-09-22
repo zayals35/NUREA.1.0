@@ -22,7 +22,10 @@ export default function PageHeader({
 }: Props) {
   useEffect(() => {
     document.title = `${docTitle} · NUREA`;
-  }, [docTitle]);
+    if (intro) {
+      document.querySelector('meta[name="description"]')?.setAttribute("content", intro);
+    }
+  }, [docTitle, intro]);
 
   return (
     <header className="grain relative overflow-hidden bg-espresso text-cream">

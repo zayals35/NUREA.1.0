@@ -23,7 +23,7 @@ const T: Record<Lang, {
     intro:
       "Et lite studio med én tydelig retning: gjøre solide bedrifter lettere å forstå og lettere å velge.",
     statement:
-      "Vi bygger merkevare, nettside, innhold og systemer som *ett* *system.* Ikke løse produkter.",
+      "Vi gjør bedriftens digitale tilstedeværelse lettere å forstå og lettere å velge.",
     founderRole: "Grunnlegger og din kontaktperson i hvert prosjekt",
     how: "Slik jobber vi",
     traits: [
@@ -50,7 +50,7 @@ const T: Record<Lang, {
     intro:
       "A small studio with one clear direction: making solid businesses easier to understand and easier to choose.",
     statement:
-      "We build brand, website, content and systems as *one* *system.* Not loose products.",
+      "We make your business's digital presence easier to understand and easier to choose.",
     founderRole: "Founder and your contact in every project",
     how: "How we work",
     traits: [

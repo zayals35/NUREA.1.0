@@ -8,7 +8,7 @@ interface Props {
   href?: string;
   onClick?: (e: MouseEvent) => void;
   children: ReactNode;
-  variant?: "primary" | "ghost" | "ghost-dark";
+  variant?: "primary" | "ghost" | "ghost-dark" | "paper";
   type?: "button" | "submit";
   className?: string;
 }
@@ -18,11 +18,13 @@ const BASE =
 
 const VARIANTS = {
   primary:
-    "bg-accent text-[#f6efe2] hover:bg-gold shadow-[0_1px_0_rgba(255,255,255,0.12)_inset] hover:shadow-[0_10px_36px_rgba(194,81,31,0.35)]",
+    "bg-accent text-parchment hover:bg-ink",
   ghost:
     "border border-cream/25 text-cream hover:border-cream/60 hover:bg-cream/5",
   "ghost-dark":
     "border border-ink/25 text-ink hover:border-ink/60 hover:bg-ink/5",
+  paper:
+    "bg-parchment text-accent hover:bg-ink hover:text-parchment",
 };
 
 export default function Button({

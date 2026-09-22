@@ -17,6 +17,63 @@ export interface Service {
   ctaHeading: string;
 }
 
+export interface Offer {
+  id: string;
+  title: string;
+  description: string;
+  outcome: string;
+  serviceIds: ServiceId[];
+}
+
+export const OFFERINGS: Record<Lang, Offer[]> = {
+  no: [
+    {
+      id: "forste-loft",
+      title: "Første løft",
+      description: "Budskap, merkevare og nettside som gjør bedriften lettere å forstå.",
+      outcome: "Du får retning, et tydelig uttrykk og en nettside som gjør det enklere å velge.",
+      serviceIds: ["merkevare", "nettsider"],
+    },
+    {
+      id: "innholdsabonnement",
+      title: "Innholdsabonnement",
+      description: "Ukentlig eller månedlig innhold fra råmaterialet du allerede har.",
+      outcome: "Du får en jevn strøm av tekst, bilder og reklameinnhold, klar til bruk.",
+      serviceIds: ["innhold", "reklamer"],
+    },
+    {
+      id: "systemer",
+      title: "Systemer",
+      description: "Bots og flyter som svarer, booker og følger opp.",
+      outcome: "Du får en ryddigere hverdag, der henvendelser og oppfølging ikke faller mellom stolene.",
+      serviceIds: ["systemer"],
+    },
+  ],
+  en: [
+    {
+      id: "first-lift",
+      title: "First lift",
+      description: "Message, brand and website that make your business easier to understand.",
+      outcome: "You get direction, a clear expression and a website that makes it easier to choose.",
+      serviceIds: ["merkevare", "nettsider"],
+    },
+    {
+      id: "content-subscription",
+      title: "Content subscription",
+      description: "Weekly or monthly content from the raw material you already have.",
+      outcome: "You get a steady stream of copy, images and advertising content, ready to use.",
+      serviceIds: ["innhold", "reklamer"],
+    },
+    {
+      id: "systems",
+      title: "Systems",
+      description: "Bots and flows that answer, book and follow up.",
+      outcome: "You get a tidier day, where inquiries and follow-up do not fall through the cracks.",
+      serviceIds: ["systemer"],
+    },
+  ],
+};
+
 const SERVICES_NO: Service[] = [
   {
     id: "merkevare",
@@ -41,7 +98,7 @@ const SERVICES_NO: Service[] = [
     id: "nettsider",
     index: "02",
     title: "Nettsider",
-    role: "Bygget på merkevaren",
+    role: "Første løft",
     description: "Bygget for klarhet, tillit og riktige henvendelser.",
     statement: "Nettsiden er ikke brosjyren. Den er salgsteamet som aldri sover.",
     statementBody:
@@ -52,15 +109,15 @@ const SERVICES_NO: Service[] = [
       { title: "Utvikling", body: "Rask, tilgjengelig og stabil kode. Ingen unødvendige systemer, bare det som trengs." },
       { title: "Lansering og opplæring", body: "Vi setter opp alt og lærer deg å eie siden din, uten avhengighet til oss." },
     ],
-    position: "Etter merkevaren",
-    positionBody: "Nettsiden virker bare når merkevaren bak den er tydelig nok til å bære vekten.",
+    position: "Første løft",
+    positionBody: "Nettsiden samler budskap, uttrykk og kontaktflyt i én tydelig vei inn.",
     ctaHeading: "Klar til å få en nettside som faktisk selger?",
   },
   {
     id: "innhold",
     index: "03",
     title: "Innhold",
-    role: "Fyller siden med mening",
+    role: "Innholdsabonnement",
     description: "Ord, bilder og struktur som gjør verdien lettere å forstå.",
     statement: "Sosiale medier er gratis annonsering. Du trenger bare å bruke det riktig.",
     statementBody:
@@ -71,15 +128,15 @@ const SERVICES_NO: Service[] = [
       { title: "Bilde og visuelt", body: "Foto, illustrasjon og grafikk som forsterker det skrevne og gjør innholdet lettere å ta inn." },
       { title: "Publiseringsplan", body: "Når, hvor og hvor ofte. En ryddig plan som er enkel å følge over tid." },
     ],
-    position: "Sammen med nettsiden",
-    positionBody: "Innholdet forsterker merkevaren og fyller nettsiden med mening som faktisk holder.",
+    position: "Innholdsabonnement",
+    positionBody: "Innholdet gjør verdien synlig jevnt, med råmaterialet du allerede har.",
     ctaHeading: "Klar til å lage innhold som faktisk bygger tillit?",
   },
   {
     id: "systemer",
     index: "04",
     title: "Systemer",
-    role: "Fjerner friksjon",
+    role: "Systemer",
     description: "Digitale flyter som gjør hverdagen enklere og mer ryddig.",
     statement: "Et system er ikke et verktøy. Det er flyten som gjør at du slipper å tenke.",
     statementBody:
@@ -90,27 +147,27 @@ const SERVICES_NO: Service[] = [
       { title: "Automatisering", body: "Gjentakende oppgaver blir håndtert automatisk, slik at ingenting faller mellom stolene." },
       { title: "Opplæring og dokumentasjon", body: "Du og teamet ditt forstår og eier systemene. Ingen svart boks, ingen avhengighet." },
     ],
-    position: "Under alt det andre",
-    positionBody: "Systemene bak siden gjør at merkevare, nettsider og innhold lever av seg selv.",
+    position: "I hverdagen",
+    positionBody: "Systemene svarer, booker og følger opp, så henvendelser ikke blir liggende.",
     ctaHeading: "Klar til å kutte friksjon og la systemene jobbe for deg?",
   },
   {
     id: "reklamer",
     index: "05",
     title: "Reklamer",
-    role: "Det siste steget",
+    role: "Innholdsabonnement",
     description: "Strategiske budskap som gjør synligheten tydeligere.",
     statement: "Reklame uten en tydelig merkevare er støy. Med den er det forsterkning.",
     statementBody:
-      "De fleste bedrifter starter med reklame før de er klare for det. Resultatet er dyrt og skuffende. Vi tilbyr reklame som det siste steget, når merkevaren, nettsiden og innholdet allerede gjør jobben. Da er hver krone du bruker på synlighet en krone som faktisk lønner seg.",
+      "Reklame fungerer best når budskapet er tydelig og innholdet allerede har en retning. Vi lager annonser som bygger videre på det du viser hver uke, med språk og uttrykk folk kjenner igjen.",
     deliverables: [
       { title: "Kampanjestrategi", body: "Hva vi skal si, til hvem, og hvor. Strategien som gjør at pengene går til rett sted." },
       { title: "Annonsekopi og kreativt", body: "Tekst og visuals forankret i merkevaren. Ikke generisk, men gjenkjennelig." },
       { title: "Kanalvalg og kjøp", body: "Vi velger kanalene der riktig kunde faktisk er, og setter opp kampanjen uten bortkastet budsjett." },
       { title: "Måling og optimering", body: "Vi følger opp, justerer og rapporterer, slik at hver kampanje er bedre enn den forrige." },
     ],
-    position: "Det siste steget",
-    positionBody: "Reklamen er det siste steget. Den virker bare når resten allerede gjør jobben.",
+    position: "Sammen med innholdet",
+    positionBody: "Reklamen forlenger innholdet ditt og gjør det enklere for riktige folk å se det.",
     ctaHeading: "Vil du vite om du er klar for reklame?",
   },
 ];
@@ -139,7 +196,7 @@ const SERVICES_EN: Service[] = [
     id: "nettsider",
     index: "02",
     title: "Websites",
-    role: "Built on the brand",
+    role: "First lift",
     description: "Built for clarity, trust and the right inquiries.",
     statement: "The website is not the brochure. It is the sales team that never sleeps.",
     statementBody:
@@ -150,15 +207,15 @@ const SERVICES_EN: Service[] = [
       { title: "Development", body: "Fast, accessible and stable code. No unnecessary systems, only what is needed." },
       { title: "Launch and training", body: "We set everything up and teach you to own your site, with no dependency on us." },
     ],
-    position: "After the brand",
-    positionBody: "The website only works when the brand behind it is clear enough to carry the weight.",
+    position: "First lift",
+    positionBody: "The website gathers message, expression and contact flow into one clear way in.",
     ctaHeading: "Ready for a website that actually sells?",
   },
   {
     id: "innhold",
     index: "03",
     title: "Content",
-    role: "Fills the site with meaning",
+    role: "Content subscription",
     description: "Words, images and structure that make the value easier to understand.",
     statement: "Social media is free advertising. You just have to use it right.",
     statementBody:
@@ -169,15 +226,15 @@ const SERVICES_EN: Service[] = [
       { title: "Image and visuals", body: "Photo, illustration and graphics that reinforce the words and make the content easier to take in." },
       { title: "Publishing plan", body: "When, where and how often. A tidy plan that is easy to follow over time." },
     ],
-    position: "Together with the website",
-    positionBody: "The content reinforces the brand and fills the website with meaning that actually holds.",
+    position: "Content subscription",
+    positionBody: "The content makes the value visible steadily, using the raw material you already have.",
     ctaHeading: "Ready to make content that actually builds trust?",
   },
   {
     id: "systemer",
     index: "04",
     title: "Systems",
-    role: "Removes friction",
+    role: "Systems",
     description: "Digital flows that make the everyday simpler and tidier.",
     statement: "A system is not a tool. It is the flow that lets you stop thinking about it.",
     statementBody:
@@ -188,27 +245,27 @@ const SERVICES_EN: Service[] = [
       { title: "Automation", body: "Repetitive tasks are handled automatically, so nothing falls through the cracks." },
       { title: "Training and documentation", body: "You and your team understand and own the systems. No black box, no dependency." },
     ],
-    position: "Underneath everything else",
-    positionBody: "The systems behind the site let brand, websites and content run on their own.",
+    position: "In the everyday",
+    positionBody: "The systems answer, book and follow up, so inquiries do not sit unanswered.",
     ctaHeading: "Ready to cut friction and let the systems work for you?",
   },
   {
     id: "reklamer",
     index: "05",
     title: "Advertising",
-    role: "The final step",
+    role: "Content subscription",
     description: "Strategic messages that make your visibility clearer.",
     statement: "Advertising without a clear brand is noise. With one, it is amplification.",
     statementBody:
-      "Most businesses start advertising before they are ready for it. The result is expensive and disappointing. We offer advertising as the final step, when the brand, the website and the content are already doing the job. Then every krone you spend on visibility is a krone that actually pays off.",
+      "Advertising works best when the message is clear and the content already has direction. We make ads that build on what you show every week, with language and visuals people recognize.",
     deliverables: [
       { title: "Campaign strategy", body: "What to say, to whom, and where. The strategy that sends the money to the right place." },
       { title: "Ad copy and creative", body: "Copy and visuals anchored in the brand. Not generic, but recognizable." },
       { title: "Channels and buying", body: "We choose the channels where the right customer actually is, and set up the campaign without wasted budget." },
       { title: "Measurement and optimization", body: "We follow up, adjust and report, so every campaign is better than the last." },
     ],
-    position: "The final step",
-    positionBody: "Advertising is the final step. It only works when the rest is already doing the job.",
+    position: "Together with content",
+    positionBody: "Advertising extends your content and makes it easier for the right people to see it.",
     ctaHeading: "Want to know if you are ready for advertising?",
   },
 ];

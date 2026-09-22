@@ -6,7 +6,6 @@ import ProblemSection from "../components/home/ProblemSection";
 import CloseTheGap from "../components/home/CloseTheGap";
 import ServicesSection from "../components/home/ServicesSection";
 import MethodSection from "../components/home/MethodSection";
-import OfferSection from "../components/home/OfferSection";
 import FaqSection from "../components/home/FaqSection";
 
 export default function Home() {
@@ -14,8 +13,16 @@ export default function Home() {
   useEffect(() => {
     document.title =
       lang === "no"
-        ? "NUREA, merkevare og digital retning"
-        : "NUREA, brand and digital direction";
+        ? "NUREA, lettere å forstå. Lettere å velge."
+        : "NUREA, easier to understand. Easier to choose.";
+    document
+      .querySelector('meta[name="description"]')
+      ?.setAttribute(
+        "content",
+        lang === "no"
+          ? "Nurea driver bedriftens digitale tilstedeværelse og holder den synlig hver uke."
+          : "Nurea runs your business's digital presence and keeps it visible every week."
+      );
   }, [lang]);
 
   return (
@@ -26,7 +33,6 @@ export default function Home() {
       <ServicesSection />
       <CloseTheGap />
       <MethodSection />
-      <OfferSection />
       <FaqSection />
     </main>
   );

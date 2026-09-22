@@ -195,7 +195,7 @@ export default function Klarhetssjekk() {
                         aria-pressed={focus.includes(f)}
                         className={`mono rounded-none border px-5 py-2.5 text-xs tracking-[0.1em] transition-colors ${
                           focus.includes(f)
-                            ? "border-accent bg-accent text-[#f6efe2]"
+                            ? "border-accent bg-accent text-parchment"
                             : "border-ink/20 text-ink/70 hover:border-ink/50"
                         }`}
                       >

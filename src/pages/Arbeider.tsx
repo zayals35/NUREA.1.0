@@ -87,7 +87,9 @@ export default function Arbeider() {
                 <Reveal className="md:sticky md:top-32" delay={0.1}>
                   <p className="eyebrow text-accent">{w.title}</p>
                   <h2 className="display-sans mt-4 text-4xl md:text-6xl">{w.company}</h2>
-                  <p className="mono mt-3 text-xs text-ink/45">{w.metricLabel}</p>
+                  <p className="mono mt-3 text-xs text-ink/45">
+                    {w.metricLabel}{w.year ? ` · ${w.year}` : ""}
+                  </p>
                   <p className="mt-6 max-w-[54ch] text-base leading-relaxed text-ink/65 md:text-lg">
                     {w.caption}
                   </p>
@@ -101,6 +103,9 @@ export default function Arbeider() {
                       </span>
                     ))}
                   </div>
+                  {w.status && (
+                    <p className="mono mt-6 text-[11px] tracking-[0.1em] text-ink/50">{w.status}</p>
+                  )}
                   {(w.href || w.instagram) && (
                     <a
                       href={w.href ?? `https://www.instagram.com/${w.instagram?.slice(1)}`}

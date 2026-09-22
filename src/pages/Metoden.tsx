@@ -24,7 +24,7 @@ const T: Record<Lang, {
     process: "Prosessen",
     start: "Slik starter vi.",
     statement:
-      "Vi bygger merkevare, nettside, innhold og systemer som *ett* *system.* Ikke løse produkter.",
+      "Vi gjør bedriftens digitale tilstedeværelse lettere å forstå og lettere å velge.",
     cta: "Få din klarhetssjekk",
   },
   en: {
@@ -36,7 +36,7 @@ const T: Record<Lang, {
     process: "The process",
     start: "How we start.",
     statement:
-      "We build brand, website, content and systems as *one* *system.* Not loose products.",
+      "We make your business's digital presence easier to understand and easier to choose.",
     cta: "Get your clarity check",
   },
 };
@@ -91,8 +91,8 @@ export default function Metoden() {
           <div className="mt-24 max-w-3xl md:mt-32">
             <WordReveal
               key={lang}
-              brightColor="#1a1714"
-              dimColor="rgba(26, 23, 20, 0.22)"
+              brightColor="#201D1D"
+              dimColor="rgba(32, 29, 29, 0.22)"
               className="display-sans text-2xl leading-[1.2] text-ink sm:text-3xl md:text-4xl"
               text={t.statement}
             />

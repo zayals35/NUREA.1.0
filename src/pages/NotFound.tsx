@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Button from "../components/Button";
+import { NureaLogo } from "../components/brand/NureaLogo";
 import { useLang, type Lang } from "../i18n";
 
 const T: Record<Lang, { docTitle: string; title: string; body: string; home: string }> = {
@@ -27,6 +28,7 @@ export default function NotFound() {
 
   return (
     <main className="grain relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-espresso px-6 text-center text-cream">
+      <NureaLogo className="relative z-[2] h-12 w-auto text-cream md:h-16" aria-label="Nurea" />
       <p className="eyebrow relative z-[2] text-accent">404</p>
       <h1 className="display relative z-[2] mt-6 text-4xl md:text-6xl">
         {t.title}

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import Button from "../components/Button";
-import { SERVICES } from "../data/services";
+import { OFFERINGS, SERVICES } from "../data/services";
 import { sound } from "../lib/sound";
 import { useLang, type Lang } from "../i18n";
 
@@ -11,27 +11,27 @@ const T: Record<Lang, {
   eyebrow: string;
   title: string;
   intro: string;
-  readMore: (title: string) => string;
+  capabilities: string;
   unsure: string;
   cta: string;
 }> = {
   no: {
     docTitle: "Tjenester",
     eyebrow: "Tjenester",
-    title: "Fem deler, én retning.",
+    title: "Tre tilbud, én retning.",
     intro:
-      "Ikke løse produkter du kjøper, men ett system som gjør uklar digital tilstedeværelse om til klarhet, tillit og henvendelser.",
-    readMore: (title) => `Les mer om ${title.toLowerCase()}`,
+      "Tre tydelige tilbud for bedriftens digitale tilstedeværelse. Velg det som passer behovet ditt, eller start med en klarhetssjekk.",
+    capabilities: "Detaljer",
     unsure: "Usikker på hvor du bør starte? Start med klarhet.",
     cta: "Få din klarhetssjekk",
   },
   en: {
     docTitle: "Services",
     eyebrow: "Services",
-    title: "Five parts, one direction.",
+    title: "Three offers, one direction.",
     intro:
-      "Not loose products you buy, but one system that turns an unclear digital presence into clarity, trust and inquiries.",
-    readMore: (title) => `Read more about ${title.toLowerCase()}`,
+      "Three clear offers for your business's digital presence. Choose what fits your needs, or start with a clarity check.",
+    capabilities: "Details",
     unsure: "Not sure where to start? Start with clarity.",
     cta: "Get your clarity check",
   },
@@ -53,36 +53,40 @@ export default function Tjenester() {
       <section className="bg-parchment text-ink">
         <div className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-32">
           <div className="grid gap-y-4">
-            {SERVICES[lang].map((s, i) => (
-              <Reveal key={s.id} delay={i * 0.04}>
-                <Link
-                  to={p(`/tjenester/${s.id}`)}
-                  onClick={() => sound.play("click")}
-                  className="group block border-b border-ink/10 py-10 md:py-14"
-                >
+            {OFFERINGS[lang].map((offer, i) => (
+              <Reveal key={offer.id} delay={i * 0.04}>
+                <article className="border-b border-ink/10 py-10 md:py-14">
                   <div className="flex flex-wrap items-baseline justify-between gap-4">
                     <div className="flex items-baseline gap-6">
-                      <span className="text-sm font-semibold text-accent">{s.index}</span>
-                      <h2 className="display-sans text-4xl transition-transform duration-400 ease-out group-hover:translate-x-2 md:text-6xl">
-                        {s.title}
-                      </h2>
+                      <span className="text-sm font-semibold text-accent">{String(i + 1).padStart(2, "0")}</span>
+                      <h2 className="display-sans text-4xl md:text-6xl">{offer.title}</h2>
                     </div>
-                    <span className="eyebrow text-ink/40">{s.role}</span>
+                    <span className="eyebrow text-ink/40">{offer.serviceIds.length} {lang === "no" ? "deler" : "capabilities"}</span>
                   </div>
                   <div className="mt-6 grid gap-6 md:grid-cols-2 md:gap-16 md:pl-[calc(1.5rem+24px)]">
-                    <p className="display-sans text-xl leading-snug text-ink/80 md:text-2xl">
-                      {s.statement}
-                    </p>
+                    <p className="display-sans text-xl leading-snug text-ink/80 md:text-2xl">{offer.description}</p>
                     <div>
-                      <p className="max-w-[52ch] text-sm leading-relaxed text-ink/60 md:text-base">
-                        {s.description} {s.positionBody}
-                      </p>
-                      <span className="link-line mt-4 inline-block text-sm font-semibold text-accent">
-                        {t.readMore(s.title)}
-                      </span>
+                      <p className="max-w-[52ch] text-sm leading-relaxed text-ink/75 md:text-base">{offer.outcome}</p>
+                      <p className="eyebrow mt-6 text-ink/40">{t.capabilities}</p>
+                      <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+                        {offer.serviceIds.map((serviceId) => {
+                          const service = SERVICES[lang].find((item) => item.id === serviceId);
+                          if (!service) return null;
+                          return (
+                            <Link
+                              key={service.id}
+                              to={p(`/tjenester/${service.id}`)}
+                              onClick={() => sound.play("click")}
+                              className="link-line text-sm font-semibold text-accent"
+                            >
+                              {service.title}
+                            </Link>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
-                </Link>
+                </article>
               </Reveal>
             ))}
           </div>

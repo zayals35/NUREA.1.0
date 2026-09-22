@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import Cursor from "./components/Cursor";
 import Intro from "./components/Intro";
 import Home from "./pages/Home";
+import { NureaWordmark } from "./components/brand/NureaLogo";
 
 const Tjenester = lazy(() => import("./pages/Tjenester"));
 const TjenesteDetalj = lazy(() => import("./pages/TjenesteDetalj"));
@@ -94,7 +95,7 @@ function RouteCurtain() {
         transition: phase === "lift" ? "transform 0.7s cubic-bezier(0.76, 0, 0.24, 1)" : "none",
       }}
     >
-      <span className="display text-2xl text-cream/80">Nurea</span>
+      <NureaWordmark className="h-10 w-auto text-cream/80" aria-label="Nurea" />
     </div>
   );
 }

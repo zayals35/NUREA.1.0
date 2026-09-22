@@ -1,7 +1,7 @@
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import Button from "../components/Button";
-import { RETAINERS, CONTENT_TIERS, PRICING_NOTE, type PriceTier } from "../data/pricing";
+import { OFFER_PRICING, PRICING_NOTE, type PriceTier } from "../data/pricing";
 import { useLang, type Lang } from "../i18n";
 
 const T: Record<Lang, {
@@ -10,12 +10,9 @@ const T: Record<Lang, {
   title: string;
   intro: string;
   featured: string;
-  priceFits: string;
   quote: string;
-  retainer: string;
-  level: string;
-  content: string;
-  contentHeading: string;
+  offers: string;
+  offerHeading: string;
   cta: string;
 }> = {
   no: {
@@ -23,14 +20,11 @@ const T: Record<Lang, {
     eyebrow: "Priser",
     title: "Ingen prislister. Bare riktig nivå for deg.",
     intro:
-      "Hver bedrift er ulik i størrelse, tempo og behov, så prisen settes alltid individuelt. Velg nivået som ligner mest, så former vi det rundt deg i en klarhetssamtale.",
+      "Vi viser ikke priser i en liste. Omfang og pris settes i en klarhetssamtale, ut fra det du faktisk trenger.",
     featured: "Mest valgt",
-    priceFits: "Pris tilpasses deg",
-    quote: "Be om et tilbud",
-    retainer: "Retainer",
-    level: "Velg ditt nivå.",
-    content: "Innhold hver måned",
-    contentHeading: "Jevnt innhold, i din stil.",
+    quote: "Snakk om omfang",
+    offers: "Tilbud",
+    offerHeading: "Tre tilbud, ett løfte.",
     cta: "Få din klarhetssjekk",
   },
   en: {
@@ -38,14 +32,11 @@ const T: Record<Lang, {
     eyebrow: "Pricing",
     title: "No price lists. Just the right level for you.",
     intro:
-      "Every business is different in size, pace and needs, so the price is always set individually. Pick the level that looks most like you, and we shape it around you in a clarity conversation.",
+      "We do not show prices in a list. Scope and price are set in a clarity conversation, based on what you actually need.",
     featured: "Most chosen",
-    priceFits: "Priced to fit you",
-    quote: "Request a quote",
-    retainer: "Retainer",
-    level: "Choose your level.",
-    content: "Content every month",
-    contentHeading: "Steady content, in your style.",
+    quote: "Talk through scope",
+    offers: "Offers",
+    offerHeading: "Three offers, one promise.",
     cta: "Get your clarity check",
   },
 };
@@ -77,10 +68,7 @@ function TierList({ tiers, t, contactPath }: { tiers: PriceTier[]; t: (typeof T)
             ))}
           </ul>
           <div className={`mt-8 border-t pt-6 ${tier.featured ? "border-cream/15" : "border-ink/10"}`}>
-            <p className={`text-sm font-semibold ${tier.featured ? "text-cream" : "text-ink"}`}>
-              {t.priceFits}
-            </p>
-            <div className="mt-4">
+            <div>
               <Button to={contactPath} variant={tier.featured ? "primary" : "ghost-dark"} className="w-full">
                 {t.quote}
               </Button>
@@ -108,16 +96,10 @@ export default function Priser() {
       <section className="bg-parchment text-ink">
         <div className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-32">
           <Reveal>
-            <p className="eyebrow text-accent">{t.retainer}</p>
-            <h2 className="display-sans mt-6 text-3xl md:text-5xl">{t.level}</h2>
+            <p className="eyebrow text-accent">{t.offers}</p>
+            <h2 className="display-sans mt-6 text-3xl md:text-5xl">{t.offerHeading}</h2>
           </Reveal>
-          <TierList tiers={RETAINERS[lang]} t={t} contactPath={p("/kontakt")} />
-
-          <Reveal className="mt-24 md:mt-32">
-            <p className="eyebrow text-accent">{t.content}</p>
-            <h2 className="display-sans mt-6 text-3xl md:text-5xl">{t.contentHeading}</h2>
-          </Reveal>
-          <TierList tiers={CONTENT_TIERS[lang]} t={t} contactPath={p("/kontakt")} />
+          <TierList tiers={OFFER_PRICING[lang]} t={t} contactPath={p("/kontakt")} />
 
           <Reveal className="mx-auto mt-20 max-w-2xl text-center">
             <p className="text-base leading-relaxed text-ink/60 md:text-lg">{PRICING_NOTE[lang]}</p>
