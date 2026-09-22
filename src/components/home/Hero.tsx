@@ -1,133 +1,150 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import { Link } from "react-router-dom";
-import { gsap } from "../../lib/motion";
-import { useLang } from "../../i18n";
-import HeroArtwork from "./HeroArtwork";
-import "./Hero.css";
+import { gsap, prefersReducedMotion } from "../../lib/motion";
+import Button from "../Button";
+import Smoke from "../Smoke";
+import { useLang, type Lang } from "../../i18n";
 
-const T = {
+const T: Record<Lang, { eyebrow: string; line1: string; line2: string; accent: string; sub: string; cta: string; work: string; scroll: string }> = {
   no: {
-    studio: "Et designstudio i Trondheim", lines: ["Lettere", "å forstå.", "Lettere", "å velge."],
-    sub: "Nettsider med et eget uttrykk. Systemer som gjør hverdagen enklere.", cta: "Få din klarhetssjekk",
-    caption: "Ett N. Mange uttrykk.", hint: "Beveg pekeren. Trykk for å bytte.", touch: "Trykk på N for å bytte uttrykk.",
-    styles: ["Typografi", "Skulptur", "Botanisk", "Piksel", "Kollasj", "Materiale"],
-    select: "Velg uttrykk", next: "Bytt uttrykk", pause: "Pause avspilling", play: "Spill av", scroll: "Se hva vi gjør",
+    eyebrow: "Et designstudio i Trondheim",
+    line1: "Lettere å forstå.",
+    line2: "Lettere å ",
+    accent: "velge",
+    sub: "Nettsider med et eget uttrykk. Systemer som gjør hverdagen enklere.",
+    cta: "Få din klarhetssjekk",
+    work: "Se arbeider",
+    scroll: "Bla ned",
   },
   en: {
-    studio: "A design studio in Trondheim", lines: ["Easier to", "understand.", "Easier", "to choose."],
-    sub: "Websites with an identity of their own. Systems that make everyday work easier.", cta: "Get your clarity check",
-    caption: "One N. Many expressions.", hint: "Move your pointer. Click to change.", touch: "Tap the N to change its expression.",
-    styles: ["Typography", "Sculpture", "Botanical", "Pixel", "Collage", "Material"],
-    select: "Choose an expression", next: "Change expression", pause: "Pause playback", play: "Play", scroll: "Explore what we do",
+    eyebrow: "A design studio in Trondheim",
+    line1: "Easier to understand.",
+    line2: "Easier to ",
+    accent: "choose",
+    sub: "Websites with an identity of their own. Systems that make everyday work easier.",
+    cta: "Get your clarity check",
+    work: "See the work",
+    scroll: "Scroll",
   },
 };
 
+/**
+ * The opening: four colours of smoke rising through paper, always moving and
+ * stirred by the scroll, a see-through dot net over it, film grain, the
+ * centred mission in Cabinet Grotesk 700 in plain ink, with one word, the
+ * verb of the promise (velge / choose), carrying a citron border with a
+ * second outline behind it that fades through the four identity colours,
+ * the smaller lines in Nippo, one red pill CTA and a plain
+ * text link. The smoke is even across the whole hero and capped so the type
+ * reads on every patch; nothing is cleared around the words (r4 to r8, her
+ * 2026-09-23 revises).
+ */
 export default function Hero() {
+  const root = useRef<HTMLElement>(null);
   const { lang, p } = useLang();
   const t = T[lang];
-  const root = useRef<HTMLElement>(null);
-  const stage = useRef<HTMLButtonElement>(null);
-  const syncMotion = useRef<(() => void) | null>(null);
-  const [active, setActive] = useState(1);
-  const [paused, setPaused] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  const [focusWithin, setFocusWithin] = useState(false);
-  const [visible, setVisible] = useState(true);
-  const [reduced, setReduced] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  const pausedRef = useRef(paused);
 
-  useEffect(() => {
-    pausedRef.current = paused;
-    syncMotion.current?.();
-  }, [paused]);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const change = () => setReduced(query.matches);
-    query.addEventListener("change", change);
-    let inView = true;
-    const sync = () => setVisible(inView && !document.hidden);
-    const observer = new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; sync(); }, { threshold: .12 });
-    observer.observe(root.current!);
-    document.addEventListener("visibilitychange", sync);
-    sync();
-    return () => { query.removeEventListener("change", change); observer.disconnect(); document.removeEventListener("visibilitychange", sync); };
-  }, []);
-
-  useEffect(() => {
-    if (paused || reduced || hovered || focusWithin || !visible) return;
-    const timer = window.setInterval(() => setActive(index => (index + 1) % 6), 5500);
-    return () => window.clearInterval(timer);
-  }, [paused, reduced, hovered, focusWithin, visible, active]);
-
-  useGSAP(() => {
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const select = gsap.utils.selector(root);
-      gsap.from(select(".hero-title-line span"), { yPercent: 105, rotation: 3, duration: .9, stagger: .085, ease: "power4.out", clearProps: "transform" });
-      const drift = gsap.to(select(".hero-art-float"), { y: -14, rotation: 2, duration: 3.4, repeat: -1, yoyo: true, ease: "sine.inOut", paused: true });
-      let inView = true;
-      const sync = () => {
-        if (inView && !document.hidden && !pausedRef.current) drift.play();
-        else drift.pause();
-      };
-      syncMotion.current = sync;
-      const observer = new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; sync(); }, { threshold: .12 });
-      observer.observe(root.current!);
-      document.addEventListener("visibilitychange", sync);
-      sync();
-      return () => { observer.disconnect(); document.removeEventListener("visibilitychange", sync); syncMotion.current = null; };
-    });
-    mm.add("(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)", () => {
-      const el = stage.current!;
-      const tilt = el.querySelector(".hero-art-tilt");
-      const x = gsap.quickTo(tilt, "rotationY", { duration: .8, ease: "power3.out" });
-      const y = gsap.quickTo(tilt, "rotationX", { duration: .8, ease: "power3.out" });
-      const move = (event: PointerEvent) => {
-        const box = el.getBoundingClientRect();
-        x(((event.clientX - box.left) / box.width - .5) * 24);
-        y(((event.clientY - box.top) / box.height - .5) * -20);
-      };
-      const reset = () => { x(0); y(0); };
-      el.addEventListener("pointermove", move);
-      el.addEventListener("pointerleave", reset);
-      return () => { el.removeEventListener("pointermove", move); el.removeEventListener("pointerleave", reset); };
-    });
-    return () => mm.revert();
-  }, { scope: root });
-
-  const choose = (index: number) => { setActive(index); setPaused(true); };
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+      gsap.to(".hero-content", {
+        yPercent: -12,
+        autoAlpha: 0,
+        filter: "blur(14px)",
+        ease: "none",
+        scrollTrigger: { trigger: root.current, start: "top top", end: "60% top", scrub: 0.4 },
+      });
+    },
+    { scope: root }
+  );
 
   return (
-    <section className="hero-studio" ref={root} aria-labelledby="hero-heading" data-expression={active} data-paused={paused || reduced}>
-      <div className="hero-studio-inner">
-        <p className="hero-studio-label">{t.studio}</p>
-        <div className="hero-composition">
-          <div className="hero-copy">
-            <h1 id="hero-heading" className={`hero-title hero-title--${lang}`}>
-              {[0, 2].map(start => <span className="hero-title-pair" key={start}>{t.lines.slice(start, start + 2).map(line => <span className="hero-title-line" key={line}><span>{line}</span></span>)}</span>)}
-            </h1>
-            <p className="hero-description">{t.sub}</p>
-            <Link className="hero-primary" to={p("/klarhetssjekk")}>{t.cta}<span aria-hidden="true">↗</span></Link>
-          </div>
-          <div className="hero-experiment" onPointerEnter={() => setHovered(true)} onPointerLeave={() => setHovered(false)} onFocusCapture={() => setFocusWithin(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocusWithin(false); }}>
-            <div className="hero-art-note" aria-hidden="true"><span>nurea</span><span>{String(active + 1).padStart(2, "0")} / 06</span></div>
-            <button type="button" className="hero-art-stage" ref={stage} onClick={() => choose((active + 1) % 6)} aria-label={`${t.next}. ${t.styles[active]}`}>
-              <span className="hero-art-orbit" aria-hidden="true" />
-              <span className="hero-art-tilt"><span className="hero-art-float">
-                {t.styles.map((_, index) => <span className={`hero-art-layer ${active === index ? "is-active" : ""}`} key={index} aria-hidden="true"><HeroArtwork variant={index} /></span>)}
-              </span></span>
-              <span className="hero-art-corner" aria-hidden="true">↗</span>
-            </button>
-            <div className="hero-art-meta"><p>{t.caption}</p><span className="hero-pointer-hint">{t.hint}</span><span className="hero-touch-hint">{t.touch}</span></div>
-            <div className="hero-expression-controls" role="group" aria-label={t.select}>
-              {t.styles.map((name, index) => <button key={name} type="button" aria-pressed={active === index} onClick={() => choose(index)}><span className="hero-expression-dot" aria-hidden="true" />{name}</button>)}
-            </div>
-          </div>
+    <section ref={root} className="grain relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-parchment text-ink">
+      <Smoke amp={1} />
+
+      <div className="hero-content relative z-[2] flex flex-col items-center px-6 pb-28 pt-24 text-center will-change-[transform,opacity,filter]">
+        <p className="hero-seq font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-ink sm:text-xs" style={{ animationDelay: "0.45s" }}>
+          {t.eyebrow}
+        </p>
+        <h1 className="hero-title mt-7 text-[13vw] sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[7.5rem]">
+          <span className="hero-resolve block" style={{ animationDelay: "0.5s" }}>{t.line1}</span>
+          <span className="hero-resolve block" style={{ animationDelay: "0.82s" }}>
+            {t.line2}
+            <span className="hero-accent" data-text={t.accent}>{t.accent}</span>.
+          </span>
+        </h1>
+        <p className="hero-seq mx-auto mt-8 max-w-[38ch] font-mono text-lg font-medium leading-snug text-ink md:text-xl" style={{ animationDelay: "0.75s" }}>
+          {t.sub}
+        </p>
+        <div className="hero-seq mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-5" style={{ animationDelay: "0.9s" }}>
+          <Button to={p("/klarhetssjekk")}>{t.cta}</Button>
+          <Button to={p("/arbeider")} variant="link">{t.work}</Button>
         </div>
-        <div className="hero-bottom"><a href="#tilbud">{t.scroll}<span aria-hidden="true">↓</span></a><button className="hero-motion-toggle" type="button" aria-pressed={paused} onClick={() => setPaused(value => !value)}><span aria-hidden="true">{paused ? "▷" : "Ⅱ"}</span>{paused ? t.play : t.pause}</button></div>
       </div>
+
+      <div className="hero-seq absolute bottom-8 left-1/2 z-[2] flex -translate-x-1/2 flex-col items-center gap-3" style={{ animationDelay: "1.6s" }} aria-hidden="true">
+        <span className="font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-ink">{t.scroll}</span>
+        <span className="hero-cue-line block h-10 w-px overflow-hidden bg-ink/25">
+          <span className="hero-cue-dot block h-3 w-px bg-ink" />
+        </span>
+      </div>
+
+      <style>{`
+        .hero-title { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; line-height: 0.96; color: var(--color-ink); }
+        /* r8, her 2026-09-23 notes: black text, a yellow border only on the
+           last word. The border is a citron stroke painted under the ink
+           fill, so half of it shows outside the glyph. Behind it the same
+           word once more in a thinner outline, sitting a hair down and right
+           like a second colour pass, drifting a little and fading slowly
+           through the four identity colours (her KEEP note: the echo read as
+           a glitch in one colour, she liked the depth, asked for it to fade
+           between Nurea's colours). The colour fade is the one deliberate
+           exception to the transform/opacity/filter rule: it repaints one
+           word, nothing else. */
+        .hero-accent {
+          position: relative;
+          isolation: isolate;
+          -webkit-text-stroke: 0.07em var(--color-gold);
+          paint-order: stroke fill;
+        }
+        .hero-accent::before {
+          content: attr(data-text);
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          color: var(--color-gold);
+          -webkit-text-fill-color: transparent;
+          -webkit-text-stroke: 0.03em currentColor;
+          filter: blur(0.5px);
+          opacity: 0.85;
+          transform: translate(0.045em, 0.045em);
+          animation: hero-echo 9s ease-in-out infinite alternate, hero-echo-colour 16s ease-in-out infinite;
+          will-change: transform;
+          pointer-events: none;
+        }
+        @keyframes hero-echo {
+          0% { transform: translate(0.045em, 0.045em); }
+          50% { transform: translate(0.03em, 0.06em); }
+          100% { transform: translate(0.06em, 0.035em); }
+        }
+        @keyframes hero-echo-colour {
+          0%, 100% { color: #d8cf55; }
+          25% { color: #4f783c; }
+          50% { color: #2849a3; }
+          75% { color: #8c0608; }
+        }
+        .hero-seq { animation: hero-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+        .hero-resolve { animation: hero-clear 1.5s cubic-bezier(0.22, 1, 0.36, 1) both; will-change: filter, opacity, transform; }
+        @keyframes hero-rise { from { opacity: 0; transform: translateY(34px); } to { opacity: 1; transform: none; } }
+        @keyframes hero-clear {
+          0% { opacity: 0; filter: blur(22px); transform: translateY(10px) scale(1.03); }
+          45% { opacity: 1; }
+          100% { opacity: 1; filter: blur(0); transform: none; }
+        }
+        .hero-cue-dot { animation: hero-cue 1.8s cubic-bezier(0.45, 0, 0.55, 1) 2.2s infinite; transform: translateY(-12px); will-change: transform; }
+        @keyframes hero-cue { 0% { transform: translateY(-12px); } 60%, 100% { transform: translateY(40px); } }
+        @media (prefers-reduced-motion: reduce) { .hero-seq, .hero-resolve, .hero-cue-dot, .hero-accent::before { animation: none; } }
+      `}</style>
     </section>
   );
 }

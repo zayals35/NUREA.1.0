@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import SoundToggle from "./SoundToggle";
 import Magnetic from "./Magnetic";
-import { NureaLogo } from "./brand/NureaLogo";
+import { NureaWordmark } from "./brand/NureaLogo";
+import { NureaLiveMark } from "./brand/NureaMarkStyles";
 import { sound } from "../lib/sound";
 import { useLang, twinPath, type Lang } from "../i18n";
 
@@ -30,9 +31,9 @@ function LangSwitch({ className = "" }: { className?: string }) {
     <span className={`mono flex items-center gap-1.5 text-xs tracking-[0.14em] ${className}`}>
       {(["no", "en"] as Lang[]).map((l, i) => (
         <span key={l} className="flex items-center gap-1.5">
-          {i > 0 && <span aria-hidden="true" className="text-ink/30">/</span>}
+          {i > 0 && <span aria-hidden="true" className="opacity-30">/</span>}
           {l === lang ? (
-            <span aria-current="true" className="text-ink">
+            <span aria-current="true">
               {l.toUpperCase()}
             </span>
           ) : (
@@ -40,7 +41,7 @@ function LangSwitch({ className = "" }: { className?: string }) {
               to={twinPath(pathname, l)}
               onClick={() => sound.play("click")}
               aria-label={l === "no" ? "Norsk" : "English"}
-              className="text-ink/50 transition-colors hover:text-ink"
+              className="opacity-50 transition-opacity hover:opacity-100"
             >
               {l.toUpperCase()}
             </Link>
@@ -79,32 +80,32 @@ export default function Nav() {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter,box-shadow] duration-500 ${
-          scrolled && !open
-            ? "bg-parchment/90 backdrop-blur-md shadow-[0_1px_0_rgba(32,29,29,0.12)]"
-            : "bg-transparent"
+          open
+            ? "bg-transparent"
+            : scrolled
+              ? "bg-parchment/90 backdrop-blur-md shadow-[0_1px_0_rgba(32,29,29,0.12)]"
+              : "bg-parchment/65 backdrop-blur-xl"
         }`}
       >
         <nav className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 md:h-20 md:px-10 text-ink">
           <Link
             to={p("/")}
-            className="flex items-center gap-3"
+            className="flex items-center gap-2.5"
             aria-label={lang === "no" ? "NUREA, til forsiden" : "NUREA, to the front page"}
             onClick={() => sound.play("click")}
           >
-            <NureaLogo
-              className="block h-8 w-auto"
-              aria-label={lang === "no" ? "Nurea, til forsiden" : "Nurea, to the front page"}
-            />
+            <NureaLiveMark className="h-8 w-8 md:h-9 md:w-9" lang={lang} />
+            <NureaWordmark className="block h-5 w-auto md:h-[22px]" aria-hidden="true" />
           </Link>
 
-          <div className="hidden items-center gap-8 lg:flex">
+          <div className="hidden items-center gap-6 lg:flex xl:gap-8">
             {LINKS.map((l) => (
               <NavLink
                 key={l.to}
                 to={p(l.to)}
                 className={({ isActive }) =>
-                  `link-line text-sm font-medium transition-opacity ${
-                    isActive ? "opacity-100" : "opacity-70 hover:opacity-100"
+                  `link-line text-[15px] font-medium transition-opacity ${
+                    isActive ? "opacity-100" : "opacity-80 hover:opacity-100"
                   }`
                 }
               >
@@ -120,7 +121,7 @@ export default function Nav() {
               <Link
                 to={p("/klarhetssjekk")}
                 onClick={() => sound.play("click")}
-                className="mono inline-flex items-center bg-accent px-5 py-3 text-xs tracking-[0.14em] text-parchment transition-colors hover:bg-ink"
+                className="font-mono inline-flex items-center rounded-full bg-accent px-5 py-2.5 text-sm font-medium tracking-[0.01em] text-parchment transition-colors hover:bg-ink"
               >
                 {CTA[lang]}
               </Link>
@@ -144,15 +145,15 @@ export default function Nav() {
               }}
             >
               <span
-                className={`h-[2px] w-6 bg-ink transition-transform duration-300 ${
+                className={`h-[2px] w-6 bg-current transition-transform duration-300 ${
                   open ? "translate-y-[7px] rotate-45" : ""
                 }`}
               />
               <span
-                className={`h-[2px] w-6 bg-ink transition-opacity duration-300 ${open ? "opacity-0" : ""}`}
+                className={`h-[2px] w-6 bg-current transition-opacity duration-300 ${open ? "opacity-0" : ""}`}
               />
               <span
-                className={`h-[2px] w-6 bg-ink transition-transform duration-300 ${
+                className={`h-[2px] w-6 bg-current transition-transform duration-300 ${
                   open ? "-translate-y-[7px] -rotate-45" : ""
                 }`}
               />
@@ -196,7 +197,7 @@ export default function Nav() {
           <Link
             to={p("/klarhetssjekk")}
             onClick={() => sound.play("click")}
-            className="mono inline-flex items-center justify-center bg-parchment px-6 py-4 text-sm tracking-[0.14em] text-accent"
+            className="font-mono inline-flex items-center justify-center rounded-full bg-parchment px-6 py-4 text-base font-medium tracking-[0.01em] text-accent"
           >
             {CTA[lang]}
           </Link>

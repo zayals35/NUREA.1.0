@@ -6,6 +6,7 @@ import { sound } from "../lib/sound";
 import Button from "./Button";
 import Reveal from "./Reveal";
 import { NureaWordmark } from "./brand/NureaLogo";
+import Smoke from "./Smoke";
 import { useLang, type Lang } from "../i18n";
 
 const LINKS: { to: string; label: Record<Lang, string> }[] = [
@@ -83,24 +84,25 @@ export default function Footer() {
   );
 
   return (
-    <footer className="relative overflow-hidden bg-ink text-parchment">
-      <div className="mx-auto max-w-[1440px] px-5 pt-20 md:px-10 md:pt-32">
+    <footer className="grain relative overflow-hidden bg-parchment-alt text-ink">
+      <Smoke amp={0.6} />
+      <div className="relative z-[2] mx-auto max-w-[1440px] px-5 pt-20 md:px-10 md:pt-32">
         <Reveal className="max-w-3xl">
-          <p className="eyebrow text-gold">{t.eyebrow}</p>
+          <p className="eyebrow text-accent">{t.eyebrow}</p>
           <h2 className="poster mt-6 text-[clamp(3rem,10vw,8rem)]">{t.heading}</h2>
-          <p className="voice mt-6 max-w-[34ch] text-xl text-parchment/85 md:text-3xl">{t.sub}</p>
+          <p className="voice mt-6 max-w-[34ch] text-xl text-ink/85 md:text-3xl">{t.sub}</p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <Button to={p("/klarhetssjekk")}>{t.cta}</Button>
-            <Button to={p("/kontakt")} variant="ghost">
+            <Button to={p("/kontakt")} variant="ghost-dark">
               {t.start}
             </Button>
           </div>
         </Reveal>
 
-        <div className="mt-20 grid gap-12 border-t border-parchment/20 pt-12 md:grid-cols-3 md:gap-8">
+        <div className="mt-20 grid gap-12 border-t border-ink/20 pt-12 md:grid-cols-3 md:gap-8">
           <div>
             <p className="voice text-xl">nurea</p>
-            <p className="mt-3 max-w-[36ch] text-sm leading-relaxed text-parchment/70">{t.about}</p>
+            <p className="mt-3 max-w-[36ch] text-sm leading-relaxed text-ink/70">{t.about}</p>
           </div>
           <nav className="grid grid-cols-2 gap-x-8 gap-y-3" aria-label={t.navLabel}>
             {LINKS.map((l) => (
@@ -108,7 +110,7 @@ export default function Footer() {
                 key={l.to}
                 to={p(l.to)}
                 onClick={() => sound.play("click")}
-                className="link-line w-fit text-sm text-parchment/70 transition-colors hover:text-parchment"
+                className="link-line w-fit text-sm text-ink/70 transition-colors hover:text-ink"
               >
                 {l.label[lang]}
               </Link>
@@ -117,12 +119,12 @@ export default function Footer() {
           <div className="md:text-right">
             <a
               href="mailto:hei@nurea.no"
-              className="link-line display-sans text-2xl text-parchment"
+              className="link-line display-sans text-2xl text-ink"
               onClick={() => sound.play("click")}
             >
               hei@nurea.no
             </a>
-            <p className="mt-4 text-sm text-parchment/65">
+            <p className="mt-4 text-sm text-ink/65">
               <a href="https://www.instagram.com/nurea.no" target="_blank" rel="noreferrer" className="link-line">
                 Instagram
               </a>
@@ -131,9 +133,9 @@ export default function Footer() {
         </div>
 
         <div ref={markRef} className="mt-16 flex select-none justify-start overflow-hidden md:mt-24" aria-hidden="true">
-          <NureaWordmark className="w-full max-w-[1360px] text-parchment" aria-hidden="true" />
+          <NureaWordmark className="w-full max-w-[1360px] text-ink" aria-hidden="true" />
         </div>
-        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-parchment/20 py-6 text-xs text-parchment/60">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-ink/20 py-6 text-xs text-ink/60">
           <span>© {new Date().getFullYear()} NUREA · {t.orgnr}</span>
           <span>{t.promise}</span>
         </div>
