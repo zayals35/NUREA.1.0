@@ -6,18 +6,23 @@ interface Props {
   intro?: string;
   /** Browser tab title. */
   docTitle: string;
-  /** Typography role for the h1. Defaults to the serif signature. */
+  /** Typography role for the h1. Defaults to the poster voice. */
   titleClassName?: string;
   children?: ReactNode;
 }
 
-/** Shared dark page opener with the hero entrance choreography. */
+/**
+ * Shared page opener on paper, the front page's world carried inward: a red
+ * Nippo eyebrow, the title in the poster voice, the intro in the human voice,
+ * and one red rule drawing itself under the block. The smoke stays with the
+ * hero and the footer; the pages between them are plain paper.
+ */
 export default function PageHeader({
   eyebrow,
   title,
   intro,
   docTitle,
-  titleClassName = "display",
+  titleClassName = "poster",
   children,
 }: Props) {
   useEffect(() => {
@@ -28,20 +33,23 @@ export default function PageHeader({
   }, [docTitle, intro]);
 
   return (
-    <header className="grain relative overflow-hidden bg-espresso text-cream">
-      <div className="relative z-[2] mx-auto max-w-[1440px] px-6 pb-20 pt-36 md:px-10 md:pb-28 md:pt-48">
-        <p className="page-seq eyebrow text-gold" style={{ animationDelay: "0.05s" }}>
+    <header className="grain relative overflow-hidden bg-parchment text-ink">
+      <div className="relative z-[2] mx-auto max-w-[1440px] px-5 pb-12 pt-32 md:px-10 md:pb-16 md:pt-44">
+        <p
+          className="page-seq font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-accent sm:text-xs"
+          style={{ animationDelay: "0.05s" }}
+        >
           {eyebrow}
         </p>
         <h1
-          className={`page-seq ${titleClassName} mt-6 max-w-5xl text-4xl sm:text-5xl md:text-7xl`}
+          className={`page-seq ${titleClassName} mt-6 max-w-[16ch] text-[clamp(2.6rem,11vw,4.4rem)] md:text-[clamp(3.6rem,6.4vw,6.4rem)]`}
           style={{ animationDelay: "0.15s" }}
         >
           {title}
         </h1>
         {intro && (
           <p
-            className="page-seq mt-8 max-w-[56ch] text-base leading-relaxed text-cream/70 md:text-lg"
+            className="page-seq voice mt-7 max-w-[38ch] text-xl text-ink md:mt-9 md:text-3xl"
             style={{ animationDelay: "0.28s" }}
           >
             {intro}
@@ -52,6 +60,11 @@ export default function PageHeader({
             {children}
           </div>
         )}
+        <span
+          aria-hidden="true"
+          className="rule-draw mt-12 block h-[2px] w-full bg-accent md:mt-16"
+          style={{ animationDelay: "0.45s" }}
+        />
       </div>
       <style>{`
         .page-seq { animation: hero-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }

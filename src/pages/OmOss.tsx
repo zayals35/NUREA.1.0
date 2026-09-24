@@ -72,6 +72,7 @@ const T: Record<Lang, {
   },
 };
 
+/** The studio on paper: the reading statement, the founder line, three traits on ink rules. */
 export default function OmOss() {
   const { lang, p } = useLang();
   const t = T[lang];
@@ -85,38 +86,40 @@ export default function OmOss() {
         intro={t.intro}
       />
 
-      <section className="grain relative overflow-hidden bg-espresso text-cream">
-        <div className="relative z-[2] mx-auto max-w-[1440px] px-6 pb-24 md:px-10 md:pb-36">
+      <section className="bg-parchment text-ink">
+        <div className="mx-auto max-w-[1440px] px-5 pb-20 pt-4 md:px-10 md:pb-28 md:pt-8">
           <WordReveal
             key={lang}
+            brightColor="#201d1d"
+            dimColor="rgba(32, 29, 29, 0.22)"
             className="display-sans max-w-4xl text-2xl leading-[1.2] sm:text-3xl md:text-5xl"
             text={t.statement}
           />
           <Reveal className="mt-12 flex items-center gap-4" delay={0.1}>
             <span
               aria-hidden="true"
-              className="display flex h-14 w-14 items-center justify-center rounded-full border border-accent/50 bg-accent/15 text-xl text-cream"
+              className="voice flex h-14 w-14 items-center justify-center rounded-full bg-accent text-2xl text-parchment"
             >
               Z
             </span>
             <span>
-              <span className="block font-semibold text-cream">Zaynab</span>
-              <span className="block text-sm text-cream/65">{t.founderRole}</span>
+              <span className="display-sans block text-xl">Zaynab</span>
+              <span className="block text-sm text-ink/70">{t.founderRole}</span>
             </span>
           </Reveal>
         </div>
       </section>
 
-      <section className="bg-parchment text-ink">
-        <div className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-32">
+      <section className="bg-parchment-alt text-ink">
+        <div className="mx-auto max-w-[1440px] px-5 py-20 md:px-10 md:py-32">
           <Reveal>
             <p className="eyebrow text-accent">{t.how}</p>
           </Reveal>
-          <div className="mt-12 grid gap-12 md:grid-cols-3 md:gap-10">
+          <div className="mt-10 grid gap-10 md:grid-cols-3 md:gap-8">
             {t.traits.map((trait, i) => (
-              <Reveal key={trait.h} delay={i * 0.1} className="border-t-2 border-accent/30 pt-6">
+              <Reveal key={trait.h} delay={i * 0.1} className="border-t-2 border-ink pt-6">
                 <h2 className="display-sans text-3xl md:text-4xl">{trait.h}</h2>
-                <p className="mt-4 max-w-[38ch] text-sm leading-relaxed text-ink/60 md:text-base">
+                <p className="mt-4 max-w-[38ch] text-sm leading-relaxed text-ink/70 md:text-base">
                   {trait.p}
                 </p>
               </Reveal>
@@ -124,7 +127,7 @@ export default function OmOss() {
           </div>
 
           <Reveal className="mt-24 max-w-3xl">
-            <p className="text-base leading-relaxed text-ink/65 md:text-lg">{t.body}</p>
+            <p className="text-base leading-relaxed text-ink/75 md:text-lg">{t.body}</p>
             <div className="mt-10">
               <Button to={p("/klarhetssjekk")}>{t.cta}</Button>
             </div>

@@ -37,6 +37,7 @@ const T: Record<Lang, {
   },
 };
 
+/** The cases on paper: square frames, ink type, one red link per case. */
 export default function Arbeider() {
   const { lang, p } = useLang();
   const t = T[lang];
@@ -50,8 +51,8 @@ export default function Arbeider() {
       />
 
       <section className="bg-parchment text-ink">
-        <div className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-32">
-          <div className="flex flex-col gap-28 md:gap-40">
+        <div className="mx-auto max-w-[1440px] px-5 pb-20 pt-6 md:px-10 md:pb-32 md:pt-10">
+          <div className="flex flex-col gap-24 md:gap-40">
             {WORK[lang].filter((w) => !w.hidden).map((w, i) => (
               <article
                 key={w.id}
@@ -63,13 +64,12 @@ export default function Arbeider() {
                   <MediaReveal
                     src={w.art}
                     alt={`${w.company}, ${w.title}`}
-                    className="rounded-2xl"
                     eager={i === 0}
                   />
                   {w.shots.length > 0 && (
                     <div className="mt-4 grid grid-cols-3 gap-4">
                       {w.shots.map((s) => (
-                        <div key={s} className="overflow-hidden rounded-xl">
+                        <div key={s} className="overflow-hidden">
                           <img
                             src={s}
                             alt=""
@@ -87,24 +87,24 @@ export default function Arbeider() {
                 <Reveal className="md:sticky md:top-32" delay={0.1}>
                   <p className="eyebrow text-accent">{w.title}</p>
                   <h2 className="display-sans mt-4 text-4xl md:text-6xl">{w.company}</h2>
-                  <p className="mono mt-3 text-xs text-ink/45">
+                  <p className="mono mt-3 text-xs text-ink/60">
                     {w.metricLabel}{w.year ? ` · ${w.year}` : ""}
                   </p>
-                  <p className="mt-6 max-w-[54ch] text-base leading-relaxed text-ink/65 md:text-lg">
+                  <p className="mt-6 max-w-[54ch] text-base leading-relaxed text-ink/75 md:text-lg">
                     {w.caption}
                   </p>
                   <div className="mt-6 flex flex-wrap gap-2">
-                    {w.tags.map((t) => (
+                    {w.tags.map((tag) => (
                       <span
-                        key={t}
-                        className="mono rounded-none border border-ink/15 px-3 py-1 text-[11px] tracking-[0.1em] text-ink/60"
+                        key={tag}
+                        className="font-mono rounded-full border border-ink/25 px-3.5 py-1 text-[12px] text-ink"
                       >
-                        {t}
+                        {tag}
                       </span>
                     ))}
                   </div>
                   {w.status && (
-                    <p className="mono mt-6 text-[11px] tracking-[0.1em] text-ink/50">{w.status}</p>
+                    <p className="mono mt-6 text-[11px] tracking-[0.1em] text-ink/60">{w.status}</p>
                   )}
                   {(w.href || w.instagram) && (
                     <a
@@ -122,10 +122,8 @@ export default function Arbeider() {
             ))}
           </div>
 
-          <Reveal className="mt-28 text-center md:mt-40">
-            <p className="display-sans mx-auto max-w-2xl text-2xl text-ink/70 md:text-3xl">
-              {t.possible}
-            </p>
+          <Reveal className="mt-24 border-t-2 border-ink pt-12 md:mt-40 md:pt-16">
+            <p className="voice max-w-[26ch] text-3xl text-ink md:text-5xl">{t.possible}</p>
             <div className="mt-8">
               <Button to={p("/klarhetssjekk")}>{t.cta}</Button>
             </div>

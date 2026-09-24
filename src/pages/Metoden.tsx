@@ -41,6 +41,7 @@ const T: Record<Lang, {
   },
 };
 
+/** The method on paper: three red poster numbers, then the four start steps on ink rules. */
 export default function Metoden() {
   const { lang, p } = useLang();
   const t = T[lang];
@@ -54,14 +55,14 @@ export default function Metoden() {
         intro={t.intro}
       />
 
-      <section className="grain relative overflow-hidden bg-espresso text-cream">
-        <div className="relative z-[2] mx-auto max-w-[1440px] px-6 pb-24 md:px-10 md:pb-36">
-          <div className="grid gap-16 md:grid-cols-3 md:gap-10">
+      <section className="bg-parchment text-ink">
+        <div className="mx-auto max-w-[1440px] px-5 pb-20 pt-4 md:px-10 md:pb-32 md:pt-8">
+          <div className="grid gap-12 md:grid-cols-3 md:gap-8">
             {METHOD_STEPS[lang].map((s, i) => (
-              <Reveal key={s.h} delay={i * 0.12}>
-                <span className="display-sans text-6xl text-accent/60 md:text-7xl">{s.n}</span>
-                <h2 className="display-sans mt-6 text-3xl md:text-4xl">{s.h}</h2>
-                <p className="mt-4 max-w-[38ch] text-sm leading-relaxed text-cream/75 md:text-base">
+              <Reveal key={s.h} delay={i * 0.1}>
+                <span className="poster block text-5xl text-accent md:text-7xl">{s.n}</span>
+                <h2 className="display-sans mt-5 text-3xl md:text-4xl">{s.h}</h2>
+                <p className="mt-3 max-w-[36ch] text-sm leading-relaxed text-ink/70 md:text-base">
                   {s.p}
                 </p>
               </Reveal>
@@ -70,18 +71,18 @@ export default function Metoden() {
         </div>
       </section>
 
-      <section className="bg-parchment text-ink">
-        <div className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-32">
+      <section className="bg-parchment-alt text-ink">
+        <div className="mx-auto max-w-[1440px] px-5 py-20 md:px-10 md:py-32">
           <Reveal>
             <p className="eyebrow text-accent">{t.process}</p>
-            <h2 className="display-sans mt-6 text-4xl md:text-6xl">{t.start}</h2>
+            <h2 className="poster mt-6 text-[clamp(2.6rem,9vw,7rem)]">{t.start}</h2>
           </Reveal>
-          <div className="mt-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4 md:gap-8">
+          <div className="mt-14 grid gap-10 border-t-2 border-ink pt-10 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
             {WEEK_STEPS[lang].map((w, i) => (
-              <Reveal key={w.n} delay={i * 0.08} className="border-t-2 border-accent/30 pt-6">
-                <span className="eyebrow text-ink/40">{w.n}</span>
+              <Reveal key={w.n} delay={i * 0.08}>
+                <span className="eyebrow text-accent">{w.n}</span>
                 <h3 className="display-sans mt-3 text-2xl md:text-3xl">{w.h}</h3>
-                <p className="mt-4 max-w-[36ch] text-sm leading-relaxed text-ink/60 md:text-base">
+                <p className="mt-3 max-w-[34ch] text-sm leading-relaxed text-ink/70 md:text-base">
                   {w.p}
                 </p>
               </Reveal>
@@ -91,14 +92,14 @@ export default function Metoden() {
           <div className="mt-24 max-w-3xl md:mt-32">
             <WordReveal
               key={lang}
-              brightColor="#201D1D"
+              brightColor="#201d1d"
               dimColor="rgba(32, 29, 29, 0.22)"
-              className="display-sans text-2xl leading-[1.2] text-ink sm:text-3xl md:text-4xl"
+              className="display-sans text-2xl leading-[1.2] sm:text-3xl md:text-4xl"
               text={t.statement}
             />
           </div>
 
-          <Reveal className="mt-16">
+          <Reveal className="mt-12">
             <Button to={p("/klarhetssjekk")}>{t.cta}</Button>
           </Reveal>
         </div>

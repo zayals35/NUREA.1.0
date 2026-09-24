@@ -40,19 +40,19 @@ export default function Personvern() {
       />
 
       <section className="bg-parchment text-ink">
-        <div className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-32">
+        <div className="mx-auto max-w-[1440px] px-5 pb-20 pt-4 md:px-10 md:pb-32 md:pt-8">
           <div className="max-w-3xl">
             {SECTIONS.map((s, i) => (
-              <Reveal key={s.h} delay={Math.min(i * 0.04, 0.15)} className="border-t border-ink/10 py-10">
+              <Reveal key={s.h} delay={Math.min(i * 0.04, 0.15)} className="border-t border-ink/20 py-10">
                 <h2 className="display-sans text-2xl md:text-3xl">{s.h}</h2>
-                <p className="mt-4 max-w-[68ch] text-sm leading-relaxed text-ink/65 md:text-base">
+                <p className="mt-4 max-w-[68ch] text-sm leading-relaxed text-ink/70 md:text-base">
                   {s.p}
                 </p>
               </Reveal>
             ))}
-            <Reveal className="border-t border-ink/10 py-10">
+            <Reveal className="border-t border-ink/20 py-10">
               <h2 className="display-sans text-2xl md:text-3xl">Behandlingsansvarlig</h2>
-              <p className="mt-4 text-sm leading-relaxed text-ink/65 md:text-base">
+              <p className="mt-4 text-sm leading-relaxed text-ink/70 md:text-base">
                 NUREA, org.nr 937 929 145, Trondheim, Norge.{" "}
                 <a href={`mailto:${LEAD_EMAIL}`} className="link-line font-semibold text-accent">
                   {LEAD_EMAIL}

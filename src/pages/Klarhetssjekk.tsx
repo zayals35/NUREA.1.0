@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import Button from "../components/Button";
+import { FIELD, THANKS_BOX } from "../components/field";
 import { useWebForm, mailtoFallback } from "../lib/useWebForm";
 import { sound } from "../lib/sound";
 import { useLang, type Lang } from "../i18n";
@@ -105,9 +106,6 @@ const T: Record<Lang, {
   },
 };
 
-const FIELD =
-  "w-full rounded-none border border-ink/15 bg-white/50 px-5 py-4 text-base text-ink placeholder:text-ink/35 outline-none transition-[border-color,box-shadow] focus:border-accent focus:shadow-[0_0_0_3px_rgba(194,81,31,0.15)]";
-
 export default function Klarhetssjekk() {
   const { lang } = useLang();
   const t = T[lang];
@@ -141,29 +139,29 @@ export default function Klarhetssjekk() {
       />
 
       <section className="bg-parchment text-ink">
-        <div className="mx-auto grid max-w-[1440px] gap-16 px-6 py-20 md:grid-cols-[1fr_1.2fr] md:gap-24 md:px-10 md:py-32">
+        <div className="mx-auto grid max-w-[1440px] gap-16 px-5 pb-20 pt-4 md:grid-cols-[1fr_1.2fr] md:gap-24 md:px-10 md:pb-32 md:pt-8">
           <Reveal>
             <p className="eyebrow text-accent">{t.lookAt}</p>
             <ul className="mt-8 flex flex-col gap-4">
               {t.reviews.map((r, i) => (
-                <li key={r} className="flex items-baseline gap-4 border-b border-ink/10 pb-4">
-                  <span className="text-xs font-semibold text-accent">
+                <li key={r} className="flex items-baseline gap-4 border-b border-ink/20 pb-4">
+                  <span className="poster text-lg text-accent">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="display-sans text-xl md:text-2xl">{r}</span>
                 </li>
               ))}
             </ul>
-            <p className="mt-8 max-w-[44ch] text-sm leading-relaxed text-ink/55">
+            <p className="mt-8 max-w-[44ch] text-sm leading-relaxed text-ink/70">
               {t.personal}
             </p>
           </Reveal>
 
           <Reveal delay={0.1}>
             {status === "ok" ? (
-              <div className="rounded-2xl border border-accent/25 bg-white/40 p-10 text-center md:p-16">
-                <p className="display-sans text-5xl md:text-6xl">{t.thanks}</p>
-                <p className="mx-auto mt-6 max-w-[40ch] text-base leading-relaxed text-ink/65">
+              <div className={THANKS_BOX}>
+                <p className="poster text-5xl md:text-6xl">{t.thanks}</p>
+                <p className="voice mx-auto mt-6 max-w-[30ch] text-xl text-ink md:text-2xl">
                   {t.thanksBody}
                 </p>
               </div>
@@ -193,10 +191,10 @@ export default function Klarhetssjekk() {
                         type="button"
                         onClick={() => toggleFocus(f)}
                         aria-pressed={focus.includes(f)}
-                        className={`mono rounded-none border px-5 py-2.5 text-xs tracking-[0.1em] transition-colors ${
+                        className={`font-mono rounded-full border px-5 py-2.5 text-[13px] font-medium transition-colors ${
                           focus.includes(f)
                             ? "border-accent bg-accent text-parchment"
-                            : "border-ink/20 text-ink/70 hover:border-ink/50"
+                            : "border-ink/30 text-ink hover:border-ink"
                         }`}
                       >
                         {f}
@@ -221,13 +219,13 @@ export default function Klarhetssjekk() {
 
                 <div>
                   <label htmlFor="name" className="mb-2 block text-sm font-semibold">
-                    {t.nameLabel} <span className="font-normal text-ink/40">{t.nameOptional}</span>
+                    {t.nameLabel} <span className="font-normal text-ink/60">{t.nameOptional}</span>
                   </label>
                   <input id="name" name="name" placeholder={t.namePlaceholder} className={FIELD} />
                 </div>
 
                 <div className="mt-2">
-                  <Button type="submit" className="w-full py-5 text-base sm:w-auto sm:px-12">
+                  <Button type="submit" className="w-full sm:w-auto">
                     {status === "sending" ? t.sending : t.cta}
                   </Button>
                 </div>

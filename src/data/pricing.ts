@@ -4,44 +4,67 @@ export interface PriceTier {
   name: string;
   tagline: string;
   points: string[];
-  featured?: boolean;
+  /** Availability line, only where an offer is not open yet. */
+  note?: string;
 }
 
+/**
+ * The three launch offers as they appear on /priser, approved 2026-09-20.
+ * Unranked and independently selectable; no offer is "most chosen".
+ */
 export const OFFER_PRICING: Record<Lang, PriceTier[]> = {
   no: [
     {
-      name: "Første løft",
-      tagline: "Budskap, merkevare og nettside samlet i en tydelig start.",
-      points: ["Retning for budskap og uttrykk.", "En nettside bygget for klarhet og tillit."],
+      name: "Nettside og uttrykk",
+      tagline: "Gjør det lett å velge deg.",
+      points: [
+        "Klare ord, et eget uttrykk og en enkel vei til kontakt.",
+        "Omfanget avtales før vi starter, og bygges ferdig.",
+      ],
     },
     {
-      name: "Innholdsabonnement",
-      tagline: "Jevnt innhold fra råmaterialet du allerede har.",
-      points: ["Innhold hver uke eller måned.", "Tekst, bilder og reklameinnhold klar til bruk."],
-      featured: true,
+      name: "Systemer og automatisering",
+      tagline: "Færre ting å følge opp manuelt.",
+      points: [
+        "Én konkret arbeidsflyt: skjema, e-post eller booking.",
+        "Tilpasset verktøyene du bruker, med tydelig avtalt oppfølging.",
+      ],
     },
     {
-      name: "Systemer",
-      tagline: "Bots og flyter som svarer, booker og følger opp.",
-      points: ["Ryddigere kontaktflyt.", "Automatisering tilpasset hverdagen din."],
+      name: "Visuell produksjon",
+      tagline: "Nurea Create.",
+      points: [
+        "AI-assisterte kampanjebilder og korte filmer for produktmerker.",
+        "Avgrensede produksjoner med avtalt retning, leveranser og revisjoner.",
+      ],
+      note: "Under utvikling. Åpner senere.",
     },
   ],
   en: [
     {
-      name: "First lift",
-      tagline: "Message, brand and website gathered into a clear start.",
-      points: ["Direction for message and expression.", "A website built for clarity and trust."],
+      name: "Website and identity",
+      tagline: "Make choosing you easy.",
+      points: [
+        "Clear words, a distinctive identity and a simple way to get in touch.",
+        "Scope agreed before we start, then built to completion.",
+      ],
     },
     {
-      name: "Content subscription",
-      tagline: "Steady content from the raw material you already have.",
-      points: ["Content every week or month.", "Copy, images and advertising content ready to use."],
-      featured: true,
+      name: "Systems and automation",
+      tagline: "Less to follow up manually.",
+      points: [
+        "One specific workflow: forms, email or booking.",
+        "Built around the tools you use, with clearly agreed support.",
+      ],
     },
     {
-      name: "Systems",
-      tagline: "Bots and flows that answer, book and follow up.",
-      points: ["A tidier contact flow.", "Automation shaped around your everyday."],
+      name: "Visual production",
+      tagline: "Nurea Create.",
+      points: [
+        "AI-assisted campaign images and short films for product brands.",
+        "Defined productions with agreed direction, deliverables and revisions.",
+      ],
+      note: "In development. Coming later.",
     },
   ],
 };

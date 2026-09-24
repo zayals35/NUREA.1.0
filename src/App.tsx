@@ -111,7 +111,7 @@ export default function App() {
         <Intro />
         <Cursor />
         <Nav />
-        <Suspense fallback={<div className="min-h-screen bg-espresso" />}>
+        <Suspense fallback={<div className="min-h-screen bg-parchment" />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/tjenester" element={<Tjenester />} />

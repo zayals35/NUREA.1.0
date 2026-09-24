@@ -9,7 +9,6 @@ const T: Record<Lang, {
   eyebrow: string;
   title: string;
   intro: string;
-  featured: string;
   quote: string;
   offers: string;
   offerHeading: string;
@@ -21,7 +20,6 @@ const T: Record<Lang, {
     title: "Ingen prislister. Bare riktig nivå for deg.",
     intro:
       "Vi viser ikke priser i en liste. Omfang og pris settes i en klarhetssamtale, ut fra det du faktisk trenger.",
-    featured: "Mest valgt",
     quote: "Snakk om omfang",
     offers: "Tilbud",
     offerHeading: "Tre tilbud, ett løfte.",
@@ -33,7 +31,6 @@ const T: Record<Lang, {
     title: "No price lists. Just the right level for you.",
     intro:
       "We do not show prices in a list. Scope and price are set in a clarity conversation, based on what you actually need.",
-    featured: "Most chosen",
     quote: "Talk through scope",
     offers: "Offers",
     offerHeading: "Three offers, one promise.",
@@ -41,38 +38,34 @@ const T: Record<Lang, {
   },
 };
 
+/** Three equal paper cards, square, ink rule on top, no card raised above the others. */
 function TierList({ tiers, t, contactPath }: { tiers: PriceTier[]; t: (typeof T)["no"]; contactPath: string }) {
   return (
-    <div className="mt-12 grid gap-8 md:grid-cols-3">
+    <div className="mt-12 grid gap-6 md:grid-cols-3 md:gap-8">
       {tiers.map((tier, i) => (
         <Reveal
           key={tier.name}
           delay={i * 0.08}
-          className={`flex flex-col rounded-2xl border p-8 md:p-10 ${
-            tier.featured
-              ? "border-accent/40 bg-espresso text-cream shadow-[0_24px_60px_rgba(42,31,22,0.25)]"
-              : "border-ink/10 bg-white/35 text-ink"
-          }`}
+          className="flex flex-col border border-ink bg-parchment-alt p-7 md:p-9"
         >
-          {tier.featured && <p className="eyebrow mb-4 text-gold-soft/90">{t.featured}</p>}
           <h3 className="display-sans text-2xl md:text-3xl">{tier.name}</h3>
-          <p className={`mt-4 text-sm leading-relaxed md:text-base ${tier.featured ? "text-cream/70" : "text-ink/60"}`}>
-            {tier.tagline}
-          </p>
-          <ul className={`mt-6 flex flex-col gap-3 text-sm leading-relaxed ${tier.featured ? "text-cream/80" : "text-ink/70"}`}>
+          <p className="voice mt-3 text-xl text-ink md:text-2xl">{tier.tagline}</p>
+          <ul className="mt-6 flex flex-col gap-3 text-sm leading-relaxed text-ink/75 md:text-base">
             {tier.points.map((point) => (
               <li key={point} className="flex gap-3">
-                <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                 {point}
               </li>
             ))}
           </ul>
-          <div className={`mt-8 border-t pt-6 ${tier.featured ? "border-cream/15" : "border-ink/10"}`}>
-            <div>
-              <Button to={contactPath} variant={tier.featured ? "primary" : "ghost-dark"} className="w-full">
+          <div className="mt-auto border-t border-ink/20 pt-6">
+            {tier.note ? (
+              <p className="mono text-[11px] tracking-[0.14em] text-accent">{tier.note}</p>
+            ) : (
+              <Button to={contactPath} variant="ghost-dark">
                 {t.quote}
               </Button>
-            </div>
+            )}
           </div>
         </Reveal>
       ))}
@@ -94,15 +87,15 @@ export default function Priser() {
       />
 
       <section className="bg-parchment text-ink">
-        <div className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-32">
+        <div className="mx-auto max-w-[1440px] px-5 pb-20 pt-4 md:px-10 md:pb-32 md:pt-8">
           <Reveal>
             <p className="eyebrow text-accent">{t.offers}</p>
-            <h2 className="display-sans mt-6 text-3xl md:text-5xl">{t.offerHeading}</h2>
+            <h2 className="poster mt-6 text-[clamp(2.6rem,9vw,7rem)]">{t.offerHeading}</h2>
           </Reveal>
           <TierList tiers={OFFER_PRICING[lang]} t={t} contactPath={p("/kontakt")} />
 
-          <Reveal className="mx-auto mt-20 max-w-2xl text-center">
-            <p className="text-base leading-relaxed text-ink/60 md:text-lg">{PRICING_NOTE[lang]}</p>
+          <Reveal className="mt-24 border-t-2 border-ink pt-12 md:mt-32 md:pt-16">
+            <p className="voice max-w-[30ch] text-2xl text-ink md:text-4xl">{PRICING_NOTE[lang]}</p>
             <div className="mt-8">
               <Button to={p("/klarhetssjekk")}>{t.cta}</Button>
             </div>

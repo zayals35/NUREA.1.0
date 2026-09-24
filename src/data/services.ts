@@ -20,56 +20,71 @@ export interface Service {
 export interface Offer {
   id: string;
   title: string;
+  /** The promise in one line. */
   description: string;
   outcome: string;
+  /** Availability line, only where an offer is not open yet. */
+  note?: string;
   serviceIds: ServiceId[];
 }
 
+/**
+ * The three launch offers, approved 2026-09-20 and unnumbered: independently
+ * selectable, never a sequence. Copy mirrors the approved front page.
+ */
 export const OFFERINGS: Record<Lang, Offer[]> = {
   no: [
     {
-      id: "forste-loft",
-      title: "Første løft",
-      description: "Budskap, merkevare og nettside som gjør bedriften lettere å forstå.",
-      outcome: "Du får retning, et tydelig uttrykk og en nettside som gjør det enklere å velge.",
-      serviceIds: ["merkevare", "nettsider"],
+      id: "nettside-og-uttrykk",
+      title: "Nettside og uttrykk",
+      description: "Gjør det lett å velge deg.",
+      outcome:
+        "En gjennomarbeidet nettside med klare ord, et eget uttrykk og en enkel vei til kontakt. Vi avtaler hva du trenger, og bygger det ferdig.",
+      serviceIds: ["nettsider", "merkevare"],
     },
     {
-      id: "innholdsabonnement",
-      title: "Innholdsabonnement",
-      description: "Ukentlig eller månedlig innhold fra råmaterialet du allerede har.",
-      outcome: "Du får en jevn strøm av tekst, bilder og reklameinnhold, klar til bruk.",
-      serviceIds: ["innhold", "reklamer"],
-    },
-    {
-      id: "systemer",
-      title: "Systemer",
-      description: "Bots og flyter som svarer, booker og følger opp.",
-      outcome: "Du får en ryddigere hverdag, der henvendelser og oppfølging ikke faller mellom stolene.",
+      id: "systemer-og-automatisering",
+      title: "Systemer og automatisering",
+      description: "Færre ting å følge opp manuelt.",
+      outcome:
+        "Vi kobler sammen skjema, e-post eller booking, så en henvendelse kommer riktig frem. Én konkret arbeidsflyt, tilpasset verktøyene du bruker, med tydelig avtalt oppfølging.",
       serviceIds: ["systemer"],
+    },
+    {
+      id: "visuell-produksjon",
+      title: "Visuell produksjon",
+      description: "Nurea Create.",
+      outcome:
+        "AI-assisterte kampanjebilder og korte filmer for produktmerker. Avgrensede produksjoner med en avtalt visuell retning og ferdige filer til dine kanaler.",
+      note: "Under utvikling. Åpner senere.",
+      serviceIds: ["innhold"],
     },
   ],
   en: [
     {
-      id: "first-lift",
-      title: "First lift",
-      description: "Message, brand and website that make your business easier to understand.",
-      outcome: "You get direction, a clear expression and a website that makes it easier to choose.",
-      serviceIds: ["merkevare", "nettsider"],
+      id: "website-and-identity",
+      title: "Website and identity",
+      description: "Make choosing you easy.",
+      outcome:
+        "A considered website with clear words, a distinctive identity and a simple way to get in touch. We agree on what you need, then build it.",
+      serviceIds: ["nettsider", "merkevare"],
     },
     {
-      id: "content-subscription",
-      title: "Content subscription",
-      description: "Weekly or monthly content from the raw material you already have.",
-      outcome: "You get a steady stream of copy, images and advertising content, ready to use.",
-      serviceIds: ["innhold", "reklamer"],
-    },
-    {
-      id: "systems",
-      title: "Systems",
-      description: "Bots and flows that answer, book and follow up.",
-      outcome: "You get a tidier day, where inquiries and follow-up do not fall through the cracks.",
+      id: "systems-and-automation",
+      title: "Systems and automation",
+      description: "Less to follow up manually.",
+      outcome:
+        "We connect forms, email or booking so inquiries reach the right place. One specific workflow, built around the tools you use, with clearly agreed support.",
       serviceIds: ["systemer"],
+    },
+    {
+      id: "visual-production",
+      title: "Visual production",
+      description: "Nurea Create.",
+      outcome:
+        "AI-assisted campaign images and short films for product brands. Defined productions with an agreed visual direction and finished files for your channels.",
+      note: "In development. Coming later.",
+      serviceIds: ["innhold"],
     },
   ],
 };
@@ -117,7 +132,7 @@ const SERVICES_NO: Service[] = [
     id: "innhold",
     index: "03",
     title: "Innhold",
-    role: "Innholdsabonnement",
+    role: "Visuell produksjon",
     description: "Ord, bilder og struktur som gjør verdien lettere å forstå.",
     statement: "Sosiale medier er gratis annonsering. Du trenger bare å bruke det riktig.",
     statementBody:
@@ -128,8 +143,8 @@ const SERVICES_NO: Service[] = [
       { title: "Bilde og visuelt", body: "Foto, illustrasjon og grafikk som forsterker det skrevne og gjør innholdet lettere å ta inn." },
       { title: "Publiseringsplan", body: "Når, hvor og hvor ofte. En ryddig plan som er enkel å følge over tid." },
     ],
-    position: "Innholdsabonnement",
-    positionBody: "Innholdet gjør verdien synlig jevnt, med råmaterialet du allerede har.",
+    position: "Visuell produksjon",
+    positionBody: "Innholdet gjør verdien synlig, i avgrensede produksjoner med en avtalt retning.",
     ctaHeading: "Klar til å lage innhold som faktisk bygger tillit?",
   },
   {
@@ -155,7 +170,7 @@ const SERVICES_NO: Service[] = [
     id: "reklamer",
     index: "05",
     title: "Reklamer",
-    role: "Innholdsabonnement",
+    role: "Reklamer",
     description: "Strategiske budskap som gjør synligheten tydeligere.",
     statement: "Reklame uten en tydelig merkevare er støy. Med den er det forsterkning.",
     statementBody:
@@ -215,7 +230,7 @@ const SERVICES_EN: Service[] = [
     id: "innhold",
     index: "03",
     title: "Content",
-    role: "Content subscription",
+    role: "Visual production",
     description: "Words, images and structure that make the value easier to understand.",
     statement: "Social media is free advertising. You just have to use it right.",
     statementBody:
@@ -226,8 +241,8 @@ const SERVICES_EN: Service[] = [
       { title: "Image and visuals", body: "Photo, illustration and graphics that reinforce the words and make the content easier to take in." },
       { title: "Publishing plan", body: "When, where and how often. A tidy plan that is easy to follow over time." },
     ],
-    position: "Content subscription",
-    positionBody: "The content makes the value visible steadily, using the raw material you already have.",
+    position: "Visual production",
+    positionBody: "The content makes the value visible, in defined productions with an agreed direction.",
     ctaHeading: "Ready to make content that actually builds trust?",
   },
   {
@@ -253,7 +268,7 @@ const SERVICES_EN: Service[] = [
     id: "reklamer",
     index: "05",
     title: "Advertising",
-    role: "Content subscription",
+    role: "Advertising",
     description: "Strategic messages that make your visibility clearer.",
     statement: "Advertising without a clear brand is noise. With one, it is amplification.",
     statementBody:
