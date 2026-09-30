@@ -19,6 +19,9 @@ const ART_ON = "(prefers-reduced-motion: no-preference)";
 /** The sticky deck runs only where studio.css makes it sticky: motion allowed and a screen tall enough for a whole card. */
 const DECK_ON = "(prefers-reduced-motion: no-preference) and (min-height: 600px)";
 
+/** Phones: the drawing sits low on a tall card, so its scrub is timed to the drawing itself (studio.css, max-width 899px). */
+const PHONE = "(max-width: 899px)";
+
 /**
  * The homepage deck, rebuilt to elespacio.net's measured behaviour
  * (2026-09-29, lib/deck.ts): a statement column pinned beside a column of
@@ -123,10 +126,21 @@ export default function StackCards() {
         const section = root.current!;
         const items = gsap.utils.toArray<HTMLElement>(".st-deck-item", section);
         const deck = () => window.matchMedia(DECK_ON).matches && geometry.current;
+        const phone = () => window.matchMedia(PHONE).matches;
+        // On a phone the drawing enters the screen late in its card's rise, so
+        // the scrub starts as the drawing appears and runs a little past the
+        // landing, while the next card is still below it: the whole assembly is seen.
+        const phoneStart = (i: number, item: HTMLElement) => {
+          const art = item.querySelector(".st-card-art");
+          const slot = parseFloat(getComputedStyle(item).top) || 0;
+          const scale = Number(gsap.getProperty(item, "scaleY")) || 1;
+          const artTop = art ? (art.getBoundingClientRect().top - item.getBoundingClientRect().top) / scale : 0;
+          return geometry.current!.stick[i] - Math.max(0, window.innerHeight - slot - artTop);
+        };
         const span = (i: number, item: HTMLElement) => ({
           trigger: item,
-          start: () => (deck() ? geometry.current!.stick[i] - window.innerHeight * 0.85 : "top 92%"),
-          end: () => (deck() ? geometry.current!.stick[i] : "top 35%"),
+          start: () => (deck() ? (phone() ? phoneStart(i, item) : geometry.current!.stick[i] - window.innerHeight * 0.85) : "top 92%"),
+          end: () => (deck() ? geometry.current!.stick[i] + (phone() ? 40 : 0) : "top 35%"),
           scrub: 0.4,
           invalidateOnRefresh: true,
         });

@@ -38,12 +38,12 @@ export interface WorkPiece {
   lead?: boolean;
 }
 
-/** Real recordings of live sites, in gallery order. */
+/** Real recordings of live sites; the gallery groups them by client, in first-seen order. */
 export const WORK: WorkPiece[] = [
   { id: "gizay-desktop", client: "GIZAY", clip: CLIP.gizayDesktop, orientation: "wide", url: "https://gizay.no", domain: "gizay.no", lead: true },
-  { id: "bilmekka-phone", client: "Bilmekka", clip: CLIP.bilmekkaPhone, orientation: "tall", url: "https://www.bilmekka.no", domain: "bilmekka.no" },
-  { id: "bilmekka-desktop", client: "Bilmekka", clip: CLIP.bilmekkaSteps, orientation: "wide", url: "https://www.bilmekka.no", domain: "bilmekka.no" },
   { id: "gizay-phone", client: "GIZAY", clip: CLIP.gizayPhone, orientation: "tall", url: "https://gizay.no", domain: "gizay.no" },
+  { id: "bilmekka-desktop", client: "Bilmekka", clip: CLIP.bilmekkaSteps, orientation: "wide", url: "https://www.bilmekka.no", domain: "bilmekka.no" },
+  { id: "bilmekka-phone", client: "Bilmekka", clip: CLIP.bilmekkaPhone, orientation: "tall", url: "https://www.bilmekka.no", domain: "bilmekka.no" },
 ];
 
 export const BELT = [
@@ -241,12 +241,12 @@ const no = {
     initiativeH: "Nurea Create",
     initiativeP: "Nureas egen produksjonsgren for bilder og film. Ikke et kundeoppdrag, og fortsatt under utvikling.",
     initiativeCta: "Les om Create",
-    pieces: {
-      "gizay-desktop": { task: "Landingsside, merkevare og web", caption: "Egyptisk bomull for nordiske hjem. Materialet fikk sette tonen fra første skjerm." },
-      "bilmekka-phone": { task: "Nettside og visuell identitet, mobil", caption: "Fra registreringsnummer til henvendelse på ett skjermbilde." },
-      "bilmekka-desktop": { task: "Innholdsstruktur", caption: "Bilsalget forklart i konkrete steg, så kunden vet hva som skjer videre." },
-      "gizay-phone": { task: "Mobil", caption: "Tre steder, ingen mellomledd. Historien holder også på en liten skjerm." },
+    cases: {
+      GIZAY: { task: "Landingsside, merkevare og web", caption: "Egyptisk bomull for nordiske hjem. Materialet fikk sette tonen fra første skjerm." },
+      Bilmekka: { task: "Nettside og visuell identitet", caption: "Fra registreringsnummer til henvendelse på ett skjermbilde. Bilsalget forklart i konkrete steg." },
     } as Record<string, { task: string; caption: string }>,
+    desktop: "Datamaskin",
+    phone: "Mobil",
   },
   services: {
     h1a: "Det gode",
@@ -515,12 +515,12 @@ const en: StudioCopy = {
     initiativeH: "Nurea Create",
     initiativeP: "Nurea's own production branch for images and film. Not a client project, and still in development.",
     initiativeCta: "Read about Create",
-    pieces: {
-      "gizay-desktop": { task: "Landing page, brand and web", caption: "Egyptian cotton for Nordic homes. The material set the tone from the first screen." },
-      "bilmekka-phone": { task: "Website and visual identity, mobile", caption: "From licence plate to enquiry on one screen." },
-      "bilmekka-desktop": { task: "Content structure", caption: "The car sale explained in concrete steps, so the customer knows what happens next." },
-      "gizay-phone": { task: "Mobile", caption: "Three places, no middlemen. The story holds on a small screen too." },
+    cases: {
+      GIZAY: { task: "Landing page, brand and web", caption: "Egyptian cotton for Nordic homes. The material set the tone from the first screen." },
+      Bilmekka: { task: "Website and visual identity", caption: "From licence plate to enquiry on one screen. The car sale explained in concrete steps." },
     },
+    desktop: "Desktop",
+    phone: "Mobile",
   },
   services: {
     h1a: "The good",

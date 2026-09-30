@@ -315,10 +315,13 @@ export default function StudioShell({ children }: { children: ReactNode }) {
             </a>
           )}
         </nav>
-        <CutLink to={p("/kontakt")}>{t.contact}</CutLink>
-        <button type="button" className="st-menu-btn" onClick={() => setMenuOpen(true)} aria-expanded={menuOpen} aria-controls={menuId}>
-          {t.menuOpen}
-        </button>
+        <div className="st-header-end">
+          <LangSwitch pathname={pathname} />
+          <CutLink to={p("/kontakt")}>{t.contact}</CutLink>
+          <button type="button" className="st-menu-btn" onClick={() => setMenuOpen(true)} aria-expanded={menuOpen} aria-controls={menuId}>
+            {t.menuOpen}
+          </button>
+        </div>
       </header>
       {children}
       <Footer />
