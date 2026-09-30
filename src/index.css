@@ -379,3 +379,40 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .rise-clip > span, .fade-late, .rule-draw { animation: none; transform: none; opacity: 1; }
 }
+
+/* ---------- routes r2, 2026-09-25 ---------- */
+
+/* Body copy on paper and ink: her 2026-09-25 note, full ink at 400 still
+   read as grey, so reading copy carries weight and size. Colour is set by
+   the caller (text-ink on paper, text-parchment on ink). */
+.copy {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+}
+@media (min-width: 768px) {
+  .copy { font-size: 19px; }
+}
+
+/* The hero's citron stroke carried inward: one word per page, ink fill on
+   top, half the stroke outside the glyph. */
+.stroke-citron {
+  -webkit-text-stroke: 0.07em var(--color-gold);
+  paint-order: stroke fill;
+}
+
+/* The Create posters drifting on the offer stage. */
+@keyframes poster-drift {
+  0% { transform: translateY(0) rotate(var(--r, 0deg)); }
+  100% { transform: translateY(-3%) rotate(calc(var(--r, 0deg) + 1.5deg)); }
+}
+.poster-drift {
+  animation: poster-drift 7s ease-in-out infinite alternate;
+  animation-delay: var(--d, 0s);
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .poster-drift { animation: none; }
+}

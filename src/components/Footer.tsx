@@ -86,11 +86,12 @@ export default function Footer() {
   return (
     <footer className="grain relative overflow-hidden bg-parchment-alt text-ink">
       <Smoke amp={0.6} />
-      <div className="relative z-[2] mx-auto max-w-[1440px] px-5 pt-20 md:px-10 md:pt-32">
+      {/* z-[4]: the text sits above the grain (z-3), so the small lines stay sharp. */}
+      <div className="relative z-[4] mx-auto max-w-[1440px] px-5 pt-20 md:px-10 md:pt-32">
         <Reveal className="max-w-3xl">
           <p className="eyebrow text-accent">{t.eyebrow}</p>
           <h2 className="poster mt-6 text-[clamp(3rem,10vw,8rem)]">{t.heading}</h2>
-          <p className="voice mt-6 max-w-[34ch] text-xl text-ink/85 md:text-3xl">{t.sub}</p>
+          <p className="voice mt-6 max-w-[34ch] text-xl text-ink md:text-3xl">{t.sub}</p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <Button to={p("/klarhetssjekk")}>{t.cta}</Button>
             <Button to={p("/kontakt")} variant="ghost-dark">
@@ -99,10 +100,11 @@ export default function Footer() {
           </div>
         </Reveal>
 
-        <div className="mt-20 grid gap-12 border-t border-ink/20 pt-12 md:grid-cols-3 md:gap-8">
+        {/* Solid paper under the small type: the smoke and its dot grid stay behind the heading and the wordmark only. */}
+        <div className="mt-20 grid gap-12 bg-parchment px-6 py-10 md:grid-cols-3 md:gap-8 md:px-10">
           <div>
             <p className="voice text-xl">nurea</p>
-            <p className="mt-3 max-w-[36ch] text-sm leading-relaxed text-ink/70">{t.about}</p>
+            <p className="mt-3 max-w-[36ch] text-base font-semibold leading-relaxed text-ink">{t.about}</p>
           </div>
           <nav className="grid grid-cols-2 gap-x-8 gap-y-3" aria-label={t.navLabel}>
             {LINKS.map((l) => (
@@ -110,7 +112,7 @@ export default function Footer() {
                 key={l.to}
                 to={p(l.to)}
                 onClick={() => sound.play("click")}
-                className="link-line w-fit text-sm text-ink/70 transition-colors hover:text-ink"
+                className="link-line w-fit text-lg font-semibold text-ink"
               >
                 {l.label[lang]}
               </Link>
@@ -124,7 +126,7 @@ export default function Footer() {
             >
               hei@nurea.no
             </a>
-            <p className="mt-4 text-sm text-ink/65">
+            <p className="mt-4 text-base font-semibold text-ink">
               <a href="https://www.instagram.com/nurea.no" target="_blank" rel="noreferrer" className="link-line">
                 Instagram
               </a>
@@ -135,7 +137,7 @@ export default function Footer() {
         <div ref={markRef} className="mt-16 flex select-none justify-start overflow-hidden md:mt-24" aria-hidden="true">
           <NureaWordmark className="w-full max-w-[1360px] text-ink" aria-hidden="true" />
         </div>
-        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-ink/20 py-6 text-xs text-ink/60">
+        <div className="flex flex-wrap items-center justify-between gap-2 bg-parchment px-6 py-5 text-sm font-semibold text-ink md:px-10">
           <span>© {new Date().getFullYear()} NUREA · {t.orgnr}</span>
           <span>{t.promise}</span>
         </div>

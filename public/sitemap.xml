@@ -1,17 +1,174 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.nurea.no/</loc></url>
-  <url><loc>https://www.nurea.no/tjenester</loc></url>
-  <url><loc>https://www.nurea.no/tjenester/merkevare</loc></url>
-  <url><loc>https://www.nurea.no/tjenester/nettsider</loc></url>
-  <url><loc>https://www.nurea.no/tjenester/innhold</loc></url>
-  <url><loc>https://www.nurea.no/tjenester/systemer</loc></url>
-  <url><loc>https://www.nurea.no/tjenester/reklamer</loc></url>
-  <url><loc>https://www.nurea.no/arbeider</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.nurea.no/</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/en</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/tjenester</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/tjenester" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/services" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/tjenester" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/en/services</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/tjenester" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/services" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/tjenester" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/tjenester/merkevare</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/tjenester/merkevare" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/services/brand" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/tjenester/merkevare" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/en/services/brand</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/tjenester/merkevare" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/services/brand" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/tjenester/merkevare" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/tjenester/nettsider</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/tjenester/nettsider" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/services/websites" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/tjenester/nettsider" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/en/services/websites</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/tjenester/nettsider" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/services/websites" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/tjenester/nettsider" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/tjenester/innhold</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/tjenester/innhold" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/services/content" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/tjenester/innhold" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/en/services/content</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/tjenester/innhold" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/services/content" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/tjenester/innhold" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/tjenester/systemer</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/tjenester/systemer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/services/systems" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/tjenester/systemer" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/en/services/systems</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/tjenester/systemer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/services/systems" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/tjenester/systemer" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/tjenester/reklamer</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/tjenester/reklamer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/services/advertising" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/tjenester/reklamer" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/en/services/advertising</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/tjenester/reklamer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/services/advertising" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/tjenester/reklamer" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/arbeider</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/arbeider" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/work" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/arbeider" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/en/work</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/arbeider" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/work" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/arbeider" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/metoden</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/metoden" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/method" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/metoden" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/en/method</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/metoden" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/method" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/metoden" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/klarhetssjekk</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/klarhetssjekk" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/clarity-check" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/klarhetssjekk" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/en/clarity-check</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/klarhetssjekk" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/clarity-check" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/klarhetssjekk" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/priser</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/priser" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/pricing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/priser" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/en/pricing</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/priser" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/pricing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/priser" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/om-oss</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/om-oss" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/om-oss" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/en/about</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/om-oss" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/om-oss" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/kontakt</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/kontakt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/kontakt" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/kontakt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/kontakt" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/innsikt</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/innsikt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/insights" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/innsikt" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/en/insights</loc>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/innsikt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/insights" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/innsikt" />
+  </url>
+  <url><loc>https://www.nurea.no/create</loc></url>
   <url><loc>https://www.nurea.no/demoer</loc></url>
-  <url><loc>https://www.nurea.no/metoden</loc></url>
-  <url><loc>https://www.nurea.no/klarhetssjekk</loc></url>
-  <url><loc>https://www.nurea.no/priser</loc></url>
-  <url><loc>https://www.nurea.no/om-oss</loc></url>
-  <url><loc>https://www.nurea.no/kontakt</loc></url>
+  <url><loc>https://www.nurea.no/personvern</loc></url>
 </urlset>

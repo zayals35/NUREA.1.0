@@ -200,7 +200,18 @@ const INTERVAL = 4200;
 export function NureaLiveMark({ className = "", lang = "no" }: { className?: string; lang?: "no" | "en" }) {
   const [active, setActive] = useState(0);
   const [held, setHeld] = useState(false);
-  const [reduced] = useState(() => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  const [reduced, setReduced] = useState(() => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+  // Follows a reduced-motion change during the visit: the mark stops on the first style.
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const on = () => {
+      setReduced(mq.matches);
+      if (mq.matches) setActive(0);
+    };
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
 
   useEffect(() => {
     if (reduced || held) return;

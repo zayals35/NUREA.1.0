@@ -193,14 +193,6 @@ export default function Smoke({ className = "", amp = 1, colors = SMOKE_COLORS, 
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
 
-    if (prefersReducedMotion()) {
-      draw(20); // one calm static frame
-      return () => {
-        canvas.removeEventListener("webglcontextlost", onContextLost);
-        ro.disconnect();
-      };
-    }
-
     // Scroll reactivity: how far the section has moved past the viewport top,
     // in viewport heights, eased so a flick of the wheel stirs rather than jumps.
     let scrollTarget = 0;
@@ -214,6 +206,11 @@ export default function Smoke({ className = "", amp = 1, colors = SMOKE_COLORS, 
 
     let raf = 0;
     let running = false;
+    let visible = false;
+    // Reduced motion is read live: switching it on mid-session stops the loop
+    // and leaves one calm static frame; switching it off resumes.
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let reduced = prefersReducedMotion();
     const start = performance.now() - Math.random() * 60000;
     const loop = () => {
       scrollEased += (scrollTarget - scrollEased) * 0.08;
@@ -221,20 +218,36 @@ export default function Smoke({ className = "", amp = 1, colors = SMOKE_COLORS, 
       draw((performance.now() - start) / 1000);
       raf = requestAnimationFrame(loop);
     };
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting && !running) {
+    const sync = () => {
+      const shouldRun = visible && !reduced;
+      if (shouldRun && !running) {
         running = true;
         raf = requestAnimationFrame(loop);
-      } else if (!e.isIntersecting && running) {
+      } else if (!shouldRun && running) {
         running = false;
         cancelAnimationFrame(raf);
       }
+      if (reduced) {
+        gl.uniform1f(uScroll, 0);
+        draw(20); // one calm static frame
+      }
+    };
+    const onMotion = () => {
+      reduced = mq.matches;
+      sync();
+    };
+    mq.addEventListener("change", onMotion);
+    const io = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      sync();
     });
     io.observe(canvas);
+    if (reduced) draw(20);
 
     return () => {
       canvas.removeEventListener("webglcontextlost", onContextLost);
       window.removeEventListener("scroll", onScroll);
+      mq.removeEventListener("change", onMotion);
       io.disconnect();
       ro.disconnect();
       cancelAnimationFrame(raf);

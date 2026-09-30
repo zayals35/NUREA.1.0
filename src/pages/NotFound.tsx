@@ -1,7 +1,7 @@
-import { useEffect } from "react";
 import Button from "../components/Button";
 import { NureaLogo } from "../components/brand/NureaLogo";
 import { useLang, type Lang } from "../i18n";
+import { usePageMeta } from "../lib/pageMeta";
 
 const T: Record<Lang, { docTitle: string; title: string; body: string; home: string }> = {
   no: {
@@ -22,9 +22,7 @@ export default function NotFound() {
   const { lang, p } = useLang();
   const t = T[lang];
 
-  useEffect(() => {
-    document.title = t.docTitle;
-  }, [t.docTitle]);
+  usePageMeta(t.docTitle, t.body);
 
   return (
     <main className="grain relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-parchment px-6 text-center text-ink">

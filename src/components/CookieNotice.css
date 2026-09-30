@@ -1,0 +1,62 @@
+/* The cookie notice: bottom right on desktop (the dock is bottom left),
+   above the phone dock toggle on phones. Paper on ink, the cut corner, Nippo
+   controls; its own tokens so it reads the same on every frame of the site. */
+.ck {
+  --ck-paper: #f5f4f0;
+  --ck-ink: #201d1d;
+  --ck-blue: #2849a3;
+  position: fixed;
+  z-index: 130;
+  right: 16px;
+  bottom: 16px;
+  left: 16px;
+  max-width: 520px;
+  margin-left: auto;
+  padding: 22px 22px 20px;
+  background: var(--ck-ink);
+  color: var(--ck-paper);
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+  font: 500 15px/1.45 "Cabinet Grotesk", Arial, sans-serif;
+  display: grid;
+  gap: 12px;
+  animation: ck-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.ck * { box-sizing: border-box; }
+.ck p { margin: 0; }
+.ck-label { font: 500 12px/1.5 Nippo, sans-serif; letter-spacing: 0.06em; opacity: 0.85; }
+.ck-text { max-width: 52ch; }
+.ck-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 4px; }
+.ck-btn {
+  min-height: 48px;
+  padding: 0 18px;
+  background: var(--ck-paper);
+  color: var(--ck-ink);
+  border: 0;
+  cursor: pointer;
+  font: 500 14px/1 Nippo, sans-serif;
+  letter-spacing: 0.02em;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ck-btn:hover { transform: translateY(-2px); }
+.ck-btn:focus-visible { outline: 3px solid var(--ck-paper); outline-offset: 3px; clip-path: none; }
+.ck-more {
+  color: inherit;
+  text-decoration: none;
+  font: 500 13px/1 Nippo, sans-serif;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid currentColor;
+  padding: 2px 0;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.ck-more:focus-visible { outline: 3px solid var(--ck-paper); outline-offset: 3px; }
+@keyframes ck-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@media (max-width: 899px) {
+  .ck { bottom: 84px; max-width: none; padding: 18px 18px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ck { animation: none; }
+  .ck-btn { transition: none; }
+}

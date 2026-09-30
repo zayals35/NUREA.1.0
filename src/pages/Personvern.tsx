@@ -21,7 +21,11 @@ const SECTIONS = [
   },
   {
     h: "Tredjeparter",
-    p: "Skjemaene på siden sendes via Web3Forms, som formidler innholdet til vår e-post. Siden er driftet på Vercel. Begge behandler data i tråd med sine personvernerklæringer.",
+    p: "Skjemaene på siden sendes via Web3Forms, som formidler innholdet til vår e-post. Svar fra prosjektskjemaet lagres i tillegg som en fil i et privat GitHub-arkiv som bare Nurea har tilgang til. Siden er driftet på Vercel. Alle tre behandler data i tråd med sine personvernerklæringer.",
+  },
+  {
+    h: "Informasjonskapsler og lagring i nettleseren",
+    p: "Nettstedet setter ingen informasjonskapsler og bruker ingen analyseverktøy, annonsesporing eller innhold fra andre nettsteder som sporer deg. Skrifter og videoer lastes fra vår egen server. Nettleseren din lagrer bare det funksjonene du bruker trenger, og ingenting av det sendes til oss: «nurea-consent» husker at du har lukket meldingen om lagring, i opptil 180 dager. «nurea-sound» husker om du har slått lyd av eller på, og lagres bare hvis du bruker lydknappen. «nurea-skjema-v1» er et utkast av prosjektskjemaet mens du fyller det ut, og slettes når du sender det. «nurea-intro-seen» lagres bare for denne fanen, slik at en introanimasjon på enkelte eldre sider bare vises én gang. Du kan slette alt dette i nettleserens innstillinger.",
   },
   {
     h: "Dine rettigheter",

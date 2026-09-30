@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, type ReactNode } from "react";
 import { useLocation } from "react-router-dom";
+import { ARTICLES } from "../data/studioSite";
 
 export type Lang = "no" | "en";
 
@@ -13,7 +14,15 @@ const PATH_TO_EN: Record<string, string> = {
   "/priser": "/en/pricing",
   "/om-oss": "/en/about",
   "/kontakt": "/en/contact",
+  "/innsikt": "/en/insights",
 };
+
+/** Create is one English page; it has no Norwegian twin and reads as English. */
+const ENGLISH_ONLY = new Set(["/create"]);
+
+export function langOf(pathname: string): Lang {
+  return pathname === "/en" || pathname.startsWith("/en/") || ENGLISH_ONLY.has(pathname) ? "en" : "no";
+}
 
 const PATH_TO_NO: Record<string, string> = Object.fromEntries(
   Object.entries(PATH_TO_EN).map(([no, en]) => [en, no])
@@ -46,12 +55,18 @@ export function localizePath(noPath: string, lang: Lang): string {
     const en = SERVICE_SLUG_EN[detail[1]];
     if (en) return `/en/services/${en}`;
   }
+  const article = noPath.match(/^\/innsikt\/([^/]+)$/);
+  if (article) {
+    const hit = ARTICLES.find((a) => a.slug.no === article[1]);
+    if (hit) return `/en/insights/${hit.slug.en}`;
+  }
   return noPath;
 }
 
 /** The same page in the other language, for the NO/EN toggle and hreflang. */
 export function twinPath(pathname: string, to: Lang): string {
-  const from: Lang = pathname === "/en" || pathname.startsWith("/en/") ? "en" : "no";
+  if (ENGLISH_ONLY.has(pathname)) return pathname;
+  const from: Lang = langOf(pathname);
   if (from === to) return pathname;
   if (to === "en") return localizePath(pathname, "en");
   const direct = PATH_TO_NO[pathname];
@@ -61,11 +76,17 @@ export function twinPath(pathname: string, to: Lang): string {
     const id = SERVICE_ID_FROM_EN_SLUG[detail[1]];
     if (id) return `/tjenester/${id}`;
   }
+  const article = pathname.match(/^\/en\/insights\/([^/]+)$/);
+  if (article) {
+    const hit = ARTICLES.find((a) => a.slug.en === article[1]);
+    if (hit) return `/innsikt/${hit.slug.no}`;
+  }
   return "/";
 }
 
 /** True when this NO path has a real EN twin (drives hreflang and the toggle). */
 export function hasTwin(pathname: string): boolean {
+  if (ENGLISH_ONLY.has(pathname)) return false;
   return twinPath(pathname, "en") !== pathname || pathname === "/en" || pathname.startsWith("/en/");
 }
 
@@ -73,7 +94,7 @@ const LangContext = createContext<Lang>("no");
 
 export function LangProvider({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
-  const lang: Lang = pathname === "/en" || pathname.startsWith("/en/") ? "en" : "no";
+  const lang: Lang = langOf(pathname);
 
   // The document follows the page language; hreflang pairs let search engines
   // serve each visitor the right one.

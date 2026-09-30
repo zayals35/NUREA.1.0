@@ -158,12 +158,15 @@ export default function Skjema() {
   const saveTimer = useRef<number>(undefined);
   const inFlight = useRef(false);
 
-  // Autosave: everything typed lands in localStorage, debounced.
+  // Autosave: everything typed lands in localStorage, debounced. An untouched
+  // (or emptied) form stores nothing, as the privacy page promises.
   useEffect(() => {
     window.clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ contact, answers, services, submissionId }));
+        const typed = Object.values(contact).some((v) => v.trim()) || Object.values(answers).some((v) => v.trim()) || services.length > 0;
+        if (!typed) localStorage.removeItem(STORAGE_KEY);
+        else localStorage.setItem(STORAGE_KEY, JSON.stringify({ contact, answers, services, submissionId }));
       } catch {
         /* storage full or blocked; the form still works */
       }
