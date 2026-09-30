@@ -38,10 +38,18 @@ export default function CookieNotice() {
 
   if (!open) return null;
 
+  // Phones show only the first sentence (the slim bar); the rest stays one
+  // tap away behind the "what is stored" link.
+  const cut = t.text.indexOf(". ") + 1;
+  const [lead, rest] = cut > 0 ? [t.text.slice(0, cut), t.text.slice(cut + 1)] : [t.text, ""];
+
   return (
     <section className="ck" role="region" aria-label={t.label} tabIndex={-1} ref={region}>
       <p className="ck-label">{t.label}</p>
-      <p className="ck-text">{t.text}</p>
+      <p className="ck-text">
+        {lead}
+        {rest && <span className="ck-rest"> {rest}</span>}
+      </p>
       <div className="ck-actions">
         <button
           type="button"

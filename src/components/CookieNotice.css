@@ -53,8 +53,22 @@
 }
 .ck-more:focus-visible { outline: 3px solid var(--ck-paper); outline-offset: 3px; }
 @keyframes ck-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+/* Phones: a slim bar above the dock toggle. One sentence, then "Lukk" and
+   the link on one row; the label and the second sentence step aside. */
 @media (max-width: 899px) {
-  .ck { bottom: 84px; max-width: none; padding: 18px 18px 16px; }
+  .ck {
+    bottom: 84px;
+    max-width: none;
+    padding: 12px 14px 8px 16px;
+    gap: 2px;
+    font-size: 14px;
+    line-height: 1.35;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+  }
+  .ck-label, .ck-rest { display: none; }
+  .ck-actions { flex-wrap: nowrap; justify-content: space-between; gap: 12px; margin-top: 0; }
+  .ck-btn { min-height: 44px; padding: 0 16px; }
+  .ck-more { font-size: 12px; border-bottom: 0; text-decoration: underline; text-underline-offset: 4px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .ck { animation: none; }
