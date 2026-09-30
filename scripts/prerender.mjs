@@ -132,7 +132,9 @@ async function capture(browser, route) {
     await page.waitForFunction(() => document.querySelector("h1, h2") !== null, {
       timeout: 15000,
     });
-    const html = await page.content();
+    // Vite's preloader writes absolute modulepreload hrefs against the capture
+    // server; strip the origin so the shipped page never points at localhost.
+    const html = (await page.content()).replaceAll(`http://127.0.0.1:${PORT}`, "");
     return { html, errors };
   } finally {
     await page.close();
