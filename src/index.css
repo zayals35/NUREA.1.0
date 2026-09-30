@@ -1,28 +1,47 @@
 @import "tailwindcss";
 
-/*
- * Locked NUREA brand system (nurea-brand-system.html):
- * greige & ink, one burnt-orange spark, three fonts with three jobs:
- * Quiche Display Bold Italic (signature), Forma DJR (body), Mono45 (labels).
- * Token names kept from v1 so utility classes stay stable:
- * espresso=ink, parchment=greige, cream=text-on-dark, gold=spark orange.
- */
-@theme {
-  --color-espresso: #1a1714;
-  --color-espresso-deep: #100e0b;
-  --color-parchment: #d9d1c2;
-  --color-parchment-alt: #e7e1d5;
-  --color-ink: #1a1714;
-  --color-stone: #8a8170;
-  --color-cream: #d9d1c2;
-  --color-accent: #c2511f;
-  --color-gold: #e8671c;
-  --color-gold-soft: #f3d9c5;
+/* Approved NUREA identity, 2026-09-11. Token names stay stable for the existing layouts. */
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url("/fonts/CabinetGrotesk-Variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
 
-  --font-display: "Syne Variable", "Syne", system-ui, sans-serif;
-  --font-body: "forma-djr-text", "Inter", system-ui, sans-serif;
-  --font-display-sans: "forma-djr-display", "forma-djr-text", "Inter", system-ui, sans-serif;
-  --font-mono: "mono45-headline", "Courier New", monospace;
+@font-face {
+  font-family: "Chillax";
+  src: url("/fonts/Chillax-Variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nippo";
+  src: url("/fonts/Nippo-Variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@theme {
+  --color-espresso: #201d1d;
+  --color-espresso-deep: #171515;
+  --color-parchment: #f5f4f0;
+  --color-parchment-alt: #e8e6df;
+  --color-ink: #201d1d;
+  --color-stone: #aaa5a0;
+  --color-cream: #f5f4f0;
+  --color-accent: #8c0608;
+  --color-gold: #d8cf55;
+  --color-gold-soft: #ebdcd9;
+
+  --font-display: "Cabinet Grotesk", sans-serif;
+  --font-body: "Cabinet Grotesk", sans-serif;
+  --font-display-sans: "Cabinet Grotesk", sans-serif;
+  --font-mono: "Nippo", monospace;
+  --font-signature: "Chillax", sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -37,8 +56,8 @@ html {
 
 body {
   font-family: var(--font-body);
-  background: var(--color-espresso);
-  color: var(--color-cream);
+  background: var(--color-parchment);
+  color: var(--color-ink);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -46,30 +65,28 @@ body {
 
 ::selection {
   background: var(--color-accent);
-  color: #f6efe2;
+  color: var(--color-cream);
 }
 
 /* ---------- typography roles ---------- */
 
-/* Headline voice: Syne, the signature by her round-2 vote (2026-08-06).
-   Weight 600 for presence; the wordmark rides the same class. */
+/* Display voice: Cabinet Grotesk 700. */
 .display {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 700;
   font-style: normal;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.04em;
   line-height: 1.06;
 }
 
-/* Section subheads: Forma DJR Display. The working headings; the serif stays a signature. */
+/* Supporting display voice: Cabinet Grotesk 700. */
 .display-sans {
   font-family: var(--font-display-sans);
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  letter-spacing: -0.04em;
   line-height: 1.08;
 }
 
-/* Labels: Mono45 Headline */
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -129,7 +146,7 @@ body {
   height: 55vw;
   left: -12%;
   top: -18%;
-  background: radial-gradient(circle, rgba(138, 129, 112, 0.34), transparent 65%);
+  background: radial-gradient(circle, rgba(245, 244, 240, 0.18), transparent 65%);
   animation: drift-a 26s ease-in-out infinite alternate;
 }
 
@@ -138,7 +155,7 @@ body {
   height: 44vw;
   right: -10%;
   top: 12%;
-  background: radial-gradient(circle, rgba(232, 103, 28, 0.1), transparent 65%);
+  background: radial-gradient(circle, rgba(140, 6, 8, 0.16), transparent 65%);
   animation: drift-b 32s ease-in-out infinite alternate;
 }
 
@@ -147,7 +164,7 @@ body {
   height: 60vw;
   left: 18%;
   bottom: -35%;
-  background: radial-gradient(circle, rgba(90, 82, 70, 0.55), transparent 68%);
+  background: radial-gradient(circle, rgba(23, 21, 21, 0.55), transparent 68%);
   animation: drift-c 38s ease-in-out infinite alternate;
 }
 
@@ -157,11 +174,11 @@ body {
 }
 
 .ambient-light span:nth-child(2) {
-  background: radial-gradient(circle, rgba(194, 81, 31, 0.09), transparent 65%);
+  background: radial-gradient(circle, rgba(140, 6, 8, 0.09), transparent 65%);
 }
 
 .ambient-light span:nth-child(3) {
-  background: radial-gradient(circle, rgba(138, 129, 112, 0.28), transparent 68%);
+  background: radial-gradient(circle, rgba(32, 29, 29, 0.18), transparent 68%);
 }
 
 @keyframes drift-a {
@@ -238,7 +255,7 @@ body {
   .cursor-ring {
     width: 34px;
     height: 34px;
-    border: 1px solid rgba(217, 209, 194, 0.55);
+    border: 1px solid rgba(245, 244, 240, 0.55);
     mix-blend-mode: difference;
     transition: width 0.25s var(--ease-out-expo), height 0.25s var(--ease-out-expo),
       opacity 0.25s;
@@ -252,7 +269,7 @@ body {
 /* ---------- word reveal ---------- */
 
 .word-reveal .w {
-  color: rgba(217, 209, 194, 0.22);
+  color: rgba(245, 244, 240, 0.22);
   transition: none;
 }
 
@@ -260,7 +277,6 @@ body {
 
 .media-frame {
   overflow: hidden;
-  border-radius: 1rem;
 }
 
 .media-frame img {
@@ -290,4 +306,113 @@ body {
     scroll-behavior: auto !important;
   }
   .grain::after { animation: none; }
+  .belt-track { animation: none; transform: none; }
+}
+
+/* Small body copy on paper uses the approved AA-safe stone value. */
+.bg-parchment [class~="text-ink/40"],
+.bg-parchment [class~="text-ink/45"],
+.bg-parchment [class~="text-ink/50"],
+.bg-parchment [class~="text-ink/55"],
+.bg-parchment [class~="text-ink/60"],
+.bg-parchment [class~="text-ink/65"],
+.bg-parchment [class~="text-ink/70"],
+.bg-parchment [class~="text-ink/75"] {
+  color: #66615c;
+}
+
+/* ---------- poster identity, 2026-09-17 ---------- */
+
+/* Poster voice: Cabinet Grotesk 700, tight, set to fill the width. */
+.poster {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+}
+
+/* The human voice: Chillax 500. */
+.voice {
+  font-family: var(--font-signature);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+/* Hard entrance for poster lines: the wrapper clips, the line rises. */
+.rise-clip {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.rise-clip > span {
+  display: block;
+  transform: translateY(110%);
+  animation: rise-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--d, 0s);
+  will-change: transform;
+}
+@keyframes rise-in {
+  to { transform: translateY(0); }
+}
+.fade-late {
+  opacity: 0;
+  animation: fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--d, 0s);
+  will-change: transform, opacity;
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+.rule-draw {
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: rule-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--d, 0s);
+  will-change: transform;
+}
+@keyframes rule-in {
+  to { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise-clip > span, .fade-late, .rule-draw { animation: none; transform: none; opacity: 1; }
+}
+
+/* ---------- routes r2, 2026-09-25 ---------- */
+
+/* Body copy on paper and ink: her 2026-09-25 note, full ink at 400 still
+   read as grey, so reading copy carries weight and size. Colour is set by
+   the caller (text-ink on paper, text-parchment on ink). */
+.copy {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+}
+@media (min-width: 768px) {
+  .copy { font-size: 19px; }
+}
+
+/* The hero's citron stroke carried inward: one word per page, ink fill on
+   top, half the stroke outside the glyph. */
+.stroke-citron {
+  -webkit-text-stroke: 0.07em var(--color-gold);
+  paint-order: stroke fill;
+}
+
+/* The Create posters drifting on the offer stage. */
+@keyframes poster-drift {
+  0% { transform: translateY(0) rotate(var(--r, 0deg)); }
+  100% { transform: translateY(-3%) rotate(calc(var(--r, 0deg) + 1.5deg)); }
+}
+.poster-drift {
+  animation: poster-drift 7s ease-in-out infinite alternate;
+  animation-delay: var(--d, 0s);
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .poster-drift { animation: none; }
 }

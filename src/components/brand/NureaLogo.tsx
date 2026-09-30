@@ -1,0 +1,75 @@
+import type { SVGProps } from "react";
+
+export const SYMBOL_PATH =
+  "M 1.000 0.000 C 22.186 0.000 43.264 -0.214 64.300 2.700 C 136.469 12.697 220.767 54.882 242.732 130.268 C 254.202 169.637 250.000 212.477 250.000 253.000 C 250.000 292.967 254.653 329.987 285.674 358.326 C 291.690 363.821 297.649 369.140 304.722 373.278 C 315.064 379.330 327.050 382.605 337.000 385.000 C 340.093 332.425 337.000 275.977 337.000 222.000 C 337.000 185.572 331.130 132.752 377.728 122.728 C 387.532 120.619 397.191 120.949 406.000 121.000 C 409.186 175.156 407.000 233.413 407.000 289.000 C 407.000 344.587 409.186 402.844 406.000 457.000 C 375.197 458.803 342.313 458.389 311.599 449.401 C 252.085 431.986 198.051 383.311 183.308 321.692 C 174.860 286.386 177.604 248.132 178.073 212.118 C 178.337 191.874 180.120 169.902 173.561 150.439 C 164.027 122.150 140.237 100.987 114.246 87.754 C 100.339 80.673 86.333 76.693 72.000 74.000 C 72.000 131.000 72.000 188.000 72.000 245.000 C 72.000 283.124 79.948 340.212 30.102 350.102 C 20.066 352.093 10.890 351.401 1.000 351.000 C -2.322 294.529 0.000 233.906 0.000 176.000 C 0.000 117.762 -2.341 56.802 1.000 0.000 Z";
+
+export function NureaSymbol({ className = "", ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      className={className}
+      viewBox="0 0 512 512"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden={props["aria-label"] ? undefined : true}
+    >
+      <g fill="currentColor" transform="translate(96.04 76) scale(0.7860262008733624)">
+        <path d={SYMBOL_PATH} />
+      </g>
+    </svg>
+  );
+}
+
+export function NureaWordmark({ className = "", ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      className={className}
+      viewBox="48 42 800 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden={props["aria-label"] ? undefined : true}
+    >
+      <text
+        x="48"
+        y="342"
+        fill="currentColor"
+        fontFamily="Chillax, sans-serif"
+        fontSize="300"
+        fontWeight="500"
+        letterSpacing="-9"
+      >
+        nurea
+      </text>
+    </svg>
+  );
+}
+
+export function NureaLogo({ className = "", ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      className={className}
+      viewBox="0 0 780 324"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label={props["aria-label"] ?? "Nurea"}
+    >
+      <g transform="translate(24 36) scale(0.48)">
+        <path fill="currentColor" d={SYMBOL_PATH} />
+      </g>
+      <text
+        x="224"
+        y="244"
+        fill="currentColor"
+        fontFamily="Chillax, sans-serif"
+        fontSize="190"
+        fontWeight="500"
+        letterSpacing="-6"
+      >
+        nurea
+      </text>
+    </svg>
+  );
+}

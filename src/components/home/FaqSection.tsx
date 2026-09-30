@@ -60,11 +60,11 @@ export function FaqList({ items, dark = false }: { items: FaqItem[]; dark?: bool
 export default function FaqSection() {
   const { lang } = useLang();
   return (
-    <section className="grain relative overflow-hidden bg-parchment-alt text-ink">
+    <section className="relative overflow-hidden bg-parchment text-ink">
       <div className="relative z-[2] mx-auto max-w-[1440px] px-6 py-24 md:px-10 md:py-40">
         <div className="grid gap-12 md:grid-cols-[1fr_2fr] md:gap-20">
           <Reveal>
-            <p className="eyebrow text-ink/70">FAQ</p>
+            <p className="eyebrow text-accent">FAQ</p>
             <h2 className="display mt-6 text-4xl md:text-5xl">
               {T[lang].heading}
             </h2>

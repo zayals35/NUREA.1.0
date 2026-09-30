@@ -8,21 +8,27 @@ interface Props {
   href?: string;
   onClick?: (e: MouseEvent) => void;
   children: ReactNode;
-  variant?: "primary" | "ghost" | "ghost-dark";
+  variant?: "primary" | "ghost" | "ghost-dark" | "paper" | "link";
   type?: "button" | "submit";
   className?: string;
 }
 
+/**
+ * Buttons are pills set in Nippo, sentence case (r4, her 2026-09-23 revise:
+ * no rectangles, no tracked small caps). `link` is the quiet second action:
+ * bare text with an underline that draws on hover, no box at all.
+ */
 const BASE =
-  "mono inline-flex items-center justify-center gap-3 px-7 py-4 text-xs tracking-[0.14em] transition-[transform,box-shadow,background-color,color] duration-200 will-change-transform";
+  "font-mono inline-flex items-center justify-center gap-2 text-[15px] font-medium tracking-[0.01em] transition-[transform,box-shadow,background-color,color,border-color] duration-200 will-change-transform";
+
+const PILL = "rounded-full px-7 py-3.5";
 
 const VARIANTS = {
-  primary:
-    "bg-accent text-[#f6efe2] hover:bg-gold shadow-[0_1px_0_rgba(255,255,255,0.12)_inset] hover:shadow-[0_10px_36px_rgba(194,81,31,0.35)]",
-  ghost:
-    "border border-cream/25 text-cream hover:border-cream/60 hover:bg-cream/5",
-  "ghost-dark":
-    "border border-ink/25 text-ink hover:border-ink/60 hover:bg-ink/5",
+  primary: `${PILL} bg-accent text-parchment hover:bg-ink`,
+  ghost: `${PILL} border border-cream/30 text-cream hover:border-cream/70 hover:bg-cream/10`,
+  "ghost-dark": `${PILL} border border-ink/30 text-ink hover:border-ink hover:bg-ink/5`,
+  paper: `${PILL} bg-parchment text-accent hover:bg-ink hover:text-parchment`,
+  link: "link-line py-2 text-ink",
 };
 
 export default function Button({

@@ -2,6 +2,7 @@ import type { FormEvent } from "react";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import Button from "../components/Button";
+import { FIELD, THANKS_BOX } from "../components/field";
 import { useWebForm, mailtoFallback, LEAD_EMAIL } from "../lib/useWebForm";
 import { useLang, type Lang } from "../i18n";
 
@@ -72,9 +73,6 @@ const T: Record<Lang, {
   },
 };
 
-const FIELD =
-  "w-full rounded-none border border-ink/15 bg-white/50 px-5 py-4 text-base text-ink placeholder:text-ink/35 outline-none transition-[border-color,box-shadow] focus:border-accent focus:shadow-[0_0_0_3px_rgba(194,81,31,0.15)]";
-
 export default function Kontakt() {
   const { lang } = useLang();
   const t = T[lang];
@@ -101,21 +99,21 @@ export default function Kontakt() {
       />
 
       <section className="bg-parchment text-ink">
-        <div className="mx-auto grid max-w-[1440px] gap-16 px-6 py-20 md:grid-cols-[1fr_1.2fr] md:gap-24 md:px-10 md:py-32">
+        <div className="mx-auto grid max-w-[1440px] gap-16 px-5 pb-20 pt-4 md:grid-cols-[1fr_1.2fr] md:gap-24 md:px-10 md:pb-32 md:pt-8">
           <Reveal>
             <p className="eyebrow text-accent">{t.direct}</p>
             <a href={`mailto:${LEAD_EMAIL}`} className="link-line display-sans mt-6 inline-block text-3xl md:text-4xl">
               {LEAD_EMAIL}
             </a>
-            <p className="mt-8 max-w-[44ch] text-sm leading-relaxed text-ink/55 md:text-base">
+            <p className="mt-8 max-w-[44ch] text-sm leading-relaxed text-ink/70 md:text-base">
               {t.about}
             </p>
-            <p className="mt-6 text-sm text-ink/55">
+            <p className="mt-6 text-sm text-ink/70">
               <a
                 href="https://www.instagram.com/nurea.no"
                 target="_blank"
                 rel="noreferrer"
-                className="link-line font-semibold"
+                className="link-line font-semibold text-accent"
               >
                 Instagram
               </a>
@@ -124,9 +122,9 @@ export default function Kontakt() {
 
           <Reveal delay={0.1}>
             {status === "ok" ? (
-              <div className="rounded-2xl border border-accent/25 bg-white/40 p-10 text-center md:p-16">
-                <p className="display-sans text-5xl md:text-6xl">{t.thanks}</p>
-                <p className="mx-auto mt-6 max-w-[40ch] text-base leading-relaxed text-ink/65">
+              <div className={THANKS_BOX}>
+                <p className="poster text-5xl md:text-6xl">{t.thanks}</p>
+                <p className="voice mx-auto mt-6 max-w-[30ch] text-xl text-ink md:text-2xl">
                   {t.thanksBody}
                 </p>
               </div>
@@ -165,7 +163,7 @@ export default function Kontakt() {
                   />
                 </div>
                 <div className="mt-2">
-                  <Button type="submit" className="w-full py-5 text-base sm:w-auto sm:px-12">
+                  <Button type="submit" className="w-full sm:w-auto">
                     {status === "sending" ? t.sending : t.send}
                   </Button>
                 </div>

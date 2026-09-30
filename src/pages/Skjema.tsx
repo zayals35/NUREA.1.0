@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import Button from "../components/Button";
+import { FIELD, THANKS_BOX } from "../components/field";
 import { mailtoFallback, type FormStatus } from "../lib/useWebForm";
 import { deliverSubmission, newSubmissionId } from "../lib/submitSkjema";
 import { SKJEMA, REQUIRED_IDS, type SkjemaSection } from "../data/skjema";
@@ -10,9 +11,6 @@ import { SERVICES, type ServiceId } from "../data/services";
 import { sound } from "../lib/sound";
 
 const STORAGE_KEY = "nurea-skjema-v1";
-
-const FIELD =
-  "w-full rounded-none border border-ink/15 bg-white/50 px-5 py-4 text-base text-ink placeholder:text-ink/35 outline-none transition-[border-color,box-shadow] focus:border-accent focus:shadow-[0_0_0_3px_rgba(194,81,31,0.15)]";
 
 interface Contact {
   bedrift: string;
@@ -78,7 +76,7 @@ function AccordionSection({
   const total = section.questions.length;
 
   return (
-    <div className="border-b border-ink/10">
+    <div className="border-b border-ink/20">
       <button
         type="button"
         onClick={onToggle}
@@ -86,7 +84,7 @@ function AccordionSection({
         aria-controls={`panel-${section.id}`}
         className="group flex w-full items-baseline gap-4 py-6 text-left md:gap-6"
       >
-        <span className="text-xs font-semibold text-accent">
+        <span className="poster text-lg text-accent">
           {String(index + 1).padStart(2, "0")}
         </span>
         <span className="display-sans flex-1 text-xl transition-colors group-hover:text-accent md:text-2xl">
@@ -94,7 +92,7 @@ function AccordionSection({
         </span>
         <span
           className={`mono hidden text-[11px] tracking-[0.14em] sm:inline ${
-            done === total ? "text-accent" : "text-ink/40"
+            done === total ? "text-accent" : "text-ink/60"
           }`}
         >
           {done} av {total}
@@ -160,12 +158,15 @@ export default function Skjema() {
   const saveTimer = useRef<number>(undefined);
   const inFlight = useRef(false);
 
-  // Autosave: everything typed lands in localStorage, debounced.
+  // Autosave: everything typed lands in localStorage, debounced. An untouched
+  // (or emptied) form stores nothing, as the privacy page promises.
   useEffect(() => {
     window.clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ contact, answers, services, submissionId }));
+        const typed = Object.values(contact).some((v) => v.trim()) || Object.values(answers).some((v) => v.trim()) || services.length > 0;
+        if (!typed) localStorage.removeItem(STORAGE_KEY);
+        else localStorage.setItem(STORAGE_KEY, JSON.stringify({ contact, answers, services, submissionId }));
       } catch {
         /* storage full or blocked; the form still works */
       }
@@ -280,12 +281,12 @@ export default function Skjema() {
       />
 
       <section className="bg-parchment text-ink">
-        <div className="mx-auto max-w-[880px] px-6 py-20 md:px-10 md:py-28">
+        <div className="mx-auto max-w-[880px] px-5 pb-20 pt-4 md:px-10 md:pb-28 md:pt-8">
           {status === "ok" ? (
             <Reveal>
-              <div className="rounded-2xl border border-accent/25 bg-white/40 p-10 text-center md:p-16">
-                <p className="display-sans text-5xl md:text-6xl">Takk.</p>
-                <p className="mx-auto mt-6 max-w-[44ch] text-base leading-relaxed text-ink/65">
+              <div className={THANKS_BOX}>
+                <p className="poster text-5xl md:text-6xl">Takk.</p>
+                <p className="voice mx-auto mt-6 max-w-[34ch] text-xl text-ink md:text-2xl">
                   Vi har mottatt svarene dine. Zaynab leser dem før oppstartsmøtet,
                   så bruker vi tiden der på det som faktisk betyr noe. Du hører fra oss.
                 </p>
@@ -305,7 +306,7 @@ export default function Skjema() {
                 className="absolute -left-[9999px] h-0 w-0 opacity-0"
               />
               <Reveal>
-                <p className="max-w-[52ch] text-sm leading-relaxed text-ink/55">
+                <p className="max-w-[52ch] text-sm leading-relaxed text-ink/70">
                   Ta det i ditt eget tempo. Svarene lagres automatisk i nettleseren
                   din, så du kan lukke siden og komme tilbake senere. Bare feltene
                   merket med <span className="font-semibold text-accent">*</span> må
@@ -315,7 +316,7 @@ export default function Skjema() {
                 <div className="mt-12">
                   <p className="text-sm font-semibold">
                     Hva gjelder det?{" "}
-                    <span className="font-normal text-ink/45">
+                    <span className="font-normal text-ink/60">
                       Velg gjerne flere. Skjemaet viser bare det som er relevant.
                     </span>
                   </p>
@@ -330,19 +331,12 @@ export default function Skjema() {
                           onClick={() => toggleService(s.id)}
                           className={`rounded-none border px-5 py-4 text-left transition-colors ${
                             on
-                              ? "border-accent bg-white/50"
-                              : "border-ink/15 bg-white/20 hover:border-ink/40"
+                              ? "border-accent bg-white/40"
+                              : "border-ink/20 bg-white/20 hover:border-ink"
                           }`}
                         >
-                          <span
-                            className={`text-xs font-semibold ${
-                              on ? "text-accent" : "text-ink/40"
-                            }`}
-                          >
-                            {s.index}
-                          </span>
-                          <span className="display-sans mt-1 block text-lg">{s.title}</span>
-                          <span className="mt-1 block text-xs leading-relaxed text-ink/50">
+                          <span className="display-sans block text-lg">{s.title}</span>
+                          <span className={`mt-1 block text-xs leading-relaxed ${on ? "text-accent" : "text-ink/60"}`}>
                             {s.description}
                           </span>
                         </button>
@@ -405,7 +399,7 @@ export default function Skjema() {
               </Reveal>
 
               <Reveal>
-                <div className="mt-16 border-t border-ink/10">
+                <div className="mt-16 border-t-2 border-ink">
                   {visible.map((section, i) => (
                     <AccordionSection
                       key={section.id}
@@ -422,11 +416,11 @@ export default function Skjema() {
               </Reveal>
 
               <div className="mt-14">
-                <p className="mono text-xs tracking-[0.14em] text-ink/45">
+                <p className="mono text-xs tracking-[0.14em] text-ink/60">
                   {answered} av {visibleQuestions.length} besvart
                 </p>
                 <div className="mt-6">
-                  <Button type="submit" className="w-full py-5 text-base sm:w-auto sm:px-12">
+                  <Button type="submit" className="w-full sm:w-auto">
                     {status === "sending" ? "Sender…" : "Send inn svarene"}
                   </Button>
                 </div>
@@ -435,10 +429,10 @@ export default function Skjema() {
                     Noen av feltene merket med * mangler svar. Vi har åpnet dem for deg.
                   </p>
                 )}
-                <p className="mt-6 max-w-[52ch] text-sm leading-relaxed text-ink/55">
+                <p className="mt-6 max-w-[52ch] text-sm leading-relaxed text-ink/70">
                   Svarene behandles konfidensielt og brukes bare i prosjektet vårt
                   sammen. Les mer i{" "}
-                  <Link to="/personvern" className="link-line font-semibold">
+                  <Link to="/personvern" className="link-line font-semibold text-accent">
                     personvernerklæringen
                   </Link>
                   .

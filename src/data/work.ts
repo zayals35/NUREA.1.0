@@ -12,8 +12,12 @@ export interface WorkItem {
   art: string;
   /** Real brand shots for the detail presentation. */
   shots: string[];
+  /** Reserved for approved motion clips. */
+  clips?: string[];
+  year?: number;
   href?: string;
   instagram?: string;
+  status?: string;
   /** Locked until the delivered work is actually live; hidden everywhere. */
   hidden?: boolean;
 }
@@ -35,13 +39,25 @@ const WORK_NO: WorkItem[] = [
     id: "bilmekka",
     title: "Bilforhandler",
     company: "Bilmekka",
-    caption:
-      "Bilmekka trengte et digitalt uttrykk som føltes like ryddig og tillitsvekkende som en god bilhandel skal være. NUREA utviklet logo, nettside, e-poststruktur og systemer som gir bedriften en mer profesjonell og samlet tilstedeværelse.",
+    caption: "NUREA leverte logo, nettside, e-poststruktur og systemer for Bilmekka.",
     tags: ["Merkevare", "Nettside"],
     metricLabel: "Logo · Nettside · E-post · Systemer",
     art: "/work/art-bilmekka.webp",
     shots: ["/work/bilmekka/shot-1.webp", "/work/bilmekka/shot-2.webp", "/work/bilmekka/shot-3.webp"],
     href: "https://www.bilmekka.no",
+  },
+  {
+    id: "gizay",
+    title: "Landing page",
+    company: "GIZAY",
+    caption: "Landing page, merkevare og web levert for GIZAY. Siden er live på gizay.no.",
+    tags: ["Merkevare", "Web"],
+    metricLabel: "Merkevare · Web · Landing page",
+    art: "/work/gizay/01-hero-arrival-poster.webp",
+    shots: [],
+    clips: [],
+    year: 2026,
+    href: "https://gizay.no",
   },
   {
     id: "moremarin",
@@ -70,12 +86,12 @@ const WORK_NO: WorkItem[] = [
     id: "moustache-city",
     title: "Fotograf",
     company: "Moustache City",
-    caption:
-      "Logo og nettside for en fotograf i Trondheim. Visuell identitet og en side bygget for å la bildene snakke.",
+    caption: "Logo og nettside for en fotograf i Trondheim. Arbeidet er ikke publisert.",
     tags: ["Merkevare", "Nettside"],
     metricLabel: "Logo · Nettside · Identitet",
     art: "/work/art-moustach.webp",
     shots: [],
+    status: "Under arbeid, ikke publisert",
   },
 ];
 
@@ -96,13 +112,25 @@ const WORK_EN: WorkItem[] = [
     id: "bilmekka",
     title: "Car dealership",
     company: "Bilmekka",
-    caption:
-      "Bilmekka needed a digital expression that felt as tidy and trustworthy as a good car dealership should be. NUREA developed the logo, website, email structure and systems that give the business a more professional and unified presence.",
+    caption: "NUREA delivered the logo, website, email structure and systems for Bilmekka.",
     tags: ["Brand", "Website"],
     metricLabel: "Logo · Website · Email · Systems",
     art: "/work/art-bilmekka.webp",
     shots: ["/work/bilmekka/shot-1.webp", "/work/bilmekka/shot-2.webp", "/work/bilmekka/shot-3.webp"],
     href: "https://www.bilmekka.no",
+  },
+  {
+    id: "gizay",
+    title: "Landing page",
+    company: "GIZAY",
+    caption: "Landing page, brand and web delivered for GIZAY. The site is live at gizay.no.",
+    tags: ["Brand", "Web"],
+    metricLabel: "Brand · Web · Landing page",
+    art: "/work/gizay/01-hero-arrival-poster.webp",
+    shots: [],
+    clips: [],
+    year: 2026,
+    href: "https://gizay.no",
   },
   {
     id: "moremarin",
@@ -131,12 +159,12 @@ const WORK_EN: WorkItem[] = [
     id: "moustache-city",
     title: "Photographer",
     company: "Moustache City",
-    caption:
-      "Logo and website for a photographer in Trondheim, Norway. Visual identity and a site built to let the photos speak.",
+    caption: "Logo and website for a photographer in Trondheim, Norway. The work is not published.",
     tags: ["Brand", "Website"],
     metricLabel: "Logo · Website · Identity",
     art: "/work/art-moustach.webp",
     shots: [],
+    status: "In progress, not published",
   },
 ];
 

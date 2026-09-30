@@ -1,102 +1,64 @@
-import { Link } from "react-router-dom";
-import PageHeader from "../components/PageHeader";
-import Reveal from "../components/Reveal";
-import Button from "../components/Button";
-import { SERVICES } from "../data/services";
-import { sound } from "../lib/sound";
-import { useLang, type Lang } from "../i18n";
+import { useRef } from "react";
+import { useLang } from "../i18n";
+import { usePageMeta } from "../lib/pageMeta";
+import { STUDIO } from "../data/studioSite";
+import ServiceSelectors from "../components/studio/ServiceSelectors";
+import { CutLink, LogoBelt, TextLink } from "../components/studio/parts";
+import { useReveal } from "../components/studio/useReveal";
 
-const T: Record<Lang, {
-  docTitle: string;
-  eyebrow: string;
-  title: string;
-  intro: string;
-  readMore: (title: string) => string;
-  unsure: string;
-  cta: string;
-}> = {
-  no: {
-    docTitle: "Tjenester",
-    eyebrow: "Tjenester",
-    title: "Fem deler, én retning.",
-    intro:
-      "Ikke løse produkter du kjøper, men ett system som gjør uklar digital tilstedeværelse om til klarhet, tillit og henvendelser.",
-    readMore: (title) => `Les mer om ${title.toLowerCase()}`,
-    unsure: "Usikker på hvor du bør starte? Start med klarhet.",
-    cta: "Få din klarhetssjekk",
-  },
-  en: {
-    docTitle: "Services",
-    eyebrow: "Services",
-    title: "Five parts, one direction.",
-    intro:
-      "Not loose products you buy, but one system that turns an unclear digital presence into clarity, trust and inquiries.",
-    readMore: (title) => `Read more about ${title.toLowerCase()}`,
-    unsure: "Not sure where to start? Start with clarity.",
-    cta: "Get your clarity check",
-  },
-};
-
+/**
+ * Services: a large introduction, the three selectors opening their scenes,
+ * how the collaboration works, the belt. No prices.
+ */
 export default function Tjenester() {
   const { lang, p } = useLang();
-  const t = T[lang];
+  const t = STUDIO[lang];
+  const s = t.services;
+  usePageMeta(t.meta.services.title, t.meta.services.description);
+  const main = useRef<HTMLElement>(null);
+  useReveal(main, [lang]);
 
   return (
-    <main>
-      <PageHeader
-        docTitle={t.docTitle}
-        eyebrow={t.eyebrow}
-        title={t.title}
-        intro={t.intro}
-      />
-
-      <section className="bg-parchment text-ink">
-        <div className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-32">
-          <div className="grid gap-y-4">
-            {SERVICES[lang].map((s, i) => (
-              <Reveal key={s.id} delay={i * 0.04}>
-                <Link
-                  to={p(`/tjenester/${s.id}`)}
-                  onClick={() => sound.play("click")}
-                  className="group block border-b border-ink/10 py-10 md:py-14"
-                >
-                  <div className="flex flex-wrap items-baseline justify-between gap-4">
-                    <div className="flex items-baseline gap-6">
-                      <span className="text-sm font-semibold text-accent">{s.index}</span>
-                      <h2 className="display-sans text-4xl transition-transform duration-400 ease-out group-hover:translate-x-2 md:text-6xl">
-                        {s.title}
-                      </h2>
-                    </div>
-                    <span className="eyebrow text-ink/40">{s.role}</span>
-                  </div>
-                  <div className="mt-6 grid gap-6 md:grid-cols-2 md:gap-16 md:pl-[calc(1.5rem+24px)]">
-                    <p className="display-sans text-xl leading-snug text-ink/80 md:text-2xl">
-                      {s.statement}
-                    </p>
-                    <div>
-                      <p className="max-w-[52ch] text-sm leading-relaxed text-ink/60 md:text-base">
-                        {s.description} {s.positionBody}
-                      </p>
-                      <span className="link-line mt-4 inline-block text-sm font-semibold text-accent">
-                        {t.readMore(s.title)}
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal className="mt-20 text-center">
-            <p className="display-sans mx-auto max-w-2xl text-2xl text-ink/70 md:text-3xl">
-              {t.unsure}
-            </p>
-            <div className="mt-8">
-              <Button to={p("/klarhetssjekk")}>{t.cta}</Button>
-            </div>
-          </Reveal>
+    <main id="main" tabIndex={-1} ref={main}>
+      <section className="st-intro">
+        <h1>
+          {s.h1a}
+          <br />
+          {s.h1b}
+          <span className="st-accent">{s.h1accent}</span>
+        </h1>
+        <div className="st-intro-aside">
+          <p className="st-label">{t.shell.nav[1].label}</p>
+          <p className="st-lead">{s.lead}</p>
+          <p>{s.intro}</p>
+          <CutLink to={p("/kontakt")}>{t.shell.contact}</CutLink>
         </div>
       </section>
+
+      <section className="st-section st-soft" style={{ paddingTop: "clamp(40px, 5vw, 72px)" }} aria-label={t.shell.nav[1].label}>
+        <ServiceSelectors />
+      </section>
+
+      <section className="st-section" aria-labelledby="working-h">
+        <div className="st-working">
+          <h2 id="working-h" data-rv>
+            {s.workingH}
+          </h2>
+          <div data-rv>
+            {s.working.map((w, i) => (
+              <details key={w.q} open={i === 0}>
+                <summary>{w.q}</summary>
+                <p>{w.a}</p>
+              </details>
+            ))}
+            <div style={{ marginTop: 28 }}>
+              <TextLink to={p("/arbeider")}>{t.studio.workLink}</TextLink>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <LogoBelt />
     </main>
   );
 }

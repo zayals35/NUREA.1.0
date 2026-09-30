@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { prefersReducedMotion } from "../lib/motion";
+import { NureaWordmark } from "./brand/NureaLogo";
 
 const KEY = "nurea-intro-seen";
 
@@ -34,18 +35,17 @@ export default function Intro() {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-espresso-deep transition-transform duration-[900ms] will-change-transform"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-accent transition-transform duration-[900ms] will-change-transform"
       style={{
         transform: phase === "leaving" ? "translateY(-100%)" : "translateY(0)",
         transitionTimingFunction: "cubic-bezier(0.76, 0, 0.24, 1)",
       }}
     >
-      <span
-        className="display text-3xl text-cream/90"
+      <NureaWordmark
+        className="h-10 w-auto text-parchment"
         style={{ animation: "fade-up-in 0.7s cubic-bezier(0.16,1,0.3,1) 0.1s both" }}
-      >
-        Nurea
-      </span>
+        aria-label="Nurea"
+      />
       <style>{`@keyframes fade-up-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }`}</style>
     </div>
   );
