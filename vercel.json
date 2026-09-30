@@ -1,5 +1,6 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
+  "installCommand": "dnf install -y --setopt=strict=False nss nspr atk at-spi2-atk cups-libs libdrm libxkbcommon libXcomposite libXdamage libXfixes libXrandr libXext libX11 libxcb mesa-libgbm pango alsa-lib >/dev/null && npm install",
+  "rewrites":[{ "source": "/(.*)", "destination": "/index.html" }],
   "headers": [
     {
       "source": "/(.*)",
