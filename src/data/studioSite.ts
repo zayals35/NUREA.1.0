@@ -115,7 +115,7 @@ const no = {
     services: {
       title: "Tjenester · NUREA",
       description:
-        "Nettside og uttrykk først. Systemer og automatisering når det trengs. Nurea Create for bilder og film. Avgrensede leveranser, avtalt omfang.",
+        "Nettside og uttrykk, systemer og automatisering, og bilder og film gjennom Nurea Create. Vi starter der dere står. Avgrensede leveranser, avtalt omfang.",
     },
     studio: {
       title: "Studio · NUREA",
@@ -188,8 +188,8 @@ const no = {
     workLead: "Ekte nettsider, tatt opp slik kundene møter dem. Ingen stillbilder.",
     workAll: "Alle arbeider",
     servicesLabel: "Tjenester",
-    servicesH: "Nettsiden først. Resten når det trengs.",
-    servicesLead: "Nettsider som gjør dere tydelige. Systemer som gjør hverdagen enklere. Visuell produksjon gjennom Nurea Create.",
+    servicesH: "Vi starter der dere står.",
+    servicesLead: "Noen trenger et strammere uttrykk først, andre en ny nettside eller enklere systemer. Rekkefølgen finner vi sammen.",
     cardsLabel: "Slik jobber vi",
     cardsH: "Fire ting du bør vite om oss.",
     cards: [
@@ -394,7 +394,7 @@ const en: StudioCopy = {
     },
     services: {
       title: "Services · NUREA",
-      description: "Website and identity first. Systems and automation when needed. Nurea Create for images and film. Scoped deliverables, agreed scope.",
+      description: "Website and identity, systems and automation, and images and film through Nurea Create. We start where you are. Scoped deliverables, agreed scope.",
     },
     studio: {
       title: "The studio · NUREA",
@@ -462,8 +462,8 @@ const en: StudioCopy = {
     workLead: "Real websites, recorded the way customers meet them. No still images.",
     workAll: "All work",
     servicesLabel: "Services",
-    servicesH: "The website first. The rest when needed.",
-    servicesLead: "Websites that make you clear. Systems that make everyday work simpler. Visual production through Nurea Create.",
+    servicesH: "We start where you are.",
+    servicesLead: "Some need a sharper identity first, others a new website or simpler systems. We find the order together.",
     cardsLabel: "How we work",
     cardsH: "Four things to know about us.",
     cards: [

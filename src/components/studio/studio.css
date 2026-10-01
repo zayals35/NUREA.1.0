@@ -341,12 +341,12 @@ html.st-html body { background: var(--paper); }
 
 /* ---------- the opening: services at once, as three selectors ----------
    Straight after the hero: one heading, one line, three tactile fields in
-   the cut-corner family. The website is broad and first; systems and Create
-   sit together below. Selecting one opens the inset scene (dialog below). */
+   the cut-corner family, equal in size, none first. Selecting one opens the
+   inset scene (dialog below). */
 
 .st .st-open { padding: clamp(64px, 8vw, 120px) var(--gutter) clamp(72px, 9vw, 140px); display: grid; gap: clamp(32px, 4vw, 56px); }
 .st .st-open-head { display: grid; gap: 18px; }
-.st .st-open-head h2 { max-width: 12ch; }
+.st .st-open-head h2 { max-width: 12ch; text-wrap: balance; }
 .st .st-open-head .st-lead { max-width: 38ch; }
 .st .st-picks { display: grid; gap: 16px; }
 .st .st-pick {
@@ -374,19 +374,48 @@ html.st-html body { background: var(--paper); }
 .st .st-pick-create .st-pick-name { font-family: Chillax, sans-serif; font-weight: 500; letter-spacing: -0.045em; }
 .st .st-pick-short { grid-column: 1; grid-row: 3; font-size: 17px; max-width: 40ch; display: flex; gap: 12px; flex-wrap: wrap; align-items: baseline; }
 .st .st-status { font: 500 12px Nippo, sans-serif; letter-spacing: 0.06em; border: 1px solid currentColor; padding: 4px 8px; white-space: nowrap; }
-/* Each service wears its own colour: the website blue, systems green, Create
-   the same ink-and-glow as its deck card. Paper type on all three (AA or better). */
-.st .st-pick-nettside { background: var(--blue); color: var(--paper); min-height: 280px; }
-.st .st-pick-systemer { background: var(--green); color: var(--paper); }
+/* Three equal cards, none ranked above the others (her ruling 2026-10-01: we
+   never know what the next client needs first). Website and systems are paper
+   cards with a drawn motif that says what the service does, frames for the
+   website and a flow for systems; Create keeps the ink-and-glow of its deck
+   card. Below 1100 px the three stack as compact cards of equal height, the
+   drawing beside the number, so all three fit one phone screen. */
 .st .st-pick-create { color: var(--paper); background: radial-gradient(120% 90% at 85% 75%, rgba(40, 73, 163, 0.55), transparent 60%), radial-gradient(90% 70% at 15% 95%, rgba(140, 6, 8, 0.6), transparent 65%), var(--ink); }
 .st .st-pick:focus-visible { outline-color: var(--ink); }
-.st .st-pick-nettside .st-pick-name { font-size: clamp(36px, 5.6vw, 92px); }
+.st .st-pick { overflow: hidden; }
+.st .st-pick > :not(.st-art) { position: relative; z-index: 1; }
+.st .st-pick-short { font-weight: 500; }
+.st .st-art { overflow: visible; position: absolute; left: 24px; right: 24px; top: 64px; width: calc(100% - 48px); height: auto; max-height: 48%; z-index: 0; }
+.st .st-art path, .st .st-art rect { fill: none; stroke: var(--ink); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.st .st-art-order path { transform-box: fill-box; transform-origin: center; animation: st-order 6.4s var(--ease) infinite both; animation-delay: calc(var(--k) * 0.12s); }
+.st .st-art-order .st-order-mark { stroke: var(--blue); stroke-width: 3; }
+.st .st-art .st-flow-line { stroke: var(--green); stroke-width: 3; }
+.st .st-art .st-node { fill: var(--paper); transform-box: fill-box; transform-origin: center; animation: st-node-pulse 2.8s var(--ease) infinite; animation-delay: calc(var(--k) * 0.5s); }
+.st .st-art-flow g:last-child .st-node { fill: var(--green); stroke: var(--green); }
+@keyframes st-order {
+  0%, 100% { opacity: 0.35; transform: translate(var(--x), var(--y)) rotate(var(--r)); }
+  30%, 78% { opacity: 1; transform: none; }
+}
+@keyframes st-node-pulse { 0%, 60%, 100% { transform: none; } 20% { transform: scale(1.5) rotate(45deg); } }
+@media (max-width: 1099px) {
+  .st .st-picks { grid-auto-rows: 1fr; gap: 10px; }
+  .st .st-pick { min-height: 0; padding: 18px 20px 20px; grid-template-rows: auto auto 1fr; gap: 12px 16px; }
+  .st .st-art { position: static; grid-column: 2; grid-row: 1; width: min(30vw, 150px); max-height: none; }
+  .st .st-pick-name { grid-column: 1 / -1; font-size: clamp(26px, 6.6vw, 40px); }
+  .st .st-pick-short { grid-column: 1 / -1; grid-row: 3; font-size: 16px; align-self: end; padding-right: 44px; }
+  .st .st-pick-plus { grid-row: 3; justify-self: end; font-size: 36px; }
+}
 @media (min-width: 900px) {
-  .st .st-open { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); align-items: start; }
-  .st .st-open-head { position: sticky; top: 96px; }
-  .st .st-picks { grid-template-columns: 1fr 1fr; gap: 20px; }
-  .st .st-pick-nettside { grid-column: 1 / -1; min-height: 340px; padding: 30px 32px 32px; }
-  .st .st-pick { min-height: 250px; }
+  .st .st-open-head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; gap: 18px var(--gutter); }
+}
+@media (min-width: 1100px) {
+  .st .st-picks { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .st .st-pick { min-height: 440px; padding: 30px 32px 32px; }
+  .st .st-pick-name { font-size: clamp(28px, 2.5vw, 44px); }
+  .st .st-art { top: 76px; left: 32px; right: 32px; width: calc(100% - 64px); max-height: 40%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .st .st-art path, .st .st-art .st-node { animation: none; }
 }
 
 /* ---------- work gallery ---------- */
@@ -757,7 +786,6 @@ html.st-html body { background: var(--paper); }
 /* Footer type full strength and a step heavier: her ruling 2026-09-30, the small lines were too thin and too faint on ink. */
 .st .st-footer-nav { display: flex; flex-wrap: wrap; gap: 8px 24px; font: 600 16px Nippo, sans-serif; letter-spacing: 0.03em; }
 .st .st-footer-nav a { display: inline-flex; align-items: center; min-height: 40px; }
-.st .st-footer-mark { width: 64px; height: 64px; justify-self: end; }
 .st .st-footer-legal { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; font: 600 14px Nippo, sans-serif; letter-spacing: 0.04em; }
 .st .st-footer-legal .st-lang { font: 600 14px Nippo, sans-serif; }
 .st .st-footer-legal .st-lang a { opacity: 1; }
@@ -782,4 +810,32 @@ html.st-html body { background: var(--paper); }
   .st .st-belt-marks[aria-hidden="true"], .st .st-belt-toggle { display: none; }
   .st .st-belt-run { width: 100%; }
   .st .st-belt-marks { flex-wrap: wrap; padding: 0 var(--gutter); gap: 32px 56px; }
+}
+
+/* ---------- footer: calm paper, the blue N as signature ---------- */
+/* Chosen 2026-10-01 (direction A). All paper and ink type, "tydeligere?" in
+   blue, an ink CTA, the links as a list under an ink rule, and the canonical
+   blue N cropped by the bottom edge. The legal row wraps so the footer never
+   grows past a phone screen. */
+
+.st .st-footer.st-ink { background: var(--paper); color: var(--ink); grid-template-columns: minmax(0, 1fr); padding-bottom: 0; overflow: hidden; }
+.st .st-footer.st-ink p { color: var(--ink); }
+.st .st-footer :focus-visible { outline-color: var(--ink); }
+.st .st-footer .st-invite h2 em { color: var(--blue); }
+.st .st-footer .st-invite-aside p { font-size: 19px; font-weight: 500; }
+.st .st-footer .st-cut.paper { background: var(--ink); color: var(--paper); }
+.st .st-footer .st-cut.paper > b { border-color: rgba(245, 244, 240, 0.35); }
+.st .st-footer .st-textlink { font-size: 15px; font-weight: 600; }
+.st .st-footer .st-footer-meta { border-top: 2px solid var(--ink); padding-top: 36px; }
+.st .st-footer .st-footer-meta > a.st-mail { font-size: clamp(30px, 3vw, 40px); }
+.st .st-footer .st-footer-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; font: 600 20px/1.1 "Cabinet Grotesk", sans-serif; letter-spacing: -0.01em; }
+.st .st-footer .st-footer-nav a { min-height: 62px; border-bottom: 1px solid rgba(32, 29, 29, 0.25); }
+.st .st-footer .st-footer-legal { font: 600 15px Nippo, sans-serif; }
+.st .st-footer .st-footer-legal .st-lang { font-size: 15px; }
+.st .st-footer-n { display: block; width: min(80vw, 600px); height: auto; margin: 24px 0 calc(-0.36 * min(80vw, 600px)) -4vw; }
+@media (min-width: 900px) {
+  .st .st-footer .st-footer-meta { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); align-items: center; }
+  .st .st-footer .st-footer-nav { grid-template-columns: repeat(4, auto); justify-content: start; gap: 4px 32px; font-size: 19px; }
+  .st .st-footer .st-footer-nav a { min-height: 44px; border-bottom: 0; }
+  .st .st-footer-n { justify-self: end; margin-right: 8vw; width: min(36vw, 560px); margin-bottom: calc(-0.5 * min(36vw, 560px)); }
 }

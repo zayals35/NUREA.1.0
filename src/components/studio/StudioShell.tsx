@@ -249,13 +249,12 @@ function Footer() {
             Instagram
           </a>
         </nav>
-        <img className="st-footer-mark" src="/brand/n-paper.svg" alt="Nurea" />
       </div>
       <div className="st-footer-legal">
         <span>
           © Nurea 2026 · {t.orgnr} · {t.studioLine}
         </span>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 22 }}>
+        <span style={{ display: "inline-flex", flexWrap: "wrap", alignItems: "center", gap: "8px 22px" }}>
           <Link to="/personvern">{t.privacy}</Link>
           <button type="button" className="st-footer-cookies" onClick={openCookieNotice}>
             {t.cookies}
@@ -263,6 +262,7 @@ function Footer() {
           <LangSwitch pathname={pathname} />
         </span>
       </div>
+      <img className="st-footer-n" src="/brand/n-blue.svg" alt="Nurea" />
     </footer>
   );
 }

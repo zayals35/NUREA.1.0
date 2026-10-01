@@ -5,8 +5,26 @@ import CaseVideo from "./CaseVideo";
 import { CutLink } from "./parts";
 
 /**
- * Services as three tactile selectors, the website broad and first, systems
- * and Create together below. A selector opens the service scene in an inset
+ * The website card's drawing: loose pieces, a cut-corner mark, a ring, three
+ * lines and a small cut tab, that drift in from scattered and click into one
+ * ordered composition, again and again. Expression finding its order, said
+ * without drawing a browser. Offsets are where each piece starts.
+ */
+const ORDER = [
+  { d: "M28 24 H82 L100 42 V96 H28 Z", x: -18, y: 34, r: -24, mark: true },
+  { d: "M64 140 m-22 0 a22 22 0 1 0 44 0 a22 22 0 1 0 -44 0", x: 34, y: -26, r: 0 },
+  { d: "M128 34 H276", x: 26, y: 52, r: 14 },
+  { d: "M128 64 H244", x: -34, y: 70, r: -18 },
+  { d: "M128 94 H206", x: 44, y: -40, r: 22 },
+  { d: "M128 128 H198 L212 142 V160 H128 Z", x: 52, y: -60, r: 30 },
+];
+
+/**
+ * Services as three equal selectors, none ranked above the others (Zaynab's
+ * ruling 2026-10-01: we never know what the next client needs first). The
+ * website and systems cards carry a drawn motif, pieces finding their order
+ * and a flow; Create keeps its own glow. On phones the three stack as compact
+ * cards of equal height, all three on one screen. A selector opens the service scene in an inset
  * dialog: native <dialog>, so focus is contained, Escape closes and focus
  * returns to the selector on its own. One scene at a time. Page scroll is
  * locked while it is open and put back exactly where it was. On phones the
@@ -64,6 +82,23 @@ export default function ServiceSelectors({ cases = true }: { cases?: boolean }) 
             aria-controls={`${base}-dialog`}
             onClick={() => setActive(s.id)}
           >
+            {s.id === "nettside" && (
+              <svg className="st-art st-art-order" viewBox="0 0 300 180" aria-hidden="true">
+                {ORDER.map(({ d, x, y, r, mark }, k) => (
+                  <path key={k} className={mark ? "st-order-mark" : undefined} style={{ ["--k" as string]: k, ["--x" as string]: `${x}px`, ["--y" as string]: `${y}px`, ["--r" as string]: `${r}deg` }} d={d} />
+                ))}
+              </svg>
+            )}
+            {s.id === "systemer" && (
+              <svg className="st-art st-art-flow" viewBox="0 0 300 180" aria-hidden="true">
+                <path className="st-flow-line" d="M24 130 C 74 130, 74 50, 130 50 S 190 130, 236 110 S 262 44, 276 44" />
+                {[[24, 130], [130, 50], [236, 110], [276, 44]].map(([x, y], k) => (
+                  <g key={k} style={{ ["--k" as string]: k }} transform={`translate(${x} ${y})`}>
+                    <rect className="st-node" x="-9" y="-9" width="18" height="18" />
+                  </g>
+                ))}
+              </svg>
+            )}
             <span className="st-label">{s.index}</span>
             <span className="st-pick-name">{s.name}</span>
             <span className="st-pick-short">
