@@ -114,143 +114,193 @@ export default function Smoke({ className = "", amp = 1, colors = SMOKE_COLORS, 
   // No WebGL (hardware acceleration off, blocklisted GPU, context lost):
   // swap to an animated CSS gradient in the same colours instead of going flat.
   const [fallback, setFallback] = useState(false);
+  const [ready, setReady] = useState(false);
   const [c0, c1, c2, c3] = colors;
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const gl = canvas.getContext("webgl", {
-      alpha: false,
-      antialias: false,
-      powerPreference: "low-power",
-    });
-    if (!gl) {
-      setFallback(true);
-      return;
-    }
-
-    const compile = (type: number, src: string) => {
-      const sh = gl.createShader(type)!;
-      gl.shaderSource(sh, src);
-      gl.compileShader(sh);
-      return sh;
-    };
-    const prog = gl.createProgram()!;
-    gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT));
-    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
-    gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-      setFallback(true);
-      return;
-    }
-    gl.useProgram(prog);
-
-    const onContextLost = (e: Event) => {
-      e.preventDefault();
-      setFallback(true);
-    };
-    canvas.addEventListener("webglcontextlost", onContextLost);
-
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-    const loc = gl.getAttribLocation(prog, "p");
-    gl.enableVertexAttribArray(loc);
-    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-
-    const uRes = gl.getUniformLocation(prog, "uRes");
-    const uTime = gl.getUniformLocation(prog, "uTime");
-    const uScroll = gl.getUniformLocation(prog, "uScroll");
-
-    gl.uniform3fv(gl.getUniformLocation(prog, "uC0"), hexToRgb(c0));
-    gl.uniform3fv(gl.getUniformLocation(prog, "uC1"), hexToRgb(c1));
-    gl.uniform3fv(gl.getUniformLocation(prog, "uC2"), hexToRgb(c2));
-    gl.uniform3fv(gl.getUniformLocation(prog, "uC3"), hexToRgb(c3));
-    gl.uniform1f(gl.getUniformLocation(prog, "uAmp"), amp);
-    gl.uniform1f(gl.getUniformLocation(prog, "uMax"), MAX_DENSITY);
-    gl.uniform1f(uScroll, 0);
-
-    // Smoke is soft: render at half resolution and let the browser scale it up.
-    const scale = Math.min(window.devicePixelRatio || 1, 1.5) * 0.5;
-
-    const resize = () => {
-      const w = Math.max(1, Math.round(canvas.clientWidth * scale));
-      const h = Math.max(1, Math.round(canvas.clientHeight * scale));
-      if (canvas.width !== w || canvas.height !== h) {
-        canvas.width = w;
-        canvas.height = h;
+    if (fallback) return;
+    let dispose: (() => void) | undefined;
+    // Paint the text and colour field before compiling the decorative shader.
+    const timer = window.setTimeout(() => { dispose = initialise(); }, 120);
+    function initialise() {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const gl = canvas.getContext("webgl", {
+        alpha: false,
+        antialias: false,
+        powerPreference: "low-power",
+      });
+      if (!gl) {
+        setFallback(true);
+        return;
       }
-      // Always (re)apply: a remount reuses the sized canvas with a new program.
-      gl.viewport(0, 0, w, h);
-      gl.uniform2f(uRes, w, h);
-    };
-    resize();
-    const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
 
-    const draw = (t: number) => {
-      gl.uniform1f(uTime, t);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-    };
+      const compile = (type: number, src: string) => {
+        const sh = gl.createShader(type)!;
+        gl.shaderSource(sh, src);
+        gl.compileShader(sh);
+        return sh;
+      };
+      const parallel = gl.getExtension("KHR_parallel_shader_compile");
+      const prog = gl.createProgram()!;
+      const vert = compile(gl.VERTEX_SHADER, VERT);
+      const frag = compile(gl.FRAGMENT_SHADER, FRAG);
+      gl.attachShader(prog, vert);
+      gl.attachShader(prog, frag);
+      gl.linkProgram(prog);
+      gl.deleteShader(vert);
+      gl.deleteShader(frag);
+      let compileFrame = 0;
+      let stopDrawing: (() => void) | undefined;
+      const onContextLost = (e: Event) => {
+        e.preventDefault();
+        cancelAnimationFrame(compileFrame);
+        stopDrawing?.();
+        setReady(false);
+        setFallback(true);
+      };
+      // Listen while compiling too: a lost context cannot finish its program.
+      canvas.addEventListener("webglcontextlost", onContextLost);
+      const waitForProgram = () => {
+        // Poll availability before LINK_STATUS, which otherwise stalls the page.
+        if (parallel && !gl.getProgramParameter(prog, parallel.COMPLETION_STATUS_KHR)) {
+          compileFrame = requestAnimationFrame(waitForProgram);
+          return;
+        }
+        stopDrawing = startDrawing();
+      };
+      function startDrawing() {
+        if (!gl || !canvas) return;
+        if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+          gl.deleteProgram(prog);
+          setFallback(true);
+          return;
+        }
+        gl.useProgram(prog);
 
-    // Scroll reactivity: how far the section has moved past the viewport top,
-    // in viewport heights, eased so a flick of the wheel stirs rather than jumps.
-    let scrollTarget = 0;
-    let scrollEased = 0;
-    const onScroll = () => {
-      const r = canvas.getBoundingClientRect();
-      scrollTarget = Math.max(0, -r.top) / Math.max(1, window.innerHeight);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+        const buf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+        const loc = gl.getAttribLocation(prog, "p");
+        gl.enableVertexAttribArray(loc);
+        gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
-    let raf = 0;
-    let running = false;
-    let visible = false;
-    // Reduced motion is read live: switching it on mid-session stops the loop
-    // and leaves one calm static frame; switching it off resumes.
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let reduced = prefersReducedMotion();
-    const start = performance.now() - Math.random() * 60000;
-    const loop = () => {
-      scrollEased += (scrollTarget - scrollEased) * 0.08;
-      gl.uniform1f(uScroll, scrollEased);
-      draw((performance.now() - start) / 1000);
-      raf = requestAnimationFrame(loop);
-    };
-    const sync = () => {
-      const shouldRun = visible && !reduced;
-      if (shouldRun && !running) {
-        running = true;
-        raf = requestAnimationFrame(loop);
-      } else if (!shouldRun && running) {
-        running = false;
-        cancelAnimationFrame(raf);
-      }
-      if (reduced) {
+        const uRes = gl.getUniformLocation(prog, "uRes");
+        const uTime = gl.getUniformLocation(prog, "uTime");
+        const uScroll = gl.getUniformLocation(prog, "uScroll");
+
+        gl.uniform3fv(gl.getUniformLocation(prog, "uC0"), hexToRgb(c0));
+        gl.uniform3fv(gl.getUniformLocation(prog, "uC1"), hexToRgb(c1));
+        gl.uniform3fv(gl.getUniformLocation(prog, "uC2"), hexToRgb(c2));
+        gl.uniform3fv(gl.getUniformLocation(prog, "uC3"), hexToRgb(c3));
+        gl.uniform1f(gl.getUniformLocation(prog, "uAmp"), amp);
+        gl.uniform1f(gl.getUniformLocation(prog, "uMax"), MAX_DENSITY);
         gl.uniform1f(uScroll, 0);
-        draw(20); // one calm static frame
-      }
-    };
-    const onMotion = () => {
-      reduced = mq.matches;
-      sync();
-    };
-    mq.addEventListener("change", onMotion);
-    const io = new IntersectionObserver(([e]) => {
-      visible = e.isIntersecting;
-      sync();
-    });
-    io.observe(canvas);
-    if (reduced) draw(20);
 
+        // Smoke is soft: render at half resolution and let the browser scale it up.
+        const resize = () => {
+          // Smoke is low-frequency art. Bound its pixel cost on large screens and phones.
+          const area = Math.max(1, canvas.clientWidth * canvas.clientHeight);
+          const scale = Math.min(0.5, Math.sqrt(180000 / area));
+          const w = Math.max(1, Math.round(canvas.clientWidth * scale));
+          const h = Math.max(1, Math.round(canvas.clientHeight * scale));
+          if (canvas.width !== w || canvas.height !== h) {
+            canvas.width = w;
+            canvas.height = h;
+          }
+          // Always (re)apply: a remount reuses the sized canvas with a new program.
+          gl.viewport(0, 0, w, h);
+          gl.uniform2f(uRes, w, h);
+          gl.drawArrays(gl.TRIANGLES, 0, 3);
+        };
+        resize();
+        const ro = new ResizeObserver(resize);
+        ro.observe(canvas);
+
+        const draw = (t: number) => {
+          gl.uniform1f(uTime, t);
+          gl.drawArrays(gl.TRIANGLES, 0, 3);
+        };
+
+        // Scroll reactivity: how far the section has moved past the viewport top,
+        // in viewport heights, eased so a flick of the wheel stirs rather than jumps.
+        let scrollTarget = 0;
+        let scrollEased = 0;
+        const onScroll = () => {
+          const r = canvas.getBoundingClientRect();
+          scrollTarget = Math.max(0, -r.top) / Math.max(1, window.innerHeight);
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+
+        let raf = 0;
+        let running = false;
+        let visible = false;
+        // Reduced motion is read live: switching it on mid-session stops the loop
+        // and leaves one calm static frame; switching it off resumes.
+        const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+        let reduced = prefersReducedMotion();
+        const start = performance.now() - Math.random() * 60000;
+        let lastFrame = 0;
+        const loop = (now: number) => {
+          raf = requestAnimationFrame(loop);
+          if (now - lastFrame < 1000 / 30) return;
+          lastFrame = now;
+          scrollEased += (scrollTarget - scrollEased) * 0.08;
+          gl.uniform1f(uScroll, scrollEased);
+          draw((performance.now() - start) / 1000);
+        };
+        const sync = () => {
+          const shouldRun = visible && !reduced && !document.hidden;
+          if (shouldRun && !running) {
+            running = true;
+            raf = requestAnimationFrame(loop);
+          } else if (!shouldRun && running) {
+            running = false;
+            cancelAnimationFrame(raf);
+          }
+          if (reduced) {
+            gl.uniform1f(uScroll, 0);
+            draw(20); // one calm static frame
+          }
+        };
+        const onMotion = () => {
+          reduced = mq.matches;
+          sync();
+        };
+        mq.addEventListener("change", onMotion);
+        const io = new IntersectionObserver(([e]) => {
+          visible = e.isIntersecting;
+          sync();
+        });
+        io.observe(canvas);
+        draw(20);
+        setReady(true);
+        document.addEventListener("visibilitychange", sync);
+
+        return () => {
+          canvas.removeEventListener("webglcontextlost", onContextLost);
+          window.removeEventListener("scroll", onScroll);
+          mq.removeEventListener("change", onMotion);
+          io.disconnect();
+          ro.disconnect();
+          cancelAnimationFrame(raf);
+          document.removeEventListener("visibilitychange", sync);
+          gl.deleteBuffer(buf);
+          gl.deleteProgram(prog);
+        };
+      }
+      waitForProgram();
+      return () => {
+        cancelAnimationFrame(compileFrame);
+        canvas.removeEventListener("webglcontextlost", onContextLost);
+        if (stopDrawing) stopDrawing();
+        else gl.deleteProgram(prog);
+      };
+    }
     return () => {
-      canvas.removeEventListener("webglcontextlost", onContextLost);
-      window.removeEventListener("scroll", onScroll);
-      mq.removeEventListener("change", onMotion);
-      io.disconnect();
-      ro.disconnect();
-      cancelAnimationFrame(raf);
+      clearTimeout(timer);
+      dispose?.();
     };
   }, [amp, c0, c1, c2, c3, fallback]);
 
@@ -267,33 +317,30 @@ export default function Smoke({ className = "", amp = 1, colors = SMOKE_COLORS, 
       />
     ) : null;
 
-  if (fallback) {
-    return (
-      <>
+  const colourField = (
         <div
           aria-hidden="true"
           className={`ambient mix-blend-multiply ${className}`}
-          style={{ opacity: Math.min(1, amp * MAX_DENSITY + 0.2) }}
+          style={{ opacity: ready && !fallback ? 0 : Math.min(1, amp * MAX_DENSITY) }}
         >
           {FALLBACK_SPANS.map((pos, i) => (
             <span
               key={i}
-              style={{ ...pos, background: `radial-gradient(circle, ${colors[i]}, transparent 65%)` }}
+              style={{ ...pos, animation: fallback ? pos.animation : "none", background: `radial-gradient(circle, ${colors[i]}, transparent 65%)` }}
             />
           ))}
         </div>
-        {netLayer}
-      </>
-    );
-  }
+  );
 
   return (
     <>
-      <canvas
+      {colourField}
+      {!fallback && <canvas
         ref={canvasRef}
         aria-hidden="true"
         className={`pointer-events-none absolute inset-0 h-full w-full mix-blend-multiply ${className}`}
-      />
+        style={{ opacity: ready ? 1 : 0 }}
+      />}
       {netLayer}
     </>
   );

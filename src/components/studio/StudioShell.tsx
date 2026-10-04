@@ -1,10 +1,13 @@
 import { useEffect, useId, useRef, useState, type CSSProperties, type FocusEvent, type KeyboardEvent, type ReactNode } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "../../lib/motion";
 import { useLang, twinPath } from "../../i18n";
 import { STUDIO, CREATE_DESTINATION } from "../../data/studioSite";
 import { CutLink, LangSwitch, TextLink, useMediaQuery } from "./parts";
 import { NureaLiveMark } from "../brand/NureaMarkStyles";
 import { openCookieNotice } from "../../lib/consent";
+import Smoke from "../Smoke";
 import "./studio.css";
 
 const STUDIO_PATHS = new Set([
@@ -212,9 +215,31 @@ function Menu({ open, onClose, id }: { open: boolean; onClose: () => void; id: s
 }
 
 function Footer() {
+  const word = useRef<HTMLAnchorElement>(null);
   const { lang, p } = useLang();
   const { pathname } = useLocation();
   const t = STUDIO[lang].shell;
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.fromTo(word.current!.querySelectorAll(".st-footer-letter"),
+          { yPercent: 75, opacity: 0 },
+          {
+            yPercent: 0,
+            opacity: 1,
+            duration: 0.95,
+            stagger: 0.1,
+            ease: "elastic.out(1, 0.5)",
+            scrollTrigger: { trigger: word.current, start: "top 95%", once: true },
+          }
+        );
+      });
+      return () => mm.revert();
+    },
+    { scope: word, dependencies: [pathname], revertOnUpdate: true }
+  );
+
   return (
     <footer className="st-footer st-ink">
       <div className="st-invite">
@@ -262,7 +287,12 @@ function Footer() {
           <LangSwitch pathname={pathname} />
         </span>
       </div>
-      <img className="st-footer-n" src="/brand/n-blue.svg" alt="Nurea" />
+      <div className="st-footer-signature">
+        <Smoke amp={0.8} net={0.22} />
+        <Link ref={word} className="st-footer-word" to={p("/")} aria-label={t.brand}>
+          {Array.from("nurea", (letter, i) => <span key={i} className="st-footer-letter" aria-hidden="true">{letter}</span>)}
+        </Link>
+      </div>
     </footer>
   );
 }

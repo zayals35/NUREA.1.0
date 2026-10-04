@@ -156,8 +156,11 @@ html.st-html body { background: var(--paper); }
   box-shadow: 0 -7px 0 currentColor, 0 7px 0 currentColor;
 }
 @media (min-width: 900px) {
-  .st .st-nav { display: flex; }
   .st .st-header .st-cut { display: inline-flex; }
+}
+/* The full navigation needs more room than the desktop scene breakpoint. */
+@media (min-width: 1200px) {
+  .st .st-nav { display: flex; }
   .st .st-header-end { gap: 28px; }
   .st .st-menu-btn { display: none; }
 }
@@ -307,7 +310,7 @@ html.st-html body { background: var(--paper); }
 @media (min-width: 481px) { .st .st-hero h1 { font-size: clamp(50px, 7.1vw + 20px, 124px); } }
 .st .st-hero h1 .st-line { display: block; }
 .st .st-hero h1 .st-line.st-voice { line-height: 1; }
-.st .st-hero-sub { font-size: clamp(18px, 1.3vw, 22px); line-height: 1.35; max-width: 34ch; }
+.st .st-hero-sub { color: var(--ink); font-size: clamp(22px, 1.8vw, 28px); font-weight: 600; line-height: 1.45; max-width: 40ch; }
 .st .st-hero-act { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
 @media (min-width: 900px) {
   .st .st-hero { padding: 120px var(--gutter) 64px; }
@@ -316,6 +319,7 @@ html.st-html body { background: var(--paper); }
      is the work, so no two controls promise the same thing on one screen. */
   .st .st-hero-cta { display: none; }
 }
+.st .st-hero .st-arrive { opacity: 1; animation: none; }
 .st .st-arrive { opacity: 0; animation: st-arrive 0.6s var(--ease) both; animation-delay: var(--d, 0s); }
 @keyframes st-arrive { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
 
@@ -812,16 +816,14 @@ html.st-html body { background: var(--paper); }
   .st .st-belt-marks { flex-wrap: wrap; padding: 0 var(--gutter); gap: 32px 56px; }
 }
 
-/* ---------- footer: calm paper, the blue N as signature ---------- */
-/* Chosen 2026-10-01 (direction A). All paper and ink type, "tydeligere?" in
-   blue, an ink CTA, the links as a list under an ink rule, and the canonical
-   blue N cropped by the bottom edge. The legal row wraps so the footer never
-   grows past a phone screen. */
+/* ---------- footer: September 22 smoke signature, selected October 4 ---------- */
+/* Preserve the current invitation, navigation and legal layout. The final
+   scene restores the large ink wordmark on smoke from her selected reference. */
 
-.st .st-footer.st-ink { background: var(--paper); color: var(--ink); grid-template-columns: minmax(0, 1fr); padding-bottom: 0; overflow: hidden; }
+.st .st-footer.st-ink { background: var(--nurea-field-light); color: var(--ink); grid-template-columns: minmax(0, 1fr); padding-bottom: 0; overflow: hidden; }
 .st .st-footer.st-ink p { color: var(--ink); }
 .st .st-footer :focus-visible { outline-color: var(--ink); }
-.st .st-footer .st-invite h2 em { color: var(--blue); }
+.st .st-footer .st-invite h2 em { color: var(--blue); font-weight: 600; }
 .st .st-footer .st-invite-aside p { font-size: 19px; font-weight: 500; }
 .st .st-footer .st-cut.paper { background: var(--ink); color: var(--paper); }
 .st .st-footer .st-cut.paper > b { border-color: rgba(245, 244, 240, 0.35); }
@@ -832,10 +834,65 @@ html.st-html body { background: var(--paper); }
 .st .st-footer .st-footer-nav a { min-height: 62px; border-bottom: 1px solid rgba(32, 29, 29, 0.25); }
 .st .st-footer .st-footer-legal { font: 600 15px Nippo, sans-serif; }
 .st .st-footer .st-footer-legal .st-lang { font-size: 15px; }
-.st .st-footer-n { display: block; width: min(80vw, 600px); height: auto; margin: 24px 0 calc(-0.36 * min(80vw, 600px)) -4vw; }
+.st .st-footer-signature { container-type: inline-size;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  margin-inline: calc(-1 * var(--gutter));
+  padding: clamp(100px, 15vw, 220px) var(--gutter) 88px;
+  overflow: hidden;
+  background: var(--paper);
+}
+.st .st-footer-word { position: relative; z-index: 1; display: block; justify-self: center; width: fit-content; max-width: 100%; color: var(--ink); font: 500 37cqw/0.95 Chillax, sans-serif; letter-spacing: -0.03em; white-space: nowrap; }
+@media (max-width: 899px) {
+  .st .st-footer-signature { container-type: inline-size; padding-bottom: 76px; }
+}
+.st .st-footer-letter { display: inline-block; }
+.st .st-footer > *, .st .st-invite > *, .st .st-footer-meta > *, .st .st-footer-legal > span { min-width: 0; }
+.st .st-footer-legal { overflow-wrap: anywhere; }
+@media (max-width: 480px) {
+  .st .st-invite h2 { font-size: clamp(38px, 12vw, 50px); }
+  .st .st-footer .st-textlink { white-space: normal; }
+}
 @media (min-width: 900px) {
   .st .st-footer .st-footer-meta { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); align-items: center; }
   .st .st-footer .st-footer-nav { grid-template-columns: repeat(4, auto); justify-content: start; gap: 4px 32px; font-size: 19px; }
   .st .st-footer .st-footer-nav a { min-height: 44px; border-bottom: 0; }
-  .st .st-footer-n { justify-self: end; margin-right: 8vw; width: min(36vw, 560px); margin-bottom: calc(-0.5 * min(36vw, 560px)); }
+}
+
+/* September 28 hue fields, adapted as paint only. No page/section geometry,
+   hero, service card, media, illustration or deck-card structure changes. */
+.st .st-intro, .st .st-studio-hero, .st .st-create-hero,
+.st .st-insight, .st .st-article { background: var(--nurea-field-light); }
+.st .st-section, .st .st-open, .st .st-belt { background: var(--nurea-field-soft); }
+.st .st-section:nth-of-type(even) {
+  background:
+    radial-gradient(ellipse at 100% 0%, var(--nurea-hue-blue), transparent 53%),
+    radial-gradient(ellipse at 0% 55%, var(--nurea-hue-citron), transparent 64%),
+    radial-gradient(ellipse at 86% 100%, var(--nurea-hue-red), transparent 51%),
+    var(--paper);
+}
+.st .st-section.st-blue, .st .st-section.st-green,
+.st .st-section.st-blue p, .st .st-section.st-green p { color: var(--ink); }
+.st .st-section.st-blue .st-row, .st .st-section.st-green .st-row { border-color: rgba(32, 29, 29, 0.35); }
+.st .st-gallery-foot .st-note { color: var(--ink); }
+.st .st-section.st-green {
+  background:
+    radial-gradient(ellipse at 0% 100%, var(--nurea-hue-green), transparent 60%),
+    radial-gradient(ellipse at 100% 0%, var(--nurea-hue-citron), transparent 65%),
+    var(--paper);
+}
+.st .st-section.st-blue :focus-visible, .st .st-section.st-green :focus-visible { outline-color: var(--ink); }
+.st .st-section.st-ink, .st .st-deck-section { background: var(--nurea-field-dark); }
+
+/* Preserve every header control at the narrowest phone width. */
+@media (max-width: 360px) {
+  .st .st-header { gap: 4px; }
+  .st .st-header .st-brand { gap: 6px; }
+  .st .st-header .st-brand-mark { width: 28px; height: 28px; }
+  .st .st-header .st-brand span { font-size: 24px; }
+  .st .st-header-end { gap: 8px; }
+  .st .st-header .st-lang a, .st .st-header .st-lang span { min-width: 30px; }
+  .st .st-header .st-menu-btn { gap: 6px; font-size: 12px; }
 }

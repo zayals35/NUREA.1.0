@@ -47,6 +47,25 @@
 }
 
 :root {
+  /* September 28 hue study: paint tokens shared by both existing page frames. */
+  --nurea-hue-blue: #bcc6df;
+  --nurea-hue-citron: #e8e19a;
+  --nurea-hue-red: #dfbbb1;
+  --nurea-hue-green: #c4d0b5;
+  --nurea-field-light:
+    radial-gradient(ellipse at 93% 12%, var(--nurea-hue-blue), transparent 55%),
+    radial-gradient(ellipse at 65% 68%, var(--nurea-hue-citron), transparent 57%),
+    radial-gradient(ellipse at 7% 86%, var(--nurea-hue-red), transparent 52%),
+    #f5f4f0;
+  --nurea-field-soft:
+    radial-gradient(ellipse at 0% 80%, var(--nurea-hue-blue), transparent 56%),
+    radial-gradient(ellipse at 24% 8%, var(--nurea-hue-citron), transparent 65%),
+    #f5f4f0;
+  --nurea-field-dark:
+    radial-gradient(ellipse at 92% 8%, #303c69, transparent 65%),
+    radial-gradient(ellipse at 45% 110%, #584344, transparent 65%),
+    radial-gradient(ellipse at 0% 65%, #384835, transparent 60%),
+    #201d1d;
   --grain-opacity: 0.05;
 }
 
@@ -415,4 +434,13 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .poster-drift { animation: none; }
+}
+
+/* The older form/detail frame keeps its markup and layout, with the same hue
+   on existing light section surfaces. Inputs, media and dark panels stay solid. */
+html:not(.st-html) main > header.bg-parchment {
+  background: var(--nurea-field-light);
+}
+html:not(.st-html) main > section:is(.bg-parchment, .bg-parchment-alt, .bg-cream) {
+  background: var(--nurea-field-soft);
 }

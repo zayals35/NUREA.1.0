@@ -41,7 +41,7 @@ function LangSwitch({ className = "" }: { className?: string }) {
               to={twinPath(pathname, l)}
               onClick={() => sound.play("click")}
               aria-label={l === "no" ? "Norsk" : "English"}
-              className="opacity-50 transition-opacity hover:opacity-100"
+              className="opacity-75 transition-opacity hover:opacity-100"
             >
               {l.toUpperCase()}
             </Link>

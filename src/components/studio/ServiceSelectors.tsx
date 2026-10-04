@@ -46,20 +46,23 @@ export default function ServiceSelectors({ cases = true }: { cases?: boolean }) 
 
   useEffect(() => {
     const d = dialog.current;
-    if (!d) return;
-    if (active && !d.open) {
-      const gap = window.innerWidth - document.documentElement.clientWidth;
-      document.documentElement.style.overflow = "hidden";
-      if (gap > 0) document.body.style.paddingRight = `${gap}px`;
-      d.showModal();
-      inner.current?.focus({ preventScroll: true });
-    }
-    if (!active && d.open) d.close();
+    if (!d || !active) return;
+    const overflow = document.documentElement.style.overflow;
+    const padding = document.body.style.paddingRight;
+    const gap = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.style.overflow = "hidden";
+    if (gap > 0) document.body.style.paddingRight = `${gap}px`;
+    if (!d.open) d.showModal();
+    inner.current?.focus({ preventScroll: true });
+    // Contact links unmount the dialog. Restore the page on every exit path.
+    return () => {
+      document.documentElement.style.overflow = overflow;
+      document.body.style.paddingRight = padding;
+      if (d.open) d.close();
+    };
   }, [active]);
 
   const onClose = () => {
-    document.documentElement.style.overflow = "";
-    document.body.style.paddingRight = "";
     setActive(null);
   };
 
