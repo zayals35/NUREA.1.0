@@ -67,7 +67,6 @@ export interface HomeCard {
 
 export interface ServiceCopy {
   id: ServiceId;
-  index: string;
   name: string;
   short: string;
   status?: string;
@@ -261,7 +260,6 @@ const no = {
     list: [
       {
         id: "nettside",
-        index: "01",
         name: "Nettside og uttrykk",
         short: "Avgrenset nettside, tydelig budskap og visuell retning.",
         need: "Dere er gode. Nettsiden sier det ikke. Kunden leser to setninger og går videre til noen som var lettere å forstå.",
@@ -272,7 +270,6 @@ const no = {
       },
       {
         id: "systemer",
-        index: "02",
         name: "Systemer og automatisering",
         short: "Én konkret arbeidsflyt, testet hele veien.",
         need: "Henvendelser, skjema og booking som ikke henger sammen, og manuelle steg som stjeler tid hver uke.",
@@ -283,7 +280,6 @@ const no = {
       },
       {
         id: "create",
-        index: "03",
         name: "Nurea Create",
         short: "Forklarende innhold, annonser og kampanjebilder, i bilde og film.",
         status: "Under utvikling",
@@ -534,7 +530,6 @@ const en: StudioCopy = {
     list: [
       {
         id: "nettside",
-        index: "01",
         name: "Website and identity",
         short: "A scoped website, clear messaging and visual direction.",
         need: "You are good. The website doesn't say so. The customer reads two sentences and moves on to someone who was easier to understand.",
@@ -545,7 +540,6 @@ const en: StudioCopy = {
       },
       {
         id: "systemer",
-        index: "02",
         name: "Systems and automation",
         short: "One concrete workflow, tested all the way.",
         need: "Enquiries, forms and bookings that don't fit together, and manual steps that steal time every week.",
@@ -556,7 +550,6 @@ const en: StudioCopy = {
       },
       {
         id: "create",
-        index: "03",
         name: "Nurea Create",
         short: "Explainer content, ads and campaign visuals, in stills and film.",
         status: "In development",

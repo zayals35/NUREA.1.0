@@ -102,7 +102,6 @@ export default function ServiceSelectors({ cases = true }: { cases?: boolean }) 
                 ))}
               </svg>
             )}
-            <span className="st-label">{s.index}</span>
             <span className="st-pick-name">{s.name}</span>
             <span className="st-pick-short">
               {s.short}
@@ -122,10 +121,11 @@ export default function ServiceSelectors({ cases = true }: { cases?: boolean }) 
               {t.close} <span aria-hidden="true">×</span>
             </button>
             <div className="st-svc-body">
-              <p className="st-label">
-                {service.index}
-                {service.status && <span className="st-status">{service.status}</span>}
-              </p>
+              {service.status && (
+                <p className="st-label">
+                  <span className="st-status">{service.status}</span>
+                </p>
+              )}
               <h2 id={`${base}-title`} className={service.id === "create" ? "st-voice" : undefined}>
                 {service.name}
               </h2>
