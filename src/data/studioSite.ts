@@ -1,3 +1,4 @@
+import articleData from "./articles.json";
 import type { Lang } from "../i18n";
 
 /**
@@ -84,15 +85,17 @@ export interface Article {
   lead: Record<Lang, string>;
   /** ISO date, only set once the article is actually published. */
   date?: string;
-  body: Record<Lang, string[]>;
+  body: Record<Lang, { heading: string; paragraphs: string[] }[]>;
+  cover: string;
+  sources: { title: string; url: string; note: Record<Lang, string> }[];
 }
 
 /**
- * Editorial articles. Nothing is published yet: the weekly research
+ * Editorial articles. The weekly research
  * heartbeat proposes pitches and Zaynab selects. Unpublished entries never
  * reach navigation, the index, the sitemap or the prerender.
  */
-export const ARTICLES: Article[] = [];
+export const ARTICLES: Article[] = articleData;
 
 export const publishedArticles = () => ARTICLES.filter((a) => a.published);
 

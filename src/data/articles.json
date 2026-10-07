@@ -1,0 +1,139 @@
+[
+  {
+    "title": {
+      "no": "Trenger du egentlig alle feltene i kontaktskjemaet?",
+      "en": "Do you really need every field in your contact form?"
+    },
+    "lead": {
+      "no": "Et kontaktskjema skal gi deg nok informasjon til å svare ordentlig. Hvert ekstra spørsmål bør ha en grunn.",
+      "en": "A contact form should give you enough information to respond properly. Every extra question should have a reason."
+    },
+    "slug": {
+      "no": "trenger-du-alle-feltene-i-kontaktskjemaet",
+      "en": "do-you-need-every-contact-form-field"
+    },
+    "published": true,
+    "date": "2026-10-08",
+    "cover": "/brand/art/innsikt-wide.webp",
+    "body": {
+      "no": [
+        {
+          "heading": "",
+          "paragraphs": [
+            "Navn. E-post. Telefon. Firmanavn. Adresse. Budsjett. Ønsket oppstart. Det er lett å legge til ett felt til når nettsiden bygges. Kanskje blir opplysningen nyttig senere. Men før skjemaet vokser, trenger du å vite hva du faktisk skal bruke svaret til.",
+            "Et godt sted å begynne er den første samtalen: Hva må være avklart før du kan hjelpe kunden videre?"
+          ]
+        },
+        {
+          "heading": "Gi hvert felt en oppgave",
+          "paragraphs": [
+            "Gå gjennom spørsmålene og fullfør denne setningen for hvert av dem: «Vi trenger dette svaret for å …»",
+            "«… svare kunden» er en tydelig grunn til å be om en kontaktmåte. «… sjekke om vi tar oppdrag i området» kan begrunne et postnummer. «… ha det i systemet» sier mindre om hvorfor opplysningen trengs akkurat nå.",
+            "GOV.UKs veiledning for spørsmål i skjemaer anbefaler at hvert spørsmål har et formål, og at du bare ber om informasjon du trenger. For bedriften din kan det bety å flytte enkelte spørsmål til et senere tidspunkt.",
+            "Behold det som avgjør neste steg. Vurder resten på nytt."
+          ]
+        },
+        {
+          "heading": "Et tenkt eksempel: malerbedriften",
+          "paragraphs": [
+            "Tenk deg en malerbedrift som tar imot forespørsler om innvendig maling. Før den kan foreslå en befaring, trenger den å vite hva kunden ønsker malt, hvor oppdraget er, og hvordan kunden kan nås.",
+            "Da kan postnummer være nyttig allerede i skjemaet. Fargen på veggene, organisasjonsnummer og full fakturaadresse kan kanskje vente. Hvis bilder hjelper bedriften å forstå omfanget, kan bildeopplasting være et frivillig tillegg med en kort forklaring.",
+            "Dette er et tenkt eksempel, ikke en oppskrift for alle håndverkere. Hvis bedriften gir et konkret pristilbud direkte fra skjemaet, vil den trenge andre opplysninger enn hvis neste steg er en befaring."
+          ]
+        },
+        {
+          "heading": "Be om avklaringer som faktisk betyr noe",
+          "paragraphs": [
+            "Et kort skjema kan også bli for knapt. Hvis du stadig må sende samme oppfølgingsspørsmål før du kan vurdere en henvendelse, kan det spørsmålet fortjene en plass.",
+            "Ønsket dato kan være avgjørende for en fotograf. Et budsjettintervall kan være relevant når prosjektets omfang må passe en økonomisk ramme. Behold slike spørsmål når svarene endrer hva du kan tilby.",
+            "Men gi plass til usikkerhet. En kunde som trenger råd, har ikke nødvendigvis bestemt dato eller budsjett. «Ikke avklart ennå» kan være et reelt svar. Forklar hva opplysningen hjelper deg med å vurdere."
+          ]
+        },
+        {
+          "heading": "Gjør skjemaet mulig å forstå",
+          "paragraphs": [
+            "Antall felt er bare én del av jobben. W3Cs veiledning for tilgjengelige skjemaer fremhever tydelige feltnavn, forståelige instruksjoner og hjelp til å rette feil.",
+            "Skriv «Telefon (valgfritt)» hvis nummeret er valgfritt. En feilmelding bør si hva kunden skal rette. Hvis e-postadressen mangler @, hjelper «Skriv inn en e-postadresse med @» mer enn «Ugyldig verdi». Etter innsending må det være tydelig at meldingen er mottatt.",
+            "Opplys også om hva som skjer videre. Lover du svar innen en bestemt tid, må bedriften kunne holde det."
+          ]
+        },
+        {
+          "heading": "Prøv med en virkelig henvendelse",
+          "paragraphs": [
+            "Åpne skjemaet på telefonen og fyll det ut med utgangspunkt i en vanlig kundehenvendelse. Hvor må du lete etter opplysninger? Hvor er det uklart hva du skal skrive?",
+            "Be deretter noen som ikke kjenner bedriften, gjøre det samme. Se hvor de stopper opp før du forklarer.",
+            "Velg ett felt å vurdere i dag. Skriv ned hva svaret brukes til, hvem som bruker det, og når det trengs. Da har du et konkret grunnlag for å beholde det, gjøre det valgfritt eller spørre senere."
+          ]
+        }
+      ],
+      "en": [
+        {
+          "heading": "",
+          "paragraphs": [
+            "Name. Email. Phone. Company. Address. Budget. Preferred start date. It is easy to add another field while building a website. Perhaps the information will be useful later. But before the form grows, you need to know what you will actually do with the answer.",
+            "Start with the first conversation: what needs to be clear before you can help the customer take the next step?"
+          ]
+        },
+        {
+          "heading": "Give each field a job",
+          "paragraphs": [
+            "Go through the questions and finish this sentence for each one: “We need this answer to …”",
+            "“… reply to the customer” is a clear reason to ask for a way to contact them. “… check whether we work in the area” may justify a postcode. “… keep it in our system” says less about why you need it right now.",
+            "GOV.UK’s guidance on form questions recommends having a purpose for every question and asking only for information you need. For your business, that may mean moving some questions to a later conversation.",
+            "Keep what determines the next step. Reconsider the rest."
+          ]
+        },
+        {
+          "heading": "A hypothetical example: a painting business",
+          "paragraphs": [
+            "Imagine a painting business receiving enquiries about interior painting. Before suggesting a site visit, it needs to know what the customer wants painted, where the work is, and how to reach them.",
+            "A postcode may therefore be useful in the form. Wall colours, company registration details and the full billing address could perhaps wait. If photos help the business understand the work involved, uploading them could be optional, with a brief explanation.",
+            "This is a hypothetical example, not a template for every trade. A business providing a specific quote directly from the form will need different information from one arranging a site visit."
+          ]
+        },
+        {
+          "heading": "Ask for details that affect your response",
+          "paragraphs": [
+            "A short form can also ask too little. If you repeatedly need to send the same follow-up question before assessing an enquiry, that question may deserve a place.",
+            "A preferred date may be essential for a photographer. A budget range may be relevant when a project needs to fit a financial limit. Keep these questions when the answers change what you can offer.",
+            "But leave room for uncertainty. Someone looking for advice may not have a date or budget yet. “Not decided yet” can be a valid answer. Explain what the information helps you assess."
+          ]
+        },
+        {
+          "heading": "Make the form understandable",
+          "paragraphs": [
+            "The number of fields is only part of the job. W3C’s accessible forms guidance highlights clear labels, understandable instructions and help with correcting errors.",
+            "Write “Phone (optional)” when the number is optional. An error message should explain what to fix. If an email address is missing @, “Enter an email address containing @” is more useful than “Invalid value”. After submission, make it clear that the message has been received.",
+            "Explain what happens next, too. If you promise a response within a certain time, your business needs to be able to deliver it."
+          ]
+        },
+        {
+          "heading": "Try it with a real enquiry",
+          "paragraphs": [
+            "Open the form on your phone and complete it using a typical customer enquiry. Where do you need to look up information? Where is it unclear what to write?",
+            "Then ask someone unfamiliar with the business to do the same. Watch where they pause before you explain.",
+            "Choose one field to review today. Write down what the answer is used for, who uses it, and when it is needed. That gives you a concrete basis for keeping it, making it optional or asking later."
+          ]
+        }
+      ]
+    },
+    "sources": [
+      {
+        "title": "GOV.UK Design System: Question pages",
+        "url": "https://design-system.service.gov.uk/patterns/question-pages/",
+        "note": {
+          "no": "Veiledning om formålet med hvert spørsmål, valgfrie felt og muligheten til å svare at noe ikke er avklart. Lest 8. oktober 2026.",
+          "en": "Guidance on the purpose of each question, optional fields and allowing uncertainty as a valid answer. Accessed 8 October 2026."
+        }
+      },
+      {
+        "title": "W3C Web Accessibility Initiative: Forms Tutorial",
+        "url": "https://www.w3.org/WAI/tutorials/forms/",
+        "note": {
+          "no": "Veiledning om tilgjengelige feltnavn, instruksjoner, feilmeldinger og bekreftelser. Oppdatert 27. mars 2026. Lest 8. oktober 2026.",
+          "en": "Guidance on accessible labels, instructions, error messages and confirmations. Updated 27 March 2026. Accessed 8 October 2026."
+        }
+      }
+    ]
+  }
+]

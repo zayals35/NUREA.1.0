@@ -36,6 +36,11 @@ const CONCURRENCY = 4;
 /** A route with less readable text than this almost certainly failed to render. */
 const MIN_TEXT_CHARS = 600;
 
+const articleData = JSON.parse(await readFile(new URL("../src/data/articles.json", import.meta.url), "utf8"));
+const ARTICLE_ROUTES = articleData.filter((a) => a.published).flatMap((a) => [
+  `/innsikt/${a.slug.no}`, `/en/insights/${a.slug.en}`,
+]);
+
 const SERVICE_SLUGS = ["merkevare", "nettsider", "innhold", "systemer", "reklamer"];
 const SERVICE_SLUGS_EN = ["brand", "websites", "content", "systems", "advertising"];
 
@@ -65,8 +70,7 @@ const ROUTES = [
   "/en/about",
   "/en/contact",
   "/en/insights",
-  // Published articles (src/data/studioSite.ts ARTICLES with published: true)
-  // are added here as /innsikt/<slug> and /en/insights/<slug> when they exist.
+  ...ARTICLE_ROUTES,
 ];
 
 const MIME = {

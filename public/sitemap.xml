@@ -171,4 +171,18 @@
   <url><loc>https://www.nurea.no/create</loc></url>
   <url><loc>https://www.nurea.no/demoer</loc></url>
   <url><loc>https://www.nurea.no/personvern</loc></url>
+  <url>
+    <loc>https://www.nurea.no/innsikt/trenger-du-alle-feltene-i-kontaktskjemaet</loc>
+    <lastmod>2026-10-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/innsikt/trenger-du-alle-feltene-i-kontaktskjemaet" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/insights/do-you-need-every-contact-form-field" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/innsikt/trenger-du-alle-feltene-i-kontaktskjemaet" />
+  </url>
+  <url>
+    <loc>https://www.nurea.no/en/insights/do-you-need-every-contact-form-field</loc>
+    <lastmod>2026-10-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.nurea.no/innsikt/trenger-du-alle-feltene-i-kontaktskjemaet" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nurea.no/en/insights/do-you-need-every-contact-form-field" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nurea.no/innsikt/trenger-du-alle-feltene-i-kontaktskjemaet" />
+  </url>
 </urlset>

@@ -19,14 +19,27 @@ export default function Artikkel() {
       <article className="st-article">
         <p className="st-label">
           {STUDIO[lang].shell.nav[3].label}
-          {article.date && ` · ${dateFmt.format(new Date(article.date))}`}
+          {article.date && <> · <time dateTime={article.date}>{dateFmt.format(new Date(article.date))}</time></>}
         </p>
         <h1>{article.title[lang]}</h1>
         <p className="st-lead">{article.lead[lang]}</p>
+        <img className="st-article-cover" src={article.cover} width={2016} height={1140} alt="" decoding="async" />
         <div className="st-article-body">
-          {article.body[lang].map((para, i) => (
-            <p key={i}>{para}</p>
+          {article.body[lang].map((section, i) => (
+            <section key={i}>
+              {section.heading && <h2>{section.heading}</h2>}
+              {section.paragraphs.map((para, j) => <p key={j}>{para}</p>)}
+            </section>
           ))}
+          <section aria-labelledby="article-sources">
+            <h2 id="article-sources">{lang === "no" ? "Kilder" : "Sources"}</h2>
+            <ul className="st-article-sources">
+              {article.sources.map((source) => (
+                <li key={source.url}><a href={source.url}>{source.title}</a><span>{source.note[lang]}</span></li>
+              ))}
+            </ul>
+            <p>{lang === "no" ? "Kildene gir veiledning om skjemaer og tilgjengelighet. De fastslår ikke et ideelt antall felt eller hvor mange flere henvendelser en endring vil gi." : "These sources provide guidance on forms and accessibility. They do not establish an ideal field count or predict how many more enquiries a change will generate."}</p>
+          </section>
         </div>
         <TextLink to={p("/innsikt")}>{t.back}</TextLink>
       </article>

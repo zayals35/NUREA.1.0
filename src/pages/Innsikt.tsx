@@ -48,7 +48,7 @@ export default function Innsikt() {
         <>
           <section className="st-section" style={{ paddingTop: 0 }} aria-label={s.featured}>
             <article className="st-featured" data-rv>
-              <div className="st-featured-art" />
+              <div className="st-featured-art"><img src={featured.cover} alt="" width={2016} height={1140} loading="lazy" decoding="async" /></div>
               <div className="st-intro-aside">
                 <p className="st-label">
                   {s.featured}

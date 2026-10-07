@@ -3,7 +3,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "../lib/motion";
 import { useLang } from "../i18n";
 import { usePageMeta } from "../lib/pageMeta";
-import { STUDIO } from "../data/studioSite";
+import { STUDIO, publishedArticles } from "../data/studioSite";
 import Smoke from "../components/Smoke";
 import ServiceSelectors from "../components/studio/ServiceSelectors";
 import StackCards from "../components/studio/StackCards";
@@ -89,7 +89,7 @@ export default function Home() {
       <StackCards />
 
       <section className="st-insight" id="insights" aria-labelledby="insights-h">
-        <InsightScene as="h2" id="insights-h" title={h.insightsTitle} lead={h.insightsH} text={h.insightsP} soon={h.insightsSoon} alt={h.insightsArtAlt}>
+        <InsightScene as="h2" id="insights-h" title={h.insightsTitle} lead={h.insightsH} text={h.insightsP} soon={publishedArticles().length ? undefined : h.insightsSoon} alt={h.insightsArtAlt}>
           <CutLink to={p("/innsikt")}>{h.insightsCta}</CutLink>
         </InsightScene>
       </section>
